@@ -4,7 +4,7 @@ from bottle import route, template
 
 @route('/')# Handle HTTP GET for the application root
 def index():
-    return template('\n<h1>{{message}}</h1>', message='Hello Runabove')
+    return template('\n<h1>{{message}}</h1>', message='Здесь будет 2-я версия remontas 24!!!')
 
 # Run bottle internal test server when invoked directly ie: non-uxsgi mode
 if __name__ == '__main__':
@@ -12,3 +12,5 @@ if __name__ == '__main__':
 # Run bottle in application mode. Required in order to get the application working with uWSGI!
 else:
     app = application = bottle.default_app()
+
+    #acc1aca627
