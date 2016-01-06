@@ -4,7 +4,7 @@ from bottle import route, template
 
 @route('/')# Handle HTTP GET for the application root
 def index():
-    return template('\n<h1>{{message}}</h1>', message=u'Привет, Remontas24!!!')
+    return template('\n<h1>{{message}}</h1>', message='Remontas24!!!')
 
 # Run bottle internal test server when invoked directly ie: non-uxsgi mode
 if __name__ == '__main__':
