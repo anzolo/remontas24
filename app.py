@@ -22,11 +22,30 @@ def static(access, filename):
 
             bearer = request.get_header("Authorization").split()
 
-            print(bearer[1])
+            #print(bearer[1])
 
-            return bottle.static_file(filename, root='./adminka/restricted')
+            print(check_token(bearer[1]))
+
+            if check_token(bearer[1]):
+                return bottle.static_file(filename, root='./adminka/restricted')
+            else:
+                return "Sorry, access denied."
         else:
             return "Sorry, access denied."
+
+def check_token(token):
+    check_status = False
+
+    try:
+        header, claims = jwt.verify_jwt(token, session_pub_key, ['PS256'])
+        print(header)
+        print(claims)
+        check_status = True
+    except Exception as e:
+        print(e)
+
+    return check_status
+
 
 
 @route('/')
@@ -85,7 +104,7 @@ def create_session(result):
     priv_key = RSA.importKey(session_priv_key)
 
     payload = { 'user_id': result["user_id"], 'role': result["role"] }
-    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=30))
+    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(seconds=5))
     return result
 
 
