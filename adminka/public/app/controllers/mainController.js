@@ -34,5 +34,10 @@ remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService
     $scope.logout = function () {
         AuthService.logout();
         $scope.isAuthorizedAdmin = AuthService.isAuthorized();
-    }
+    };
+
+    $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
+        Session.destroy();
+        $scope.isAuthorizedAdmin = AuthService.isAuthorized();
+    });
             }]);

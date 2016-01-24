@@ -14,22 +14,18 @@ session_pub_key = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
 @route('/adminka/<access>/<filename:path>')
 def static(access, filename):
     if access=="public":
-        #print("Authorization = ",request.get_header("Authorization"))
         return bottle.static_file(filename, root='./adminka/public')
     elif access=="restricted":
-        #print("Authorization(restricted) = ",request.get_header("Authorization"))
         if request.get_header("Authorization")!= None:
 
             bearer = request.get_header("Authorization").split()
 
-            #print(bearer[1])
-
-            print(check_token(bearer[1]))
+            #print(check_token(bearer[1]))
 
             if check_token(bearer[1]):
                 return bottle.static_file(filename, root='./adminka/restricted')
             else:
-                return "Sorry, access denied."
+                return abort(401,"Sorry, access denied.")
         else:
             return "Sorry, access denied."
 
@@ -38,19 +34,35 @@ def check_token(token):
 
     try:
         header, claims = jwt.verify_jwt(token, session_pub_key, ['PS256'])
-        print(header)
-        print(claims)
+        #print(header)
+        #print(claims)
         check_status = True
     except Exception as e:
         print(e)
 
     return check_status
 
-
-
 @route('/')
 def index():
-    return template('\n<h1>{{message}}</h1>', message='Главная страница нового Remontas24!')
+    return template('remontas')
+
+@route('/remontas/<access>/<filename:path>')
+def static(access, filename):
+    if access=="public":
+        return bottle.static_file(filename, root='./remontas/public')
+    elif access=="restricted":
+        if request.get_header("Authorization")!= None:
+
+            bearer = request.get_header("Authorization").split()
+
+            #print(check_token(bearer[1]))
+
+            if check_token(bearer[1]):
+                return bottle.static_file(filename, root='./adminka/restricted')
+            else:
+                return abort(401,"Sorry, access denied.")
+        else:
+            return abort(401,"Sorry, access denied.")
 
 @route('/adminka')
 def adminka():
@@ -90,16 +102,6 @@ def check_login_master(username, password, result):
 #    return result
 
 def create_session(result):
-    '''
-    key = RSA.generate(2048)
-    priv_pem = key.exportKey()
-    pub_pem = key.publickey().exportKey()
-    priv_key = RSA.importKey(priv_pem)
-    pub_key = RSA.importKey(pub_pem)
-
-    print(priv_pem)
-    print(pub_pem)
-    '''
 
     priv_key = RSA.importKey(session_priv_key)
 

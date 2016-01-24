@@ -5,9 +5,6 @@ remontas24App.config(function ($routeProvider, $locationProvider, USER_ROLES, $h
         .when('/adminka', {
             controller: 'adminkaMainPageController',
             templateUrl: '/adminka/restricted/views/adminka_page.html'
-                //            data: {
-                //                authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
-                //            }
         })
         .otherwise({
             redirectTo: '/'
