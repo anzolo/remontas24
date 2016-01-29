@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <base href="/">
     <meta charset="UTF-8">
     <title>Ремонтас 24 - Мастер найдется!</title>
     <link type="text/css" rel="stylesheet" href="/remontas/public/css/normalize.css">
@@ -17,10 +18,14 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
+    <script src="/remontas/public/bower_components/angular/angular.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
+
 </head>
 
-<body>
-    <div class="wrapper">
+<body ng-app="remontas24Site">
+    <div class="wrapper" ng-controller="mainController">
         <div class="content">
             <div class="header">
                 <div class="container clearfix">
@@ -76,6 +81,7 @@
 
                 <h2 class="master-counter"><span>87</span> мастеров на ваш выбор</h2>
                 <div class="selection clearfix">
+                    <masters-search-box-element></masters-search-box-element>
                     <a href="#" class="item">
                         <div class="favorite"></div>
                         <div class="img">
@@ -419,6 +425,20 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
+
+    <!-- Angular Modules -->
+    <script src="/remontas/public/angular/remontas24Site.js"></script>
+
+    <!-- Angular Controllers -->
+
+    <script src="/remontas/public/angular/controllers/mainController.js"></script>
+
+    <!--    Директивы-->
+
+    <script src="/remontas/public/angular/directives.js"></script>
+
+    <!--  Angular services  -->
+    <!--    <script src="/adminka/public/app/services/AuthServices.js"></script>-->
 
 </body>
 
