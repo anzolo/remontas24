@@ -42,31 +42,17 @@
     <![endif]-->
 
     <script src="/adminka/public/bower_components/angular/angular.min.js"></script>
-    <script src="/adminka/public/bower_components/angular-route/angular-route.min.js"></script>
+    <!--    <script src="/adminka/public/bower_components/angular-route/angular-route.min.js"></script>-->
+    <script src="/adminka/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/adminka/public/bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
 
 </head>
 
 <body ng-app="remontas24App">
 
     <div ng-controller="mainController">
-        <div ng-if="isAuthorizedAdmin">
-            <ng-view></ng-view>
-        </div>
-        <div ng-if="!isAuthorizedAdmin">
-            <div class="container">
-
-                <form class="form-signin" ng-submit="login(credentials)" novalidate>
-                    <h2 class="form-signin-heading">Введите логин и пароль</h2>
-                    <label for="inputEmail" class="sr-only">Электронная почта</label>
-                    <input type="email" id="inputEmail" class="form-control" ng-model="credentials.username" placeholder="Адрес электронной почты" required autofocus>
-                    <label for="inputPassword" class="sr-only">Пароль</label>
-                    <input type="password" id="inputPassword" class="form-control" ng-model="credentials.password" placeholder="Пароль" required>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-                </form>
-
-            </div>
-        </div>
+        <div ui-view></div>
     </div>
 
 
@@ -79,9 +65,11 @@
     <!-- Angular Controllers -->
     <script src="/adminka/public/app/controllers/mainController.js"></script>
     <script src="/adminka/public/app/controllers/adminkaMainPageController.js"></script>
+    <script src="/adminka/public/app/controllers/mastersController.js"></script>
 
     <!--  Angular services  -->
     <script src="/adminka/public/app/services/AuthServices.js"></script>
+    <script src="/adminka/public/app/backend.js"></script>
 
 
     <!-- Доп скрипиты для админки -->

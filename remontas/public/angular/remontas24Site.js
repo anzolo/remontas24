@@ -1,14 +1,14 @@
-var remontas24Site = angular.module('remontas24Site', ['ngRoute', 'ngStorage']);
+var remontas24Site = angular.module('remontas24Site', ['ngRoute', 'ngStorage', 'remBackend']);
 
 remontas24Site.config(function ($routeProvider, $locationProvider, USER_ROLES, $httpProvider) {
     $routeProvider
-//        .when('/adminka', {
-//            controller: 'adminkaMainPageController',
-//            templateUrl: '/adminka/restricted/views/adminka_page.html'
-//        })
+    //        .when('/adminka', {
+    //            controller: 'adminkaMainPageController',
+    //            templateUrl: '/adminka/restricted/views/adminka_page.html'
+    //        })
         .otherwise({
-            redirectTo: '/'
-        });
+        redirectTo: '/'
+    });
 
     //$httpProvider.interceptors.push('AuthInterceptor');
 

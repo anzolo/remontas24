@@ -21,6 +21,7 @@
     <script src="/remontas/public/bower_components/angular/angular.min.js"></script>
     <script src="/remontas/public/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
 
 </head>
 
@@ -79,142 +80,8 @@
                     <button disabled="disabled">Подобрать</button>
                 </div>
 
-                <h2 class="master-counter"><span>87</span> мастеров на ваш выбор</h2>
-                <div class="selection clearfix">
-                    <masters-search-box-element></masters-search-box-element>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite active"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-no-photo.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-no-photo.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                    <a href="#" class="item">
-                        <div class="favorite"></div>
-                        <div class="img">
-                            <img src="/remontas/public/img/img-user-1.png" width="187" height="187">
-                            <div>6 работ</div>
-                        </div>
-                        <div class="name">Дмитрий</div>
-                    </a>
-                </div>
-                <div class="pagination clearfix">
-                    <a href="#" class="left">назад</a>
-                    <ul class="clearfix">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li class="active">3</li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                    </ul>
-                    <a href="#" class="right">вперёд</a>
-                </div>
+                <masters-search-box masters="searchResult.masters" masters-count="searchResult.masters_count" max-page="searchResult.max_page" current-page="searchResult.current_page"></masters-search-box>
+
             </div>
 
             <div class="container">
@@ -426,19 +293,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
 
-    <!-- Angular Modules -->
+    <!-- Модули -->
     <script src="/remontas/public/angular/remontas24Site.js"></script>
 
-    <!-- Angular Controllers -->
-
+    <!-- Контроллеры -->
     <script src="/remontas/public/angular/controllers/mainController.js"></script>
 
-    <!--    Директивы-->
-
+    <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>
 
-    <!--  Angular services  -->
-    <!--    <script src="/adminka/public/app/services/AuthServices.js"></script>-->
+    <!--  Сервисы  -->
+    <script src="/remontas/public/angular/services.js"></script>
 
 </body>
 

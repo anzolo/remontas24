@@ -1,10 +1,10 @@
-remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService', 'USER_ROLES', 'AUTH_EVENTS', 'Session', '$route', '$templateCache', function ($scope, $rootScope, AuthService, USER_ROLES, AUTH_EVENTS, Session, $route, $templateCache) {
+remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService', 'USER_ROLES', 'AUTH_EVENTS', 'Session', '$state', function ($scope, $rootScope, AuthService, USER_ROLES, AUTH_EVENTS, Session, $state) {
     //$scope.isAutorized = false;
 
     $scope.currentUser = Session.username();
     $scope.userRoles = USER_ROLES;
     //    console.log("AuthService", AuthService);
-    $scope.isAuthorizedAdmin = AuthService.isAuthorized();
+    //$scope.isAuthorizedAdmin = AuthService.isAuthorized();
 
 
     $scope.credentials = {
@@ -18,10 +18,10 @@ remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService
         AuthService.login(credentials).then(function () {
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 //$scope.currentUser = $scope.credentials.username;
-                $scope.isAuthorizedAdmin = AuthService.isAuthorized();
-                var currentPageTemplate = $route.current.templateUrl;
-                $templateCache.remove(currentPageTemplate);
-                $route.reload();
+                //$scope.isAuthorizedAdmin = AuthService.isAuthorized();
+                //                var currentPageTemplate = $route.current.templateUrl;
+                //                $templateCache.remove(currentPageTemplate);
+                //                $route.reload();
 
                 $scope.currentUser = Session.username();
 
@@ -33,11 +33,15 @@ remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService
 
     $scope.logout = function () {
         AuthService.logout();
-        $scope.isAuthorizedAdmin = AuthService.isAuthorized();
+        $state.go('login');
     };
 
     $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
-        Session.destroy();
-        $scope.isAuthorizedAdmin = AuthService.isAuthorized();
+        AuthService.logout();
+        $state.go('login');
+    });
+
+    $scope.$on(AUTH_EVENTS.loginSuccess, function () {
+        $state.go('adminka.dashboard');
     });
             }]);
