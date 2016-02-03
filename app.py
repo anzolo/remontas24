@@ -13,6 +13,7 @@ session_priv_key = b'-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA9C/3dZkVFi
 session_pub_key = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9C/3dZkVFiGIUg4mvqt3\npZSpGzVv2xtSwu7O17p5tx0tOxga+inyb/1FU1GRT9cAQupIvssEsK9m+5MchnU3\n5SyTotSado/9dgJNTeZeCQ0pTuK8l4fsPfLZH2kcrmDcQx4jzDKJc0dhSxMGXrys\ng9t9VRowEF+73+DKQJbu2KqIOG5m69HDdQWTucTUCXrqpy1sn8MBYW4PjLgExpEQ\ndwZCNjLwxYVTL5dt/rZkSs6l8ENMjaHAZF5FOXGQJeuC2InlqJbPVLPKnuKkFrXJ\n+uzeNuhbdkNMLKqtCleFLYYV8ZezQz6Dt3y/eT9qogiDcdeIN7sVKD82zsAkv4eK\nDQIDAQAB\n-----END PUBLIC KEY-----'
 
 img_path = "/remontas/public/img/"
+session_time_out_minutes = 5
 
 #  хранилище фото
 @route('/storage/<filename:path>')
@@ -92,12 +93,12 @@ def create_session(result):
     priv_key = RSA.importKey(session_priv_key)
 
     payload = { 'user_id': result["user_id"], 'role': result["role"] }
-    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(seconds=60))
+    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=session_time_out_minutes))
     return result
 
 def check_rights(role,rq):
     result = False
-    print(rq.get_header("Authorization"))
+    #print(rq.get_header("Authorization"))
     if rq.get_header("Authorization")!= None:
         bearer = rq.get_header("Authorization").split()
 
@@ -117,7 +118,7 @@ def check_rights(role,rq):
     return result
 
 @route('/api/adminka/masters')
-def mastersService():
+def getMastersList():
     if check_rights("admin",request):
 
         masters_list = []
@@ -132,6 +133,24 @@ def mastersService():
             masters_list.append(new_master)
 
         result["masters"]=masters_list
+
+        return result
+    else:
+        return abort(401,"Sorry, access denied.")
+
+@route('/api/adminka/masters', method='POST')
+def createNewMaster():
+    if check_rights("admin",request):
+
+        result = {}
+
+        #print(request.json["name"])
+        #print(request.json["works"])
+        #print(request.json["avatarPict"])
+
+        upload     = request.files.get('file')
+        print(upload.filename)
+        #print(len(request.files))
 
         return result
     else:

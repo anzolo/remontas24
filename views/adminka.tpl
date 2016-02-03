@@ -45,7 +45,8 @@
     <!--    <script src="/adminka/public/bower_components/angular-route/angular-route.min.js"></script>-->
     <script src="/adminka/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/adminka/public/bower_components/ngstorage/ngStorage.min.js"></script>
-    <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/adminka/public/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/adminka/public/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
 </head>
 
@@ -66,6 +67,7 @@
     <script src="/adminka/public/app/controllers/mainController.js"></script>
     <script src="/adminka/public/app/controllers/adminkaMainPageController.js"></script>
     <script src="/adminka/public/app/controllers/mastersController.js"></script>
+    <script src="/adminka/public/app/controllers/masterController.js"></script>
 
     <!--  Angular services  -->
     <script src="/adminka/public/app/services/AuthServices.js"></script>

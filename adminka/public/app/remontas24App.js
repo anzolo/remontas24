@@ -1,25 +1,6 @@
-var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend']);
+var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend', 'ngFileUpload']);
 
 remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-    //    $routeProvider
-    //        .when('/adminka', {
-    //            controller: 'adminkaMainPageController',
-    //            templateUrl: '/adminka/restricted/views/adminka_page.html'
-    //        })
-    ////        .when('/adminka/masters', {
-    ////            controller: 'adminkaMainPageController',
-    ////            templateUrl: '/adminka/restricted/views/adminka_page.html'
-    ////        })
-    //        .otherwise({
-    //            redirectTo: '/'
-    //        });
-
-    //    $httpProvider.interceptors.push([
-    //    '$injector',
-    //    function ($injector) {
-    //            return $injector.get('AuthInterceptor');
-    //    }
-    //  ]);
 
     $urlRouterProvider.otherwise("/adminka/login");
 
@@ -47,9 +28,16 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
                 //                $scope.items = ["A", "List", "Of", "Items"];
             }
         })
+        .state('adminka.newMaster', {
+            url: "/adminka/masters/new",
+            templateUrl: "/adminka/restricted/views/master.html",
+            controller: function ($scope) {
+                //                $scope.items = ["A", "List", "Of", "Items"];
+            }
+        })
         .state('adminka.masters.edit', {
-            url: "/adminka/masters",
-            templateUrl: "/adminka/restricted/views/masters.html",
+            url: "/adminka/masters/edit",
+            templateUrl: "/adminka/restricted/views/master.html",
             controller: function ($scope) {
                 //                $scope.items = ["A", "List", "Of", "Items"];
             }
