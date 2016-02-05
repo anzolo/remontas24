@@ -66,4 +66,8 @@ remontas24App.constant('USER_ROLES', {
     all: '*',
     admin: 'admin',
     master: 'master'
+});
+
+remontas24App.constant('CONFIG', {
+    app_url: '0.0.0.0:8080'
 })

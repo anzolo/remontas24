@@ -1,4 +1,4 @@
-remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', function ($scope, masters, $state, Upload) {
+remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', 'CONFIG', function ($scope, masters, $state, Upload, CONFIG) {
     $scope.name = "";
     $scope.works = 0;
     $scope.avatarPict = "";
@@ -9,17 +9,11 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     }
 
     $scope.newMaster = function () {
-        var master = {};
-        master.name = $scope.name;
-        master.works = $scope.works;
-        //master.avatarPict = Upload.jsonBlob($scope.avatarPict);
-
-        //masters.save(master);
 
         $scope.avatarPict.upload = Upload.upload({
-            url: 'http://0.0.0.0:8080/api/adminka/masters',
+            url: 'http://' + CONFIG.app_url + '/api/adminka/masters',
             data: {
-                file: $scope.avatarPict,
+                avatarPict: $scope.avatarPict,
                 name: $scope.name,
                 works: $scope.works
             },

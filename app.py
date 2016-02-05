@@ -4,6 +4,7 @@ from bson.json_util import dumps
 
 from bottle import route, template, request, abort
 from pymongo import MongoClient
+import os, uuid
 
 
 client = MongoClient()
@@ -13,6 +14,7 @@ session_priv_key = b'-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA9C/3dZkVFi
 session_pub_key = b'-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9C/3dZkVFiGIUg4mvqt3\npZSpGzVv2xtSwu7O17p5tx0tOxga+inyb/1FU1GRT9cAQupIvssEsK9m+5MchnU3\n5SyTotSado/9dgJNTeZeCQ0pTuK8l4fsPfLZH2kcrmDcQx4jzDKJc0dhSxMGXrys\ng9t9VRowEF+73+DKQJbu2KqIOG5m69HDdQWTucTUCXrqpy1sn8MBYW4PjLgExpEQ\ndwZCNjLwxYVTL5dt/rZkSs6l8ENMjaHAZF5FOXGQJeuC2InlqJbPVLPKnuKkFrXJ\n+uzeNuhbdkNMLKqtCleFLYYV8ZezQz6Dt3y/eT9qogiDcdeIN7sVKD82zsAkv4eK\nDQIDAQAB\n-----END PUBLIC KEY-----'
 
 img_path = "/remontas/public/img/"
+storage_path = "storage"
 session_time_out_minutes = 5
 
 #  хранилище фото
@@ -144,13 +146,19 @@ def createNewMaster():
 
         result = {}
 
-        #print(request.json["name"])
-        #print(request.json["works"])
-        #print(request.json["avatarPict"])
+        print(request.forms.get('name'))
+        print(request.forms.get('works'))
 
-        upload     = request.files.get('file')
-        print(upload.filename)
-        #print(len(request.files))
+        upload = request.files.get('avatarPict')
+        filename, ext = os.path.splitext(upload.raw_filename)
+
+        new_filename =  str(uuid.uuid4())
+
+        upload.filename = new_filename + ext
+
+        #print(upload.filename)
+
+        upload.save(storage_path)
 
         return result
     else:
