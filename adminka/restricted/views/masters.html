@@ -19,28 +19,13 @@
             </thead>
             <tbody>
                 <tr ng-repeat="master in result.masters">
-                    <td>{{$index + 1}}</td>
-                    <td>{{master.id}}</td>
+                    <td> {{$index + 1}}</td>
+                    <td><a href="#" ui-sref="adminka.editMaster({ id: master.id })">{{master.id}}</a></td>
                     <td>{{master.name}}</td>
                     <td><img ng-src="{{master.avatar}}"></td>
                     <td>Ред/Уд</td>
                 </tr>
-                <!--
-<tr>
-    <td>2</td>
-    <td>Jacob</td>
-    <td>Thornton</td>
-    <td>@fat</td>
-    <td>@mdo</td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>Larry</td>
-    <td>the Bird</td>
-    <td>@twitter</td>
-    <td>@mdo</td>
-</tr>
--->
+
             </tbody>
         </table>
     </div>

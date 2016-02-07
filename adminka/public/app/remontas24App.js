@@ -35,11 +35,11 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
                 //                $scope.items = ["A", "List", "Of", "Items"];
             }
         })
-        .state('adminka.masters.edit', {
-            url: "/adminka/masters/edit",
+        .state('adminka.editMaster', {
+            url: "/adminka/masters/edit/:id",
             templateUrl: "/adminka/restricted/views/master.html",
             controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
+                $scope.mode = "edit";
             }
         })
         .state('login', {

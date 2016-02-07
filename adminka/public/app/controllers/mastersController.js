@@ -4,4 +4,11 @@ remontas24App.controller('mastersController', ['$scope', 'masters', '$state', fu
     $scope.newMaster = function () {
         $state.go('adminka.newMaster');
     }
+
+    $scope.editMaster = function (masterId) {
+        $state.go('adminka.editMaster');
+    }
+
+
+
 }]);
