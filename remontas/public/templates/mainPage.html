@@ -1,0 +1,40 @@
+<div class="wrapper" ng-controller="mainController">
+    <div class="content">
+        <div class="header">
+            <div class="container clearfix">
+                <a href="/" class="logo"></a>
+                <ul class="top-menu">
+                    <li class="active">Главная</li>
+                    <li class="dropdown">
+                        <a href="#">Мастерам</a>
+                        <ul>
+                            <li><a href="#" class="open-modal" data-modal-name="auth-tabs">Вход/Регистрация</a></li>
+                            <li><a href="#">Как это работает</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Вопрос/Ответ</a></li>
+                </ul>
+                <div class="comparison-list"><span>6</span>Список сравнения</div>
+            </div>
+        </div>
+
+        <div ui-view></div>
+
+    </div>
+
+
+    <div class="footer">
+        <div class="container clearfix">
+            <a href="http://alivedream.ru" class="logo-dp"></a>
+            <ul class="bottom-menu">
+                <li><a href="#"><span class="icon-info"></span>О проекте</a></li>
+                <li><a href="#"><span class="icon-doc"></span>Договор оферты</a></li>
+            </ul>
+            <div class="social">
+                <div class="descr">Мы в соц. медиа</div>
+                <a href="#" class="vk"></a>
+                <a href="#" class="fb"></a>
+            </div>
+        </div>
+    </div>
+</div>

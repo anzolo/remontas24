@@ -7,6 +7,7 @@
     <title>Ремонтас 24 - Мастер найдется!</title>
     <link type="text/css" rel="stylesheet" href="/remontas/public/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/remontas/public/css/custom.css">
+    <link rel="stylesheet" href="/remontas/public/js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/remontas/public/favicon.ico" />
     <meta name="viewport" content="width=1250">
@@ -19,156 +20,14 @@
 	<![endif]-->
 
     <script src="/remontas/public/bower_components/angular/angular.min.js"></script>
-    <script src="/remontas/public/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
 </head>
 
 <body ng-app="remontas24Site">
-    <div class="wrapper" ng-controller="mainController">
-        <div class="content">
-            <div class="header">
-                <div class="container clearfix">
-                    <a href="/" class="logo"></a>
-                    <ul class="top-menu">
-                        <li class="active">Главная</li>
-                        <li class="dropdown">
-                            <a href="#">Мастерам</a>
-                            <ul>
-                                <li><a href="#" class="open-modal" data-modal-name="auth-tabs">Вход/Регистрация</a></li>
-                                <li><a href="#">Как это работает</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Вопрос/Ответ</a></li>
-                    </ul>
-                    <div class="comparison-list"><span>6</span>Список сравнения</div>
-                </div>
-            </div>
-
-
-            <div class="container">
-                <h2 class="text-center">Подбор мастера</h2>
-                <div class="filter clearfix">
-                    <div class="service-1">
-                        <input type="text" readonly="readonly" required="required" placeholder="Выберите услугу">
-                        <div class="sub">
-                            <div>Натяжные потолки</div>
-                            <div>Мебель на заказ</div>
-                            <div>Ремонтно-отделочные работы</div>
-                            <div>Дизайн интерьеров</div>
-                        </div>
-                    </div>
-                    <div class="service-2">
-                        <input type="text" readonly="readonly" required="required" placeholder="Выберите услугу">
-                        <div class="sub">
-                            <div>Ремонт квартир</div>
-                            <div>Ремонт офисов</div>
-                            <div>Ремонт ванной</div>
-                        </div>
-                    </div>
-                    <div class="service-3">
-                        <input type="text" readonly="readonly" required="required" placeholder="Услуга мастер на час">
-                        <div class="sub">
-                            <div>Услуга мастер на час</div>
-                            <div class="counter">Отмечено услуг <strong>0</strong></div>
-                            <div><span>Работа по договору</span></div>
-                            <div><span>Услуга мастер на час</span></div>
-                            <abbr class="btn">Выбрать</abbr>
-                        </div>
-                    </div>
-                    <button disabled="disabled">Подобрать</button>
-                </div>
-
-                <masters-search-box masters="searchResult.masters" masters-count="searchResult.masters_count" max-page="searchResult.max_page" current-page="searchResult.current_page"></masters-search-box>
-
-            </div>
-
-            <div class="container">
-                <h2 class="text-center">Преимущества</h2>
-                <div class="privilege clearfix">
-                    <a href="#" class="block item">
-                        <h2>&laquo;Живая база&raquo;<br/>мастеров</h2>
-                        <div class="img"><img src="/remontas/public/img/icon-big-phone.png" width="68" height="76"></div>
-                        <p>Мы лично позвонили
-                            <br/>каждому мастеру</p>
-                    </a>
-                    <a href="#" class="block item">
-                        <h2>Экономия времени <br/>и средств</h2>
-                        <div class="img"><img src="/remontas/public/img/icon-big-clock.png" width="68" height="84"></div>
-                        <p>Выберите понравившихся
-                            <br/>мастеров и сравните их цены</p>
-                    </a>
-                    <a href="#" class="block item">
-                        <h2>Ремонт &laquo;под ключ&raquo;<br/>на одном сайте</h2>
-                        <div class="img"><img src="/remontas/public/img/icon-big-brush.png" width="76" height="80"></div>
-                        <p>Создайте свой уют
-                            <br/>на одном сайте</p>
-                    </a>
-                </div>
-            </div>
-
-            <div class="container">
-                <h2 class="text-center">Как пользоваться</h2>
-                <div class="block how-to-use clearfix">
-                    <div class="item">
-                        <h2>Подберите</h2>
-                        <img src="/remontas/public/img/round-1.png" width="88" height="88">
-                        <p>мастера
-                            <br/>из списка</p>
-                    </div>
-                    <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-                    <div class="item">
-                        <h2>Добавьте</h2>
-                        <img src="/remontas/public/img/round-2.png" width="88" height="88">
-                        <p>мастеров
-                            <br/>к списку сравнения</p>
-                    </div>
-                    <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-                    <div class="item">
-                        <h2>Сравните</h2>
-                        <img src="/remontas/public/img/round-3.png" width="88" height="88">
-                        <p>услуги и цены
-                            <br/>выбранных мастеров</p>
-                    </div>
-                    <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-                    <div class="item">
-                        <h2>Позвоните</h2>
-                        <img src="/remontas/public/img/round-4.png" width="88" height="88">
-                        <p>выбранному
-                            <br/>мастеру</p>
-                    </div>
-                    <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-                    <div class="item">
-                        <h2>Не смогли</h2>
-                        <img src="/remontas/public/img/round-5.png" width="88" height="88">
-                        <p>подобрать мастера?
-                            <br/>Нет времени?
-                            <br/>Оставьте заявку</p>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-
-        <div class="footer">
-            <div class="container clearfix">
-                <a href="http://alivedream.ru" class="logo-dp"></a>
-                <ul class="bottom-menu">
-                    <li><a href="#"><span class="icon-info"></span>О проекте</a></li>
-                    <li><a href="#"><span class="icon-doc"></span>Договор оферты</a></li>
-                </ul>
-                <div class="social">
-                    <div class="descr">Мы в соц. медиа</div>
-                    <a href="#" class="vk"></a>
-                    <a href="#" class="fb"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div ui-view></div>
 
     <div id="order-btn" class="open-modal" data-modal-name="order"></div>
 
@@ -292,6 +151,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
+    <script type="text/javascript" src="/remontas/public/js/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
     <!-- Модули -->
     <script src="/remontas/public/angular/remontas24Site.js"></script>

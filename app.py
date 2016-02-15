@@ -267,10 +267,17 @@ def adm_createNewMaster():
 def rem_doSearchMasters():
     result = {'filter':{'first_job': None, 'second_job':None, 'extra_jobs':{}}, 'masters_count':80, 'current_page':3, 'max_page':6, 'masters':[]}
 
-    perfect_master = {'name':"Петр", 'foto':img_path + "img-user-1.png", 'jobs_count':"5 работ", 'guid':"id", 'link':"src"}
+    #perfect_master = {'name':"Петр", 'foto':img_path + "img-user-1.png", 'jobs_count':"5 работ", 'guid':"id", 'link':"src"}
 
-    for master in range(15):
-        result["masters"].append(perfect_master)
+    #for master in range(15):
+    #    result["masters"].append(perfect_master)
+    for master in db.masters.find():
+        newMaster = {}
+        newMaster['name'] = master["name"]
+        newMaster['jobs_count'] = str(master["jobs_count"]) + " работ"
+        newMaster['avatar'] = request.urlparts.scheme +"://"+request.urlparts.netloc + img_path + master["avatar"]
+        newMaster["id"]=str(master["_id"])
+        result["masters"].append(newMaster)
 
     return result
 
