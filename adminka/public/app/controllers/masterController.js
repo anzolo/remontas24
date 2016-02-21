@@ -1,9 +1,17 @@
 remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', 'CONFIG', '$stateParams', function ($scope, masters, $state, Upload, CONFIG, $stateParams) {
-    $scope.master = {};
+    $scope.master = {
+        name: "",
+        sername: "",
+        patronymic: "",
+        email: "",
+        jobs_count: 0,
+        avatar: "",
+        kind_profile: "phys"
+    };
 
-    $scope.master.name = "";
-    $scope.master.jobs_count = 0;
-    $scope.master.avatar = "";
+    //    $scope.model = {
+    //        avatarPic: ""
+    //    };
 
     var masterID = $stateParams.id;
 
@@ -22,13 +30,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             id: masterID
         }, function () {
             if (editMaster.status == "OK") {
-                $scope.master.name = editMaster.name;
-                $scope.master.jobs_count = editMaster.jobs_count;
+                $scope.master = editMaster;
 
                 Upload.urlToBlob(editMaster.avatar).then(function (blob) {
                     $scope.master.avatar = blob;
-                    //                    $scope.master.avatar.name = "avatarPict"
-                    //                    console.log("$scope.master.avatar = ", $scope.master.avatar);
                 });
             } else if (editMaster.status == "Error") {
                 console.error("Error:", editMaster.note);
@@ -50,21 +55,13 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         if ($scope.mode == "new") {
             Upload.upload({
                 url: 'http://' + CONFIG.app_url + '/api/adminka/masters',
-                data: {
-                    avatar: $scope.master.avatar,
-                    name: $scope.master.name,
-                    jobs_count: $scope.master.jobs_count
-                },
+                data: $scope.master,
             });
             $state.go('adminka.masters');
         } else if ($scope.mode == "edit") {
             Upload.upload({
                 url: 'http://' + CONFIG.app_url + '/api/adminka/masters/' + masterID,
-                data: {
-                    avatar: $scope.master.avatar,
-                    name: $scope.master.name,
-                    jobs_count: $scope.master.jobs_count
-                },
+                data: $scope.master,
             });
             $state.go('adminka.masters');
         };

@@ -1,8 +1,37 @@
 <div id="page-wrapper" ng-controller="masterController">
 
     <div class="form-group">
+        <label>Тип профиля</label>
+
+        <br>
+
+        <div class="radio-inline">
+            <label>
+                <input type="radio" ng-model="master.kind_profile" name="profileKind" id="physRadio" value="phys" checked> Частник
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label>
+                <input type="radio" ng-model="master.kind_profile" name="profileKind" id="orgRadio" value="org"> Организация
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group" ng-if="master.kind_profile=='phys'">
+        <label for="inputSername">Фамилия</label>
+        <input type="text" ng-model="master.sername" class="form-control" id="inputSername">
+    </div>
+    <div class="form-group">
         <label for="inputName">Имя или название фирмы</label>
         <input type="text" ng-model="master.name" class="form-control" id="inputName" placeholder="Имя или название">
+    </div>
+    <div class="form-group" ng-if="master.kind_profile=='phys'">
+        <label for="inputPatronymic">Отчество</label>
+        <input type="text" ng-model="master.patronymic" class="form-control" id="inputPatronymic">
+    </div>
+    <div class="form-group">
+        <label for="inputEmail">Email</label>
+        <input type="text" ng-model="master.email" class="form-control" id="inputEmail">
     </div>
     <div class="form-group">
         <label for="inputWorks">Количество работ</label>
@@ -10,10 +39,10 @@
     </div>
     <div class="form-group">
         <label for="inputFile">Аватарка</label>
-
-        <input type="file" id="inputFile" ngf-select ng-model="master.avatar" name="avatarPict" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-
+        <br>
         <img ngf-src="master.avatar">
+
+        <input type="file" id="inputFile" ngf-select ng-model="master.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
 
     </div>
     <button type="submit" class="btn btn-default" ng-click="saveMaster()">Сохранить</button>

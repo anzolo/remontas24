@@ -150,8 +150,8 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
     <script type="text/javascript" src="/remontas/public/js/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
 
     <!-- Модули -->
     <script src="/remontas/public/angular/remontas24Site.js"></script>

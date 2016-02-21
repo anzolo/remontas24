@@ -42,11 +42,10 @@
     <![endif]-->
 
     <script src="/adminka/public/bower_components/angular/angular.min.js"></script>
-    <!--    <script src="/adminka/public/bower_components/angular-route/angular-route.min.js"></script>-->
     <script src="/adminka/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/adminka/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/adminka/public/bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="/adminka/public/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="/adminka/public/bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 
 </head>
 
