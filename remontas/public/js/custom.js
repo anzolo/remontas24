@@ -30,15 +30,15 @@ $(function() {
 	/**
 	 * Отображение модального окна
 	 */
-	$('.open-modal').on('click', function() {
-		$('#modal > div').removeClass('active');
-		var modal_name = $(this).data('modal-name');
-		// Отключить скроллинг страницы
-		//$('html, body').css("overflow", "hidden");
-		modal_place.show();
-		modal_place.find('#' + modal_name).addClass('active');
-		return false;
-	});
+//	$('.open-modal').on('click', function() {
+//		$('#modal > div').removeClass('active');
+//		var modal_name = $(this).data('modal-name');
+//		// Отключить скроллинг страницы
+//		//$('html, body').css("overflow", "hidden");
+//		modal_place.show();
+//		modal_place.find('#' + modal_name).addClass('active');
+//		return false;
+//	});
 
 	/**
 	 * Закрытие модального окна
@@ -96,20 +96,20 @@ $(function() {
 
 
 	/**
-	 * Верхнее меню: открытие подменю
-	 */
-	$('.header .top-menu > li.dropdown').on('mouseenter', function(){
-		$(this).find('ul').addClass('active');
-	});
-
-
-
-	/**
-	 * Верхнее меню: закрытие подменю
-	 */
-	$('.header .top-menu > li.dropdown').on('mouseleave', function(){
-		$(this).find('ul').removeClass('active');
-	});
+//	 * Верхнее меню: открытие подменю
+//	 */
+//	$('.header .top-menu > li.dropdown').on('mouseenter', function(){
+//		$(this).find('ul').addClass('active');
+//	});
+//
+//
+//
+//	/**
+//	 * Верхнее меню: закрытие подменю
+//	 */
+//	$('.header .top-menu > li.dropdown').on('mouseleave', function(){
+//		$(this).find('ul').removeClass('active');
+//	});
 
 
 
@@ -518,15 +518,15 @@ $(function() {
 	});
 	$(".page .comparison .masters .inner").css("width", common_width);
 	// Применение скролла
-	$(".page .comparison .masters").niceScroll({
-		cursorcolor: "#f2f2f2",
-		cursorwidth: "27px",
-		cursorborder: "2px solid #fff",
-		cursorborderradius: "15px",
-		cursoropacitymin: 1
-		//background: "transparent url('../img/scroll-horiz-1.png') no-repeat"
-		//touchbehavior: 1      // Скрол мышкой или пальцем
-	});
+//	$(".page .comparison .masters").niceScroll({
+//		cursorcolor: "#f2f2f2",
+//		cursorwidth: "27px",
+//		cursorborder: "2px solid #fff",
+//		cursorborderradius: "15px",
+//		cursoropacitymin: 1
+//		//background: "transparent url('../img/scroll-horiz-1.png') no-repeat"
+//		//touchbehavior: 1      // Скрол мышкой или пальцем
+//	});
 
 
 });

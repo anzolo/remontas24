@@ -1,4 +1,4 @@
-var remontas24Site = angular.module('remontas24Site', ['ui.router', 'ngStorage', 'remBackend']);
+var remontas24Site = angular.module('remontas24Site', ['ui.router', 'ngStorage', 'remBackend', 'angularModalService']);
 
 remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationProvider, USER_ROLES, $httpProvider) {
     //$urlRouterProvider.otherwise("/");
@@ -16,10 +16,7 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
         })
         .state('remontas.searchPage', {
             url: "/",
-            templateUrl: "/remontas/public/templates/searchMasters.html",
-            controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
-            }
+            templateUrl: "/remontas/public/templates/searchMasters.html"
         })
         .state('remontas.profile', {
             url: "master/:id",

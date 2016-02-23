@@ -306,7 +306,7 @@ def rem_doSearchMasters():
         newMaster = {}
         newMaster['name'] = master["name"]
         newMaster['jobs_count'] = str(master["jobs_count"]) + " работ"
-        newMaster['avatar'] = request.urlparts.scheme +"://"+request.urlparts.netloc + img_path + master["avatar"]
+        newMaster['avatar'] = request.urlparts.scheme +"://"+request.urlparts.netloc + img_path + master.get("avatar",img_no_avatar)
         newMaster["id"]=str(master["_id"])
         result["masters"].append(newMaster)
 

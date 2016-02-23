@@ -1,0 +1,59 @@
+<div id="modal" ng-controller="authRegFormController">
+    <!-- Вход/Регистрация -->
+    <div id="auth-tabs" class="active">
+        <div class="close-modal" ng-click="close()"></div>
+
+        <div class="tabs-header clearfix">
+            <div class="active" data-tab="tab-1">Вход</div>
+            <div data-tab="tab-2">Регистрация</div>
+        </div>
+
+        <div class="tabs-content clearfix">
+            <div class="active clearfix" id="tab-1">
+                <input type="text" placeholder="Email" required="required" />
+                <input type="password" placeholder="Пароль" required="required" />
+                <a href="#" class="open-modal" data-modal-name="forget">Забыли пароль?</a>
+                <button disabled="disabled">Вход</button>
+            </div>
+
+            <div class="clearfix" id="tab-2">
+                <div style="text-align: center">Кто вы?</div>
+
+                <div class="sub-tabs-header clearfix">
+                    <div class="sub-tab-1 active" data-sub-tab="sub-tab-1">Частная бригада</div>
+                    <div class="sub-tab-2" data-sub-tab="sub-tab-2">Компания</div>
+                </div>
+
+                <div id="sub-tab-1" class="active">
+                    <input type="text" placeholder="Фамилия" required="required" />
+                    <input type="text" placeholder="Имя" required="required" />
+                    <input type="text" placeholder="Отчество" />
+                    <input type="text" placeholder="Ваш email" required="required" />
+                    <input type="password" placeholder="Пароль" required="required" />
+                    <a href="#" class="open-hint" data-hint-name="hint-what-gives">Что даёт?</a>
+                    <button disabled="disabled">Регистрация</button>
+                </div>
+
+                <div id="sub-tab-2">
+                    <input type="text" placeholder="Название компании" required="required" />
+                    <input type="text" placeholder="Ваш email" required="required" />
+                    <input type="password" placeholder="Пароль" required="required" />
+                    <a href="#" class="open-hint" data-hint-name="hint-what-gives">Что даёт?</a>
+                    <button disabled="disabled">Регистрация</button>
+                </div>
+
+                <!-- Что даёт регистрация? -->
+                <div id="hint-what-gives" class="hint-window">
+                    <div class="corner"></div>
+                    <div class="body">
+                        <p>Какой-то HTML-инфотекст</p>
+                    </div>
+                </div>
+                <!-- /Что даёт регистрация? -->
+
+
+            </div>
+        </div>
+    </div>
+    <!-- /Вход/Регистрация -->
+</div>

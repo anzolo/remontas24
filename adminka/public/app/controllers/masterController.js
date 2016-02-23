@@ -28,15 +28,21 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     if ($scope.mode == "edit") {
         var editMaster = masters.get({
             id: masterID
-        }, function () {
-            if (editMaster.status == "OK") {
-                $scope.master = editMaster;
+        }, function (data) {
+            if (data.status == "OK") {
+                //$scope.master = data;
+                $scope.master = JSON.parse(JSON.stringify(data));
 
-                Upload.urlToBlob(editMaster.avatar).then(function (blob) {
+                Upload.urlToBlob(data.avatar).then(function (blob) {
                     $scope.master.avatar = blob;
+                    $scope.master.avatar.lastModifiedDate = new Date();
+                    $scope.master.avatar.name = data.avatar;
                 });
-            } else if (editMaster.status == "Error") {
-                console.error("Error:", editMaster.note);
+
+                //delete $scope.master.$promise;
+                //delete $scope.master.$resolved;
+            } else if (data.status == "Error") {
+                console.error("Error:", data.note);
                 $state.go('adminka.masters');
             } else {
                 $state.go('adminka.masters');
@@ -53,12 +59,14 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     $scope.saveMaster = function () {
 
         if ($scope.mode == "new") {
+            console.log("new master=", $scope.master);
             Upload.upload({
                 url: 'http://' + CONFIG.app_url + '/api/adminka/masters',
                 data: $scope.master,
             });
             $state.go('adminka.masters');
         } else if ($scope.mode == "edit") {
+            console.log("edit master=", $scope.master);
             Upload.upload({
                 url: 'http://' + CONFIG.app_url + '/api/adminka/masters/' + masterID,
                 data: $scope.master,
