@@ -1,22 +1,22 @@
-<div id="modal" ng-controller="authRegFormController">
+<div id="modal">
     <!-- Вход/Регистрация -->
     <div id="auth-tabs" class="active">
         <div class="close-modal" ng-click="close()"></div>
 
         <div class="tabs-header clearfix">
-            <div class="active" data-tab="tab-1">Вход</div>
-            <div data-tab="tab-2">Регистрация</div>
+            <div ng-class="{active: activeTab == 'auth'}" data-tab="tab-1" ng-click="activeTab = 'auth'">Вход</div>
+            <div ng-class="{active: activeTab == 'reg'}" data-tab="tab-2" ng-click="activeTab = 'reg'">Регистрация</div>
         </div>
 
         <div class="tabs-content clearfix">
-            <div class="active clearfix" id="tab-1">
+            <div class="clearfix" id="tab-1" ng-class="{active: activeTab == 'auth'}">
                 <input type="text" placeholder="Email" required="required" />
                 <input type="password" placeholder="Пароль" required="required" />
                 <a href="#" class="open-modal" data-modal-name="forget">Забыли пароль?</a>
                 <button disabled="disabled">Вход</button>
             </div>
 
-            <div class="clearfix" id="tab-2">
+            <div class="clearfix" id="tab-2" ng-class="{active: activeTab == 'reg'}">
                 <div style="text-align: center">Кто вы?</div>
 
                 <div class="sub-tabs-header clearfix">

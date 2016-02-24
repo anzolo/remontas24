@@ -22,11 +22,11 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-    <script src="/remontas/public/bower_components/angular/angular.min.js"></script>
+    <script src="/remontas/public/bower_components/angular/angular.js"></script>
     <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/remontas/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
 
 </head>
 

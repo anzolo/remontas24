@@ -43,13 +43,13 @@ $(function() {
 	/**
 	 * Закрытие модального окна
 	 */
-	$('.close-modal').on('click', function() {
-		var modal_name = $(this).data('modal-name');
-		// Включить обратно скроллинг страницы
-		//$('html, body').css("overflow", "auto");
-		modal_place.find('#' + modal_name).removeClass('active');
-		modal_place.hide();
-	});
+//	$('.close-modal').on('click', function() {
+//		var modal_name = $(this).data('modal-name');
+//		// Включить обратно скроллинг страницы
+//		//$('html, body').css("overflow", "auto");
+//		modal_place.find('#' + modal_name).removeClass('active');
+//		modal_place.hide();
+//	});
 
 
 
@@ -74,13 +74,13 @@ $(function() {
 	/**
 	 * Переключение табов авторизации/регистрации
 	 */
-	$('#auth-tabs > .tabs-header').on('click', '> div', function(){
-		var tab = $(this).data('tab');
-		$('#auth-tabs > .tabs-header > div').removeClass('active');
-		$('#auth-tabs > .tabs-content > div').removeClass('active');
-		$(this).addClass('active');
-		$('#auth-tabs #' + tab).addClass('active');
-	});
+//	$('#auth-tabs > .tabs-header').on('click', '> div', function(){
+//		var tab = $(this).data('tab');
+//		$('#auth-tabs > .tabs-header > div').removeClass('active');
+//		$('#auth-tabs > .tabs-content > div').removeClass('active');
+//		$(this).addClass('active');
+//		$('#auth-tabs #' + tab).addClass('active');
+//	});
 	/**
 	 * Переключение табов авторизации/регистрации: "частная бригада" / "компания"
 	 */
