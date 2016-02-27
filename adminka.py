@@ -1,0 +1,267 @@
+# API админки
+from bottle import route, template, request, abort, static_file
+import jwt
+import Crypto.PublicKey.RSA as RSA
+import datetime
+from bson.objectid import ObjectId
+import uuid
+import os
+
+import conf
+
+
+# Админка. По маршруту возвращается шаблон
+@route('/adminka')
+@route('/adminka/login')
+@route('/adminka/masters')
+def adm_adminka():
+    return template('adminka')
+
+
+# Админка. возврат файлов с учетом прав доступа
+@route('/adminka/<access>/<filename:path>')
+def adm_static(access, filename):
+    if access == "public":
+        return static_file(filename, root='./adminka/public')
+    elif access == "restricted":
+
+        if check_rights("admin", request):
+            return static_file(filename, root='./adminka/restricted')
+        else:
+            return abort(401, "Sorry, access denied.")
+            # return bottle.static_file(filename, root='./adminka/restricted')
+
+
+# API админки. по логину-паролю возвращаем пользователя
+@route('/api/login/<role>', method='POST')
+def do_login(role):
+    result = {"status": "forbidden",
+              "user_id": None,
+              "role": None
+             }
+    if role == "admin":
+        result = check_login_admin(request.json["username"], request.json["password"], result)
+    else:
+        result = check_login_master(request.json["username"], request.json["password"], result)
+
+    if result["status"] == "success":
+        result = create_session(result)
+
+    del result["user_id"]
+
+    return result
+
+
+# API админки. получение списка всех мастеров
+@route('/api/adminka/masters')
+def adm_getMastersList():
+    if check_rights("admin", request):
+
+        masters_list = []
+        result = {}
+
+        for master in conf.db.masters.find():
+            new_master = {}
+            new_master["name"] = master["name"]
+            new_master["id"] = str(master["_id"])
+            new_master["avatar"] = "/storage/" + master.get("avatar", conf.img_no_avatar)
+            new_master["jobs_count"] = master["jobs_count"]
+            masters_list.append(new_master)
+
+        result["masters"] = masters_list
+
+        return result
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# API админки. получить одного мастера для отображения
+@route('/api/adminka/masters/<id>')
+def adm_getMaster(id):
+    if check_rights("admin", request):
+        masters = conf.db.masters
+
+        try:
+            master = masters.find_one({"_id": ObjectId(id)})
+            if master != None:
+                master["_id"] = str(master["_id"])
+                master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+                master["status"] = "OK"
+            else:
+                master["status"] = "Error"
+                master["note"] = "id not found"
+        except Exception as e:
+                master["status"] = "Error"
+                master["note"] = str(e)
+                print(e)
+
+        return master
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# API админки. Пересохранить мастера при редактировании
+@route('/api/adminka/masters/<id>', method='POST')
+def adm_saveAfterEdit(id):
+    if check_rights("admin", request):
+        result = {}
+        newMaster = {}
+
+        try:
+            oldMaster = conf.db.masters.find_one({"_id": ObjectId(id)})
+            if oldMaster != None:
+
+                upload = request.files.get('avatar')
+
+                if upload != None:
+                    filename, ext = os.path.splitext(upload.raw_filename)
+
+                    new_filename = str(uuid.uuid4())
+
+                    upload.filename = new_filename + ext
+
+                    newMaster['avatar'] = upload.filename
+                else:
+                    newMaster['avatar'] = conf.img_no_avatar
+
+                newMaster['name'] = request.forms.get('name')
+                newMaster['email'] = request.forms.get('email')
+                newMaster['jobs_count'] = request.forms.get('jobs_count')
+                newMaster['kind_profile'] = request.forms.get('kind_profile')
+                if request.forms.get('kind_profile') == "phys":
+                    newMaster['sername'] = request.forms.get('sername')
+                    newMaster['patronymic'] = request.forms.get('patronymic')
+
+                # print("newMaster = ",newMaster)
+
+                resultQuery = conf.db.masters.update_one({"_id": ObjectId(id)}, {"$set": newMaster})
+
+                # print("resultQuery.result.matched_count = ",resultQuery.result.matched_count)
+                # print("resultQuery.result.modified_count = ",resultQuery.result.modified_count)
+                # print("----------",oldAvatarFileName)
+
+                oldFilePath = conf.storage_path + "/" + oldMaster["avatar"]
+
+                if os.path.isfile(oldFilePath):
+                    if oldMaster["avatar"] != conf.img_no_avatar:
+                        os.remove(oldFilePath)
+                else:    # Show an error ##
+                    print("Error: %s file not found" % oldMaster["avatar"])
+
+                upload.save(conf.storage_path)
+
+                result["status"] = "OK"
+
+            else:
+                result["status"] = "Error"
+                result["note"] = "id not found"
+        except Exception as e:
+                result["status"] = "Error"
+                result["note"] = str(e)
+                print(e)
+
+        return result
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# API админки. создание нового мастера в админке
+@route('/api/adminka/masters', method='POST')
+def adm_createNewMaster():
+    if check_rights("admin", request):
+
+        result = {}
+        newMaster = {}
+
+        # print(request.forms.get('name'))
+        # print(request.forms.get('works'))
+
+        upload = request.files.get('avatar')
+
+        if upload != None:
+            filename, ext = os.path.splitext(upload.raw_filename)
+
+            new_filename = str(uuid.uuid4())
+
+            upload.filename = new_filename + ext
+
+            newMaster['avatar'] = upload.filename
+        else:
+            newMaster['avatar'] = conf.img_no_avatar
+
+        # print(upload.filename)
+
+        newMaster['name'] = request.forms.get('name')
+        newMaster['email'] = request.forms.get('email')
+        newMaster['jobs_count'] = request.forms.get('jobs_count')
+        newMaster['kind_profile'] = request.forms.get('kind_profile')
+        if request.forms.get('kind_profile') == "phys":
+            newMaster['sername'] = request.forms.get('sername')
+            newMaster['patronymic'] = request.forms.get('patronymic')
+
+        try:
+            conf.db.masters.insert_one(newMaster)
+
+            if upload != None:
+                upload.save(conf.storage_path)
+
+            result["status"] = "OK"
+        except Exception as e:
+            #print(e)
+            result["status"] = "Error"
+            result["note"] = str(e)
+
+        return result
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# проверка прав на запрос к api на основе информации зашифрованной в токене
+def check_rights(role, rq):
+    result = False
+    # print(rq.get_header("Authorization"))
+    if rq.get_header("Authorization") != None:
+        bearer = rq.get_header("Authorization").split()
+
+        try:
+            header, claims = jwt.verify_jwt(bearer[1], conf.session_pub_key, ['PS256'])
+            # print(header)
+            # print(claims)
+
+            if claims["role"] == role:
+                result = True
+            else:
+                print("Попытка запросить ресурс по токену с недостаточными правами.")
+
+        except Exception as e:
+            print(e)
+
+    return result
+
+
+# Проверка логина и пароля по БД
+def check_login_admin(username, password, result):
+
+    users = conf.db.users_adminka
+    user = users.find_one({"username": username, "password": password})
+    if user != None:
+        result["status"] = "success"
+        result["user_id"] = str(user["_id"])
+        result["username"] = username
+        result["role"] = "admin"
+    return result
+
+
+def check_login_master(username, password, result):
+    pass
+#    return result
+
+
+# Создание токена сессии. вызывается, если успешно пройдена авторизация
+def create_session(result):
+    priv_key = RSA.importKey(conf.session_priv_key)
+
+    payload = {'user_id': result["user_id"], 'role': result["role"]}
+    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes))
+
+    return result
