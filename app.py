@@ -11,5 +11,3 @@ if __name__ == '__main__':
 # Run bottle in application mode. Required in order to get the application working with uWSGI!
 else:
     app = application = default_app()
-
-    # acc1aca627  55
