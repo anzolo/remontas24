@@ -61,14 +61,14 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         if ($scope.mode == "new") {
             console.log("new master=", $scope.master);
             Upload.upload({
-                url: 'http://' + CONFIG.app_url + '/api/adminka/masters',
+                url: '/api/adminka/masters',
                 data: $scope.master,
             });
             $state.go('adminka.masters');
         } else if ($scope.mode == "edit") {
             console.log("edit master=", $scope.master);
             Upload.upload({
-                url: 'http://' + CONFIG.app_url + '/api/adminka/masters/' + masterID,
+                url: '/api/adminka/masters/' + masterID,
                 data: $scope.master,
             });
             $state.go('adminka.masters');

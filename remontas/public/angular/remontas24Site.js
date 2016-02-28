@@ -27,10 +27,8 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
         })
         .state('remontas.lk', {
             url: "lk",
-            templateUrl: "/adminka/restricted/views/masters.html",
-            controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
-            }
+            templateUrl: "/remontas/public/templates/lk.html",
+            controller: "lkController"
         })
         .state('remontas.compareList', {
             url: "compare",
@@ -54,7 +52,7 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
             }
         })
 
-    //$httpProvider.interceptors.push('AuthInterceptor');
+    $httpProvider.interceptors.push('AuthInterceptor');
 
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');

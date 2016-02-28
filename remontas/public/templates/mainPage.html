@@ -4,15 +4,17 @@
             <div class="container clearfix">
                 <a href="/" class="logo"></a>
                 <ul class="top-menu">
-                    <li class="active">Главная</li>
-                    <li class="dropdown" ng-mouseenter="setMasteramPodmenuVisible(true)" ng-mouseleave="setMasteramPodmenuVisible(false)">
-                        <a href="#">Мастерам</a>
-                        <ul ng-class="{active: showMasteramPodmenu}">
+                    <li ng-class="{active: currentPage=='remontas.searchPage'}">
+                        <a href="/">Главная</a>
+                    </li>
+                    <li ng-class="{active: currentPage=='remontas.lk'}" class="dropdown" ng-mouseenter="setMasteramPodmenuVisible(true)" ng-mouseleave="setMasteramPodmenuVisible(false)">
+                        <a href="#" ng-click="showAuthRegForm()">{{lkButtonName}}</a>
+                        <ul class="active" ng-if="showMasteramPodmenu&&!isAuthOK">
                             <li><a href="#" class="open-modal" ng-click="showAuthRegForm()">Вход/Регистрация</a></li>
                             <li><a href="#">Как это работает</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Вопрос/Ответ</a></li>
+                    <li><a href="#" ng-click="logout()">Вопрос/Ответ</a></li>
                 </ul>
                 <div class="comparison-list"><span>6</span>Список сравнения</div>
             </div>

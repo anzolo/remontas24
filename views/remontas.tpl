@@ -45,12 +45,14 @@
     <!-- Контроллеры -->
     <script src="/remontas/public/angular/controllers/mainController.js"></script>
     <script src="/remontas/public/angular/controllers/authRegFormController.js"></script>
+    <script src="/remontas/public/angular/controllers/lkController.js"></script>
 
     <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>
 
     <!--  Сервисы  -->
-    <script src="/remontas/public/angular/services.js"></script>
+    <script src="/remontas/public/angular/services/services.js"></script>
+    <script src="/remontas/public/angular/services/AuthServices.js"></script>
 
 </body>
 

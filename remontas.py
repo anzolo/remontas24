@@ -1,4 +1,5 @@
 from bottle import route, template, request, abort, static_file
+from bson.objectid import ObjectId
 
 import adminka
 import conf
@@ -16,7 +17,8 @@ def static(access, filename):
     if access == "public":
         return static_file(filename, root='./remontas/public')
     elif access == "restricted":
-        if adminka.check_rights("master", request):
+        result_check_rights = adminka.check_rights("master", request)
+        if result_check_rights["status"]:
             return static_file(filename, root='./remontas/restricted')
         else:
             return abort(401, "Sorry, access denied.")
@@ -40,3 +42,14 @@ def rem_doSearchMasters():
         result["masters"].append(newMaster)
 
     return result
+
+
+# API ремонтаса. получение данных для личного кабинета
+@route('/api/lk/initData')
+def rem_lkGetData():
+    result_check_rights = adminka.check_rights("master", request)
+    if result_check_rights["status"]:
+        user = conf.db.users_masters.find_one({"_id": ObjectId(result_check_rights["user_id"])})
+        print(user)
+    else:
+        return abort(401, "Sorry, access denied.")

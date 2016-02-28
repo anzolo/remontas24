@@ -24,8 +24,8 @@ def adm_static(access, filename):
     if access == "public":
         return static_file(filename, root='./adminka/public')
     elif access == "restricted":
-
-        if check_rights("admin", request):
+        result_check_rights = check_rights("admin", request)
+        if result_check_rights["status"]:
             return static_file(filename, root='./adminka/restricted')
         else:
             return abort(401, "Sorry, access denied.")
@@ -39,23 +39,27 @@ def do_login(role):
               "user_id": None,
               "role": None
              }
+
     if role == "admin":
         result = check_login_admin(request.json["username"], request.json["password"], result)
-    else:
+    elif role == "master":
         result = check_login_master(request.json["username"], request.json["password"], result)
+    else:
+        return abort(401, "Неверный логин или пароль.")
 
     if result["status"] == "success":
         result = create_session(result)
-
-    del result["user_id"]
-
-    return result
+        del result["user_id"]
+        return result
+    else:
+        return abort(401, "Неверный логин или пароль.")
 
 
 # API админки. получение списка всех мастеров
 @route('/api/adminka/masters')
 def adm_getMastersList():
-    if check_rights("admin", request):
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
 
         masters_list = []
         result = {}
@@ -78,7 +82,8 @@ def adm_getMastersList():
 # API админки. получить одного мастера для отображения
 @route('/api/adminka/masters/<id>')
 def adm_getMaster(id):
-    if check_rights("admin", request):
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
         masters = conf.db.masters
 
         try:
@@ -103,7 +108,8 @@ def adm_getMaster(id):
 # API админки. Пересохранить мастера при редактировании
 @route('/api/adminka/masters/<id>', method='POST')
 def adm_saveAfterEdit(id):
-    if check_rights("admin", request):
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
         result = {}
         newMaster = {}
 
@@ -168,7 +174,8 @@ def adm_saveAfterEdit(id):
 # API админки. создание нового мастера в админке
 @route('/api/adminka/masters', method='POST')
 def adm_createNewMaster():
-    if check_rights("admin", request):
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
 
         result = {}
         newMaster = {}
@@ -218,7 +225,7 @@ def adm_createNewMaster():
 
 # проверка прав на запрос к api на основе информации зашифрованной в токене
 def check_rights(role, rq):
-    result = False
+    result = {"status": False}
     # print(rq.get_header("Authorization"))
     if rq.get_header("Authorization") != None:
         bearer = rq.get_header("Authorization").split()
@@ -229,7 +236,8 @@ def check_rights(role, rq):
             # print(claims)
 
             if claims["role"] == role:
-                result = True
+                result["status"] = True
+                result["user_id"] = claims["user_id"]
             else:
                 print("Попытка запросить ресурс по токену с недостаточными правами.")
 
@@ -239,7 +247,7 @@ def check_rights(role, rq):
     return result
 
 
-# Проверка логина и пароля по БД
+# Админка. Проверка логина и пароля по БД для админа
 def check_login_admin(username, password, result):
 
     users = conf.db.users_adminka
@@ -252,16 +260,25 @@ def check_login_admin(username, password, result):
     return result
 
 
-def check_login_master(username, password, result):
-    pass
-#    return result
+# Ремонтас. Проверка логина и пароля по БД для мастера
+def check_login_master(login, password, result):
+    users = conf.db.users_masters
+    user = users.find_one({"login": login, "password": password})
+    if user != None:
+        result["status"] = "success"
+        result["user_id"] = str(user["_id"])
+        result["username"] = login
+        result["role"] = "master"
+    return result
 
 
 # Создание токена сессии. вызывается, если успешно пройдена авторизация
+# Доделать. различное время сессии для админа и мастера
+# Доделать. Свой ключ шифрования для сессий мастеров
 def create_session(result):
     priv_key = RSA.importKey(conf.session_priv_key)
 
     payload = {'user_id': result["user_id"], 'role': result["role"]}
-    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes))
+    result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes_admin if result["role"] == "admin" else conf.session_time_out_minutes_master))
 
     return result

@@ -57,12 +57,12 @@ body,
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 100%;
-    padding-bottom: 150px;
+    padding-bottom: 10px;
 }
 
 .footer {
     height: 110px;
-    margin-top: -111px;
+    margin-top: 30px;
     border-top: 1px solid #eee;
 }
 
@@ -708,7 +708,11 @@ h2.master-counter span {
 }
 
 #auth-tabs > .tabs-content input:last-of-type {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
+}
+
+#auth-tabs > .tabs-content .wrongCredentials {
+    color: red;
 }
 
 #auth-tabs > .tabs-content a {
@@ -717,6 +721,7 @@ h2.master-counter span {
     background: transparent url('../img/icon-head.png') no-repeat;
     padding-left: 25px;
     float: left;
+    margin-top: 25px;
 }
 
 #auth-tabs > .tabs-content button {
@@ -724,6 +729,7 @@ h2.master-counter span {
     float: right;
     position: relative;
     bottom: 12px;
+    margin-top: 25px;
 }
 
 #auth-tabs .sub-tabs-header {
