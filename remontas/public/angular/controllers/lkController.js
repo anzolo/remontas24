@@ -1,6 +1,16 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', function ($scope, lkData) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', function ($scope, lkData, masterMainData) {
 
-    $scope.lkData = lkData.get();
+    $scope.masterData = lkData.get();
+
+
+    $scope.saveMainData = function () {
+        var master = {
+            detail: $scope.masterData.detail,
+            phone1: $scope.masterData.phone1,
+            phone2: $scope.masterData.phone2
+        };
+        masterMainData.save(master);
+    }
 
 
 }]);

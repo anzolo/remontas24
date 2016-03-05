@@ -46,6 +46,14 @@ button[disabled="disabled"] {
     background-color: #999 !important;
 }
 
+.saveMaster {
+    width: 450px;
+    float: left;
+    bottom: 12px;
+    margin-top: 19px;
+    line-height: 35px;
+}
+
 html,
 body,
 .wrapper {
@@ -1524,7 +1532,7 @@ h2.master-counter span {
 }
 
 .my textarea {
-    height: 249px;
+    height: 180px;
 }
 
 .my .photo {
@@ -1552,6 +1560,19 @@ h2.master-counter span {
 
 .my .username input + input {
     margin-left: 15px;
+}
+
+.my .phones > div {
+    float: left;
+    position: relative;
+}
+
+.my .phones > div + div {
+    margin-left: 15px;
+}
+
+.my .phones input {
+    width: 217px;
 }
 
 .my .selectors > div {

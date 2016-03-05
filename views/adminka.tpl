@@ -46,6 +46,7 @@
     <script src="/adminka/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/adminka/public/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/adminka/public/bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+    <script src="/adminka/public/bower_components/angular-ui-mask/dist/mask.js"></script>
 
 </head>
 

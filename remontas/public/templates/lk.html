@@ -2,9 +2,8 @@
     <div class="content">
         <div class="container">
             <div class="my">
+
                 <h1 class="text-center">Ваш кабинет</h1>
-
-
 
                 <h2 class="text-center">
 						Профиль <span>45 баллов</span> <a href="#" class="open-hint" data-hint-name="hint-what-is-it">Что это?</a>
@@ -30,20 +29,32 @@
                 <!-- /Что это? -->
 
                 <div class="person clearfix">
-                    <div class="photo"><img src="assets/img/img-my-nophoto.jpg" width="209" height="249"></div>
+                    <div class="photo"><img ng-src="{{masterData.avatar}}" width="209" height="249"></div>
                     <div class="fields">
                         <div class="part-1">
-                            <div class="username clearfix">
-                                <input type="text" placeholder="Имя" required="required">
-                                <input type="text" placeholder="Отчество" required="required">
-                                <input type="text" placeholder="Фамилия" required="required">
+                            <div class="username clearfix" ng-if="masterData.kind_profile=='phys'">
+                                <input type="text" placeholder="Имя" required="required" ng-model="masterData.name">
+                                <input type="text" placeholder="Отчество" required="required" ng-model="masterData.sername">
+                                <input type="text" placeholder="Фамилия" required="required" ng-model="masterData.patronymic">
+                            </div>
+                            <div ng-if="masterData.kind_profile=='org'">
+                                <input type="text" placeholder="Имя" required="required" ng-model="masterData.name">
                             </div>
                             <div>
-                                <input type="text" placeholder="Email" required="required">
+                                <input type="text" readonly="readonly" placeholder="Email" required="required" ng-model="masterData.email">
                             </div>
-                            <div>
-                                <input type="password" placeholder="Пароль" required="required">
+
+                            <div class="phones clearfix">
+
+                                <div class="phone-1">
+                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="masterData.phone1">
+                                </div>
+
+                                <div class="phone-2">
+                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="masterData.phone2">
+                                </div>
                             </div>
+
                             <div class="selectors clearfix">
 
                                 <div class="service-1">
@@ -73,8 +84,9 @@
                         </div>
                         <div class="part-2">
                             <div>
-                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр."></textarea>
+                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр." ng-model="masterData.detail"></textarea>
                             </div>
+                            <button class="btn saveMaster" ng-click="saveMainData()">Сохранить</button>
                         </div>
                     </div>
                 </div>

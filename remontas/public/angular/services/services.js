@@ -9,3 +9,8 @@ remBackend.factory('lkData', ['$resource',
   function ($resource) {
         return $resource('/api/lk/initData');
                 }]);
+
+remBackend.factory('masterMainData', ['$resource',
+  function ($resource) {
+        return $resource('/api/lk/mainDataSave');
+                }]);

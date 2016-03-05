@@ -27,6 +27,7 @@
     <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/remontas/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
+    <script src="/remontas/public/bower_components/angular-ui-mask/dist/mask.js"></script>
 
 </head>
 

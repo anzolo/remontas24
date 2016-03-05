@@ -134,6 +134,9 @@ def adm_saveAfterEdit(id):
                 newMaster['email'] = request.forms.get('email')
                 newMaster['jobs_count'] = request.forms.get('jobs_count')
                 newMaster['kind_profile'] = request.forms.get('kind_profile')
+                newMaster['detail'] = request.forms.get('detail')
+                newMaster['phone1'] = request.forms.get('phone1')
+                newMaster['phone2'] = request.forms.get('phone2')
                 if request.forms.get('kind_profile') == "phys":
                     newMaster['sername'] = request.forms.get('sername')
                     newMaster['patronymic'] = request.forms.get('patronymic')
@@ -202,6 +205,9 @@ def adm_createNewMaster():
         newMaster['email'] = request.forms.get('email')
         newMaster['jobs_count'] = request.forms.get('jobs_count')
         newMaster['kind_profile'] = request.forms.get('kind_profile')
+        newMaster['detail'] = request.forms.get('detail')
+        newMaster['phone1'] = request.forms.get('phone1')
+        newMaster['phone2'] = request.forms.get('phone2')
         if request.forms.get('kind_profile') == "phys":
             newMaster['sername'] = request.forms.get('sername')
             newMaster['patronymic'] = request.forms.get('patronymic')
@@ -238,6 +244,9 @@ def check_rights(role, rq):
             if claims["role"] == role:
                 result["status"] = True
                 result["user_id"] = claims["user_id"]
+                if claims["role"] == "master":
+                    result["master_id"] = claims["master_id"]
+                    print(str(claims["master_id"]), role)
             else:
                 print("Попытка запросить ресурс по токену с недостаточными правами.")
 
@@ -269,6 +278,7 @@ def check_login_master(login, password, result):
         result["user_id"] = str(user["_id"])
         result["username"] = login
         result["role"] = "master"
+        result["master_id"] = str(user["master_id"])
     return result
 
 
@@ -279,6 +289,10 @@ def create_session(result):
     priv_key = RSA.importKey(conf.session_priv_key)
 
     payload = {'user_id': result["user_id"], 'role': result["role"]}
+
+    if result["role"] == "master":
+        payload["master_id"] = result["master_id"]
+
     result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes_admin if result["role"] == "admin" else conf.session_time_out_minutes_master))
 
     return result

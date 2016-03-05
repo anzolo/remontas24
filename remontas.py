@@ -1,4 +1,4 @@
-from bottle import route, template, request, abort, static_file
+from bottle import route, template, request, abort, static_file, Response
 from bson.objectid import ObjectId
 
 import adminka
@@ -50,6 +50,38 @@ def rem_lkGetData():
     result_check_rights = adminka.check_rights("master", request)
     if result_check_rights["status"]:
         user = conf.db.users_masters.find_one({"_id": ObjectId(result_check_rights["user_id"])})
-        print(user)
+
+        try:
+            master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
+            if master != None:
+                master["_id"] = str(master["_id"])
+                master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+                master["status"] = "OK"
+            else:
+                master["status"] = "Error"
+                master["note"] = "id not found"
+        except Exception as e:
+                master["status"] = "Error"
+                master["note"] = str(e)
+                print(e)
+        return master
     else:
         return abort(401, "Sorry, access denied.")
+
+@route('/api/lk/mainDataSave', method='POST')
+def rem_mainDataSave():
+    print("Hello")
+    result_check_rights = adminka.check_rights("master", request)
+    if result_check_rights["status"]:
+        try:
+            conf.db.masters.update(
+                {"_id": ObjectId(result_check_rights["master_id"])},
+                {"phone1": request.json["phone1"],
+                 "phone2": request.json["phone2"],
+                 "detail": request.json["detail"]}
+            )
+            Response.status = 200
+            return None
+        except Exception as e:
+            abort(500, str(e))
+            print(e)

@@ -1,4 +1,4 @@
-var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend', 'ngFileUpload']);
+var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend', 'ngFileUpload', 'ui.mask']);
 
 remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -67,7 +67,3 @@ remontas24App.constant('USER_ROLES', {
     admin: 'admin',
     master: 'master'
 });
-
-remontas24App.constant('CONFIG', {
-    app_url: '0.0.0.0:8080'
-})

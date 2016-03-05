@@ -1,4 +1,4 @@
-remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', 'CONFIG', '$stateParams', function ($scope, masters, $state, Upload, CONFIG, $stateParams) {
+remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', function ($scope, masters, $state, Upload, $stateParams) {
     $scope.master = {
         name: "",
         sername: "",
@@ -6,7 +6,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         email: "",
         jobs_count: 0,
         avatar: "",
-        kind_profile: "phys"
+        kind_profile: "phys",
+        detail: "",
+        phone1: "",
+        phone2: ""
     };
 
     //    $scope.model = {

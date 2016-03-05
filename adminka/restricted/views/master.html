@@ -34,8 +34,21 @@
         <input type="text" ng-model="master.email" class="form-control" id="inputEmail">
     </div>
     <div class="form-group">
+        <label for="inputphone1">Телефон 1</label>
+        <input type="text" ui-mask="+7 (999) 999 99 99" ng-model="master.phone1" class="form-control" id="inputphone1">
+    </div>
+    <div class="form-group">
+        <label for="inputphone2">Телефон 2</label>
+        <input type="text" ui-mask="+7 (999) 999 99 99" ng-model="master.phone2" class="form-control" id="inputphone2">
+    </div>
+    <div class="form-group">
         <label for="inputWorks">Количество работ</label>
-        <input type="text" ng-model="master.jobs_count" class="form-control" id="inputWorks" placeholder=Количество работ>
+        <input type="text" ng-model="master.jobs_count" class="form-control" id="inputWorks" placeholder="Количество работ">
+    </div>
+    <div class="form-group">
+        <label for="inputDetail">Подробное описание</label>
+        <!--  <input type="textarea" ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"> -->
+        <textarea ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"></textarea>
     </div>
     <div class="form-group">
         <label for="inputFile">Аватарка</label>

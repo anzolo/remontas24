@@ -11,11 +11,13 @@
         <div class="tabs-content clearfix">
             <div class="clearfix" id="tab-1" ng-class="{active: activeTab == 'auth'}">
                 <ng-form name="loginForm">
-                    <input type="email" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="credentials.username" />
+                    <!--                    <input type="email" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="credentials.username" />-->
+                    <input type="text" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="credentials.username" />
                     <input type="password" name="pass" placeholder="Пароль" required ng-class="{required: loginForm.pass.$invalid}" ng-model="credentials.password" />
                     <div class="wrongCredentials" ng-show="wrongCredentials">Неверный логин или пароль</div>
                     <a href="#" class="open-modal" data-modal-name="forget">Забыли пароль?</a>
-                    <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(credentials)">Вход</button>
+                    <button ng-click="login(credentials)">Вход</button>
+                    <!-- <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(credentials)">Вход</button> -->
                 </ng-form>
             </div>
 

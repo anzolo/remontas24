@@ -37,20 +37,20 @@ remontas24App.factory('AuthService', function ($http, Session, $rootScope, $q) {
 
 remontas24App.service('Session', function ($localStorage) {
     this.create = function (loginToken, username) {
-        $localStorage.token = loginToken;
-        $localStorage.username = username;
+        $localStorage.tokenAdmin = loginToken;
+        $localStorage.usernameAdmin = username;
         //console.log("create token: ", loginToken);
     };
     this.destroy = function () {
-        $localStorage.token = null;
+        $localStorage.tokenAdmin = null;
     };
     this.token = function () {
         //console.log("return token: ", $localStorage.token);
-        return $localStorage.token;
+        return $localStorage.tokenAdmin;
     };
     this.username = function () {
         //console.log("return token: ", $localStorage.token);
-        return $localStorage.username;
+        return $localStorage.usernameAdmin;
     };
 
     return this;
