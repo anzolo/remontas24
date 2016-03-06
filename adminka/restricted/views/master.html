@@ -1,5 +1,7 @@
 <div id="page-wrapper" ng-controller="masterController">
 
+    <div class="alert" ng-class="{'alert-success': saveStatus.success, 'alert-danger': !saveStatus.success}" role="alert" ng-if="saveStatus.show">{{saveStatus.text}}</div>
+
     <div class="form-group">
         <label>Тип профиля</label>
 
@@ -59,5 +61,5 @@
 
     </div>
     <button type="submit" class="btn btn-default" ng-click="saveMaster()">Сохранить</button>
-    <button type="submit" class="btn btn-default" ng-click="cancel()">Отмена</button>
+    <button type="submit" class="btn btn-default" ng-click="cancel()">Отмена/Выйти</button>
 </div>

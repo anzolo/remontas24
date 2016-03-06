@@ -76,10 +76,12 @@ def rem_mainDataSave():
         try:
             conf.db.masters.update(
                 {"_id": ObjectId(result_check_rights["master_id"])},
-                {"phone1": request.json["phone1"],
+                {
+                 "$set":{"phone1": request.json["phone1"],
                  "phone2": request.json["phone2"],
                  "detail": request.json["detail"]}
-            )
+                }
+                )
             Response.status = 200
             return None
         except Exception as e:

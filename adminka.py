@@ -70,6 +70,8 @@ def adm_getMastersList():
             new_master["id"] = str(master["_id"])
             new_master["avatar"] = "/storage/" + master.get("avatar", conf.img_no_avatar)
             new_master["jobs_count"] = master["jobs_count"]
+            new_master["kind_profile"] = master["kind_profile"]
+            new_master["email"] = master["email"]
             masters_list.append(new_master)
 
         result["masters"] = masters_list

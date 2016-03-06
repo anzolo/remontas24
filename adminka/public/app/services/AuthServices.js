@@ -5,9 +5,7 @@ remontas24App.factory('AuthService', function ($http, Session, $rootScope, $q) {
             return $http
                 .post('/api/login/admin', credentials)
                 .then(function (res) {
-                    //                    console.log("res = ", res);
-                    //                    console.log("res.token = ", res.data.token);
-                    //                    console.log("res.role = ", res.data.role);
+
                     Session.create(res.data.token, res.data.username);
                 });
         },

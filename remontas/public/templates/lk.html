@@ -33,12 +33,12 @@
                     <div class="fields">
                         <div class="part-1">
                             <div class="username clearfix" ng-if="masterData.kind_profile=='phys'">
-                                <input type="text" placeholder="Имя" required="required" ng-model="masterData.name">
-                                <input type="text" placeholder="Отчество" required="required" ng-model="masterData.sername">
-                                <input type="text" placeholder="Фамилия" required="required" ng-model="masterData.patronymic">
+                                <input type="text" readonly="readonly" placeholder="Имя" required="required" ng-model="masterData.name">
+                                <input type="text" readonly="readonly" placeholder="Отчество" required="required" ng-model="masterData.sername">
+                                <input type="text" readonly="readonly" placeholder="Фамилия" required="required" ng-model="masterData.patronymic">
                             </div>
                             <div ng-if="masterData.kind_profile=='org'">
-                                <input type="text" placeholder="Имя" required="required" ng-model="masterData.name">
+                                <input type="text" readonly="readonly" placeholder="Имя" required="required" ng-model="masterData.name">
                             </div>
                             <div>
                                 <input type="text" readonly="readonly" placeholder="Email" required="required" ng-model="masterData.email">

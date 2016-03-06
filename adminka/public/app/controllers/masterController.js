@@ -12,23 +12,15 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         phone2: ""
     };
 
-    //    $scope.model = {
-    //        avatarPic: ""
-    //    };
+    $scope.saveStatus = {
+        show: false,
+        success: true,
+        text: "empty"
+    };
 
     var masterID = $stateParams.id;
 
-    $scope.mode = null;
-
-    if (masterID == undefined) {
-        $scope.mode = "new"
-    } else {
-        $scope.mode = "edit"
-    };
-
-    //console.log("mode = ", $scope.mode);
-
-    if ($scope.mode == "edit") {
+    $scope.loadMaster = function () {
         var editMaster = masters.get({
             id: masterID
         }, function (data) {
@@ -42,8 +34,6 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
                     $scope.master.avatar.name = data.avatar;
                 });
 
-                //delete $scope.master.$promise;
-                //delete $scope.master.$resolved;
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
                 $state.go('adminka.masters');
@@ -51,8 +41,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
                 $state.go('adminka.masters');
             }
         });
-
     }
+
+    if (masterID != undefined) $scope.loadMaster();
 
     $scope.cancel = function () {
         $state.go('adminka.masters');
@@ -61,20 +52,26 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     $scope.saveMaster = function () {
 
-        if ($scope.mode == "new") {
-            console.log("new master=", $scope.master);
-            Upload.upload({
-                url: '/api/adminka/masters',
-                data: $scope.master,
-            });
-            $state.go('adminka.masters');
-        } else if ($scope.mode == "edit") {
-            console.log("edit master=", $scope.master);
-            Upload.upload({
-                url: '/api/adminka/masters/' + masterID,
-                data: $scope.master,
-            });
-            $state.go('adminka.masters');
-        };
-    }
+        var connString = '/api/adminka/masters';
+
+        if (masterID != undefined) connString = connString + '/' + masterID;
+
+        Upload.upload({
+            url: connString,
+            data: $scope.master,
+        }).then(function (resp) {
+            console.log('Success uploaded. Response: ' + resp.data);
+            $scope.saveStatus.show = true;
+            $scope.saveStatus.success = true;
+            $scope.saveStatus.text = "Мастер успешно сохранен.";
+            $scope.loadMaster();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+            $scope.saveStatus.show = true;
+            $scope.saveStatus.success = false;
+            $scope.saveStatus.text = "При сохранении мастера произошла ошибка: " + resp.status;
+        });
+        //$state.go('adminka.masters');
+
+    };
 }]);

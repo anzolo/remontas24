@@ -11,19 +11,22 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>id</th>
-                    <th>Имя</th>
                     <th>Аватарка</th>
-                    <th>Действия</th>
+                    <th>Прочие данные</th>
+                    <!--                    <th>Имя</th>-->
+
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="master in result.masters">
+
                     <td> {{$index + 1}}</td>
-                    <td><a href="#" ui-sref="adminka.editMaster({ id: master.id })">{{master.id}}</a></td>
-                    <td>{{master.name}}</td>
-                    <td><img ng-src="{{master.avatar}}"></td>
-                    <td>Ред/Уд</td>
+                    <td>
+                        <a href="#" ui-sref="adminka.editMaster({ id: master.id })"><img ng-src="{{master.avatar}}"></a>
+                    </td>
+                    <td>{{master.name+'; ' +master.kind_profile+'; ' +master.email}}</td>
+
+
                 </tr>
 
             </tbody>
