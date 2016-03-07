@@ -1,4 +1,4 @@
-var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend', 'ngFileUpload', 'ui.mask']);
+var remontas24App = angular.module('remontas24App', ['ui.router', 'ngStorage', 'remBackend', 'ngFileUpload', 'ui.mask', 'ui.select', 'ngSanitize']);
 
 remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
@@ -24,22 +24,30 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
         .state('adminka.masters', {
             url: "/adminka/masters",
             templateUrl: "/adminka/restricted/views/masters.html",
-            controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
-            }
+            controller: "mastersController"
         })
         .state('adminka.newMaster', {
             url: "/adminka/masters/new",
             templateUrl: "/adminka/restricted/views/master.html",
-            controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
-            }
+            controller: "masterController"
         })
         .state('adminka.editMaster', {
             url: "/adminka/masters/edit/:id",
             templateUrl: "/adminka/restricted/views/master.html",
-            controller: function ($scope) {
-                $scope.mode = "edit";
+            controller: "masterController"
+        })
+        .state('adminka.categories', {
+            url: "/adminka/categories",
+            templateUrl: "/adminka/restricted/views/categories.html",
+            controller: "categoriesController"
+        })
+        .state('adminka.category', {
+            url: "/adminka/categories",
+            templateUrl: "/adminka/restricted/views/category.html",
+            controller: "categoryController",
+            params: {
+                'categoriesData': null,
+                'element': null
             }
         })
         .state('login', {

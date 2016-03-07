@@ -34,6 +34,9 @@
     <!-- Morris Charts CSS -->
     <link href="/adminka/public/css/morris.css" rel="stylesheet">
 
+    <link href="adminka/public/bower_components/ui-select/dist/select.css" rel="stylesheet">
+
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,6 +50,8 @@
     <script src="/adminka/public/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/adminka/public/bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script src="/adminka/public/bower_components/angular-ui-mask/dist/mask.js"></script>
+    <script src="/adminka/public/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/adminka/public/bower_components/ui-select/dist/select.js"></script>
 
 </head>
 
@@ -68,6 +73,7 @@
     <script src="/adminka/public/app/controllers/adminkaMainPageController.js"></script>
     <script src="/adminka/public/app/controllers/mastersController.js"></script>
     <script src="/adminka/public/app/controllers/masterController.js"></script>
+    <script src="/adminka/public/app/controllers/categoriesController.js"></script>
 
     <!--  Angular services  -->
     <script src="/adminka/public/app/services/AuthServices.js"></script>

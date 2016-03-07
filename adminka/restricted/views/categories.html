@@ -1,0 +1,54 @@
+<div id="page-wrapper">
+    <br>
+    <button class="btn btn-default" ng-click="showAddElementForm()">Добавить</button>
+
+    <h1>Категории</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Наименование</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="element in categoriesData | filter:{'type':'category'}" ng-click="selectCategory(element)" ng-class="{'success' : element == selectedCategory}">
+                <th scope=row>{{element.order}}</th>
+                <td>{{element.val}} <a ui-sref="adminka.category({'categoriesData': categoriesData, 'element': element})"><i class="fa fa-pencil-square" ></i></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-if="selectedCategory != null">
+        <h1>Виды работ</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Наименование</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="element in categoriesData | filter:{'type':'service', 'parent_id':selectedCategory._id}" ng-click="selectService(element)" ng-class="{'success' : element == selectedService}">
+                    <th scope=row>{{element.order}}</th>
+                    <td>{{element.val}} <a ui-sref="adminka.category({'categoriesData': categoriesData, 'element': element})"><i class="fa fa-pencil-square" ></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="(selectedService != null)&&(selectedCategory != null)">
+        <h1>Работы</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Наименование</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="element in categoriesData | filter:{'type':'job', 'parent_id':selectedService._id}" ng-click="selectJob(element)" ng-class="{'success' : element == selectedJob}">
+                    <th scope=row>{{element.order}}</th>
+                    <td>{{element.val}} <a ui-sref="adminka.category({'categoriesData': categoriesData, 'element': element})"><i class="fa fa-pencil-square" ></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

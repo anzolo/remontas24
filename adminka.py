@@ -1,11 +1,12 @@
 # API админки
-from bottle import route, template, request, abort, static_file
+from bottle import route, template, request, abort, static_file, Response
 import jwt
 import Crypto.PublicKey.RSA as RSA
 import datetime
 from bson.objectid import ObjectId
 import uuid
 import os
+from common import JSONEncoder
 
 import conf
 
@@ -227,6 +228,69 @@ def adm_createNewMaster():
             result["note"] = str(e)
 
         return result
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# API админки. Сервис получения информации по категориям
+@route('/api/adminka/categories')
+def adm_getCategoriesList():
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
+        if request.params.method == "getAll":
+            return JSONEncoder().encode(list(conf.db.category_job.find()))
+    else:
+        return abort(401, "Sorry, access denied.")
+
+
+# API админки. Сервис создания и изменения категорий
+@route('/api/adminka/categories', method='POST')
+def adm_saveCategory():
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
+        if request.params.method == "saveNew":
+            newCategory = request.json
+            if newCategory['type'] == 'category':
+                newCategory['parent_id'] = None
+                newCategory['order'] = 1
+                for maxOrder in conf.db.category_job.find({'type': 'category'}).sort([("order",-1)]).limit(1):
+                    newCategory['order'] = maxOrder['order'] + 1
+
+            elif newCategory['type'] == 'service':
+                newCategory['parent_id'] = ObjectId(newCategory['parent_id'])
+                newCategory['order'] = 1
+                for maxOrder in conf.db.category_job.find({'type': 'service', 'parent_id': ObjectId(newCategory['parent_id'])}).sort([("order",-1)]).limit(1):
+                    newCategory['order'] = maxOrder['order'] + 1
+
+            elif newCategory['type'] == 'job':
+                newCategory['parent_id'] = ObjectId(newCategory['parent_id'])
+                newCategory['order'] = 1
+                for maxOrder in conf.db.category_job.find({'type': 'job', 'parent_id': ObjectId(newCategory['parent_id'])}).sort([("order",-1)]).limit(1):
+                    newCategory['order'] = maxOrder['order'] + 1
+
+
+            try:
+                conf.db.category_job.insert_one(newCategory)
+                Response.status = 200
+                return None
+            except Exception as e:
+                abort(500, str(e))
+                print(e)
+        elif request.params.method == "saveEdited":
+            try:
+                conf.db.category_job.update(
+                    {"_id": ObjectId(request.json["_id"])},
+                    {
+                     "$set":{"val": request.json["val"]}
+                    }
+                    )
+                Response.status = 200
+                return None
+            except Exception as e:
+                abort(500, str(e))
+                print(e)
+
+
     else:
         return abort(401, "Sorry, access denied.")
 

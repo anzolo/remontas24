@@ -4,3 +4,28 @@ remBackend.factory('masters', ['$resource',
   function ($resource) {
         return $resource('/api/adminka/masters/:id');
                 }]);
+
+remBackend.factory('category', ['$resource',
+  function ($resource) {
+        return $resource('/api/adminka/categories', {}, {
+            "getAll": {
+                method: 'GET',
+                isArray: true,
+                params: {
+                    method: "getAll"
+                }
+            },
+            "saveNew": {
+                method: 'POST',
+                params: {
+                    method: "saveNew"
+                }
+            },
+            "saveEdited": {
+                method: 'POST',
+                params: {
+                    method: "saveEdited"
+                }
+            }
+        });
+                }]);

@@ -1,0 +1,56 @@
+<div id="page-wrapper">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Добавление нового элемента</h3>
+        </div>
+        <div class="panel-body">
+
+            <div ng-if="element == null">
+                <div class="form-group">
+                    <label for="inputTypeElement">Тип элемента</label>
+                    <ui-select ng-model="selected.type" theme="bootstrap" id="inputTypeElement" on-select="clearFields('type')">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.name"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (typeArray | filter: $select.search) track by item.id">
+                            <span ng-bind="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="form-group" ng-if="selected.type.id == 'service' || selected.type.id == 'job'">
+                    <label for="inputCategory">Категория</label>
+                    <ui-select ng-model="selected.category" theme="bootstrap" id="inputCategory" on-select="clearFields('category')">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.val"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (categoriesData | filter:{'type':'category'}) track by item.order">
+                            <span ng-bind="item.val"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="form-group" ng-if="selected.type.id == 'job' && selected.category != null">
+                    <label for="inputService">Вид работ</label>
+                    <ui-select ng-model="selected.service" theme="bootstrap" id="inputService">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.val"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (categoriesData | filter:{'type':'service','parent_id':selected.category._id}) track by item.order">
+                            <span ng-bind="item.val"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputVal">Наименование</label>
+                <input type="text" class="form-control" id="inputVal" ng-model="selected.name">
+            </div>
+            <button class="btn btn-default" ng-click="saveCategory()">Сохранить</button>
+            <button class="btn btn-default" ui-sref="adminka.categories">Отмена</button>
+        </div>
+
+    </div>
+
+</div>
