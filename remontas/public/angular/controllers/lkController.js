@@ -2,6 +2,11 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
     $scope.masterData = lkData.get();
 
+    $scope.interfaceOptions = {
+        showCategory: false,
+        showAddServices: false
+    };
+
 
     $scope.saveMainData = function () {
         var master = {

@@ -57,6 +57,7 @@ def rem_lkGetData():
                 master["_id"] = str(master["_id"])
                 master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
                 master["status"] = "OK"
+
             else:
                 master["status"] = "Error"
                 master["note"] = "id not found"

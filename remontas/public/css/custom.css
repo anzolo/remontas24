@@ -1595,7 +1595,7 @@ h2.master-counter span {
 }
 
 .my .selectors > div .sub {
-    display: none;
+    /*    display: none;*/
     position: absolute;
     /*background: #f9f9f9 url('../img/icon-select.png') no-repeat 190px 16px;*/
     background: #f9f9f9;

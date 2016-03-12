@@ -58,8 +58,8 @@
                             <div class="selectors clearfix">
 
                                 <div class="service-1">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбор категории">
-                                    <div class="sub">
+                                    <input type="text" readonly="readonly" required="required" placeholder="Выбор категории" ng-click="interfaceOptions.showCategory = !interfaceOptions.showCategory; interfaceOptions.showAddServices = false">
+                                    <div class="sub" ng-show="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
                                         <div class="counter">Отмечено услуг <strong>0</strong></div>
                                         <div><span>Мебель на заказ</span></div>
@@ -70,8 +70,8 @@
                                 </div>
 
                                 <div class="service-2">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбор доп.услуг">
-                                    <div class="sub">
+                                    <input type="text" readonly="readonly" required="required" placeholder="Выбор доп.услуг" ng-click="interfaceOptions.showAddServices = !interfaceOptions.showAddServices; interfaceOptions.showCategory = false">
+                                    <div class="sub" ng-show="interfaceOptions.showAddServices">
                                         <!--<div>Услуга мастер на час</div>-->
                                         <div class="counter">Отмечено услуг <strong>0</strong></div>
                                         <div><span>Работа по договору</span></div>
