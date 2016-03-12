@@ -3,6 +3,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.data = lkData.init({}, function (value, responseHeaders) {
         $scope.masterData = value.master;
         $scope.categories = value.categories;
+        $scope.onlyCategoriesArray = $scope.createCategoriesArray($scope.categories);
         $scope.countCategories = $scope.calcCategories();
     });
 
@@ -32,20 +33,31 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         var numberPosition = $scope.masterData.category_service.indexOf(element._id)
         if (numberPosition >= 0) {
             $scope.masterData.category_service.splice(numberPosition, 1);
+            $scope.countCategories--;
         } else {
             $scope.masterData.category_service.push(element._id);
+            $scope.countCategories++;
         }
     }
 
     $scope.calcCategories = function () {
         var calc = 0;
-        // $scope.masterData.categories
         for (var element in $scope.masterData.category_service) {
-            //, $scope.categories.indexOf(element._id)
-            console.log($scope.masterData.category_service[element], $scope.categories.indexOf("_id" = $scope.masterData.category_service[element]));
+            if ($scope.onlyCategoriesArray.indexOf($scope.masterData.category_service[element]) >= 0) {
+                calc++;
+            }
         }
+        return calc
+    }
 
-
+    $scope.createCategoriesArray = function (categories) {
+        var resultCategoriesArray = [];
+        for (var element in categories) {
+            if (categories[element].type == "category") {
+                resultCategoriesArray.push(categories[element]._id);
+            }
+        }
+        return resultCategoriesArray;
     }
 
 }]);

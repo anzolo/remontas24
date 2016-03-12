@@ -61,7 +61,7 @@
                                     <input type="text" readonly="readonly" required="required" placeholder="Выбор категории" ng-click="interfaceOptions.showCategory = !interfaceOptions.showCategory; interfaceOptions.showAddServices = false">
                                     <div class="sub" ng-show="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено услуг <strong>0</strong></div>
+                                        <div class="counter">Отмечено услуг <strong>{{countCategories}}</strong></div>
                                         <div ng-repeat="element in categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn">Выбрать</abbr>
                                     </div>
