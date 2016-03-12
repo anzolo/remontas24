@@ -7,7 +7,26 @@ remBackend.factory('searchMasters', ['$resource',
 
 remBackend.factory('lkData', ['$resource',
   function ($resource) {
-        return $resource('/api/lk/initData');
+        return $resource('/api/lk', {}, {
+            "init": {
+                method: 'GET',
+                params: {
+                    method: "init"
+                }
+            }
+            //            "saveNew": {
+            //                method: 'POST',
+            //                params: {
+            //                    method: "saveNew"
+            //                }
+            //            },
+            //            "saveEdited": {
+            //                method: 'POST',
+            //                params: {
+            //                    method: "saveEdited"
+            //                }
+            //            }
+        });
                 }]);
 
 remBackend.factory('masterMainData', ['$resource',

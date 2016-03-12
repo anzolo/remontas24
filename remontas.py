@@ -1,9 +1,9 @@
 from bottle import route, template, request, abort, static_file, Response
 from bson.objectid import ObjectId
 
+from common import JSONEncoder
 import adminka
 import conf
-
 
 # Ремонтас. По маршруту возвращается шаблон
 @route('/')
@@ -40,32 +40,42 @@ def rem_doSearchMasters():
         newMaster['avatar'] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
         newMaster["id"] = str(master["_id"])
         result["masters"].append(newMaster)
-
     return result
 
 
 # API ремонтаса. получение данных для личного кабинета
-@route('/api/lk/initData')
+@route('/api/lk')
 def rem_lkGetData():
     result_check_rights = adminka.check_rights("master", request)
     if result_check_rights["status"]:
         user = conf.db.users_masters.find_one({"_id": ObjectId(result_check_rights["user_id"])})
+        lkResult = {}
 
-        try:
-            master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
-            if master != None:
-                master["_id"] = str(master["_id"])
-                master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
-                master["status"] = "OK"
+        if request.params.method == "init":
+            try:
+                master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
+                if master != None:
+                    #master["_id"] = str(master["_id"])
+                    master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+                    lkResult["status"] = "OK"
 
-            else:
-                master["status"] = "Error"
-                master["note"] = "id not found"
-        except Exception as e:
-                master["status"] = "Error"
-                master["note"] = str(e)
-                print(e)
-        return master
+                    categories = list(conf.db.category_job.find())
+                    lkResult["master"] = master
+                    lkResult["categories"] = categories
+
+                else:
+                    lkResult["status"] = "Error"
+                    lkResult["note"] = "id not found"
+            except Exception as e:
+                    lkResult["status"] = "Error"
+                    lkResult["note"] = str(e)
+                    print(e)
+
+            return JSONEncoder().encode(lkResult)
+
+        elif request.params.method == "123":
+            pass
+
     else:
         return abort(401, "Sorry, access denied.")
 

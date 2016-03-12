@@ -62,9 +62,7 @@
                                     <div class="sub" ng-show="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
                                         <div class="counter">Отмечено услуг <strong>0</strong></div>
-                                        <div><span>Мебель на заказ</span></div>
-                                        <div><span>Ремонтно-отделочные работы</span></div>
-                                        <div><span>Дизайн интерьеров</span></div>
+                                        <div ng-repeat="element in categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn">Выбрать</abbr>
                                     </div>
                                 </div>
