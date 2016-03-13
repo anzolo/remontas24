@@ -16,10 +16,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         showAddServices: false
     };
 
-    //        "contractWork",
-    //        "masterOnHour"
-
-
     $scope.saveMainData = function () {
         var master = {
             detail: $scope.masterData.detail,
@@ -103,16 +99,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         } else {
             $scope.tempAdditional_service.push(element);
         }
-    }
-
-    $scope.calcAdditionalService = function (arrayAdditionalService) {
-        var calc = 0;
-        for (var element in arrayAdditionalService) {
-            if ($scope.onlyCategoriesArray.indexOf(arrayAdditionalService[element]) >= 0) {
-                calc++;
-            }
-        }
-        return calc
     }
 
 }]);
