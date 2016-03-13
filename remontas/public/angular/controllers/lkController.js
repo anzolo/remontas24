@@ -4,8 +4,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.masterData = value.master;
         $scope.categories = value.categories;
         $scope.onlyCategoriesArray = $scope.createCategoriesArray($scope.categories);
-        $scope.tempMasterCategories = $scope.masterData.category_service.slice();
-        $scope.tempAdditional_service = $scope.masterData.additional_service.slice();
+        $scope.tempMasterCategories = value.master.category_service.slice();
+        $scope.tempAdditional_service = value.master.additional_service.slice();
     });
 
 
