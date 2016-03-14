@@ -76,7 +76,6 @@ def adm_getMastersList():
             masters_list.append(new_master)
 
         result["masters"] = masters_list
-
         return result
     else:
         return abort(401, "Sorry, access denied.")
@@ -92,18 +91,19 @@ def adm_getMaster(id):
         try:
             master = masters.find_one({"_id": ObjectId(id)})
             if master != None:
-                master["_id"] = str(master["_id"])
+                # master["_id"] = str(master["_id"])
                 master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
                 master["status"] = "OK"
             else:
                 master["status"] = "Error"
                 master["note"] = "id not found"
+
         except Exception as e:
                 master["status"] = "Error"
                 master["note"] = str(e)
                 print(e)
 
-        return master
+        return JSONEncoder().encode(master)
     else:
         return abort(401, "Sorry, access denied.")
 
@@ -120,29 +120,26 @@ def adm_saveAfterEdit(id):
             oldMaster = conf.db.masters.find_one({"_id": ObjectId(id)})
             if oldMaster != None:
 
-                upload = request.files.get('avatar')
+                upload = request.files.get("avatar")
 
                 if upload != None:
                     filename, ext = os.path.splitext(upload.raw_filename)
-
                     new_filename = str(uuid.uuid4())
-
                     upload.filename = new_filename + ext
-
-                    newMaster['avatar'] = upload.filename
+                    newMaster["avatar"] = upload.filename
                 else:
-                    newMaster['avatar'] = conf.img_no_avatar
+                    newMaster["avatar"] = conf.img_no_avatar
 
-                newMaster['name'] = request.forms.get('name')
-                newMaster['email'] = request.forms.get('email')
-                newMaster['jobs_count'] = request.forms.get('jobs_count')
-                newMaster['kind_profile'] = request.forms.get('kind_profile')
-                newMaster['detail'] = request.forms.get('detail')
-                newMaster['phone1'] = request.forms.get('phone1')
-                newMaster['phone2'] = request.forms.get('phone2')
-                if request.forms.get('kind_profile') == "phys":
-                    newMaster['sername'] = request.forms.get('sername')
-                    newMaster['patronymic'] = request.forms.get('patronymic')
+                newMaster["name"] = request.forms.get("name")
+                newMaster["email"] = request.forms.get("email")
+                newMaster["jobs_count"] = request.forms.get("jobs_count")
+                newMaster["kind_profile"] = request.forms.get("kind_profile")
+                newMaster["detail"] = request.forms.get("detail")
+                newMaster["phone1"] = request.forms.get("phone1")
+                newMaster["phone2"] = request.forms.get("phone2")
+                if request.forms.get("kind_profile") == "phys":
+                    newMaster["sername"] = request.forms.get("sername")
+                    newMaster["patronymic"] = request.forms.get("patronymic")
 
                 # print("newMaster = ",newMaster)
 
@@ -167,6 +164,7 @@ def adm_saveAfterEdit(id):
             else:
                 result["status"] = "Error"
                 result["note"] = "id not found"
+
         except Exception as e:
                 result["status"] = "Error"
                 result["note"] = str(e)
@@ -189,31 +187,28 @@ def adm_createNewMaster():
         # print(request.forms.get('name'))
         # print(request.forms.get('works'))
 
-        upload = request.files.get('avatar')
+        upload = request.files.get("avatar")
 
         if upload != None:
             filename, ext = os.path.splitext(upload.raw_filename)
-
             new_filename = str(uuid.uuid4())
-
             upload.filename = new_filename + ext
-
-            newMaster['avatar'] = upload.filename
+            newMaster["avatar"] = upload.filename
         else:
-            newMaster['avatar'] = conf.img_no_avatar
+            newMaster["avatar"] = conf.img_no_avatar
 
         # print(upload.filename)
 
-        newMaster['name'] = request.forms.get('name')
-        newMaster['email'] = request.forms.get('email')
-        newMaster['jobs_count'] = request.forms.get('jobs_count')
-        newMaster['kind_profile'] = request.forms.get('kind_profile')
-        newMaster['detail'] = request.forms.get('detail')
-        newMaster['phone1'] = request.forms.get('phone1')
-        newMaster['phone2'] = request.forms.get('phone2')
-        if request.forms.get('kind_profile') == "phys":
-            newMaster['sername'] = request.forms.get('sername')
-            newMaster['patronymic'] = request.forms.get('patronymic')
+        newMaster["name"] = request.forms.get("name")
+        newMaster["email"] = request.forms.get("email")
+        newMaster["jobs_count"] = request.forms.get("jobs_count")
+        newMaster["kind_profile"] = request.forms.get("kind_profile")
+        newMaster["detail"] = request.forms.get("detail")
+        newMaster["phone1"] = request.forms.get("phone1")
+        newMaster["phone2"] = request.forms.get("phone2")
+        if request.forms.get("kind_profile") == "phys":
+            newMaster["sername"] = request.forms.get("sername")
+            newMaster["patronymic"] = request.forms.get("patronymic")
 
         try:
             conf.db.masters.insert_one(newMaster)
@@ -222,6 +217,7 @@ def adm_createNewMaster():
                 upload.save(conf.storage_path)
 
             result["status"] = "OK"
+
         except Exception as e:
             #print(e)
             result["status"] = "Error"
@@ -250,46 +246,45 @@ def adm_saveCategory():
     if result_check_rights["status"]:
         if request.params.method == "saveNew":
             newCategory = request.json
-            if newCategory['type'] == 'category':
-                newCategory['parent_id'] = None
-                newCategory['order'] = 1
-                for maxOrder in conf.db.category_job.find({'type': 'category'}).sort([("order",-1)]).limit(1):
-                    newCategory['order'] = maxOrder['order'] + 1
+            if newCategory["type"] == "category":
+                newCategory["parent_id"] = None
+                newCategory["order"] = 1
+                for maxOrder in conf.db.category_job.find({"type": "category"}).sort([("order", -1)]).limit(1):
+                    newCategory["order"] = maxOrder["order"] + 1
 
-            elif newCategory['type'] == 'service':
-                newCategory['parent_id'] = ObjectId(newCategory['parent_id'])
-                newCategory['order'] = 1
-                for maxOrder in conf.db.category_job.find({'type': 'service', 'parent_id': ObjectId(newCategory['parent_id'])}).sort([("order",-1)]).limit(1):
-                    newCategory['order'] = maxOrder['order'] + 1
+            elif newCategory["type"] == "service":
+                newCategory["parent_id"] = ObjectId(newCategory["parent_id"])
+                newCategory["order"] = 1
+                for maxOrder in conf.db.category_job.find({"type": "service", "parent_id": ObjectId(newCategory["parent_id"])}).sort([("order", -1)]).limit(1):
+                    newCategory["order"] = maxOrder["order"] + 1
 
-            elif newCategory['type'] == 'job':
-                newCategory['parent_id'] = ObjectId(newCategory['parent_id'])
-                newCategory['order'] = 1
-                for maxOrder in conf.db.category_job.find({'type': 'job', 'parent_id': ObjectId(newCategory['parent_id'])}).sort([("order",-1)]).limit(1):
-                    newCategory['order'] = maxOrder['order'] + 1
-
+            elif newCategory["type"] == "job":
+                newCategory["parent_id"] = ObjectId(newCategory["parent_id"])
+                newCategory["order"] = 1
+                for maxOrder in conf.db.category_job.find({"type": "job", "parent_id": ObjectId(newCategory["parent_id"])}).sort([("order", -1)]).limit(1):
+                    newCategory["order"] = maxOrder["order"] + 1
 
             try:
                 conf.db.category_job.insert_one(newCategory)
                 Response.status = 200
                 return None
-            except Exception as e:
-                abort(500, str(e))
-                print(e)
-        elif request.params.method == "saveEdited":
-            try:
-                conf.db.category_job.update(
-                    {"_id": ObjectId(request.json["_id"])},
-                    {
-                     "$set":{"val": request.json["val"]}
-                    }
-                    )
-                Response.status = 200
-                return None
+
             except Exception as e:
                 abort(500, str(e))
                 print(e)
 
+        elif request.params.method == "saveEdited":
+            try:
+                conf.db.category_job.update(
+                    {"_id": ObjectId(request.json["_id"])},
+                    {"$set": {"val": request.json["val"]}}
+                    )
+                Response.status = 200
+                return None
+
+            except Exception as e:
+                abort(500, str(e))
+                print(e)
 
     else:
         return abort(401, "Sorry, access denied.")
@@ -324,7 +319,6 @@ def check_rights(role, rq):
 
 # Админка. Проверка логина и пароля по БД для админа
 def check_login_admin(username, password, result):
-
     users = conf.db.users_adminka
     user = users.find_one({"username": username, "password": password})
     if user != None:

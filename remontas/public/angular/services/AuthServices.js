@@ -72,10 +72,9 @@ remontas24Site.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS,
             if (!!Session.token()) {
                 config.headers.Authorization = 'Bearer ' + Session.token();
             };
-
-
             return config;
         },
+
         response: function (response) {
             if (response.status === 401) {
                 // handle the case where the user is not authenticated

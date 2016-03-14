@@ -3,8 +3,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.data = lkData.init({}, function (value, responseHeaders) {
         $scope.masterData = value.master;
         $scope.categories = value.categories;
-        $scope.onlyCategoriesArray = $scope.createCategoriesArray($scope.categories);
-        $scope.tempMasterCategories = value.master.category_service.slice();
+        //        $scope.onlyCategoriesArray = $scope.createCategoriesArray($scope.categories);
+        $scope.tempMasterCategories = value.master.categories.slice();
         $scope.tempAdditional_service = value.master.additional_service.slice();
     });
 
@@ -29,13 +29,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.showCategoriesMenu = function () {
         $scope.interfaceOptions.showAddServices = false
         if (!$scope.interfaceOptions.showCategory) {
-            $scope.tempMasterCategories = $scope.masterData.category_service.slice()
+            $scope.tempMasterCategories = $scope.masterData.categories.slice()
         }
         return $scope.interfaceOptions.showCategory = !$scope.interfaceOptions.showCategory;
     }
 
     $scope.selectCategories = function () {
-        $scope.masterData.category_service = $scope.tempMasterCategories.slice();
+        $scope.masterData.categories = $scope.tempMasterCategories.slice();
         $scope.interfaceOptions.showCategory = false;
     }
 
@@ -53,25 +53,25 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }
     }
 
-    $scope.calcCategories = function (arrayCategories) {
-        var calc = 0;
-        for (var element in arrayCategories) {
-            if ($scope.onlyCategoriesArray.indexOf(arrayCategories[element]) >= 0) {
-                calc++;
-            }
-        }
-        return calc
-    }
+    //    $scope.calcCategories = function (arrayCategories) {
+    //        var calc = 0;
+    //        for (var element in arrayCategories) {
+    //            if ($scope.onlyCategoriesArray.indexOf(arrayCategories[element]) >= 0) {
+    //                calc++;
+    //            }
+    //        }
+    //        return calc
+    //    }
 
-    $scope.createCategoriesArray = function (categories) {
-        var resultCategoriesArray = [];
-        for (var element in categories) {
-            if (categories[element].type == "category") {
-                resultCategoriesArray.push(categories[element]._id);
-            }
-        }
-        return resultCategoriesArray;
-    }
+    //    $scope.createCategoriesArray = function (categories) {
+    //        var resultCategoriesArray = [];
+    //        for (var element in categories) {
+    //            if (categories[element].type == "category") {
+    //                resultCategoriesArray.push(categories[element]._id);
+    //            }
+    //        }
+    //        return resultCategoriesArray;
+    //    }
 
 
     // Функции для меню дополнительных видов работ

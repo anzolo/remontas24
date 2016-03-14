@@ -58,10 +58,10 @@
                             <div class="selectors clearfix">
 
                                 <div class="service-1">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{calcCategories(masterData.category_service)}}" ng-click="showCategoriesMenu()">
+                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{masterData.categories.length}}" ng-click="showCategoriesMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено категории <strong>{{calcCategories(tempMasterCategories)}}</strong></div>
+                                        <div class="counter">Отмечено категории <strong>{{tempMasterCategories.length}}</strong></div>
                                         <div ng-repeat="element in categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
                                     </div>

@@ -5,6 +5,7 @@ from common import JSONEncoder
 import adminka
 import conf
 
+
 # Ремонтас. По маршруту возвращается шаблон
 @route('/')
 def index():
@@ -27,7 +28,7 @@ def static(access, filename):
 # API ремонтаса. получение списка мастеров для главной странице по фильтру
 @route('/api/main/searchMasters')
 def rem_doSearchMasters():
-    result = {'filter': {'first_job': None, 'second_job': None, 'extra_jobs': {}}, 'masters_count': 80, 'current_page': 3, 'max_page': 6, 'masters': []}
+    result = {"filter": {"first_job": None, "second_job": None, "extra_jobs": {}}, "masters_count": 80, "current_page": 3, "max_page": 6, "masters": []}
 
     # perfect_master = {'name':"Петр", 'foto':img_path + "img-user-1.png", 'jobs_count':"5 работ", 'guid':"id", 'link':"src"}
 
@@ -35,9 +36,9 @@ def rem_doSearchMasters():
     #    result["masters"].append(perfect_master)
     for master in conf.db.masters.find():
         newMaster = {}
-        newMaster['name'] = master["name"]
-        newMaster['jobs_count'] = str(master["jobs_count"]) + " работ"
-        newMaster['avatar'] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+        newMaster["name"] = master["name"]
+        newMaster["jobs_count"] = str(master["jobs_count"]) + " работ"
+        newMaster["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
         newMaster["id"] = str(master["_id"])
         result["masters"].append(newMaster)
     return result
@@ -55,7 +56,7 @@ def rem_lkGetData():
             try:
                 master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
                 if master != None:
-                    #master["_id"] = str(master["_id"])
+                    # master["_id"] = str(master["_id"])
                     master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
                     lkResult["status"] = "OK"
 
@@ -78,6 +79,7 @@ def rem_lkGetData():
 
     else:
         return abort(401, "Sorry, access denied.")
+
 
 @route('/api/lk/mainDataSave', method='POST')
 def rem_mainDataSave():
