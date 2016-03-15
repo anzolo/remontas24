@@ -1069,11 +1069,12 @@ h2.master-counter span {
     margin: 0 10px 15px 10px;
     padding-bottom: 15px;
     border-bottom: 1px solid #dfdfdf;
+    text-align: center;
 }
 
 .service-list > div {
     background: #fff;
-    position: absolute;
+    position: relative;
     padding: 20px 15px;
     width: 350px;
     z-index: 999;
@@ -1081,6 +1082,8 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    float: left;
+    height: 221px;
 }
 
 .service-list > div.active {
@@ -1109,7 +1112,11 @@ h2.master-counter span {
 }
 
 .service-list > div + div {
-    /*margin-left: 65px;*/
+    margin-left: 65px;
+}
+
+.service-list > div:nth-of-type(3n + 4) {
+    margin-left: 0;
 }
 
 .service-list .more {
@@ -1152,6 +1159,10 @@ h2.master-counter span {
     text-align: center;
 }
 
+.my .fragment {
+    display: inline-block;
+}
+
 .service-list > div > div:not(.more) span,
 .service-list > div > .more > div span {
     display: inline-block;
@@ -1161,6 +1172,8 @@ h2.master-counter span {
     color: #333;
 }
 
+
+/*
 .service-list > #list-1 {
     left: -25px;
 }
@@ -1172,6 +1185,7 @@ h2.master-counter span {
 .service-list > #list-3 {
     right: -25px;
 }
+*/
 
 .delimiter {
     border-top: 1px solid #eee;

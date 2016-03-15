@@ -3,9 +3,9 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.data = lkData.init({}, function (value, responseHeaders) {
         $scope.masterData = value.master;
         $scope.categories = value.categories;
-        //        $scope.onlyCategoriesArray = $scope.createCategoriesArray($scope.categories);
         $scope.tempMasterCategories = value.master.categories.slice();
         $scope.tempAdditional_service = value.master.additional_service.slice();
+
     });
 
 
@@ -52,26 +52,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             $scope.tempMasterCategories.push(element._id);
         }
     }
-
-    //    $scope.calcCategories = function (arrayCategories) {
-    //        var calc = 0;
-    //        for (var element in arrayCategories) {
-    //            if ($scope.onlyCategoriesArray.indexOf(arrayCategories[element]) >= 0) {
-    //                calc++;
-    //            }
-    //        }
-    //        return calc
-    //    }
-
-    //    $scope.createCategoriesArray = function (categories) {
-    //        var resultCategoriesArray = [];
-    //        for (var element in categories) {
-    //            if (categories[element].type == "category") {
-    //                resultCategoriesArray.push(categories[element]._id);
-    //            }
-    //        }
-    //        return resultCategoriesArray;
-    //    }
 
 
     // Функции для меню дополнительных видов работ
