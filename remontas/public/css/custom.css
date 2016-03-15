@@ -1161,6 +1161,7 @@ h2.master-counter span {
 
 .my .fragment {
     display: inline-block;
+    width: 100%;
 }
 
 .service-list > div > div:not(.more) span,

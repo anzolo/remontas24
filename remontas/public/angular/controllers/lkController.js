@@ -81,4 +81,39 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }
     }
 
+
+    $scope.filtrMasterCategories = function (element) {
+        if ($scope.masterData.categories.indexOf(element.parent_id) >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.filtrMasterKind_services = function (parentIdElement) {
+        return function (elementServices) {
+            $scope.findByIdObj = elementServices._id
+            var filtered = $scope.categories.filter(findById);
+            if (filtered.length > 0) {
+                if (filtered[0].parent_id == parentIdElement) {
+                    return true;
+                }
+            }
+            return false
+        }
+    }
+
+    function findById(element) {
+        return element._id == $scope.findByIdObj;
+    }
+
+    $scope.findNameServiceById = function (elementId) {
+        $scope.findByIdObj = elementId
+        var filtered = $scope.categories.filter(findById);
+        if (filtered.length > 0) {
+            return filtered[0].val;
+        }
+        return ""
+    }
+
 }]);
