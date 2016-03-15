@@ -92,8 +92,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
     $scope.filtrMasterKind_services = function (parentIdElement) {
         return function (elementServices) {
-            $scope.findByIdObj = elementServices._id
-            var filtered = $scope.categories.filter(findById);
+            var filtered = $scope.categories.filter(findById(elementServices._id));
             if (filtered.length > 0) {
                 if (filtered[0].parent_id == parentIdElement) {
                     return true;
@@ -103,13 +102,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }
     }
 
-    function findById(element) {
-        return element._id == $scope.findByIdObj;
+    function findById(id) {
+        return function (element) {
+            return element._id == id;
+        }
     }
 
     $scope.findNameServiceById = function (elementId) {
-        $scope.findByIdObj = elementId
-        var filtered = $scope.categories.filter(findById);
+        var filtered = $scope.categories.filter(findById(elementId));
         if (filtered.length > 0) {
             return filtered[0].val;
         }
