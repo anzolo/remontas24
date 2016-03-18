@@ -61,7 +61,7 @@
                                     <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{masterData.categories.length}}" ng-click="showCategoriesMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено категории <strong>{{tempMasterCategories.length}}</strong></div>
+                                        <div class="counter">Отмечено категории <strong>{{tempMasterCategoriesSelect.length}}</strong></div>
                                         <div ng-repeat="element in categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
                                     </div>
@@ -95,14 +95,20 @@
                 <div class="fragment">
                     <h2 class="text-center">Услуги <span>47</span></h2>
 
-                    <div class="service-list clearfix">
-                        <div class="clearfix" ng-repeat="elementKind_services in categories | filter: filtrMasterCategories | orderBy:'order' | orderBy:'parent_id'">
-                            <h3>{{elementKind_services.val}}</h3>
+                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in masterData.categories">
 
-                            <div ng-repeat="elementServices in masterData.services2 | filter:filtrMasterKind_services(elementKind_services._id)">{{findNameServiceById(elementServices._id)}}<span>{{elementServices.cost}} руб/м<sup>2</sup></span>
+                        <!--                        <div class="clearfix" ng-class="{active: checkKind_services.isCheckKind_services && checkKind_services.checkKind_services == elementKind_services}" ng-repeat="elementKind_services in categories | filter: filtrMasterCategories | orderBy:'order' | orderBy:'parent_id'">-->
+                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterData.categories[elementCategories_key].kind_services">
+                            <h3>{{elementKind_services_value.name}}</h3>
+
+                            <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services">{{elementServices_value.name}}<span>{{elementServices_value.price}} <!-- {{elementServices_value.measure}}--></span>
                                 <div class="del">Удалить</div>
                             </div>
 
+
+
+                            <!--                            <div class="more" ng-class="{active: checkKind_services.isCheckKind_services}">-->
+                            <!--
                             <div class="more">
                                 <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
                                     <div class="del">Удалить</div>
@@ -144,9 +150,10 @@
                                     <div class="del">Удалить</div>
                                 </div>
                             </div>
-                            <a href="#" class="open-more">Посмотреть все</a>
-                            <a href="#" class="close-more">Свернуть</a>
+                            <a href="#" class="open-more" ng-if="!checkKind_services.isCheckKind_services" ng-click="selectKindServices(elementKind_services)">Посмотреть все</a>
+                            <a href="#" class="close-more" ng-if="checkKind_services.isCheckKind_services" ng-click="selectKindServices(elementKind_services)">Свернуть</a>
                             <a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a>
+-->
                         </div>
                     </div>
                 </div>

@@ -4,8 +4,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.masterData = value.master;
         $scope.categories = value.categories;
         $scope.tempMasterCategories = value.master.categories.slice();
+        $scope.tempMasterCategoriesSelect = [];
         $scope.tempAdditional_service = value.master.additional_service.slice();
-
     });
 
 
@@ -14,6 +14,11 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.interfaceOptions = {
         showCategory: false,
         showAddServices: false
+    };
+
+    $scope.checkKind_services = {
+        isCheckKind_services: false,
+        checkKind_services: null
     };
 
     $scope.saveMainData = function () {
@@ -29,34 +34,71 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.showCategoriesMenu = function () {
         $scope.interfaceOptions.showAddServices = false
         if (!$scope.interfaceOptions.showCategory) {
-            $scope.tempMasterCategories = $scope.masterData.categories.slice()
+            $scope.tempMasterCategories = $scope.masterData.categories.slice();
+            $scope.tempMasterCategoriesSelect = $scope.masterData.categories.slice();
         }
         return $scope.interfaceOptions.showCategory = !$scope.interfaceOptions.showCategory;
     }
 
     $scope.selectCategories = function () {
-        $scope.masterData.categories = $scope.tempMasterCategories.slice();
+        $scope.masterData.categories = $scope.tempMasterCategoriesSelect.slice();
         $scope.interfaceOptions.showCategory = false;
     }
 
-    $scope.isCheckedCategory = function (element) {
-        return $scope.tempMasterCategories.indexOf(element._id) >= 0;
+
+    // Поиск категории в масстиве мастера по её ID
+    function findOfMasterCategoriesById(id) {
+        return function (element) {
+            return element._id == id;
+        }
     }
 
+    // Поиск видов работ по ID категории
+    function findByParentId(id) {
+        return function (element) {
+            return element.parent_id == id;
+        }
+    }
+
+    $scope.isCheckedCategory = function (element) {
+        return $scope.tempMasterCategoriesSelect.findIndex(findOfMasterCategoriesById(element._id)) >= 0;
+    }
 
     $scope.checkCategory = function (element) {
-        var numberPosition = $scope.tempMasterCategories.indexOf(element._id)
-        if (numberPosition >= 0) {
-            $scope.tempMasterCategories.splice(numberPosition, 1);
+        var category = $scope.tempMasterCategoriesSelect.find(findOfMasterCategoriesById(element._id));
+        if (category == undefined) {
+            var tempCategory = $scope.tempMasterCategories.find(findOfMasterCategoriesById(element._id));
+            if (tempCategory == undefined) {
+                var newKind_services = [];
+                var tempNewKind_services = $scope.categories.filter(findByParentId(element._id));
+                for (var i = 0; i < tempNewKind_services.length; i++) {
+                    var kind_service = {
+                        "_id": tempNewKind_services[i]._id,
+                        "name": tempNewKind_services[i].val,
+                        "order": tempNewKind_services[i].order,
+                        "services": []
+                    };
+                    newKind_services.push(kind_service);
+                }
+                var newCategory = {
+                    "_id": element._id,
+                    "name": element.val,
+                    "order": element.order,
+                    "kind_services": newKind_services
+                };
+                $scope.tempMasterCategoriesSelect.push(newCategory);
+            } else {
+                $scope.tempMasterCategoriesSelect.push(tempCategory);
+            }
         } else {
-            $scope.tempMasterCategories.push(element._id);
+            $scope.tempMasterCategoriesSelect.splice($scope.tempMasterCategoriesSelect.indexOf(category), 1);
         }
     }
 
 
     // Функции для меню дополнительных видов работ
     $scope.showAdditionalServiceMenu = function () {
-        $scope.interfaceOptions.showCategory = false
+        $scope.interfaceOptions.showCategory = false;
         if (!$scope.interfaceOptions.showAddServices) {
             $scope.tempAdditional_service = $scope.masterData.additional_service.slice();
         }
@@ -73,7 +115,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     $scope.checkAdditionalService = function (element) {
-        var numberPosition = $scope.tempAdditional_service.indexOf(element)
+        var numberPosition = $scope.tempAdditional_service.indexOf(element);
         if (numberPosition >= 0) {
             $scope.tempAdditional_service.splice(numberPosition, 1);
         } else {
@@ -82,38 +124,46 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
 
-    $scope.filtrMasterCategories = function (element) {
-        if ($scope.masterData.categories.indexOf(element.parent_id) >= 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    $scope.filtrMasterKind_services = function (parentIdElement) {
-        return function (elementServices) {
-            var filtered = $scope.categories.filter(findById(elementServices._id));
-            if (filtered.length > 0) {
-                if (filtered[0].parent_id == parentIdElement) {
-                    return true;
-                }
-            }
-            return false
-        }
-    }
-
-    function findById(id) {
-        return function (element) {
-            return element._id == id;
-        }
-    }
-
-    $scope.findNameServiceById = function (elementId) {
-        var filtered = $scope.categories.filter(findById(elementId));
-        if (filtered.length > 0) {
-            return filtered[0].val;
-        }
-        return ""
-    }
+    // Функции для работ
+    //     $scope.filtrMasterCategories = function (element) {
+    //         return $scope.masterData.categories.findIndex(findIndexOfMasterCategoriesById(element.parent_id)) >= 0
+    //     }
+    //
+    //     $scope.filtrMasterKind_services = function (parentIdElement) {
+    //         return function (elementServices) {
+    //             var filtered = $scope.categories.filter(findById(elementServices._id));
+    //             if (filtered.length > 0) {
+    //                 if (filtered[0].parent_id == parentIdElement) {
+    //                     return true;
+    //                 }
+    //             }
+    //             return false
+    //         }
+    //     }
+    //
+    //     function findById(id) {
+    //         return function (element) {
+    //             return element._id == id;
+    //         }
+    //     }
+    //
+    //     $scope.findNameServiceById = function (elementId) {
+    //         var filtered = $scope.categories.filter(findById(elementId));
+    //         if (filtered.length > 0) {
+    //             return filtered[0].val;
+    //         }
+    //         return ""
+    //     }
+    //
+    //     $scope.selectKindServices = function (element) {
+    //         if ($scope.checkKind_services.isCheckKind_services) {
+    //             $scope.checkKind_services.checkKind_services = null;
+    //         } else {
+    //             $scope.checkKind_services.checkKind_services = element;
+    //         }
+    //         $scope.checkKind_services.isCheckKind_services = !$scope.checkKind_services.isCheckKind_services;
+    //
+    //
+    //     }
 
 }]);

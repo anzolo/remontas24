@@ -1059,9 +1059,12 @@ h2.master-counter span {
     margin-bottom: 40px;
 }
 
+
+/*
 .service-list .close-more {
     display: none;
 }
+*/
 
 .service-list h3 {
     font-size: 20px;
@@ -1088,6 +1091,7 @@ h2.master-counter span {
 
 .service-list > div.active {
     border: 1px solid #dfdfdf;
+    height: initial;
 }
 
 .service-list > div a {
