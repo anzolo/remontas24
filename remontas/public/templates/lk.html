@@ -102,7 +102,7 @@
                             <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterData.categories[elementCategories_key].kind_services | orderBy:'order'">
                                 <h3>{{elementKind_services_value.name}}</h3>
 
-                                <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services | orderBy:'order'">{{elementServices_value.name}}<span>{{elementServices_value.price}} <!-- {{elementServices_value.measure}}--></span>
+                                <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services  | orderBy:'order'">{{elementServices_value.name}}<span>{{elementServices_value.price}} <!-- {{elementServices_value.measure}}--></span>
                                     <div class="del">Удалить</div>
                                 </div>
 

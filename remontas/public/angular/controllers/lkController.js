@@ -1,8 +1,8 @@
 remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', function ($scope, lkData, masterMainData) {
 
     $scope.data = lkData.init({}, function (value, responseHeaders) {
-        $scope.masterData = value.master;
         $scope.categories = value.categories;
+        $scope.masterData = replaceMasterCategories(value.master);
         $scope.tempMasterCategories = value.master.categories.slice();
         $scope.tempMasterCategoriesSelect = [];
         $scope.tempAdditional_service = value.master.additional_service.slice();
@@ -45,6 +45,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.interfaceOptions.showCategory = false;
     }
 
+    function replaceMasterCategories(master) {
+        var categories = $scope.categories.filter(function (el) {
+            return el.type == "category"
+        });
+        console.log(categories);
+        return master;
+    }
 
     // Поиск категории в масстиве мастера по её ID
     function findOfMasterCategoriesById(id) {
