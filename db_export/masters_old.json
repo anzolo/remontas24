@@ -10,87 +10,34 @@
     "phone1" : "9221111111",
     "detail" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.",
     "phone2" : "1111111111",
-     "categories" : [
-        {
-            "_id" : "56e479cad8fa391cc4be6d6b", 
-            "name" : "Категория 1", 
-            "order" : NumberInt(1), 
-            "kind_services" : [
-                {
-                    "_id" : "56e479f8d8fa391cc4be6d6f", 
-                    "name" : "Вид работ 1 2", 
-                    "order" : NumberInt(2), 
-                    "services" : [
-                        {
-                            "_id" : "56e47a8dd8fa391cc4be6d76", 
-                            "name" : "Работа 1 2 1", 
-                            "order" : NumberInt(1), 
-                            "price" : NumberInt(100), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }, 
-                        {
-                            "_id" : "56e47a97d8fa391cc4be6d77", 
-                            "name" : "Работа 1 2 2", 
-                            "order" : NumberInt(2), 
-                            "price" : NumberInt(200), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }, 
-                        {
-                            "_id" : "56ead5fed8fa390d889ca1b6", 
-                            "name" : "Работа 1 2 4", 
-                            "order" : NumberInt(4), 
-                            "price" : NumberInt(400), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }, 
-                        {
-                            "_id" : "56ead618d8fa390d889ca1b9", 
-                            "name" : "Работа 1 2 7", 
-                            "order" : NumberInt(7), 
-                            "price" : NumberInt(700), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }, 
-                        {
-                            "_id" : "56ead622d8fa390d889ca1ba", 
-                            "name" : "Работа 1 2 8", 
-                            "order" : NumberInt(8), 
-                            "price" : NumberInt(800), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }, 
-                        {
-                            "_id" : "56e47aa1d8fa391cc4be6d78", 
-                            "name" : "Работа 1 2 3", 
-                            "order" : NumberInt(3), 
-                            "price" : NumberInt(300), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }
-                    ]
-                }
-            ]
-        }, 
-        {
-            "_id" : "56e479dcd8fa391cc4be6d6d", 
-            "name" : "Категория 3", 
-            "order" : NumberInt(3), 
-            "kind_services" : [
-                {
-                    "_id" : "56e47a0cd8fa391cc4be6d71", 
-                    "name" : "Вид работ 3 1", 
-                    "order" : NumberInt(1), 
-                    "services" : [
-                        {
-                            "_id" : "56e47a3ed8fa391cc4be6d72", 
-                            "name" : "Работа 3 1 1", 
-                            "order" : NumberInt(1), 
-                            "price" : NumberInt(300), 
-                            "measure" : "руб/м<sup>2</sup>"
-                        }
-                    ]
-                }
-            ]
-        }
-    ], 
+    "categories" : [
+        ObjectId("56dd193fdfdb2e3885200ba5"),
+        ObjectId("56dd280ddfdb2e3885200bb0")
+    ],
     "additional_service" : [
-
+        "contractWork",
+        "masterOnHour"
+    ],
+    "kind_services" : [],
+    "services" : [
+        {
+            "ObjectId(\"56dd29e7dfdb2e3885200bb6\")" : NumberInt(200)
+        },
+        {
+            "ObjectId(\"56dd2a52dfdb2e3885200bb7\")" : NumberInt(100)
+        },
+        {
+            "ObjectId(\"56e5a0e22310400c30fbfc20\")" : NumberInt(300)
+        },
+        {
+            "ObjectId(\"56e5a1422310400c30fbfc26\")" : NumberInt(400)
+        },
+        {
+            "ObjectId(\"56e5a19e23104023242596d8\")" : NumberInt(150)
+        },
+        {
+            "ObjectId(\"56e5a20923104023242596dd\")" : NumberInt(5000)
+        }
     ]
 }
 {

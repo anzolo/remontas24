@@ -1,0 +1,266 @@
+{
+    "_id" : ObjectId("56dd193fdfdb2e3885200ba5"),
+    "parent_id" : null,
+    "type" : "category",
+    "order" : NumberInt(1),
+    "val" : "Ремонтно-отделочные работы"
+}
+{
+    "_id" : ObjectId("56dd274bdfdb2e3885200bac"),
+    "parent_id" : null,
+    "type" : "category",
+    "order" : NumberInt(2),
+    "val" : "Натяжные потолки"
+}
+{
+    "_id" : ObjectId("56dd2777dfdb2e3885200bad"),
+    "parent_id" : null,
+    "type" : "category",
+    "order" : NumberInt(3),
+    "val" : "Мебель на заказ"
+}
+{
+    "_id" : ObjectId("56dd2795dfdb2e3885200bae"),
+    "parent_id" : null,
+    "type" : "category",
+    "order" : NumberInt(4),
+    "val" : "Дизайн интерьеров"
+}
+{
+    "_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
+    "parent_id" : ObjectId("56dd193fdfdb2e3885200ba5"),
+    "type" : "service",
+    "order" : NumberInt(1),
+    "val" : "Отделочные работы"
+}
+{
+    "_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "parent_id" : ObjectId("56dd193fdfdb2e3885200ba5"),
+    "type" : "service",
+    "order" : NumberInt(2),
+    "val" : "Сантехнические работы"
+}
+{
+    "_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
+    "parent_id" : ObjectId("56dd193fdfdb2e3885200ba5"),
+    "type" : "service",
+    "order" : NumberInt(3),
+    "val" : "Электромонтажные работы"
+}
+{
+    "_id" : ObjectId("56dd288bdfdb2e3885200bb2"),
+    "parent_id" : ObjectId("56dd274bdfdb2e3885200bac"),
+    "type" : "service",
+    "order" : NumberInt(1),
+    "val" : "Материал полотна"
+}
+{
+    "_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "parent_id" : ObjectId("56dd274bdfdb2e3885200bac"),
+    "type" : "service",
+    "order" : NumberInt(2),
+    "val" : "Дополнительные работы"
+}
+{
+    "_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "parent_id" : ObjectId("56dd2777dfdb2e3885200bad"),
+    "type" : "service",
+    "order" : NumberInt(1),
+    "val" : "Виды мебели"
+}
+{
+    "_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "parent_id" : ObjectId("56dd2795dfdb2e3885200bae"),
+    "type" : "service",
+    "order" : NumberInt(1),
+    "val" : "Дизайн интерьера"
+}
+{
+    "_id" : ObjectId("56dd29e7dfdb2e3885200bb6"),
+    "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
+    "type" : "job",
+    "order" : NumberInt(1),
+    "val" : "Оштукатуривание стен под маяк"
+}
+{
+    "_id" : ObjectId("56dd2a52dfdb2e3885200bb7"),
+    "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
+    "type" : "job",
+    "order" : NumberInt(2),
+    "val" : "Оштукатуривание стен визуальное равнение"
+}
+{
+    "_id" : ObjectId("56dd2a6ddfdb2e3885200bb8"),
+    "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
+    "type" : "job",
+    "order" : NumberInt(3),
+    "val" : "Шпатлевание стен"
+}
+{
+    "_id" : ObjectId("56dd2a7edfdb2e3885200bb9"),
+    "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
+    "type" : "job",
+    "order" : NumberInt(4),
+    "val" : "Грунтование стен"
+}
+{
+    "_id" : ObjectId("56ddcb222310400b88d21df3"),
+    "val" : "работа 1",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "type" : "job",
+    "order" : NumberInt(1)
+}
+{
+    "_id" : ObjectId("56ddcb372310400b88d21df4"),
+    "val" : "2",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "type" : "job",
+    "order" : NumberInt(2)
+}
+{
+    "_id" : ObjectId("56ddcb412310400b88d21df5"),
+    "val" : "наме 1",
+    "parent_id" : ObjectId("56dd2795dfdb2e3885200bae"),
+    "type" : "service",
+    "order" : NumberInt(2)
+}
+{
+    "_id" : ObjectId("56ddcb552310400b88d21df6"),
+    "val" : "12",
+    "parent_id" : ObjectId("56ddcb412310400b88d21df5"),
+    "type" : "job",
+    "order" : NumberInt(1)
+}
+{
+    "_id" : ObjectId("56ddcb642310400b88d21df7"),
+    "val" : "наме 2",
+    "parent_id" : ObjectId("56dd2795dfdb2e3885200bae"),
+    "type" : "service",
+    "order" : NumberInt(3)
+}
+{
+    "_id" : ObjectId("56ddcb6d2310400b88d21df8"),
+    "val" : "444",
+    "parent_id" : ObjectId("56ddcb642310400b88d21df7"),
+    "type" : "job",
+    "order" : NumberInt(1)
+}
+{
+    "_id" : ObjectId("56ddcb722310400b88d21df9"),
+    "val" : "444555",
+    "parent_id" : ObjectId("56ddcb642310400b88d21df7"),
+    "type" : "job",
+    "order" : NumberInt(2)
+}
+{
+    "_id" : ObjectId("56ddcb752310400b88d21dfa"),
+    "val" : "6666",
+    "parent_id" : ObjectId("56ddcb642310400b88d21df7"),
+    "type" : "job",
+    "order" : NumberInt(3)
+}
+{
+    "_id" : ObjectId("56e5a0bb2310400c30fbfc1e"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(1),
+    "val" : "Штробление стен под трубы"
+}
+{
+    "_id" : ObjectId("56e5a0cc2310400c30fbfc1f"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(2),
+    "val" : "Разводка ХВС, ГВС"
+}
+{
+    "_id" : ObjectId("56e5a0e22310400c30fbfc20"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(3),
+    "val" : "Установка раковины (мойдодыр)"
+}
+{
+    "_id" : ObjectId("56e5a0f02310400c30fbfc21"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(4),
+    "val" : "Установка ванны"
+}
+{
+    "_id" : ObjectId("56e5a0fd2310400c30fbfc22"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(5),
+    "val" : "Установка унитаза"
+}
+{
+    "_id" : ObjectId("56e5a10d2310400c30fbfc23"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(6),
+    "val" : "Установка смесителя"
+}
+{
+    "_id" : ObjectId("56e5a11d2310400c30fbfc24"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(7),
+    "val" : "Установка душевой кабины"
+}
+{
+    "_id" : ObjectId("56e5a1352310400c30fbfc25"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
+    "order" : NumberInt(1),
+    "val" : "Штробление стен под провода"
+}
+{
+    "_id" : ObjectId("56e5a1422310400c30fbfc26"),
+    "type" : "job",
+    "parent_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
+    "order" : NumberInt(2),
+    "val" : "Сверление отверстий для установки розеток, выключателей и распределительных коробок"
+}
+{
+    "_id" : ObjectId("56e5a19e23104023242596d8"),
+    "type" : "job",
+    "val" : "Матовые",
+    "order" : NumberInt(1),
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2")
+}
+{
+    "_id" : ObjectId("56e5a1b523104023242596d9"),
+    "type" : "job",
+    "val" : "Глянцевые",
+    "order" : NumberInt(2),
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2")
+}
+{
+    "_id" : ObjectId("56e5a1c823104023242596da"),
+    "type" : "job",
+    "val" : "Установка закладной под люстру",
+    "order" : NumberInt(1),
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3")
+}
+{
+    "_id" : ObjectId("56e5a1d623104023242596db"),
+    "type" : "job",
+    "val" : "Установка люстры",
+    "order" : NumberInt(2),
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3")
+}
+{
+    "_id" : ObjectId("56e5a1fa23104023242596dc"),
+    "type" : "job",
+    "val" : "Кухни",
+    "order" : NumberInt(1),
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4")
+}
+{
+    "_id" : ObjectId("56e5a20923104023242596dd"),
+    "type" : "job",
+    "val" : "Шкафы-купе",
+    "order" : NumberInt(2),
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4")
+}
