@@ -58,10 +58,10 @@
                             <div class="selectors clearfix">
 
                                 <div class="service-1">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{masterData.categories.length}}" ng-click="showCategoriesMenu()">
+                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{countCheckCategories()}}" ng-click="showCategoriesMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено категории <strong>{{tempMasterCategoriesSelect.length}}</strong></div>
+                                        <div class="counter">Отмечено категории <strong>{{countCheckCategories()}}</strong></div>
                                         <div ng-repeat="element in categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
                                     </div>
@@ -96,13 +96,13 @@
                     <h2 class="text-center">Услуги <span>47</span></h2>
 
                     <div class="service-list clearfix">
-                        <div ng-repeat="(elementCategories_key, elementCategories_value) in masterData.categories | orderBy:'order'">
+                        <div ng-repeat="(elementCategories_key, elementCategories_value) in masterData.categories" ng-if="elementCategories_value.visible">
 
                             <!--                        <div class="clearfix" ng-class="{active: checkKind_services.isCheckKind_services && checkKind_services.checkKind_services == elementKind_services}" ng-repeat="elementKind_services in categories | filter: filtrMasterCategories | orderBy:'order' | orderBy:'parent_id'">-->
-                            <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterData.categories[elementCategories_key].kind_services | orderBy:'order'">
+                            <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterData.categories[elementCategories_key].kind_services ">
                                 <h3>{{elementKind_services_value.name}}</h3>
 
-                                <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services  | orderBy:'order'">{{elementServices_value.name}}<span>{{elementServices_value.price}} <!-- {{elementServices_value.measure}}--></span>
+                                <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services  | orderBy:'order'">{{elementServices_value.name}}<span>{{elementServices_value.price}} {{elementServices_value.measure}}</span>
                                     <div class="del">Удалить</div>
                                 </div>
 
