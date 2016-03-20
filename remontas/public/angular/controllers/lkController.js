@@ -13,34 +13,19 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         showAddServices: false
     };
 
-    $scope.countKindServices = 0;
-    $scope.maxCountKindServices = 0;
-
 
     $scope.data = lkData.init({}, function (value, responseHeaders) {
         $scope.categories = value.categories;
         $scope.masterData = prepareMasterCategories(value.master, value.categories); //value.master;
-        $scope.maxCountKindServices = value.categories.filter(function (el) {
-            return el.type == "service"
-        }).length;
-
 
 
         $scope.tempMasterCategories = value.master.categories.slice();
         $scope.tempMasterCategoriesSelect = [];
         $scope.tempAdditional_service = value.master.additional_service.slice();
-
-
-
     });
 
 
-    //$scope.masterData = $scope.data["master"];
-
-    $scope.checkKind_services = {
-        isCheckKind_services: false,
-        checkKind_services: null
-    };
+    $scope.checkKind_services = null;
 
 
     $scope.saveMainData = function () {
@@ -194,56 +179,59 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         return newValue;
     };
 
-    $scope.filtrMasterCategories = function (element) {
-        console.log(element)
-        return element.visible;
-    };
+    $scope.selectKindServices = function (id) {
+        if ($scope.checkKind_services != id) $scope.checkKind_services = id;
+        else $scope.checkKind_services = null
+    }
 
-    $scope.firstRepeat = function () {
-            if ($scope.countKindServices == $scope.maxCountKindServices) {
-                $scope.countKindServices = 0
-            }
-            $scope.countKindServices++;
-            console.log($scope.countKindServices, $scope.countKindServices % 4 == 0)
-            return (($scope.countKindServices % 4 == 0) || ($scope.countKindServices == 1))
+    $scope.compareOrder = function (a, b) {
+        if (a.order < b.order) return -1;
+        else if (a.order > b.order) return 1;
+        else return 0;
+    }
 
-        }
-        //
-        //     $scope.filtrMasterKind_services = function (parentIdElement) {
-        //         return function (elementServices) {
-        //             var filtered = $scope.categories.filter(findById(elementServices._id));
-        //             if (filtered.length > 0) {
-        //                 if (filtered[0].parent_id == parentIdElement) {
-        //                     return true;
-        //                 }
-        //             }
-        //             return false
-        //         }
-        //     }
-        //
-        //     function findById(id) {
-        //         return function (element) {
-        //             return element._id == id;
-        //         }
-        //     }
-        //
-        //     $scope.findNameServiceById = function (elementId) {
-        //         var filtered = $scope.categories.filter(findById(elementId));
-        //         if (filtered.length > 0) {
-        //             return filtered[0].val;
-        //         }
-        //         return ""
-        //     }
-        //
-        //     $scope.selectKindServices = function (element) {
-        //         if ($scope.checkKind_services.isCheckKind_services) {
-        //             $scope.checkKind_services.checkKind_services = null;
-        //         } else {
-        //             $scope.checkKind_services.checkKind_services = element;
-        //         }
-        //         $scope.checkKind_services.isCheckKind_services = !$scope.checkKind_services.isCheckKind_services;
-        //
-        //
-        //     }
+    //    $scope.filtrMasterCategories = function (element) {
+    //        console.log(element)
+    //        return element.visible;
+    //    };
+
+
+    //
+    //     $scope.filtrMasterKind_services = function (parentIdElement) {
+    //         return function (elementServices) {
+    //             var filtered = $scope.categories.filter(findById(elementServices._id));
+    //             if (filtered.length > 0) {
+    //                 if (filtered[0].parent_id == parentIdElement) {
+    //                     return true;
+    //                 }
+    //             }
+    //             return false
+    //         }
+    //     }
+    //
+    //     function findById(id) {
+    //         return function (element) {
+    //             return element._id == id;
+    //         }
+    //     }
+    //
+    //     $scope.findNameServiceById = function (elementId) {
+    //         var filtered = $scope.categories.filter(findById(elementId));
+    //         if (filtered.length > 0) {
+    //             return filtered[0].val;
+    //         }
+    //         return ""
+    //     }
+    //
+    //     $scope.selectKindServices = function (element) {
+    //         if ($scope.checkKind_services.isCheckKind_services) {
+    //             $scope.checkKind_services.checkKind_services = null;
+    //         } else {
+    //             $scope.checkKind_services.checkKind_services = element;
+    //         }
+    //         $scope.checkKind_services.isCheckKind_services = !$scope.checkKind_services.isCheckKind_services;
+    //
+    //
+    //     }
 
             }]);

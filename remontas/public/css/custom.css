@@ -1124,12 +1124,15 @@ h2.master-counter span {
 }
 
 .service-list .more {
-    display: none;
+    display: block;
 }
 
+
+/*
 .service-list .more.active {
     display: block;
 }
+*/
 
 .service-list > div > div:not(.more),
 .service-list > div > .more > div {

@@ -1,4 +1,4 @@
-<div id="page-wrapper" ng-controller="masterController">
+<div id="page-wrapper">
 
     <div class="alert" ng-class="{'alert-success': saveStatus.success, 'alert-danger': !saveStatus.success}" role="alert" ng-if="saveStatus.show">{{saveStatus.text}}</div>
 
@@ -68,10 +68,32 @@
         <textarea ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"></textarea>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-if="master.categories != undefined">
         <div class="panel-heading">Категории и услуги</div>
         <div class="panel-body">
-            <!--            <input type="checkbox" ng-repeat="">-->
+
+
+            <label class="checkbox-inline" ng-repeat="category in categories|filter:{type:'category'}">
+                <input type="checkbox" ng-model="category.checked" ng-checked="isMasterCategory(category)" ng-click="checkCategory(category)"> {{category.val}}
+            </label>
+
+            <div class="panel panel-default" ng-repeat="category in categories|filter:{type:'category'}|filter:onlyMasterCategory()">
+                <div class="panel-heading">
+                    <h3>{{category.val}}</h3></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
+                            <h4>{{kind_service.val}}</h4>
+
+                            <div ng-repeat="service in masterServiceArray(category, kind_service)">{{service.name}}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 

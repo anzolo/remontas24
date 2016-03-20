@@ -28,11 +28,12 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
                 //$scope.master = data.master;
                 $scope.master = JSON.parse(JSON.stringify(data.master));
 
-                                Upload.urlToBlob(data.master.avatar).then(function (blob) {
-                                    $scope.master.avatar = blob;
-                                    $scope.master.avatar.lastModifiedDate = new Date();
-                                    $scope.master.avatar.name = data.master.avatar;
-                                });                $scope.categories = JSON.parse(JSON.stringify(data.categories));
+                Upload.urlToBlob(data.master.avatar).then(function (blob) {
+                    $scope.master.avatar = blob;
+                    $scope.master.avatar.lastModifiedDate = new Date();
+                    $scope.master.avatar.name = data.master.avatar;
+                });
+                $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
@@ -74,4 +75,56 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         //$state.go('adminka.masters');
 
     };
-}]);
+
+    //управление категориями, видами услуг, услугами
+    $scope.isMasterCategory = function (category) {
+        return $scope.master.categories.findIndex(function (el) {
+            return el._id == category._id
+        }) >= 0
+    }
+
+    $scope.onlyMasterCategory = function () {
+        return function (category) {
+            return $scope.master.categories.findIndex(function (el) {
+                return el._id == category._id
+            }) >= 0
+        };
+    };
+
+    $scope.masterServiceArray = function (category, kind_service) {
+        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+            return el._id == category._id
+        });
+        if (categoryIndex >= 0) {
+            var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+                return el._id == kind_service._id
+            });
+
+            if (kindServiceIndex >= 0) return $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services
+            else return [];
+
+        } else return [];
+    };
+
+    $scope.checkCategory = function (category) {
+        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+            return el._id == category._id
+        });
+
+        if (categoryIndex >= 0) {
+            $scope.master.categories.splice(categoryIndex, 1);
+        } else {
+            // var categoryDict = $scope.categories.find();
+
+            var newCategory = {
+                "_id": category._id,
+                "name": category.val,
+                "order": category.order,
+                "kind_services": []
+            };
+
+            $scope.master.categories.push(newCategory);
+
+        }
+    }
+            }]);
