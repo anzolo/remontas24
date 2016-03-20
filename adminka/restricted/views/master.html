@@ -3,6 +3,13 @@
     <div class="alert" ng-class="{'alert-success': saveStatus.success, 'alert-danger': !saveStatus.success}" role="alert" ng-if="saveStatus.show">{{saveStatus.text}}</div>
 
     <div class="form-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <button type="submit" class="btn btn-default" ng-click="saveMaster()">Сохранить</button>
+                <button type="submit" class="btn btn-default" ng-click="cancel()">Отмена/Выйти</button>
+            </div>
+        </div>
+
         <label>Тип профиля</label>
 
         <br>
@@ -17,6 +24,14 @@
                 <input type="radio" ng-model="master.kind_profile" name="profileKind" id="orgRadio" value="org"> Организация
             </label>
         </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputFile">Аватарка</label>
+        <br>
+        <img ngf-src="master.avatar">
+
+        <input type="file" id="inputFile" ngf-select ng-model="master.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
     </div>
 
     <div class="form-group" ng-if="master.kind_profile=='phys'">
@@ -52,14 +67,12 @@
         <!--  <input type="textarea" ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"> -->
         <textarea ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"></textarea>
     </div>
-    <div class="form-group">
-        <label for="inputFile">Аватарка</label>
-        <br>
-        <img ngf-src="master.avatar">
 
-        <input type="file" id="inputFile" ngf-select ng-model="master.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
-
+    <div class="panel panel-default">
+        <div class="panel-heading">Категории и услуги</div>
+        <div class="panel-body">
+            <!--            <input type="checkbox" ng-repeat="">-->
+        </div>
     </div>
-    <button type="submit" class="btn btn-default" ng-click="saveMaster()">Сохранить</button>
-    <button type="submit" class="btn btn-default" ng-click="cancel()">Отмена/Выйти</button>
+
 </div>

@@ -46,7 +46,7 @@
             <tbody>
                 <tr ng-repeat="element in categoriesData | filter:{'type':'job', 'parent_id':selectedService._id}" ng-click="selectJob(element)" ng-class="{'success' : element == selectedJob}">
                     <th scope=row>{{element.order}}</th>
-                    <td>{{element.val}} ({{element._id}})<a ui-sref="adminka.category({'categoriesData': categoriesData, 'element': element})"><i class="fa fa-pencil-square" ></i></a></td>
+                    <td>{{element.val}} ({{element._id}}) {{element.measure}}<a ui-sref="adminka.category({'categoriesData': categoriesData, 'element': element})"><i class="fa fa-pencil-square" ></i></a></td>
                 </tr>
             </tbody>
         </table>

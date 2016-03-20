@@ -37,6 +37,8 @@ remontas24App.controller('categoryController', ['$scope', '$state', 'category', 
     $scope.categoriesData = $stateParams.categoriesData;
     $scope.element = $stateParams.element;
 
+    $scope.nameForm = ($scope.element == null) ? "Добавление нового элемента" : "Редактирование элемента";
+
     $scope.typeArray = [
         {
             id: 'category',
@@ -57,11 +59,16 @@ remontas24App.controller('categoryController', ['$scope', '$state', 'category', 
         type: $scope.typeArray[0],
         category: null,
         service: null,
-        name: null
+        name: null,
+        measure: null
     }
 
     if ($scope.element != null) {
         $scope.selected.name = $scope.element.val;
+        $scope.selected.type = $scope.typeArray.find(function (el) {
+            return el.id == $scope.element.type
+        });
+        $scope.selected.measure = $scope.element.measure;
     }
 
     $scope.clearFields = function (mode) {
@@ -83,13 +90,17 @@ remontas24App.controller('categoryController', ['$scope', '$state', 'category', 
             if (newCategory.type == "service") {
                 newCategory.parent_id = $scope.selected.category._id
             } else if (newCategory.type == "job") {
-                newCategory.parent_id = $scope.selected.service._id
+                newCategory.parent_id = $scope.selected.service._id;
+                newCategory.measure = $scope.selected.measure;
             }
             category.saveNew(newCategory);
         } else {
             var editCategory = {
                 '_id': $scope.element._id,
                 'val': $scope.selected.name
+            }
+            if ($scope.selected.type.id == "job") {
+                editCategory.measure = $scope.selected.measure;
             }
             category.saveEdited(editCategory);
         }

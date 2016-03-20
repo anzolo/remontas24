@@ -2,7 +2,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Добавление нового элемента</h3>
+            <h3 class="panel-title">{{nameForm}}</h3>
         </div>
         <div class="panel-body">
 
@@ -46,6 +46,10 @@
             <div class="form-group">
                 <label for="inputVal">Наименование</label>
                 <input type="text" class="form-control" id="inputVal" ng-model="selected.name">
+
+                <label for="inputValMeasure" ng-if="selected.type.id == 'job'">Единица измерения</label>
+                <input type="text" class="form-control" id="inputValMeasure" ng-model="selected.measure" ng-if="selected.type.id == 'job'">
+
             </div>
             <button class="btn btn-default" ng-click="saveCategory()">Сохранить</button>
             <button class="btn btn-default" ui-sref="adminka.categories">Отмена</button>

@@ -6,29 +6,42 @@
 //    $scope.blogText = $sce.trustAsHtml($scope.article.text);
 //});
 
-remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', function ($scope, lkData, masterMainData) {
-
-    $scope.data = lkData.init({}, function (value, responseHeaders) {
-        $scope.categories = value.categories;
-        $scope.masterData = replaceMasterCategories(value.master, value.categories); //value.master;
-
-        $scope.tempMasterCategories = value.master.categories.slice();
-        $scope.tempMasterCategoriesSelect = [];
-        $scope.tempAdditional_service = value.master.additional_service.slice();
-    });
-
-
-    //$scope.masterData = $scope.data["master"];
+remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', function ($scope, lkData, masterMainData, $sce) {
 
     $scope.interfaceOptions = {
         showCategory: false,
         showAddServices: false
     };
 
+    $scope.countKindServices = 0;
+    $scope.maxCountKindServices = 0;
+
+
+    $scope.data = lkData.init({}, function (value, responseHeaders) {
+        $scope.categories = value.categories;
+        $scope.masterData = prepareMasterCategories(value.master, value.categories); //value.master;
+        $scope.maxCountKindServices = value.categories.filter(function (el) {
+            return el.type == "service"
+        }).length;
+
+
+
+        $scope.tempMasterCategories = value.master.categories.slice();
+        $scope.tempMasterCategoriesSelect = [];
+        $scope.tempAdditional_service = value.master.additional_service.slice();
+
+
+
+    });
+
+
+    //$scope.masterData = $scope.data["master"];
+
     $scope.checkKind_services = {
         isCheckKind_services: false,
         checkKind_services: null
     };
+
 
     $scope.saveMainData = function () {
         var master = {
@@ -54,7 +67,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.interfaceOptions.showCategory = false;
     }
 
-    function replaceMasterCategories(master, categories) {
+    function prepareMasterCategories(master, categories) {
         var onlyCategories = categories.filter(function (el) {
             return el.type == "category"
         });
@@ -176,9 +189,24 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
 
     // Функции для работ
+    $scope.preparePriceHTML = function (price, measure) {
+        var newValue = $sce.trustAsHtml(price + " " + measure);
+        return newValue;
+    };
+
     $scope.filtrMasterCategories = function (element) {
-            console.log(element)
-            return element.visible;
+        console.log(element)
+        return element.visible;
+    };
+
+    $scope.firstRepeat = function () {
+            if ($scope.countKindServices == $scope.maxCountKindServices) {
+                $scope.countKindServices = 0
+            }
+            $scope.countKindServices++;
+            console.log($scope.countKindServices, $scope.countKindServices % 4 == 0)
+            return (($scope.countKindServices % 4 == 0) || ($scope.countKindServices == 1))
+
         }
         //
         //     $scope.filtrMasterKind_services = function (parentIdElement) {

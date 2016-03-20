@@ -25,14 +25,14 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             id: masterID
         }, function (data) {
             if (data.status == "OK") {
-                //$scope.master = data;
-                $scope.master = JSON.parse(JSON.stringify(data));
+                //$scope.master = data.master;
+                $scope.master = JSON.parse(JSON.stringify(data.master));
 
-                Upload.urlToBlob(data.avatar).then(function (blob) {
-                    $scope.master.avatar = blob;
-                    $scope.master.avatar.lastModifiedDate = new Date();
-                    $scope.master.avatar.name = data.avatar;
-                });
+                                Upload.urlToBlob(data.master.avatar).then(function (blob) {
+                                    $scope.master.avatar = blob;
+                                    $scope.master.avatar.lastModifiedDate = new Date();
+                                    $scope.master.avatar.name = data.master.avatar;
+                                });                $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);

@@ -1055,7 +1055,7 @@ h2.master-counter span {
 
 .service-list {
     position: relative;
-    height: 220px;
+    /*    height: 220px;*/
     margin-bottom: 40px;
 }
 

@@ -90,20 +90,26 @@ def adm_getMaster(id):
 
         try:
             master = masters.find_one({"_id": ObjectId(id)})
+            result = {}
             if master != None:
                 # master["_id"] = str(master["_id"])
                 master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
-                master["status"] = "OK"
+
+
+                result["status"] = "OK"
+                result["master"] = master
+                result["categories"] = list(conf.db.category_job.find())
+
             else:
-                master["status"] = "Error"
-                master["note"] = "id not found"
+                result["status"] = "Error"
+                result["note"] = "id not found"
 
         except Exception as e:
-                master["status"] = "Error"
-                master["note"] = str(e)
+                result["status"] = "Error"
+                result["note"] = str(e)
                 print(e)
 
-        return JSONEncoder().encode(master)
+        return JSONEncoder().encode(result)
     else:
         return abort(401, "Sorry, access denied.")
 
@@ -277,7 +283,8 @@ def adm_saveCategory():
             try:
                 conf.db.category_job.update(
                     {"_id": ObjectId(request.json["_id"])},
-                    {"$set": {"val": request.json["val"]}}
+                    {"$set": {"val": request.json["val"],
+                              "measure": request.json["measure"]}}
                     )
                 Response.status = 200
                 return None

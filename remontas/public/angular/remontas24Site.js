@@ -1,4 +1,4 @@
-var remontas24Site = angular.module('remontas24Site', ['ui.router', 'ngStorage', 'remBackend', 'angularModalService', 'ui.mask']);
+var remontas24Site = angular.module('remontas24Site', ['ui.router', 'ngStorage', 'remBackend', 'angularModalService', 'ui.mask', 'ngSanitize']);
 
 remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationProvider, USER_ROLES, $httpProvider) {
     //$urlRouterProvider.otherwise("/");
