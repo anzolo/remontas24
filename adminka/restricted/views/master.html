@@ -85,22 +85,28 @@
                         <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
                             <h4>{{kind_service.val}} <i class="fa fa-plus-circle"></i></h4>
 
-                            <div ng-repeat="service in masterServiceArray(category, kind_service)">{{service.name}} <i class="fa fa-trash"></i></div>
+                            <div ng-repeat="service in masterServiceArray(category, kind_service)">{{service.name}} <a href="#" ng-click="deleteService(category, kind_service,service)"><i class="fa fa-trash"></i></a></div>
 
-                            <div class="form-group">
-                                <label for="inputAddService">Добавить услугу</label>
-                                <ui-select ng-model="newService.service" theme="bootstrap" id="inputAddService" on-select="">
-                                    <ui-select-match>
-                                        <span ng-bind="$select.selected.name"></span>
-                                    </ui-select-match>
-                                    <ui-select-choices repeat="item in [1,2,3,4]">
-                                        <span ng-bind="item.name"></span>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <ui-select ng-model="popupData[kind_service._id].newService" theme="bootstrap" on-select="">
+                                            <ui-select-match>
+                                                <span ng-bind="$select.selected.val"></span>
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="service in categories|filter:{parent_id:kind_service._id}|filter:onlyNewServices(category, kind_service)">
+                                                <span ng-bind="service.val"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+
+                                        <label for="inputPrice">Цена</label>
+                                        <input type="text" class="form-control" id="inputPrice" ng-model="popupData[kind_service._id].price">
+
+                                    </div>
+
+                                    <i class="fa fa-check-circle"></i><i class="fa fa-ban"></i>
+                                </div>
                             </div>
-
-                            <i class="fa fa-check-circle"></i><i class="fa fa-ban"></i>
-
                         </div>
                     </div>
                 </div>

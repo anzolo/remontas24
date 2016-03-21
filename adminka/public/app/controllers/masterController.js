@@ -18,6 +18,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         text: "empty"
     };
 
+    $scope.popupData = {
+        "newService": null
+    };
+
     var masterID = $stateParams.id;
 
     $scope.loadMaster = function () {
@@ -127,4 +131,33 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
         }
     }
+
+    $scope.deleteService = function (category, kind_service, service) {
+        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+            return el._id == category._id
+        });
+
+        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+            return el._id == kind_service._id
+        });
+
+        var serviceIndex = $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.findIndex(function (el) {
+            return el._id == service._id
+        });
+
+        try {
+            $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.splice(serviceIndex, 1);
+        } catch (ex) {
+            console.error("Error: ", ex.message);
+        }
+    }
+
+    $scope.onlyNewServices = function (category, kind_service) {
+        return function (service) {
+            return $scope.masterServiceArray(category, kind_service).findIndex(function (el) {
+                return el._id == service._id
+            }) < 0
+        };
+    }
+
             }]);
