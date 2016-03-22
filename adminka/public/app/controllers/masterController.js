@@ -14,30 +14,33 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         additional_service: []
     };
 
+    //categories при создании нового мастера нужно загружать справочник
+
     $scope.saveStatus = {
         show: false,
         success: true,
         text: "empty"
     };
 
-    $scope.popupData = {
-        "newService": null
+    $scope.formData = {
+        "newService": null,
+        "avatar": null
     };
 
-    var masterID = $stateParams.id;
+    //    var masterID = $stateParams.id;
 
     $scope.loadMaster = function () {
         var editMaster = masters.get({
-            id: masterID
+            id: $stateParams.id
         }, function (data) {
             if (data.status == "OK") {
                 //$scope.master = data.master;
                 $scope.master = JSON.parse(JSON.stringify(data.master));
 
                 Upload.urlToBlob(data.master.avatar).then(function (blob) {
-                    $scope.master.avatar = blob;
-                    $scope.master.avatar.lastModifiedDate = new Date();
-                    $scope.master.avatar.name = data.master.avatar;
+                    $scope.formData.avatar = blob;
+                    $scope.formData.avatar.lastModifiedDate = new Date();
+                    $scope.formData.avatar.name = data.master.avatar;
                 });
                 $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
@@ -53,7 +56,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         });
     }
 
-    if (masterID != undefined) $scope.loadMaster();
+    if ($stateParams.id != undefined) $scope.loadMaster();
 
     $scope.cancel = function () {
         $state.go('adminka.masters');
@@ -64,19 +67,23 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
         var connString = '/api/adminka/masters';
 
-        if (masterID != undefined) connString = connString + '/' + masterID;
+        //        if (masterID != undefined) connString = connString + '/' + masterID;
 
         Upload.upload({
             url: connString,
             data: {
-                avatar: file,
+                avatar: $scope.formData.avatar,
                 master: Upload.json($scope.master)
             }
+
         }).then(function (resp) {
             console.log('Success uploaded. Response: ' + resp.data);
             $scope.saveStatus.show = true;
             $scope.saveStatus.success = true;
-            $scope.saveStatus.text = "Мастер успешно сохранен.";
+            $scope.saveStatus.text = "Мастер успешно сохранен: " + resp.data.note;
+
+            if (resp.data.new_id != undefined) $stateParams.id = resp.data.new_id;
+
             $scope.loadMaster();
         }, function (resp) {
             console.log('Error status: ' + resp.status);
@@ -84,7 +91,6 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             $scope.saveStatus.success = false;
             $scope.saveStatus.text = "При сохранении мастера произошла ошибка: " + resp.status;
         });
-        //$state.go('adminka.masters');
 
     };
 

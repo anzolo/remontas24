@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 import uuid
 import os
 from common import JSONEncoder
+import json
 
 import conf
 
@@ -115,47 +116,39 @@ def adm_getMaster(id):
 
 
 # API админки. Пересохранить мастера при редактировании
-@route('/api/adminka/masters/<id>', method='POST')
-def adm_saveAfterEdit(id):
+@route('/api/adminka/masters', method='POST')
+def adm_manageMasters():
     result_check_rights = check_rights("admin", request)
     if result_check_rights["status"]:
         result = {}
-        newMaster = {}
 
         try:
-            oldMaster = conf.db.masters.find_one({"_id": ObjectId(id)})
+            newMaster = json.loads(request.forms.get("master"))
+
+            if "_id" in newMaster:
+
+                master_id = newMaster["_id"]
+
+                oldMaster = conf.db.masters.find_one({"_id": ObjectId(master_id)})
+
+                del newMaster["_id"]
+            else:
+                oldMaster = None
+
+            upload = request.files.get("avatar")
+
+            if upload != None:
+                filename, ext = os.path.splitext(upload.raw_filename)
+                new_filename = str(uuid.uuid4())
+                upload.filename = new_filename + ext
+                newMaster["avatar"] = upload.filename
+
+                upload.save(conf.storage_path)
+            else:
+                newMaster["avatar"] = conf.img_no_avatar
+
             if oldMaster != None:
-
-                upload = request.files.get("avatar")
-
-                if upload != None:
-                    filename, ext = os.path.splitext(upload.raw_filename)
-                    new_filename = str(uuid.uuid4())
-                    upload.filename = new_filename + ext
-                    newMaster["avatar"] = upload.filename
-                else:
-                    newMaster["avatar"] = conf.img_no_avatar
-
-                newMaster["name"] = request.forms.get("name")
-                newMaster["email"] = request.forms.get("email")
-                newMaster["jobs_count"] = request.forms.get("jobs_count")
-                newMaster["kind_profile"] = request.forms.get("kind_profile")
-                newMaster["detail"] = request.forms.get("detail")
-                newMaster["phone1"] = request.forms.get("phone1")
-                newMaster["phone2"] = request.forms.get("phone2")
-                newMaster["categories"] = request.forms.get("categories")
-                newMaster["additional_service"] = request.forms.get("additional_service")
-                if request.forms.get("kind_profile") == "phys":
-                    newMaster["sername"] = request.forms.get("sername")
-                    newMaster["patronymic"] = request.forms.get("patronymic")
-
-                # print("newMaster = ",newMaster)
-
-                resultQuery = conf.db.masters.update_one({"_id": ObjectId(id)}, {"$set": newMaster})
-
-                # print("resultQuery.result.matched_count = ",resultQuery.result.matched_count)
-                # print("resultQuery.result.modified_count = ",resultQuery.result.modified_count)
-                # print("----------",oldAvatarFileName)
+                conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
 
                 oldFilePath = conf.storage_path + "/" + oldMaster["avatar"]
 
@@ -165,13 +158,13 @@ def adm_saveAfterEdit(id):
                 else:    # Show an error ##
                     print("Error: %s file not found" % oldMaster["avatar"])
 
-                upload.save(conf.storage_path)
-
-                result["status"] = "OK"
+                result["note"] = "Отредактирован существующий мастер"
 
             else:
-                result["status"] = "Error"
-                result["note"] = "id not found"
+                result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
+                result["note"] = "Создан новый мастер"
+
+            result["status"] = "OK"
 
         except Exception as e:
                 result["status"] = "Error"
@@ -179,59 +172,7 @@ def adm_saveAfterEdit(id):
                 print(e)
 
         return result
-    else:
-        return abort(401, "Sorry, access denied.")
 
-
-# API админки. создание нового мастера в админке
-@route('/api/adminka/masters', method='POST')
-def adm_createNewMaster():
-    result_check_rights = check_rights("admin", request)
-    if result_check_rights["status"]:
-
-        result = {}
-        newMaster = {}
-
-        # print(request.forms.get('name'))
-        # print(request.forms.get('works'))
-
-        upload = request.files.get("avatar")
-
-        if upload != None:
-            filename, ext = os.path.splitext(upload.raw_filename)
-            new_filename = str(uuid.uuid4())
-            upload.filename = new_filename + ext
-            newMaster["avatar"] = upload.filename
-        else:
-            newMaster["avatar"] = conf.img_no_avatar
-
-        # print(upload.filename)
-
-        newMaster["name"] = request.forms.get("name")
-        newMaster["email"] = request.forms.get("email")
-        newMaster["jobs_count"] = request.forms.get("jobs_count")
-        newMaster["kind_profile"] = request.forms.get("kind_profile")
-        newMaster["detail"] = request.forms.get("detail")
-        newMaster["phone1"] = request.forms.get("phone1")
-        newMaster["phone2"] = request.forms.get("phone2")
-        if request.forms.get("kind_profile") == "phys":
-            newMaster["sername"] = request.forms.get("sername")
-            newMaster["patronymic"] = request.forms.get("patronymic")
-
-        try:
-            conf.db.masters.insert_one(newMaster)
-
-            if upload != None:
-                upload.save(conf.storage_path)
-
-            result["status"] = "OK"
-
-        except Exception as e:
-            #print(e)
-            result["status"] = "Error"
-            result["note"] = str(e)
-
-        return result
     else:
         return abort(401, "Sorry, access denied.")
 

@@ -29,9 +29,9 @@
     <div class="form-group">
         <label for="inputFile">Аватарка</label>
         <br>
-        <img ngf-src="master.avatar">
+        <img ngf-src="formData.avatar">
 
-        <input type="file" id="inputFile" ngf-select ng-model="master.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
+        <input type="file" id="inputFile" ngf-select ng-model="formData.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
     </div>
 
     <div class="form-group" ng-if="master.kind_profile=='phys'">
@@ -83,7 +83,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
-                            <h4>{{kind_service.val}} <a href="#" ng-click="popupData[kind_service._id].showAddBlock=true"><i class="fa fa-plus-circle"></i></a></h4>
+                            <h4>{{kind_service.val}} <button type="button" class="btn btn-primary" ng-click="formData[kind_service._id].showAddBlock=true"><i class="fa fa-plus-circle"></i></button></h4>
 
                             <table class="table table-bordered">
                                 <thead>
@@ -104,11 +104,11 @@
                                 </tbody>
                             </table>
 
-                            <div class="panel panel-default" ng-if="popupData[kind_service._id].showAddBlock">
+                            <div class="panel panel-default" ng-if="formData[kind_service._id].showAddBlock">
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label for="comboService">Услуга</label>
-                                        <ui-select id="comboService" ng-model="popupData[kind_service._id].newService" theme="bootstrap" on-select="">
+                                        <ui-select id="comboService" ng-model="formData[kind_service._id].newService" theme="bootstrap" on-select="">
                                             <ui-select-match>
                                                 <span ng-bind="$select.selected.val"></span>
                                             </ui-select-match>
@@ -118,12 +118,12 @@
                                         </ui-select>
 
                                         <label for="inputPrice">Цена</label>
-                                        <input type="number" class="form-control" id="inputPrice" ng-model="popupData[kind_service._id].price">
+                                        <input type="number" class="form-control" id="inputPrice" ng-model="formData[kind_service._id].price">
 
                                     </div>
 
-                                    <button type="button" class="btn btn-danger pull-right" ng-click="popupData[kind_service._id].showAddBlock=false"> <i class="fa fa-ban"></i></button>
-                                    <button type="button" class="btn btn-success pull-right" ng-click="addService(category, kind_service,popupData[kind_service._id])" ng-disabled="popupData[kind_service._id].newService==null"><i class="fa fa-check-circle"></i></button>
+                                    <button type="button" class="btn btn-danger pull-right" ng-click="formData[kind_service._id].showAddBlock=false"> <i class="fa fa-ban"></i></button>
+                                    <button type="button" class="btn btn-success pull-right" ng-click="addService(category, kind_service,formData[kind_service._id])" ng-disabled="formData[kind_service._id].newService==null"><i class="fa fa-check-circle"></i></button>
 
                                 </div>
                             </div>
