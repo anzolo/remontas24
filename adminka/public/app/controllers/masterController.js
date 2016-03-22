@@ -9,7 +9,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         kind_profile: "phys",
         detail: "",
         phone1: "",
-        phone2: ""
+        phone2: "",
+        categories: [],
+        additional_service: []
     };
 
     $scope.saveStatus = {
@@ -39,6 +41,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
                 });
                 $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
+                if ($scope.master.categories == null) $scope.master.categories = [];
+                if ($scope.master.additional_service == null) $scope.master.additional_service = [];
+
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
                 $state.go('adminka.masters');
@@ -63,7 +68,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
         Upload.upload({
             url: connString,
-            data: $scope.master,
+            data: {
+                avatar: file,
+                master: Upload.json($scope.master)
+            }
         }).then(function (resp) {
             console.log('Success uploaded. Response: ' + resp.data);
             $scope.saveStatus.show = true;
@@ -147,9 +155,50 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
         try {
             $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.splice(serviceIndex, 1);
+
+            if ($scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.length == 0) $scope.master.categories[categoryIndex].kind_services.splice(kindServiceIndex, 1);
+
         } catch (ex) {
             console.error("Error: ", ex.message);
         }
+    }
+
+    $scope.addService = function (category, kind_service, data) {
+        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+            return el._id == category._id
+        });
+
+        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+            return el._id == kind_service._id
+        });
+
+        var newService = {
+            _id: data.newService._id,
+            measure: data.newService.measure,
+            name: data.newService.val,
+            order: data.newService.order,
+            price: data.price
+        }
+
+
+        //console.log(categoryIndex, kindServiceIndex, newService);
+        if (kindServiceIndex < 0) {
+            var newKindService = {
+                _id: kind_service._id,
+                name: kind_service.val,
+                order: kind_service.order,
+                services: []
+            };
+            newKindService.services.push(newService);
+
+            $scope.master.categories[categoryIndex].kind_services.push(newKindService);
+
+        } else $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.push(newService);
+
+        data.showAddBlock = false;
+        data.newService = null;
+        data.price = 0;
+
     }
 
     $scope.onlyNewServices = function (category, kind_service) {

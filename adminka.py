@@ -143,6 +143,8 @@ def adm_saveAfterEdit(id):
                 newMaster["detail"] = request.forms.get("detail")
                 newMaster["phone1"] = request.forms.get("phone1")
                 newMaster["phone2"] = request.forms.get("phone2")
+                newMaster["categories"] = request.forms.get("categories")
+                newMaster["additional_service"] = request.forms.get("additional_service")
                 if request.forms.get("kind_profile") == "phys":
                     newMaster["sername"] = request.forms.get("sername")
                     newMaster["patronymic"] = request.forms.get("patronymic")

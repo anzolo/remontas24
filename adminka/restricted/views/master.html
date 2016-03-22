@@ -83,14 +83,32 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
-                            <h4>{{kind_service.val}} <i class="fa fa-plus-circle"></i></h4>
+                            <h4>{{kind_service.val}} <a href="#" ng-click="popupData[kind_service._id].showAddBlock=true"><i class="fa fa-plus-circle"></i></a></h4>
 
-                            <div ng-repeat="service in masterServiceArray(category, kind_service)">{{service.name}} <a href="#" ng-click="deleteService(category, kind_service,service)"><i class="fa fa-trash"></i></a></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Услуга</th>
+                                        <th>Цена</th>
+                                        <th>Ед. изм</th>
+                                        <th>*</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="service in masterServiceArray(category, kind_service)">
+                                        <td>{{service.name}}</td>
+                                        <td>{{service.price}}</td>
+                                        <td>{{service.measure}}</td>
+                                        <td><a href="#" ng-click="deleteService(category, kind_service,service)"><i class="fa fa-trash"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" ng-if="popupData[kind_service._id].showAddBlock">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <ui-select ng-model="popupData[kind_service._id].newService" theme="bootstrap" on-select="">
+                                        <label for="comboService">Услуга</label>
+                                        <ui-select id="comboService" ng-model="popupData[kind_service._id].newService" theme="bootstrap" on-select="">
                                             <ui-select-match>
                                                 <span ng-bind="$select.selected.val"></span>
                                             </ui-select-match>
@@ -100,11 +118,13 @@
                                         </ui-select>
 
                                         <label for="inputPrice">Цена</label>
-                                        <input type="text" class="form-control" id="inputPrice" ng-model="popupData[kind_service._id].price">
+                                        <input type="number" class="form-control" id="inputPrice" ng-model="popupData[kind_service._id].price">
 
                                     </div>
 
-                                    <i class="fa fa-check-circle"></i><i class="fa fa-ban"></i>
+                                    <button type="button" class="btn btn-danger pull-right" ng-click="popupData[kind_service._id].showAddBlock=false"> <i class="fa fa-ban"></i></button>
+                                    <button type="button" class="btn btn-success pull-right" ng-click="addService(category, kind_service,popupData[kind_service._id])" ng-disabled="popupData[kind_service._id].newService==null"><i class="fa fa-check-circle"></i></button>
+
                                 </div>
                             </div>
                         </div>
