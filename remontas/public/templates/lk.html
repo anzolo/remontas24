@@ -94,7 +94,7 @@
 
                 <div class="fragment">
                     <h2 class="text-center">Услуги <span>47</span></h2>
-                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in masterData.categories.sort(compareOrder)" ng-if="elementCategories_value.visible">
+                    <div class="service-list clearfix" ng-class="{height2: elementCategories_value.kind_services.length > 3}" ng-repeat="(elementCategories_key, elementCategories_value) in masterData.categories.sort(compareOrder)" ng-if="elementCategories_value.visible">
 
                         <div class="clearfix" ng-class="{active: elementKind_services_value._id == checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterData.categories[elementCategories_key].kind_services.sort(compareOrder)">
                             <h3>{{elementKind_services_value.name}}</h3>
@@ -108,47 +108,9 @@
                                 <div ng-repeat="(elementServices_key, elementServices_value) in masterData.categories[elementCategories_key].kind_services[elementKind_services_key].services.sort(compareOrder).slice(5)">{{elementServices_value.name}}<span ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></span>
                                     <div class="del">Удалить</div>
                                 </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
-                                <div>Укладка плитки<span>200 руб/м<sup>2</sup></span>
-                                    <div class="del">Удалить</div>
-                                </div>
+
                             </div>
-                            <a href="#" class="open-more" ng-if="elementKind_services_value._id != checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                            <a href="#" class="open-more" ng-if="(elementKind_services_value._id != checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
                             <a href="#" class="close-more" ng-if="elementKind_services_value._id == checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
                             <a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a>
                         </div>

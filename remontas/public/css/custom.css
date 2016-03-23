@@ -1055,8 +1055,12 @@ h2.master-counter span {
 
 .service-list {
     position: relative;
-    /*    height: 220px;*/
+    height: 220px;
     margin-bottom: 40px;
+}
+
+.service-list.height2 {
+    height: 480px;
 }
 
 
@@ -1077,7 +1081,7 @@ h2.master-counter span {
 
 .service-list > div {
     background: #fff;
-    position: relative;
+    position: absolute;
     padding: 20px 15px;
     width: 350px;
     z-index: 999;
@@ -1085,21 +1089,20 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    float: left;
-    height: 221px;
+    /*    float: left;*/
+    min-height: 221px;
 }
 
 .service-list > div.active {
     border: 1px solid #dfdfdf;
-    height: initial;
+    z-index: 1000;
 }
 
 .service-list > div a {
     font-size: 14px;
     text-decoration: underline;
-    position: relative;
-    top: 10px;
-    left: 10px;
+    position: absolute;
+    bottom: 10px;
 }
 
 .service-list > div a.add-service:before {
@@ -1110,22 +1113,45 @@ h2.master-counter span {
 .service-list > div a.add-service {
     color: #ff5c0f;
     float: right;
-    margin-right: 25px;
+    /*    margin-right: 25px;*/
     text-decoration: none;
     border-bottom: 1px solid #ff5c0f;
+    right: 25px;
+}
+
+.service-list .close-more,
+.service-list .open-more {
+    left: 25px;
 }
 
 .service-list > div + div {
-    margin-left: 65px;
+    /*    margin-left: 65px;*/
 }
 
-.service-list > div:nth-of-type(3n + 4) {
-    margin-left: 0;
+.service-list > div:nth-of-type(3n + 1) {
+    left: -25px;
 }
 
+.service-list > div:nth-of-type(3n + 2) {
+    left: 415px;
+}
+
+.service-list > div:nth-of-type(3n + 3) {
+    right: -25px;
+}
+
+.service-list > div:nth-of-type(4),
+.service-list > div:nth-of-type(5),
+.service-list > div:nth-of-type(6) {
+    top: 261px;
+}
+
+
+/*
 .service-list .more {
     display: block;
 }
+*/
 
 
 /*
@@ -1149,6 +1175,10 @@ h2.master-counter span {
 .my .service-list > div > div:not(.more):hover,
 .my .service-list > div > .more > div:hover {
     background: none;
+}
+
+.service-list > div > .more > div:last-of-type {
+    margin-bottom: 15px;
 }
 
 .my .service-list .del {
