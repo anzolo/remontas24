@@ -11,6 +11,9 @@ import json
 
 import conf
 
+from bottle import debug
+debug(True)
+
 
 # Админка. По маршруту возвращается шаблон
 @route('/adminka')
@@ -219,12 +222,17 @@ def adm_saveCategory():
                 return None
 
             except Exception as e:
-                abort(500, str(e))
                 print(e)
+                return abort(500, str(e))
+
 
         elif request.params.method == "saveEdited":
             try:
-                conf.db.category_job.update(
+                if not ("measure" in request.json):
+                    request.json["measure"]=""
+
+
+                conf.db.category_job.update_one(
                     {"_id": ObjectId(request.json["_id"])},
                     {"$set": {"val": request.json["val"],
                               "measure": request.json["measure"]}}
@@ -233,8 +241,9 @@ def adm_saveCategory():
                 return None
 
             except Exception as e:
-                abort(500, str(e))
                 print(e)
+                return abort(500, str(e))
+
 
     else:
         return abort(401, "Sorry, access denied.")

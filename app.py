@@ -5,6 +5,9 @@ import common
 import adminka
 import remontas
 
+from bottle import debug
+debug(True)
+
 # Run bottle internal test server when invoked directly ie: non-uxsgi mode
 if __name__ == '__main__':
     run(host='127.0.0.1', port=8080)
