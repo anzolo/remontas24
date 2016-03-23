@@ -1,4 +1,4 @@
-remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', function ($scope, masters, $state, Upload, $stateParams) {
+remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', 'category', function ($scope, masters, $state, Upload, $stateParams, category) {
     $scope.master = {
         name: "",
         sername: "",
@@ -56,7 +56,8 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         });
     }
 
-    if ($stateParams.id != undefined) $scope.loadMaster();
+    if ($stateParams.id != undefined) $scope.loadMaster()
+    else $scope.categories = category.getAll();
 
     $scope.cancel = function () {
         $state.go('adminka.masters');
