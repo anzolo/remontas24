@@ -299,12 +299,12 @@ $(function () {
     /**
      *  ЛК -> Услуги: показать "удалить"
      */
-    $('.my .service-list > div > div:not(.more), .my .service-list > div > .more > div').on('mouseenter', function () {
-        $(this).find('.del').show();
-    });
-    $('.my .service-list > div > div:not(.more), .my .service-list > div > .more > div').on('mouseleave', function () {
-        $(this).find('.del').hide();
-    });
+    //    $('.my .service-list > div > div:not(.more), .my .service-list > div > .more > div').on('mouseenter', function () {
+    //        $(this).find('.del').show();
+    //    });
+    //    $('.my .service-list > div > div:not(.more), .my .service-list > div > .more > div').on('mouseleave', function () {
+    //        $(this).find('.del').hide();
+    //    });
 
 
 

@@ -1182,7 +1182,7 @@ h2.master-counter span {
 }
 
 .my .service-list .del {
-    display: none;
+    /*    display: none;*/
     position: absolute;
     top: 0;
     left: 0;

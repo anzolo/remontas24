@@ -26,6 +26,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
 
     $scope.checkKind_services = null;
+    $scope.mouseMoveServise = null;
 
 
     $scope.saveMainData = function () {
