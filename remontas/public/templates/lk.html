@@ -29,7 +29,12 @@
                 <!-- /Что это? -->
 
                 <div class="person clearfix">
-                    <div class="photo"><img ng-src="{{masterData.avatar}}" width="209" height="249"></div>
+                    <div class="photo">
+                        <img ng-src="{{masterData.avatar}}" width="209" height="249" ng-if="interfaceOptions.newAvatar==null">
+                        <img ngf-src="interfaceOptions.newAvatar" ngf-resize="{width: 200, height: 200, quality: 0.9}">
+                        <button class="btn changeAvatarButton" ng-click="changeAvatar()">Изменить</button>
+                    </div>
+
                     <div class="fields">
                         <div class="part-1">
                             <div class="username clearfix" ng-if="masterData.kind_profile=='phys'">
@@ -84,7 +89,7 @@
                             <div>
                                 <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр." ng-model="masterData.detail"></textarea>
                             </div>
-                            <button class="btn saveMaster" ng-click="saveMainData()">Сохранить</button>
+                            <button class="btn saveMaster" ng-click="saveMaster()">Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -108,10 +113,12 @@
                                     <div class="del" ng-if="elementServices_value._id == mouseMoveServise">Удалить</div>
                                 </div>
                             </div>
+                            <div class="addmore">
 
-                            <a href="#" class="open-more" ng-if="(elementKind_services_value._id != checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
-                            <a href="#" class="close-more" ng-if="elementKind_services_value._id == checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                            <a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a>
+                                <a href="#" class="open-more" ng-if="(elementKind_services_value._id != checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                <a href="#" class="close-more" ng-if="elementKind_services_value._id == checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
+                                <a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,37 +134,15 @@
                     <div class="works clearfix">
                         <a href="#" class="item add open-modal" data-modal-name="add-work"></a>
 
-                        <a href="#" class="item">
+
+                        <a href="#" class="item" ng-repeat="work in masterData.works">
                             <div class="edit"></div>
                             <div class="img">
-                                <img src="assets/img/img-room-1.png" width="187" height="187">
+                                <img ng-src="{{getImgLink(work)}}" width="187" height="187">
                             </div>
                             <div class="title">Заголовок</div>
                         </a>
 
-                        <a href="#" class="item">
-                            <div class="edit"></div>
-                            <div class="img">
-                                <img src="assets/img/img-room-1.png" width="187" height="187">
-                            </div>
-                            <div class="title">Заголовок
-                                <br> в две строки</div>
-                        </a>
-
-                        <a href="#" class="item">
-                            <div class="edit"></div>
-                            <div class="img">
-                                <img src="assets/img/img-room-1.png" width="187" height="187">
-                            </div>
-                            <div class="title">Заголовок</div>
-                        </a>
-                        <a href="#" class="item">
-                            <div class="edit"></div>
-                            <div class="img">
-                                <img src="assets/img/img-room-1.png" width="187" height="187">
-                            </div>
-                            <div class="title">Заголовок</div>
-                        </a>
                         <a href="#" class="item">
                             <div class="edit"></div>
                             <div class="img">

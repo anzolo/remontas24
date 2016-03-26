@@ -29,6 +29,7 @@
     <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
     <script src="/remontas/public/bower_components/angular-ui-mask/dist/mask.js"></script>
     <script src="/remontas/public/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/remontas/public/bower_components/ng-file-upload/ng-file-upload-all.js"></script>
 
 </head>
 

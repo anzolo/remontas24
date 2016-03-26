@@ -1,42 +1,49 @@
-//remontas24App.controller('blogElementController', ['$scope', '$log', '$sce', '$routeParams', 'Blog', function ($scope, $log, $sce, $routeParams, Blog) {
-//
-//    $scope.article = Blog.get({
-//        id: $routeParams.id
-//    }, function () {
-//    $scope.blogText = $sce.trustAsHtml($scope.article.text);
-//});
-
-remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', function ($scope, lkData, masterMainData, $sce) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', function ($scope, lkData, masterMainData, $sce, ModalService, Upload) {
 
     $scope.interfaceOptions = {
         showCategory: false,
-        showAddServices: false
+        showAddServices: false,
+        newAvatar: null
     };
 
+    var loadData = function () {
 
-    $scope.data = lkData.init({}, function (value, responseHeaders) {
-        $scope.categories = value.categories;
-        $scope.masterData = prepareMasterCategories(value.master, value.categories); //value.master;
+        lkData.init({}, function (value, responseHeaders) {
+            $scope.categories = value.categories;
+            $scope.masterData = prepareMasterCategories(value.master, value.categories); //value.master;
 
+            $scope.tempMasterCategories = value.master.categories.slice();
+            $scope.tempMasterCategoriesSelect = [];
+            $scope.tempAdditional_service = value.master.additional_service.slice();
+        })
 
-        $scope.tempMasterCategories = value.master.categories.slice();
-        $scope.tempMasterCategoriesSelect = [];
-        $scope.tempAdditional_service = value.master.additional_service.slice();
-    });
+    }
 
+    loadData();
 
     $scope.checkKind_services = null;
     $scope.mouseMoveServise = null;
 
+    $scope.saveMaster = function () {
 
-    $scope.saveMainData = function () {
-        var master = {
-            detail: $scope.masterData.detail,
-            phone1: $scope.masterData.phone1,
-            phone2: $scope.masterData.phone2
-        };
-        masterMainData.save(master);
-    }
+        var connString = '/api/lk';
+
+        Upload.upload({
+            url: connString,
+            data: {
+                avatar: $scope.interfaceOptions.newAvatar,
+                master: Upload.json($scope.masterData)
+            }
+
+        }).then(function (resp) {
+            //console.log('Success uploaded. Response: ' + resp.data);
+
+            loadData();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        });
+
+    };
 
     // Функции для меню категорий
     $scope.showCategoriesMenu = function () {
@@ -86,7 +93,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 master.categories.push(newCategory);
             } else {
 
-                master.categories[categoryKey].visible = true;
+                master.categories[categoryKey].visible = true; //удалять перед сохранением.
                 var kindServices = categories.filter(function (el) {
                     return el.parent_id == master.categories[categoryKey]._id
                 });
@@ -191,48 +198,42 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         else return 0;
     }
 
-    //    $scope.filtrMasterCategories = function (element) {
-    //        console.log(element)
-    //        return element.visible;
-    //    };
+    //изменение аватарки
 
+    $scope.changeAvatar = function () {
+        ModalService.showModal({
+            templateUrl: "/remontas/public/templates/modals/changeAvatar.html",
+            controller: "changeAvatarModalController"
+        }).then(function (modal) {
+            // The modal object has the element built, if this is a bootstrap modal
+            // you can call 'modal' to show it, if it's a custom modal just show or hide
+            // it as you need to.
+            //            modal.element.modal();
+            modal.close.then(function (result) {
+                $scope.interfaceOptions.newAvatar = result;
+            });
+        });
+    }
 
-    //
-    //     $scope.filtrMasterKind_services = function (parentIdElement) {
-    //         return function (elementServices) {
-    //             var filtered = $scope.categories.filter(findById(elementServices._id));
-    //             if (filtered.length > 0) {
-    //                 if (filtered[0].parent_id == parentIdElement) {
-    //                     return true;
-    //                 }
-    //             }
-    //             return false
-    //         }
-    //     }
-    //
-    //     function findById(id) {
-    //         return function (element) {
-    //             return element._id == id;
-    //         }
-    //     }
-    //
-    //     $scope.findNameServiceById = function (elementId) {
-    //         var filtered = $scope.categories.filter(findById(elementId));
-    //         if (filtered.length > 0) {
-    //             return filtered[0].val;
-    //         }
-    //         return ""
-    //     }
-    //
-    //     $scope.selectKindServices = function (element) {
-    //         if ($scope.checkKind_services.isCheckKind_services) {
-    //             $scope.checkKind_services.checkKind_services = null;
-    //         } else {
-    //             $scope.checkKind_services.checkKind_services = element;
-    //         }
-    //         $scope.checkKind_services.isCheckKind_services = !$scope.checkKind_services.isCheckKind_services;
-    //
-    //
-    //     }
+    $scope.getImgLink = function (work) {
+        return "http://127.0.0.1:8080/storage/331539c3-bfef-4b41-a5a1-5fe1098de837.jpg"
+    }
 
-            }]);
+}]);
+
+remontas24Site.controller('changeAvatarModalController', ['$scope', '$rootScope', 'close', function ($scope, $rootScope, close) {
+    $scope.close = close;
+
+    $scope.acceptChange = function () {
+        close($scope.avatar.file, 200); // close, but give 200ms for bootstrap to animate
+    };
+
+    $scope.avatar = {
+        file: null
+    };
+
+    $scope.canSelect = function () {
+        return ($scope.avatar.file) ? false : true;
+    }
+
+}]);

@@ -14,18 +14,7 @@ remBackend.factory('lkData', ['$resource',
                     method: "init"
                 }
             }
-            //            "saveNew": {
-            //                method: 'POST',
-            //                params: {
-            //                    method: "saveNew"
-            //                }
-            //            },
-            //            "saveEdited": {
-            //                method: 'POST',
-            //                params: {
-            //                    method: "saveEdited"
-            //                }
-            //            }
+
         });
                 }]);
 

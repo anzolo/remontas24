@@ -4,6 +4,9 @@ from bson.objectid import ObjectId
 from common import JSONEncoder
 import adminka
 import conf
+import os
+import json
+import uuid
 
 
 # Ремонтас. По маршруту возвращается шаблон
@@ -80,6 +83,58 @@ def rem_lkGetData():
     else:
         return abort(401, "Sorry, access denied.")
 
+# API ремонтаса. Сохранение данных
+@route('/api/lk', method='POST')
+def rem_lkSaveData():
+    result_check_rights = adminka.check_rights("master", request)
+    if result_check_rights["status"]:
+        user = conf.db.users_masters.find_one({"_id": ObjectId(result_check_rights["user_id"])})
+
+        result = {}
+
+        try:
+            master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
+            if master != None:
+
+                newMaster = json.loads(request.forms.get("master"))
+
+                del newMaster["_id"]
+
+                upload = request.files.get("avatar")
+
+                if upload != None:
+                    filename, ext = os.path.splitext(upload.raw_filename)
+                    new_filename = str(uuid.uuid4())
+                    upload.filename = new_filename + ext
+
+                    oldFilePath = conf.storage_path + master["avatar"]
+
+                    if os.path.isfile(oldFilePath):
+                        if master["avatar"] != conf.img_no_avatar:
+                            os.remove(oldFilePath)
+                    else:  # Show an error ##
+                        print("Error: %s file not found" % master["avatar"])
+
+                    newMaster["avatar"] = upload.filename
+
+                    upload.save(conf.storage_path)
+
+                conf.db.masters.update_one({"_id": ObjectId(user["master_id"])}, {"$set": newMaster})
+
+                result["status"] = "OK"
+
+            else:
+                raise ValueError('Master id not found.', str(user["master_id"]))
+
+        except Exception as e:
+            result["status"] = "Error"
+            result["note"] = str(e)
+            print(e)
+
+        return result
+
+    else:
+        return abort(401, "Sorry, access denied.")
 
 @route('/api/lk/mainDataSave', method='POST')
 def rem_mainDataSave():

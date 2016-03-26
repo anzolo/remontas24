@@ -54,6 +54,13 @@ button[disabled="disabled"] {
     line-height: 35px;
 }
 
+.changeAvatarButton {
+    width: 180px;
+    margin-top: 15px;
+    line-height: 35px;
+    position: absolute;
+}
+
 html,
 body,
 .wrapper {
@@ -614,7 +621,7 @@ h2.master-counter span {
     min-width: 100%;
     min-height: 100%;
     position: fixed;
-    z-index: 90;
+    z-index: 2000;
     top: 0;
     left: 0;
 }
@@ -629,11 +636,18 @@ h2.master-counter span {
     cursor: pointer;
 }
 
+
+/*
 #modal > div {
     display: none;
 }
 
 #modal > div.active {
+    display: block;
+}
+*/
+
+#modal > div {
     display: block;
 }
 
@@ -775,6 +789,29 @@ h2.master-counter span {
     display: block;
 }
 
+#changeAvatar {
+    /*    display: none;*/
+    position: relative;
+    z-index: 1000;
+    color: #000;
+    background: #efefef;
+    width: 450px;
+    line-height: normal;
+    margin: auto;
+    top: 150px;
+    text-align: center;
+    padding: 10px 30px 30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#changeAvatar img {
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
 #order-btn {
     position: fixed;
     top: 50%;
@@ -798,7 +835,7 @@ h2.master-counter span {
 }
 
 #order {
-    display: none;
+    /*    display: none;*/
     position: relative;
     z-index: 9999;
     color: #000;
@@ -1098,11 +1135,20 @@ h2.master-counter span {
     z-index: 1000;
 }
 
+.service-list > div > .addmore {
+    display: inline-block;
+}
+
 .service-list > div a {
     font-size: 14px;
     text-decoration: underline;
-    position: absolute;
-    bottom: 10px;
+    /*
+    top: 10px;
+    left: 10px;
+*/
+    /*    position: relative;*/
+    /*    position: absolute;*/
+    /*    bottom: 10px;*/
 }
 
 .service-list > div a.add-service:before {
@@ -1112,17 +1158,20 @@ h2.master-counter span {
 
 .service-list > div a.add-service {
     color: #ff5c0f;
-    float: right;
-    /*    margin-right: 25px;*/
+    /*    float: right;*/
+    /*    margin-right: 0px;*/
     text-decoration: none;
     border-bottom: 1px solid #ff5c0f;
-    right: 25px;
+    /*    right: 0px;*/
 }
 
+
+/*
 .service-list .close-more,
 .service-list .open-more {
     left: 25px;
 }
+*/
 
 .service-list > div + div {
     /*    margin-left: 65px;*/
@@ -1590,6 +1639,11 @@ h2.master-counter span {
 .my .photo {
     float: left;
     margin-right: 35px;
+}
+
+.my .photo img {
+    height: 180px;
+    width: 180px;
 }
 
 .my .fields {
