@@ -68,10 +68,22 @@
         <textarea ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"></textarea>
     </div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">Дополнительные услуги</div>
+        <div class="panel-body">
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-checked="isCheckedAdditionalService('contractWork')" ng-click="checkAdditionalService('contractWork')"> Работа по договору
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" ng-checked="isCheckedAdditionalService('masterOnHour')" ng-click="checkAdditionalService('masterOnHour')"> Услуга мастер на час
+            </label>
+
+        </div>
+    </div>
+
     <div class="panel panel-default" ng-if="master.categories != undefined">
         <div class="panel-heading">Категории и услуги</div>
         <div class="panel-body">
-
 
             <label class="checkbox-inline" ng-repeat="category in categories|filter:{type:'category'}">
                 <input type="checkbox" ng-model="category.checked" ng-checked="isMasterCategory(category)" ng-click="checkCategory(category)"> {{category.val}}

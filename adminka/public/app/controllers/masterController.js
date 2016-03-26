@@ -216,4 +216,23 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         };
     }
 
+    //функции для "Дополнительных услуг"
+
+    $scope.checkAdditionalService = function (service) {
+        var categoryIndex = $scope.master.additional_service.indexOf(service);
+
+        if (categoryIndex >= 0) {
+            $scope.master.additional_service.splice(categoryIndex, 1);
+        } else {
+            // var categoryDict = $scope.categories.find();
+
+            $scope.master.additional_service.push(service);
+
+        }
+    }
+
+    $scope.isCheckedAdditionalService = function (service) {
+        return $scope.master.additional_service.indexOf(service) >= 0
+    }
+
             }]);
