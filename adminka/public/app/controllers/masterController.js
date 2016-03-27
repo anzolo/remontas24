@@ -24,7 +24,8 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     $scope.formData = {
         "newService": null,
-        "avatar": null
+        "avatar": null,
+        "currentPage": 'services'
     };
 
     //    var masterID = $stateParams.id;

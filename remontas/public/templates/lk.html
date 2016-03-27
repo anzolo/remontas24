@@ -135,8 +135,8 @@
                         <a href="#" class="item add open-modal" data-modal-name="add-work"></a>
 
 
-                        <a href="#" class="item" ng-repeat="work in masterData.works">
-                            <div class="edit"></div>
+                        <a href="#" class="item" ng-repeat="work in masterData.works" ng-mouseenter="interfaceOptions.mouseOverWork[$index]=true" ng-mouseleave="interfaceOptions.mouseOverWork[$index]=false">
+                            <div class="edit" ng-show="interfaceOptions.mouseOverWork[$index]"></div>
                             <div class="img">
                                 <img ng-src="{{getImgLink(work)}}" width="187" height="187">
                             </div>

@@ -1795,7 +1795,7 @@ h2.master-counter span {
 }
 
 .my .works .item .edit {
-    display: none;
+    /*    display: none;*/
     background: transparent url('../img/img-my-edit-work.png') no-repeat center;
     position: absolute;
     top: 0;

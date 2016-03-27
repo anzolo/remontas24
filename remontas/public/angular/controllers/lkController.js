@@ -3,7 +3,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.interfaceOptions = {
         showCategory: false,
         showAddServices: false,
-        newAvatar: null
+        newAvatar: null,
+        mouseOverWork: {}
     };
 
     var loadData = function () {

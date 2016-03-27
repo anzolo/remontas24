@@ -68,85 +68,95 @@
         <textarea ng-model="master.detail" class="form-control" id="inputDetail" placeholder="Подробное описание" rows="3"></textarea>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Дополнительные услуги</div>
-        <div class="panel-body">
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-checked="isCheckedAdditionalService('contractWork')" ng-click="checkAdditionalService('contractWork')"> Работа по договору
-            </label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-checked="isCheckedAdditionalService('masterOnHour')" ng-click="checkAdditionalService('masterOnHour')"> Услуга мастер на час
-            </label>
+    <ul class="nav nav-tabs">
+        <li ng-class="{'active': formData.currentPage=='services'}"><a href="#" ng-click="formData.currentPage = 'services'">Услуги</a></li>
+        <li ng-class="{'active': formData.currentPage=='works'}"><a href="#" ng-click="formData.currentPage = 'works'">Работы</a></li>
+    </ul>
 
+    <div ng-show="formData.currentPage=='services'">
+        <div class="panel panel-default">
+            <div class="panel-heading">Дополнительные услуги</div>
+            <div class="panel-body">
+                <label class="checkbox-inline">
+                    <input type="checkbox" ng-checked="isCheckedAdditionalService('contractWork')" ng-click="checkAdditionalService('contractWork')"> Работа по договору
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" ng-checked="isCheckedAdditionalService('masterOnHour')" ng-click="checkAdditionalService('masterOnHour')"> Услуга мастер на час
+                </label>
+
+            </div>
         </div>
-    </div>
 
-    <div class="panel panel-default" ng-if="master.categories != undefined">
-        <div class="panel-heading">Категории и услуги</div>
-        <div class="panel-body">
+        <div class="panel panel-default" ng-if="master.categories != undefined">
+            <div class="panel-heading">Категории и услуги</div>
+            <div class="panel-body">
 
-            <label class="checkbox-inline" ng-repeat="category in categories|filter:{type:'category'}">
-                <input type="checkbox" ng-model="category.checked" ng-checked="isMasterCategory(category)" ng-click="checkCategory(category)"> {{category.val}}
-            </label>
+                <label class="checkbox-inline" ng-repeat="category in categories|filter:{type:'category'}">
+                    <input type="checkbox" ng-model="category.checked" ng-checked="isMasterCategory(category)" ng-click="checkCategory(category)"> {{category.val}}
+                </label>
 
-            <div class="panel panel-default" ng-repeat="category in categories|filter:{type:'category'}|filter:onlyMasterCategory()">
-                <div class="panel-heading">
-                    <h3>{{category.val}}</h3></div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
-                            <h4>{{kind_service.val}} <button type="button" class="btn btn-primary" ng-click="formData[kind_service._id].showAddBlock=true"><i class="fa fa-plus-circle"></i></button></h4>
+                <div class="panel panel-default" ng-repeat="category in categories|filter:{type:'category'}|filter:onlyMasterCategory()">
+                    <div class="panel-heading">
+                        <h3>{{category.val}}</h3></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4" ng-repeat="kind_service in categories|filter:{parent_id:category._id}">
+                                <h4>{{kind_service.val}} <button type="button" class="btn btn-primary" ng-click="formData[kind_service._id].showAddBlock=true"><i class="fa fa-plus-circle"></i></button></h4>
 
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Услуга</th>
-                                        <th>Цена</th>
-                                        <th>Ед. изм</th>
-                                        <th>*</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="service in masterServiceArray(category, kind_service)">
-                                        <td>{{service.name}}</td>
-                                        <td>{{service.price}}</td>
-                                        <td>{{service.measure}}</td>
-                                        <td><a href="#" ng-click="deleteService(category, kind_service,service)"><i class="fa fa-trash"></i></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Услуга</th>
+                                            <th>Цена</th>
+                                            <th>Ед. изм</th>
+                                            <th>*</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="service in masterServiceArray(category, kind_service)">
+                                            <td>{{service.name}}</td>
+                                            <td>{{service.price}}</td>
+                                            <td>{{service.measure}}</td>
+                                            <td><a href="#" ng-click="deleteService(category, kind_service,service)"><i class="fa fa-trash"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                            <div class="panel panel-default" ng-if="formData[kind_service._id].showAddBlock">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label for="comboService">Услуга</label>
-                                        <ui-select id="comboService" ng-model="formData[kind_service._id].newService" theme="bootstrap" on-select="">
-                                            <ui-select-match>
-                                                <span ng-bind="$select.selected.val"></span>
-                                            </ui-select-match>
-                                            <ui-select-choices repeat="service in categories|filter:{parent_id:kind_service._id}|filter:onlyNewServices(category, kind_service)">
-                                                <span ng-bind="service.val"></span>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                <div class="panel panel-default" ng-if="formData[kind_service._id].showAddBlock">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label for="comboService">Услуга</label>
+                                            <ui-select id="comboService" ng-model="formData[kind_service._id].newService" theme="bootstrap" on-select="">
+                                                <ui-select-match>
+                                                    <span ng-bind="$select.selected.val"></span>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="service in categories|filter:{parent_id:kind_service._id}|filter:onlyNewServices(category, kind_service)">
+                                                    <span ng-bind="service.val"></span>
+                                                </ui-select-choices>
+                                            </ui-select>
 
-                                        <label for="inputPrice">Цена</label>
-                                        <input type="number" class="form-control" id="inputPrice" ng-model="formData[kind_service._id].price">
+                                            <label for="inputPrice">Цена</label>
+                                            <input type="number" class="form-control" id="inputPrice" ng-model="formData[kind_service._id].price">
+
+                                        </div>
+
+                                        <button type="button" class="btn btn-danger pull-right" ng-click="formData[kind_service._id].showAddBlock=false"> <i class="fa fa-ban"></i></button>
+                                        <button type="button" class="btn btn-success pull-right" ng-click="addService(category, kind_service,formData[kind_service._id])" ng-disabled="formData[kind_service._id].newService==null"><i class="fa fa-check-circle"></i></button>
 
                                     </div>
-
-                                    <button type="button" class="btn btn-danger pull-right" ng-click="formData[kind_service._id].showAddBlock=false"> <i class="fa fa-ban"></i></button>
-                                    <button type="button" class="btn btn-success pull-right" ng-click="addService(category, kind_service,formData[kind_service._id])" ng-disabled="formData[kind_service._id].newService==null"><i class="fa fa-check-circle"></i></button>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
-
-
-
         </div>
+    </div>
+
+    <div ng-show="formData.currentPage=='works'">
     </div>
 
 </div>
