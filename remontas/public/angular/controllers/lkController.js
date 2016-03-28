@@ -23,7 +23,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     loadData();
 
     $scope.checkKind_services = null;
-    $scope.mouseMoveServise = null;
 
     $scope.saveMaster = function () {
 
@@ -152,7 +151,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             return category.length;
         }
     }
-
 
     // Функции для меню дополнительных видов работ
     $scope.showAdditionalServiceMenu = function () {

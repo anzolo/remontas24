@@ -1100,34 +1100,21 @@ h2.master-counter span {
     height: 480px;
 }
 
-
-/*
-.service-list .close-more {
-    display: none;
-}
-*/
-
-.service-list h3 {
-    font-size: 20px;
-    font-weight: 500;
-    margin: 0 10px 15px 10px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #dfdfdf;
-    text-align: center;
-}
-
 .service-list > div {
+    /*    background: antiquewhite;*/
     background: #fff;
     position: absolute;
-    padding: 20px 15px;
-    width: 350px;
+    padding: 10px 15px;
+    width: 318px;
     z-index: 999;
     border: 1px solid #fff;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    /*    float: left;*/
-    min-height: 221px;
+    min-height: 200px;
+}
+
+.service-list table {
+    table-layout: fixed;
+    width: 318px;
+    word-wrap: break-word;
 }
 
 .service-list > div.active {
@@ -1135,46 +1122,13 @@ h2.master-counter span {
     z-index: 1000;
 }
 
-.service-list > div > .addmore {
-    display: inline-block;
-}
-
-.service-list > div a {
-    font-size: 14px;
-    text-decoration: underline;
-    /*
-    top: 10px;
-    left: 10px;
-*/
-    /*    position: relative;*/
-    /*    position: absolute;*/
-    /*    bottom: 10px;*/
-}
-
-.service-list > div a.add-service:before {
-    content: "+ ";
-    border-bottom: 1px solid #fff;
-}
-
-.service-list > div a.add-service {
-    color: #ff5c0f;
-    /*    float: right;*/
-    /*    margin-right: 0px;*/
-    text-decoration: none;
-    border-bottom: 1px solid #ff5c0f;
-    /*    right: 0px;*/
-}
-
-
-/*
-.service-list .close-more,
-.service-list .open-more {
-    left: 25px;
-}
-*/
-
-.service-list > div + div {
-    /*    margin-left: 65px;*/
+.service-list table caption {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0px 10px 15px 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dfdfdf;
+    text-align: center;
 }
 
 .service-list > div:nth-of-type(3n + 1) {
@@ -1195,84 +1149,77 @@ h2.master-counter span {
     top: 261px;
 }
 
-
-/*
-.service-list .more {
-    display: block;
+.service-list table tr:last-of-type > td {
+    padding-top: 10px;
 }
-*/
 
 
 /*
-.service-list .more.active {
-    display: block;
+.service-list table tr:not(.footer_table):nth-of-type(even) {
+        background: #f0f0f0;
+    background: #ffe;
 }
 */
 
-.service-list > div > div:not(.more),
-.service-list > div > .more > div {
-    color: #636363;
-    padding: 1px 10px;
-    position: relative;
-}
-
-.service-list > div > div:not(.more):hover,
-.service-list > div > .more > div:hover {
-    background: #efefef;
-}
-
-.my .service-list > div > div:not(.more):hover,
-.my .service-list > div > .more > div:hover {
-    background: none;
-}
-
-.service-list > div > .more > div:last-of-type {
-    margin-bottom: 15px;
-}
-
-.my .service-list .del {
-    /*    display: none;*/
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #fff;
-    background: #ff5c0f url('../img/icon-delete-white.png') no-repeat 105px center;
-    width: 320px;
-    height: 20px;
-    z-index: 99999;
+.service-list table tr:not(.footer_table):hover {
+    background: #ff5c0f url('../img/icon-delete-word-white.png') no-repeat 125px center;
     cursor: pointer;
-    font-size: 13px;
-    text-align: center;
+}
+
+.service-list table tr:not(.footer_table):hover * {
+    opacity: 0;
+}
+
+.service-list table col.col1_table {
+    width: 208px;
+}
+
+.service-list table col.col2_table {
+    width: 110px;
+}
+
+.service-list table td.job {
+    color: #636363;
+    padding: 1px 5px 1px 10px;
+}
+
+.service-list table td.price {
+    color: #333;
+    padding: 1px 10px 1px 0px;
+}
+
+.service-list table td > span {
+    float: right;
+    margin-right: 10px;
+}
+
+.service-list table a {
+    font-size: 14px;
+    /*    text-decoration: underline;*/
+}
+
+.service-list table a.open-more,
+.service-list table a.close-more {
+    color: #333;
+    border-bottom: 1px solid #333;
+    margin-left: 10px;
+    column-width: 100px;
+}
+
+.service-list table a.add-service:before {
+    content: "+ ";
+    border-bottom: 1px solid #fff;
+}
+
+.service-list table a.add-service {
+    color: #ff5c0f;
+    border-bottom: 1px solid #ff5c0f;
 }
 
 .my .fragment {
     display: inline-block;
     width: 100%;
 }
-
-.service-list > div > div:not(.more) span,
-.service-list > div > .more > div span {
-    display: inline-block;
-    float: right;
-    text-align: left;
-    width: 85px;
-    color: #333;
-}
-
-
-/*
-.service-list > #list-1 {
-    left: -25px;
-}
-
-.service-list > #list-2 {
-    left: 420px;
-}
-
-.service-list > #list-3 {
-    right: -25px;
-}
-*/
 
 .delimiter {
     border-top: 1px solid #eee;
