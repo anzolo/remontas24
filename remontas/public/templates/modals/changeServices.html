@@ -1,0 +1,40 @@
+<div id="modal">
+    <!-- Добавление услуг -->
+    <div id="add-service">
+        <div class="close-modal" ng-click="close()"></div>
+        <h2>Добавление услуг</h2>
+        <p>{{kindServices.name}}</p>
+
+        <div class="add-form">
+            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in kindServices.services">
+                <div class="some-service">
+                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" required="required" placeholder="Наименование услуги">
+                </div>
+                <div class="price">
+                    <input type="text" ng-model="elementServices_value.price" required="required" placeholder="Цена">
+                </div>
+                <div class="measure" ng-bind-html="preparePriceHTML(elementServices_value.measure)"></div>
+            </div>
+        </div>
+        <a href="#">+ добавтиь позицию</a>
+        <button disabled="disabled">Отправить</button>
+
+
+        <!--
+        <div class="item template-service-hidden clearfix">
+            <div class="some-service">
+                <input type="text" readonly="readonly" required="required" placeholder="Наименование услуги">
+                <div class="sub">
+                    <div>Мебель на заказ</div>
+                    <div>Ремонтно-отделочные работы</div>
+                    <div>Дизайн интерьеров</div>
+                </div>
+            </div>
+            <div class="price">
+                <input type="text" required="required" placeholder="Цена">
+            </div>
+        </div>
+-->
+    </div>
+</div>
+<!-- /Добавление услуг -->

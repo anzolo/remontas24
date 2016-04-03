@@ -1,4 +1,4 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', function ($scope, lkData, masterMainData, $sce, ModalService, Upload) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', '$document', function ($scope, lkData, masterMainData, $sce, ModalService, Upload, $document) {
 
     $scope.interfaceOptions = {
         showCategory: false,
@@ -11,8 +11,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
         lkData.init({}, function (value, responseHeaders) {
             $scope.categories = value.categories;
-            $scope.masterData = prepareMasterCategories(value.master, value.categories); //value.master;
-
+            $scope.masterData = prepareMasterCategories(value.master, value.categories);
+            //            $scope.masterData = value.master;
             $scope.tempMasterCategories = value.master.categories.slice();
             $scope.tempMasterCategoriesSelect = [];
             $scope.tempAdditional_service = value.master.additional_service.slice();
@@ -197,9 +197,30 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         else return 0;
     }
 
+    $scope.changeServices = function (kind_services) {
+        //        $scope.bodyRef = angular.element(document.querySelector('.my'))
+        //         angular.element(document.getElementsByClassName("multi-files"));
+        var bodyRef = angular.element($document[0].body)
+        bodyRef.addClass('ovh');
+        ModalService.showModal({
+            templateUrl: "/remontas/public/templates/modals/changeServices.html",
+            controller: "changeServicesModalController",
+            inputs: {
+                kindServices: kind_services,
+
+            }
+        }).then(function (modal) {
+            modal.close.then(function (result) {
+                bodyRef.removeClass('ovh');
+            });
+        });
+    }
+
     //изменение аватарки
 
     $scope.changeAvatar = function () {
+        var bodyRef = angular.element($document[0].body)
+        bodyRef.addClass('ovh');
         ModalService.showModal({
             templateUrl: "/remontas/public/templates/modals/changeAvatar.html",
             controller: "changeAvatarModalController"
@@ -210,6 +231,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             //            modal.element.modal();
             modal.close.then(function (result) {
                 $scope.interfaceOptions.newAvatar = result;
+                bodyRef.removeClass('ovh');
             });
         });
     }
@@ -234,5 +256,16 @@ remontas24Site.controller('changeAvatarModalController', ['$scope', '$rootScope'
     $scope.canSelect = function () {
         return ($scope.avatar.file) ? false : true;
     }
+
+}]);
+
+remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScope', '$sce', 'close', 'kindServices', function ($scope, $rootScope, $sce, close, kindServices) {
+    $scope.close = close;
+    $scope.kindServices = kindServices;
+
+    $scope.preparePriceHTML = function (measure) {
+        var newValue = $sce.trustAsHtml(measure);
+        return newValue;
+    };
 
 }]);
