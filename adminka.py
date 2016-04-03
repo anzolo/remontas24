@@ -153,6 +153,15 @@ def adm_manageMasters():
                 newMaster["avatar"] = avatarFile.filename
 
                 avatarFile.save(conf.storage_path)
+
+                if not isNewMaster:
+                    oldFilePath = conf.storage_path + oldMaster["avatar"]
+                    if os.path.isfile(oldFilePath):
+                        if oldMaster["avatar"] != conf.img_no_avatar:
+                            os.remove(oldFilePath)
+
+                else:  # Show an error ##
+                    print("Error: %s file not found" % oldMaster["avatar"])
             elif isNewMaster:
                 newMaster["avatar"] = conf.img_no_avatar
 
@@ -160,25 +169,14 @@ def adm_manageMasters():
             #если мастер уже существует
             if not isNewMaster:
 
-                #создать пришедшие файлы
+                syncFiles(newMaster, oldMaster, request)
 
-                #удалить файлы, которые больше не нужны
-
-                #conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
-
-                oldFilePath = conf.storage_path + "/" + oldMaster["avatar"]
-
-                if os.path.isfile(oldFilePath):
-                    if oldMaster["avatar"] != conf.img_no_avatar:
-                        pass
-                        #os.remove(oldFilePath)
-
-                else:    # Show an error ##
-                    print("Error: %s file not found" % oldMaster["avatar"])
+                conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
 
                 result["note"] = "Отредактирован существующий мастер"
 
-            elif isNewMaster: #если это создание нового мастера
+            else: #если это создание нового мастера
+                syncFiles(newMaster, None, request)
                 result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
                 result["note"] = "Создан новый мастер"
 
@@ -198,6 +196,38 @@ def createFileName(oldFilename):
     filename, ext = os.path.splitext(oldFilename)
     new_filename = str(uuid.uuid4())
     return new_filename + ext
+
+def syncFiles(newMaster, oldMaster, request):
+    #создаем лист со всеми фотками которые есть в старом мастере
+    oldPhotos = []
+    if oldMaster is not None:
+        for work in oldMaster["works"]:
+            for photo in work["photos"]:
+                oldPhotos.append(photo["filename"])
+
+    for work in newMaster["works"]:
+        for photo in work["photos"]:
+            if "new" in photo:
+                if photo["new"]:
+                    #сохраняем файл
+                    del photo["new"]
+
+                    photoFile = request.files.get(photo["filename"])
+
+                    if photoFile is not None:
+                        photoFile.filename = createFileName(photoFile.raw_filename)
+                        photo["filename"] = photoFile.filename
+                        photoFile.save(conf.works_path)
+            else:
+                #исключаем фото, которое осталось в мастере из списка удаления
+                if oldPhotos.count(photo["filename"])>0:
+                    oldPhotos.remove(photo["filename"])
+
+    #удаляем фото, которых нет в новом мастере
+    for photo in oldPhotos:
+        oldFilePath = conf.works_path + photo
+        if os.path.isfile(oldFilePath):
+            os.remove(oldFilePath)
 
 
 # API админки. Сервис получения информации по категориям

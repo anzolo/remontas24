@@ -11,7 +11,8 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         phone1: "",
         phone2: "",
         categories: [],
-        additional_service: []
+        additional_service: [],
+        works: []
     };
 
     //categories при создании нового мастера нужно загружать справочник
