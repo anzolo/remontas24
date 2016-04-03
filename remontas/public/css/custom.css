@@ -1954,13 +1954,14 @@ h2.master-counter span {
 }
 
 #add-service {
-    display: none;
     position: relative;
-    z-index: 9999;
+    z-index: 1000;
     color: #000;
     background: #efefef;
     line-height: normal;
     margin: auto;
+    width: 640px;
+    /*    width: 550px;*/
     top: 150px;
     padding: 25px;
     text-align: center;
@@ -1969,13 +1970,17 @@ h2.master-counter span {
     box-sizing: border-box;
 }
 
-#add-service .close-modal {
-    top: 30px;
-    right: 30px;
+#add-service .add-form {
+    overflow: auto;
+    max-height: 295px;
 }
 
 #add-service h2 {
     margin: 0;
+}
+
+#add-service p {
+    font-weight: 300;
 }
 
 #add-service a {
@@ -2006,7 +2011,8 @@ h2.master-counter span {
 }
 
 #add-service .item {
-    width: 455px;
+    /*    width: 455px;*/
+    width: 540px;
     margin: auto;
 }
 
@@ -2015,12 +2021,20 @@ h2.master-counter span {
 }
 
 #add-service .item .some-service {
-    position: relative;
+    /*    position: relative;*/
     float: left;
 }
 
 #add-service .item .price {
-    float: right;
+    float: left;
+    margin-left: 15px;
+}
+
+#add-service .item .measure {
+    float: left;
+    width: 55px;
+    margin: 14px 15px;
+    /*    margin: 0px 15px;*/
 }
 
 #add-service .item .price input {
@@ -2066,4 +2080,8 @@ h2.master-counter span {
 
 #add-service .template-service-hidden {
     display: none;
+}
+
+.ovh {
+    overflow: hidden;
 }

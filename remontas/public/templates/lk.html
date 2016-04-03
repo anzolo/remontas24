@@ -121,7 +121,8 @@
                                             <td colspan="2">
                                                 <a href="#" class="open-more" ng-if="(elementKind_services_value._id != checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
                                                 <a href="#" class="close-more" ng-if="elementKind_services_value._id == checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>
+                                                <!--<span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
+                                                <span><a href="#" class="add-service" ng-click="changeServices(masterData.categories[elementCategories_key].kind_services[elementKind_services_key])">Добавить услуги</a></span>
                                             </td>
                                         </tr>
                             </table>
@@ -349,48 +350,3 @@
 
 </div>
 <!-- /Добавление работы -->
-
-
-<!-- Добавление услуг -->
-<div id="add-service">
-    <div class="close-modal"></div>
-    <h2>Добавление услуг</h2>
-    <p style="font-weight: 300">Сантехнические работы</p>
-
-    <div class="add-form">
-        <div class="item clearfix">
-            <div class="some-service">
-                <input type="text" readonly="readonly" required="required" placeholder="Наименование услуги">
-                <div class="sub">
-                    <div>Мебель на заказ</div>
-                    <div>Ремонтно-отделочные работы</div>
-                    <div>Дизайн интерьеров</div>
-                </div>
-            </div>
-            <div class="price">
-                <input type="text" required="required" placeholder="Цена">
-            </div>
-        </div>
-        <a href="#">+ добавтиь позицию</a>
-        <button disabled="disabled">Отправить</button>
-    </div>
-
-    <div class="item template-service-hidden clearfix">
-        <div class="some-service">
-            <input type="text" readonly="readonly" required="required" placeholder="Наименование услуги">
-            <div class="sub">
-                <div>Мебель на заказ</div>
-                <div>Ремонтно-отделочные работы</div>
-                <div>Дизайн интерьеров</div>
-            </div>
-        </div>
-        <div class="price">
-            <input type="text" required="required" placeholder="Цена">
-        </div>
-    </div>
-</div>
-<!-- /Добавление услуг -->
-
-
-
-</div>
