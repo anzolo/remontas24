@@ -41,7 +41,7 @@ def rem_doSearchMasters():
         newMaster = {}
         newMaster["name"] = master["name"]
         newMaster["jobs_count"] = str(master["jobs_count"]) + " работ"
-        newMaster["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+        newMaster["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
         newMaster["id"] = str(master["_id"])
         result["masters"].append(newMaster)
     return result
@@ -60,7 +60,7 @@ def rem_lkGetData():
                 master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
                 if master != None:
                     # master["_id"] = str(master["_id"])
-                    master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+                    master["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
                     lkResult["status"] = "OK"
 
                     categories = list(conf.db.category_job.find())

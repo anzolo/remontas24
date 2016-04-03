@@ -29,7 +29,8 @@
     <div class="form-group">
         <label for="inputFile">Аватарка</label>
         <br>
-        <img ngf-src="formData.avatar">
+        <img ngf-src="formData.avatar" ng-if="formData.avatar!=null">
+        <img ng-src="{{configUrl.img_url_path + master.avatar}}" ng-if="formData.avatar==null">
 
         <input type="file" id="inputFile" ngf-select ng-model="formData.avatar" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
     </div>
@@ -157,6 +158,42 @@
     </div>
 
     <div ng-show="formData.currentPage=='works'">
+
+        <button type="submit" class="btn btn-default" ng-click="addWork()">Добавить работу</button>
+
+        <div class="panel panel-default" ng-repeat="work in master.works">
+            <div class="panel-heading"><a href="#" ng-click="formData.worksCollapse['work'+$index]=!formData.worksCollapse['work'+$index]">Работа {{$index+1}}. Фото: {{work.photos.length}}. {{work.description}}</a>
+                <button type="button" class="btn btn-danger" ng-click="deleteWork(work)">Удалить</button>
+            </div>
+            <div class="panel-body" ng-class="{'collapse':!formData.worksCollapse['work'+$index]}">
+
+                <div class="form-group">
+                    <label for="inputWorkDescription">Описание работы</label>
+                    <textarea ng-model="work.description" class="form-control" id="inputWorkDescription" rows="3"></textarea>
+                </div>
+
+                <button type="file" ngf-select="addPhoto($file, $invalidFiles,work)" accept="image/*" ngf-max-size="2MB" class="btn btn-default">Добавить фото</button>
+            </div>
+
+            <table class="table" ng-class="{'collapse':!formData.worksCollapse['work'+$index]}">
+                <tbody>
+                    <tr ng-repeat="photo in work.photos ">
+                        <td>
+                            <a href="# " class="thumbnail ">
+                                <img ng-src="{{configUrl.img_url_work_path +photo.filename}}" ng-if="!photo.new">
+                                <img ngf-src="formData.uploadData[photo.filename]" ng-if="photo.new">
+                            </a>
+                        </td>
+                        <td>
+                            <textarea ng-model="photo.description " class="form-control " rows="4 "></textarea>
+                        </td>
+                        <td><a href="#" ng-click="deletePhoto(work.photos, photo)"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
     </div>
 
 </div>

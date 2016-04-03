@@ -97,12 +97,16 @@ def adm_getMaster(id):
             result = {}
             if master != None:
                 # master["_id"] = str(master["_id"])
-                master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+                #master["avatar"] = request.urlparts.scheme + "://" + request.urlparts.netloc + conf.img_path + master.get("avatar", conf.img_no_avatar)
+
+                #master["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
+
 
 
                 result["status"] = "OK"
                 result["master"] = master
                 result["categories"] = list(conf.db.category_job.find())
+                result["configUrl"] = conf.configUrl
 
             else:
                 result["status"] = "Error"
@@ -118,12 +122,13 @@ def adm_getMaster(id):
         return abort(401, "Sorry, access denied.")
 
 
-# API админки. Пересохранить мастера при редактировании
+# API админки. Создать нового/пересохранение существующего мастера при редактировании
 @route('/api/adminka/masters', method='POST')
 def adm_manageMasters():
     result_check_rights = check_rights("admin", request)
     if result_check_rights["status"]:
         result = {}
+        isNewMaster = False
 
         try:
             newMaster = json.loads(request.forms.get("master"))
@@ -137,33 +142,43 @@ def adm_manageMasters():
                 del newMaster["_id"]
             else:
                 oldMaster = None
+                isNewMaster = True
 
-            upload = request.files.get("avatar")
+            avatarFile = request.files.get("avatar")
 
-            if upload != None:
-                filename, ext = os.path.splitext(upload.raw_filename)
-                new_filename = str(uuid.uuid4())
-                upload.filename = new_filename + ext
-                newMaster["avatar"] = upload.filename
+            #сохранение аватарки, если выбрана. если не выбрана, то делается "нет фото"
+            if avatarFile is not None:
 
-                upload.save(conf.storage_path)
-            else:
+                avatarFile.filename = createFileName(avatarFile.raw_filename)
+                newMaster["avatar"] = avatarFile.filename
+
+                avatarFile.save(conf.storage_path)
+            elif isNewMaster:
                 newMaster["avatar"] = conf.img_no_avatar
 
-            if oldMaster != None:
-                conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
+
+            #если мастер уже существует
+            if not isNewMaster:
+
+                #создать пришедшие файлы
+
+                #удалить файлы, которые больше не нужны
+
+                #conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
 
                 oldFilePath = conf.storage_path + "/" + oldMaster["avatar"]
 
                 if os.path.isfile(oldFilePath):
                     if oldMaster["avatar"] != conf.img_no_avatar:
-                        os.remove(oldFilePath)
+                        pass
+                        #os.remove(oldFilePath)
+
                 else:    # Show an error ##
                     print("Error: %s file not found" % oldMaster["avatar"])
 
                 result["note"] = "Отредактирован существующий мастер"
 
-            else:
+            elif isNewMaster: #если это создание нового мастера
                 result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
                 result["note"] = "Создан новый мастер"
 
@@ -172,12 +187,17 @@ def adm_manageMasters():
         except Exception as e:
                 result["status"] = "Error"
                 result["note"] = str(e)
-                print(e)
+                #print(e)
 
         return result
 
     else:
         return abort(401, "Sorry, access denied.")
+
+def createFileName(oldFilename):
+    filename, ext = os.path.splitext(oldFilename)
+    new_filename = str(uuid.uuid4())
+    return new_filename + ext
 
 
 # API админки. Сервис получения информации по категориям
@@ -280,7 +300,7 @@ def check_rights(role, rq):
 def check_login_admin(username, password, result):
     users = conf.db.users_adminka
     user = users.find_one({"username": username, "password": password})
-    if user != None:
+    if user is not None:
         result["status"] = "success"
         result["user_id"] = str(user["_id"])
         result["username"] = username

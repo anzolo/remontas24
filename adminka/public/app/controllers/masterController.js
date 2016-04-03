@@ -25,7 +25,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     $scope.formData = {
         "newService": null,
         "avatar": null,
-        "currentPage": 'services'
+        "currentPage": 'services',
+        "worksCollapse": {},
+        "uploadData": {}
     };
 
     //    var masterID = $stateParams.id;
@@ -35,14 +37,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             id: $stateParams.id
         }, function (data) {
             if (data.status == "OK") {
-                //$scope.master = data.master;
                 $scope.master = JSON.parse(JSON.stringify(data.master));
 
-                Upload.urlToBlob(data.master.avatar).then(function (blob) {
-                    $scope.formData.avatar = blob;
-                    $scope.formData.avatar.lastModifiedDate = new Date();
-                    $scope.formData.avatar.name = data.master.avatar;
-                });
+                $scope.configUrl = JSON.parse(JSON.stringify(data.configUrl));
+
                 $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
                 if ($scope.master.categories == null) $scope.master.categories = [];
@@ -69,14 +67,12 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
         var connString = '/api/adminka/masters';
 
-        //        if (masterID != undefined) connString = connString + '/' + masterID;
+        $scope.formData.uploadData.master = Upload.json($scope.master);
+        $scope.formData.uploadData.avatar = $scope.formData.avatar;
 
         Upload.upload({
             url: connString,
-            data: {
-                avatar: $scope.formData.avatar,
-                master: Upload.json($scope.master)
-            }
+            data: $scope.formData.uploadData
 
         }).then(function (resp) {
             console.log('Success uploaded. Response: ' + resp.data);
@@ -234,6 +230,71 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     $scope.isCheckedAdditionalService = function (service) {
         return $scope.master.additional_service.indexOf(service) >= 0
+    }
+
+    //функции для блока "Работы"
+
+    $scope.deletePhoto = function (photosArray, photo) {
+
+        if (photo.new) delete $scope.formData.uploadData[photo.filename];
+
+        var delIndex = photosArray.indexOf(photo);
+
+        photosArray.splice(delIndex, 1)
+
+    }
+
+    $scope.addWork = function () {
+        var newWork = {
+            'description': "",
+            'photos': []
+        };
+
+        $scope.master.works.push(newWork);
+    }
+
+    $scope.deleteWork = function (work) {
+
+        work.photos.forEach(function (photo, i, arr) {
+            if (photo.new) delete $scope.formData.uploadData[photo.filename];
+        });
+
+        var delIndex = $scope.master.works.indexOf(work);
+
+        $scope.master.works.splice(delIndex, 1)
+    }
+
+    $scope.addPhoto = function (file, errFiles, work) {
+        $scope.errFile = errFiles && errFiles[0];
+        if (file) {
+            var newPhoto = {
+                'description': "",
+                'filename': null
+            };
+
+            newPhoto.filename = createFileName(file.name);
+            newPhoto.new = true;
+
+            Upload.rename(file, newPhoto.filename);
+
+            $scope.formData.uploadData[newPhoto.filename] = file;
+
+            work.photos.push(newPhoto);
+        }
+    }
+
+    var createFileName = function (filename) {
+
+        var newFileName = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+
+        var fileExt = filename.split('.').pop();
+
+        return newFileName + '.' + fileExt;
+
     }
 
             }]);
