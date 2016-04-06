@@ -58,15 +58,11 @@ def rem_lkGetData():
         if request.params.method == "init":
             try:
                 master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
-                if master != None:
-                    # master["_id"] = str(master["_id"])
-                    master["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
-                    lkResult["status"] = "OK"
-
-                    categories = list(conf.db.category_job.find())
+                if master is not None:
                     lkResult["master"] = master
-                    lkResult["categories"] = categories
-
+                    lkResult["categories"] = list(conf.db.category_job.find())
+                    lkResult["configUrl"] = conf.configUrl
+                    lkResult["status"] = "OK"
                 else:
                     lkResult["status"] = "Error"
                     lkResult["note"] = "id not found"
@@ -77,11 +73,12 @@ def rem_lkGetData():
 
             return JSONEncoder().encode(lkResult)
 
-        elif request.params.method == "123":
-            pass
+        # elif request.params.method == "123":
+        #    pass
 
     else:
         return abort(401, "Sorry, access denied.")
+
 
 # API ремонтаса. Сохранение данных
 @route('/api/lk', method='POST')

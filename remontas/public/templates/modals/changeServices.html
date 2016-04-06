@@ -3,10 +3,10 @@
     <div id="add-service">
         <div class="close-modal" ng-click="close()"></div>
         <h2>Добавление услуг</h2>
-        <p>{{kindServices.name}}</p>
+        <p>{{model.name}}</p>
 
         <div class="add-form">
-            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in kindServices.services">
+            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in model.services">
                 <div class="some-service">
                     <input type="text" readonly="readonly" ng-model="elementServices_value.name" required="required" placeholder="Наименование услуги">
                 </div>
