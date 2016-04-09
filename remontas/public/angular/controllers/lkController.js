@@ -8,6 +8,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         checkKind_services: null
     };
 
+    $scope.tempMasterCategoriesSelect = [];
+
     $scope.data = {
         "uploadData": {}
     }
@@ -39,6 +41,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     // Функции для меню категорий
     $scope.showCategoriesMenu = function () {
         if ($scope.interfaceOptions.showAddServices == false) {
+            $scope.tempMasterCategoriesSelect = $scope.data.master.categories.slice();
             $scope.interfaceOptions.showCategory = true;
         }
         //        $scope.interfaceOptions.showAddServices = false
@@ -52,13 +55,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.selectCategories = function () {
         //$scope.masterData.categories = $scope.tempMasterCategoriesSelect.slice();
         $scope.interfaceOptions.showCategory = false;
+        $scope.data.kind_services = masterKindServiceArray();
     }
 
     $scope.isCheckedCategory = function (element) {
         return $scope.data.master.categories.findIndex(function (el) {
             return el._id == element._id;
         }) >= 0;
-    }
+    };
 
     $scope.checkCategory = function (element) {
         var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
@@ -68,16 +72,25 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         if (categoryIndex >= 0) {
             $scope.data.master.categories.splice(categoryIndex, 1);
         } else {
-            // var categoryDict = $scope.categories.find();
+            var tempcategoryIndex = $scope.tempMasterCategoriesSelect.findIndex(function (el) {
+                return el._id == element._id
+            });
 
-            var newCategory = {
-                "_id": element._id,
-                "name": element.val,
-                "order": element.order,
-                "kind_services": []
-            };
-            $scope.data.master.categories.push(newCategory);
+            if (tempcategoryIndex >= 0) {
+                $scope.data.master.categories.push($scope.tempMasterCategoriesSelect[tempcategoryIndex]);
+            } else {
+                // var categoryDict = $scope.categories.find();
+
+                var newCategory = {
+                    "_id": element._id,
+                    "name": element.val,
+                    "order": element.order,
+                    "kind_services": []
+                };
+                $scope.data.master.categories.push(newCategory);
+            }
         }
+        $scope.data.kind_services = masterKindServiceArray();
     }
 
 
@@ -150,6 +163,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
                 $scope.data.categories = JSON.parse(JSON.stringify(data.categories));
 
+                $scope.data.kind_services = masterKindServiceArray();
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
                 //                $state.go('adminka.masters');
@@ -169,13 +183,12 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
             if (kindServiceIndex >= 0) return $scope.data.master.categories[categoryIndex].kind_services[kindServiceIndex].services
             else return [];
-
         } else return [];
     };
 
 
 
-    $scope.masterKindServiceArray = function () {
+    function masterKindServiceArray() {
         var result = [];
         var category = $scope.data.categories.filter(function (el) {
             return (el.type == 'category') && categoryInMaster(el)
@@ -200,7 +213,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 }
             });
         });
-        console.log(result)
+        //        console.log(result)
         return result;
     };
 

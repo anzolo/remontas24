@@ -97,45 +97,39 @@
 
 
 
-                <div class="fragment">
+                <div class="fragment" ng-if="data.master != undefined && data.categories != undefined">
                     <h2 class="text-center">Услуги <span>47</span></h2>
                     <!--                    <div class="service-list clearfix" ng-class="{height2: elementCategories_value.kind_services.length > 3}" ng-repeat="(elementCategories_key, elementCategories_value) in data.master.categories.sort(compareOrder)">-->
-                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in data.categories.sort(compareOrder)|filter:{type:'category'}|filter:onlyMasterCategory()">
-                        <!--                    <div class="service-list clearfix">-->
+                    <!--                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in data.categories.sort(compareOrder)|filter:{type:'category'}|filter:onlyMasterCategory()">-->
+                    <div class="service-list clearfix" ng-class="{height2: data.kind_services.length > 3}">
                         <!--1ng-if="elementCategories_value.visible"-->
 
 
                         <!--                        <div class="clearfix" ng-class="{active: elementKind_services_value._id == interfaceOptions.checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.master.categories[elementCategories_key].kind_services.sort(compareOrder)">-->
-                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.categories.sort(compareOrder)|filter:{parent_id:elementCategories_value._id}">
-                            <!--                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in masterKindServiceArray()">-->
+                        <!--                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.categories.sort(compareOrder)|filter:{parent_id:elementCategories_value._id}">-->
+                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.kind_services">
                             <table>
                                 <caption>{{elementKind_services_value.name}}</caption>
-
-                                <!--
                                 <col class="col1_table">
                                     <col class="col2_table">
-
-
-                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in masterServiceArray(elementCategories_value, elementKind_services_value).sort(compareOrder).slice(0,5)">
+                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,5)">
                                             <td class="job">{{elementServices_value.name}}</td>
                                             <td class="price" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
                                         </tr>
 
-                                        <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in masterServiceArray(elementCategories_value, elementKind_services_value).sort(compareOrder)">
+                                        <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
                                             <td class="job">{{elementServices_value.name}}</td>
                                             <td class="price" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
                                         </tr>
 
                                         <tr class="footer_table">
                                             <td colspan="2">
-                                                <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && masterServiceArray(elementCategories_value, elementKind_services_value).length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                                <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
                                                 <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                                                                                                                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>
-                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value.val, masterServiceArray(elementCategories_value, elementKind_services_value))">Добавить услуги</a></span>
+                                                <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
+                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value.val, elementKind_services_value.services)">Добавить услуги</a></span>
                                             </td>
                                         </tr>
--->
-
                             </table>
                         </div>
 
