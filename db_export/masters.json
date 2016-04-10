@@ -2,7 +2,7 @@
     "_id" : ObjectId("56addc7e036402f984c13037"),
     "name" : "Василий",
     "jobs_count" : "7",
-    "avatar" : "686887d0-4d10-4cb5-816d-bb9d2a4a5dd9.jpg",
+    "avatar" : "331539c3-bfef-4b41-a5a1-5fe1098de837.jpg",
     "kind_profile" : "phys",
     "email" : "master@remontas24.ru",
     "sername" : "Петров",
@@ -10,7 +10,141 @@
     "phone1" : "9221111111",
     "detail" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.",
     "phone2" : "1111111111",
-     "categories" : [
+    "categories" : [
+        {
+            "visible" : true,
+            "_id" : "56dd193fdfdb2e3885200ba5",
+            "kind_services" : [
+                {
+                    "order" : NumberInt(1),
+                    "name" : "Отделочные работы",
+                    "services" : [
+                        {
+                            "order" : NumberInt(2),
+                            "price" : NumberInt(300),
+                            "measure" : "м<sup>2</sup>",
+                            "_id" : "56dd2a52dfdb2e3885200bb7",
+                            "name" : "Оштукатуривание стен визуальное равнение"
+                        },
+                        {
+                            "order" : NumberInt(3),
+                            "price" : NumberInt(100),
+                            "measure" : "м<sup>2</sup>",
+                            "_id" : "56dd2a6ddfdb2e3885200bb8",
+                            "name" : "Шпатлевание стен"
+                        }
+                    ],
+                    "_id" : "56dd27bcdfdb2e3885200baf"
+                },
+                {
+                    "order" : NumberInt(2),
+                    "name" : "Сантехнические работы",
+                    "services" : [
+                        {
+                            "order" : NumberInt(6),
+                            "price" : NumberInt(3000),
+                            "_id" : "56e5a10d2310400c30fbfc23",
+                            "name" : "Установка смесителя"
+                        }
+                    ],
+                    "_id" : "56dd280ddfdb2e3885200bb0"
+                },
+                {
+                    "order" : NumberInt(3),
+                    "name" : "Электромонтажные работы",
+                    "services" : [
+
+                    ],
+                    "_id" : "56dd2866dfdb2e3885200bb1"
+                }
+            ],
+            "order" : NumberInt(1),
+            "name" : "Ремонтно-отделочные работы"
+        },
+        {
+            "visible" : true,
+            "_id" : "56dd274bdfdb2e3885200bac",
+            "kind_services" : [
+                {
+                    "order" : NumberInt(1),
+                    "name" : "Материал полотна",
+                    "services" : [
+                        {
+                            "_id" : "56e5a19e23104023242596d8",
+                            "price" : NumberInt(0),
+                            "order" : NumberInt(1),
+                            "name" : "Матовые"
+                        }
+                    ],
+                    "_id" : "56dd288bdfdb2e3885200bb2"
+                },
+                {
+                    "order" : NumberInt(2),
+                    "name" : "Дополнительные работы",
+                    "services" : [
+
+                    ],
+                    "_id" : "56dd28b8dfdb2e3885200bb3"
+                }
+            ],
+            "order" : NumberInt(2),
+            "name" : "Натяжные потолки"
+        },
+        {
+            "visible" : true,
+            "_id" : "56dd2777dfdb2e3885200bad",
+            "kind_services" : [
+                {
+                    "order" : NumberInt(1),
+                    "name" : "Виды мебели",
+                    "services" : [
+                        {
+                            "order" : NumberInt(1),
+                            "price" : NumberInt(1000),
+                            "_id" : "56e5a1fa23104023242596dc",
+                            "name" : "Кухни"
+                        }
+                    ],
+                    "_id" : "56dd28e5dfdb2e3885200bb4"
+                }
+            ],
+            "order" : NumberInt(3),
+            "name" : "Мебель на заказ"
+        }
+    ],
+    "additional_service" : [
+        "masterOnHour",
+        "contractWork"
+    ],
+    "works" : [
+        {
+            "description" : "123",
+            "photos" : [
+                {
+                    "filename" : "17ef4489-6a28-41fc-be36-8b9dc8fd6c93.jpg",
+                    "description" : "321"
+                },
+                {
+                    "filename" : "8589c79e-e005-453e-ace8-fa3c37c77154.jpg",
+                    "description" : "951"
+                }
+            ]
+        }
+    ]
+}
+{
+    "_id" : ObjectId("56addca1036402f984c13038"),
+    "name" : "ООО \"Технологии ремонта\"",
+    "jobs_count" : "0",
+    "avatar" : "b18445ea-7256-4107-b25b-e54cc9487ce7.jpg",
+    "kind_profile" : "org",
+    "email" : "master@remontas24.ru",
+    "sername" : "Петров",
+    "patronymic" : "Петрович",
+    "phone2" : "3333333333",
+    "detail" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.",
+    "phone1" : "4444444444",
+    "categories" : [
         {
             "_id" : "56e479cad8fa391cc4be6d6b", 
             "name" : "Категория 1", 
@@ -23,8 +157,8 @@
                     "services" : [
                         {
                             "_id" : "56e47a8dd8fa391cc4be6d76", 
-                            "name" : "Работа 1 2 1", 
-                            "order" : NumberInt(1), 
+                            "name" : "Работа 1 2 10",
+                            "order" : NumberInt(10),
                             "price" : NumberInt(100), 
                             "measure" : "руб/м<sup>2</sup>"
                         }, 
@@ -88,36 +222,79 @@
                 }
             ]
         }
-    ], 
-    "additional_service" : [
-
     ]
-}
-{
-    "_id" : ObjectId("56addca1036402f984c13038"),
-    "name" : "ООО \"Технологии ремонта\"",
-    "jobs_count" : "0",
-    "avatar" : "b18445ea-7256-4107-b25b-e54cc9487ce7.jpg",
-    "kind_profile" : "org",
-    "email" : "master@remontas24.ru",
-    "sername" : "Петров",
-    "patronymic" : "Петрович",
-    "phone2" : "3333333333",
-    "detail" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.",
-    "phone1" : "4444444444"
 }
 {
     "_id" : ObjectId("56addca4036402f984c13039"),
     "name" : "Василий",
     "jobs_count" : "6",
-    "avatar" : "285e2a3c-e079-4ed6-96c0-5092ce4396d6.jpg",
+    "avatar" : "4e7636ae-e404-4336-9e3e-4fa430d0c1d2.jpg",
     "kind_profile" : "phys",
     "email" : "master@remontas24.ru",
     "sername" : "Петров",
     "patronymic" : "Петрович",
-    "phone2" : null,
-    "detail" : null,
-    "phone1" : null
+    "phone2" : "null",
+    "detail" : "54651465165651651",
+    "phone1" : "9222222222",
+    "additional_service" : [
+
+    ],
+    "categories" : [
+        {
+            "kind_services" : [
+                {
+                    "services" : [
+                        {
+                            "measure" : "м2",
+                            "_id" : "56e47a76d8fa391cc4be6d74",
+                            "name" : "Работа 1 1 1",
+                            "order" : NumberInt(1),
+                            "price" : NumberInt(100)
+                        }
+                    ],
+                    "name" : "Вид работ 1 1",
+                    "_id" : "56e479ead8fa391cc4be6d6e",
+                    "order" : NumberInt(1)
+                },
+                {
+                    "services" : [
+                        {
+                            "_id" : "56ead5fed8fa390d889ca1b6",
+                            "name" : "Работа 1 2 4",
+                            "order" : NumberInt(4),
+                            "price" : NumberInt(2000)
+                        }
+                    ],
+                    "name" : "Вид работ 1 2",
+                    "_id" : "56e479f8d8fa391cc4be6d6f",
+                    "order" : NumberInt(2)
+                }
+            ],
+            "_id" : "56e479cad8fa391cc4be6d6b",
+            "name" : "Категория 1",
+            "order" : NumberInt(1)
+        },
+        {
+            "kind_services" : [
+                {
+                    "services" : [
+                        {
+                            "_id" : "56e47a50d8fa391cc4be6d73",
+                            "name" : "Работа 2 1 1",
+                            "order" : NumberInt(1),
+                            "price" : NumberInt(3000)
+                        }
+                    ],
+                    "name" : "Вид работ 2 1",
+                    "_id" : "56e47a02d8fa391cc4be6d70",
+                    "order" : NumberInt(1)
+                }
+            ],
+            "_id" : "56e479d3d8fa391cc4be6d6c",
+            "name" : "Категория 2",
+            "order" : NumberInt(2)
+        }
+    ]
 }
 {
     "_id" : ObjectId("56addca7036402f984c1303a"),
@@ -488,4 +665,184 @@
     "name" : "2",
     "sername" : "1",
     "email" : "3"
+}
+{
+    "_id" : ObjectId("57013ffd231040198cbb4130"),
+    "phone2" : "",
+    "email" : "",
+    "kind_profile" : "phys",
+    "avatar" : "img-user-no-photo.png",
+    "jobs_count" : NumberInt(0),
+    "patronymic" : "",
+    "works" : [
+        {
+            "description" : "2323423423423434234",
+            "photos" : [
+                {
+                    "description" : "",
+                    "new" : true,
+                    "filename" : "1ecefe8c-a7cf-4230-8bde-545f8806cbad.jpg"
+                },
+                {
+                    "description" : "",
+                    "new" : true,
+                    "filename" : "a73c1731-38f6-4b16-8cf2-b8e75bd1c8fc.jpg"
+                },
+                {
+                    "description" : "",
+                    "new" : true,
+                    "filename" : "44c0bcf1-74d2-473f-89e0-e90545f21615.jpg"
+                }
+            ]
+        }
+    ],
+    "detail" : "",
+    "additional_service" : [
+        "contractWork"
+    ],
+    "name" : "324324",
+    "sername" : "324234234",
+    "categories" : [
+        {
+            "name" : "Ремонтно-отделочные работы",
+            "_id" : "56dd193fdfdb2e3885200ba5",
+            "kind_services" : [
+                {
+                    "name" : "Отделочные работы",
+                    "services" : [
+                        {
+                            "measure" : "м<sup>2</sup>",
+                            "name" : "Оштукатуривание стен под маяк",
+                            "price" : NumberInt(3333),
+                            "_id" : "56dd29e7dfdb2e3885200bb6",
+                            "order" : NumberInt(1)
+                        }
+                    ],
+                    "_id" : "56dd27bcdfdb2e3885200baf",
+                    "order" : NumberInt(1)
+                }
+            ],
+            "order" : NumberInt(1)
+        }
+    ],
+    "phone1" : ""
+}
+{
+    "_id" : ObjectId("570141d023104025043c6e6a"),
+    "kind_profile" : "phys",
+    "avatar" : "img-user-no-photo.png",
+    "phone1" : "",
+    "sername" : "gghfghfghgfh",
+    "name" : "34234242334324",
+    "categories" : [
+
+    ],
+    "additional_service" : [
+
+    ],
+    "works" : [
+        {
+            "description" : "ghfgh",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "91db8463-68fc-4946-a550-de266e7a69e7.jpg"
+                }
+            ]
+        }
+    ],
+    "patronymic" : "",
+    "phone2" : "",
+    "jobs_count" : NumberInt(0),
+    "email" : "",
+    "detail" : ""
+}
+{
+    "_id" : ObjectId("570144742310401aa4cfdce5"),
+    "sername" : "",
+    "name" : "dsdsgdfgdfgdf",
+    "phone1" : "",
+    "phone2" : "",
+    "additional_service" : [
+
+    ],
+    "email" : "",
+    "works" : [
+        {
+            "description" : "",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "5c21cb1a-d874-43bb-8976-664dd84e013e.jpg"
+                }
+            ]
+        }
+    ],
+    "jobs_count" : NumberInt(0),
+    "detail" : "",
+    "categories" : [
+
+    ],
+    "patronymic" : "",
+    "kind_profile" : "org",
+    "avatar" : "img-user-no-photo.png"
+}
+{
+    "_id" : ObjectId("57014af72310402a100b475c"),
+    "sername" : "",
+    "email" : "",
+    "detail" : "",
+    "phone1" : "",
+    "works" : [
+        {
+            "description" : "",
+            "photos" : [
+                {
+                    "filename" : "78e94ae7-a699-480e-820f-f392261c96f1.jpg",
+                    "description" : ""
+                }
+            ]
+        },
+        {
+            "description" : "",
+            "photos" : [
+                {
+                    "filename" : "9e0cc2ed-316e-4703-af2d-a587f7287402.jpg",
+                    "description" : ""
+                }
+            ]
+        }
+    ],
+    "categories" : [
+        {
+            "order" : NumberInt(4),
+            "kind_services" : [
+                {
+                    "order" : NumberInt(1),
+                    "services" : [
+                        {
+                            "order" : NumberInt(1),
+                            "measure" : "шт.",
+                            "_id" : "56ddcb222310400b88d21df3",
+                            "price" : NumberInt(5555),
+                            "name" : "План напольных покрытий"
+                        }
+                    ],
+                    "_id" : "56dd297ddfdb2e3885200bb5",
+                    "name" : "Дизайн интерьера"
+                }
+            ],
+            "_id" : "56dd2795dfdb2e3885200bae",
+            "name" : "Дизайн интерьеров"
+        }
+    ],
+    "kind_profile" : "org",
+    "phone2" : "",
+    "jobs_count" : NumberInt(0),
+    "additional_service" : [
+        "contractWork"
+    ],
+    "avatar" : "7ec44e5f-fc68-4a32-bcec-f642187ba06b.jpg",
+    "patronymic" : "",
+    "name" : "4345435"
 }
