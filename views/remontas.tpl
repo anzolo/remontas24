@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/remontas/public/css/custom.css">
     <link rel="stylesheet" href="/remontas/public/js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" type="text/css" href="/remontas/public/css/test.css">
 
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
@@ -22,6 +24,7 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
+    <script src="/remontas/public/bower_components/es6-shim/es6-shim.min.js"></script>
     <script src="/remontas/public/bower_components/angular/angular.js"></script>
     <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
@@ -49,6 +52,8 @@
     <script src="/remontas/public/angular/controllers/mainController.js"></script>
     <script src="/remontas/public/angular/controllers/authRegFormController.js"></script>
     <script src="/remontas/public/angular/controllers/lkController.js"></script>
+    <script src="/remontas/public/angular/controllers/changeAvatarModalController.js"></script>
+    <script src="/remontas/public/angular/controllers/changeServicesModalController.js"></script>
 
     <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>

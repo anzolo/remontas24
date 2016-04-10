@@ -5,7 +5,9 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         showAddServices: false,
         newAvatar: null,
         mouseOverWork: {},
-        checkKind_services: null
+        checkKind_services: null,
+        countServices: 0,
+        countJobs: 0
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -13,6 +15,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.data = {
         "uploadData": {}
     }
+
+    $scope.saveMaster = saveMaster;
 
 
     loadData();
@@ -32,7 +36,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             // it as you need to.
             //            modal.element.modal();
             modal.close.then(function (result) {
-                $scope.data.uploadData.newAvatar = result;
+                $scope.data.uploadData.avatar = result;
                 bodyRef.removeClass('ovh');
             });
         });
@@ -56,6 +60,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         //$scope.masterData.categories = $scope.tempMasterCategoriesSelect.slice();
         $scope.interfaceOptions.showCategory = false;
         $scope.data.kind_services = masterKindServiceArray();
+        calcCountServices();
     }
 
     $scope.isCheckedCategory = function (element) {
@@ -126,7 +131,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
 
-    // Функции для работ
+    // Функции для услуг
     $scope.preparePriceHTML = function (price, measure) {
         var newValue = $sce.trustAsHtml(price + " " + measure);
         return newValue;
@@ -164,28 +169,15 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 $scope.data.categories = JSON.parse(JSON.stringify(data.categories));
 
                 $scope.data.kind_services = masterKindServiceArray();
+
+                calcCountServices();
+
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
                 //                $state.go('adminka.masters');
             }
         });
     }
-
-
-    $scope.masterServiceArray = function (category, kind_service) {
-        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
-            return el._id == category._id
-        });
-        if (categoryIndex >= 0) {
-            var kindServiceIndex = $scope.data.master.categories[categoryIndex].kind_services.findIndex(function (el) {
-                return el._id == kind_service._id
-            });
-
-            if (kindServiceIndex >= 0) return $scope.data.master.categories[categoryIndex].kind_services[kindServiceIndex].services
-            else return [];
-        } else return [];
-    };
-
 
 
     function masterKindServiceArray() {
@@ -237,7 +229,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         } else return undefined;
     };
 
-    $scope.changeServices = function (name, services) {
+    $scope.changeServices = function (kindService) {
         //        $scope.bodyRef = angular.element(document.querySelector('.my'))
         //         angular.element(document.getElementsByClassName("multi-files"));
         var bodyRef = angular.element($document[0].body)
@@ -246,15 +238,69 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             templateUrl: "/remontas/public/templates/modals/changeServices.html",
             controller: "changeServicesModalController",
             inputs: {
-                services: services,
-                name: name
+                data: {
+                    kindService: kindService,
+                    categories: $scope.data.categories,
+                    master: $scope.data.master
+                }
             }
         }).then(function (modal) {
             modal.close.then(function (result) {
                 bodyRef.removeClass('ovh');
+                calcCountServices();
             });
         });
     }
+
+    function saveMaster() {
+
+        var connString = '/api/lk';
+
+        $scope.data.uploadData.master = Upload.json($scope.data.master);
+        //$scope.data.uploadData.avatar = $scope.data.avatar;
+
+        Upload.upload({
+            url: connString,
+            data: $scope.data.uploadData
+
+        }).then(function (resp) {
+            //console.log('Success uploaded. Response: ' + resp.data);
+
+            loadData();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        });
+
+    };
+
+    function calcCountServices() {
+        var count = 0;
+
+        $scope.data.master.categories.forEach(function (category, i, arr) {
+            category.kind_services.forEach(function (kindService, i, arr) {
+                kindService.services.forEach(function (service, i, arr) {
+                    count++;
+                })
+            })
+        });
+
+        $scope.interfaceOptions.countServices = count;
+    }
+
+
+    //    $scope.masterServiceArray = function (category, kind_service) {
+    //        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
+    //            return el._id == category._id
+    //        });
+    //        if (categoryIndex >= 0) {
+    //            var kindServiceIndex = $scope.data.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+    //                return el._id == kind_service._id
+    //            });
+    //
+    //            if (kindServiceIndex >= 0) return $scope.data.master.categories[categoryIndex].kind_services[kindServiceIndex].services
+    //            else return [];
+    //        } else return [];
+    //    };
 
 
 
@@ -280,26 +326,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
 
 
-    //    $scope.saveMaster = function () {
-    //
-    //        var connString = '/api/lk';
-    //
-    //        Upload.upload({
-    //            url: connString,
-    //            data: {
-    //                avatar: $scope.interfaceOptions.newAvatar,
-    //                master: Upload.json($scope.masterData)
-    //            }
-    //
-    //        }).then(function (resp) {
-    //            //console.log('Success uploaded. Response: ' + resp.data);
-    //
-    //            loadData();
-    //        }, function (resp) {
-    //            console.log('Error status: ' + resp.status);
-    //        });
-    //
-    //    };
+
     //
     //    
     //
@@ -373,56 +400,5 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     //        }
     //    }
     //
-
-    //
-
-    //
-
-    //
-
-    //
-    //
-
-    //
-
-    //
-
-    //
-
-
-}]);
-
-remontas24Site.controller('changeAvatarModalController', ['$scope', '$rootScope', 'close', function ($scope, $rootScope, close) {
-    //Убрать скролл главного окна
-
-    $scope.close = close;
-
-    $scope.acceptChange = function () {
-        close($scope.avatar.file, 200); // close, but give 200ms for bootstrap to animate
-
-        ////при закрытии ...
-    };
-
-    $scope.avatar = {
-        file: null
-    };
-
-    $scope.canSelect = function () {
-        return ($scope.avatar.file) ? false : true;
-    }
-
-}]);
-
-remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScope', '$sce', 'close', 'name', 'services', function ($scope, $rootScope, $sce, close, name, services) {
-    $scope.close = close;
-    $scope.model = {
-        services: services,
-        name: name
-    }
-
-    $scope.preparePriceHTML = function (measure) {
-        var newValue = $sce.trustAsHtml(measure);
-        return newValue;
-    };
 
 }]);

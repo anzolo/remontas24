@@ -2,39 +2,38 @@
     <!-- Добавление услуг -->
     <div id="add-service">
         <div class="close-modal" ng-click="close()"></div>
-        <h2>Добавление услуг</h2>
-        <p>{{model.name}}</p>
+        <h2>Изменение услуг</h2>
+        <p>{{model.kindService.name}}</p>
 
         <div class="add-form">
-            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in model.services">
+            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in model.kindService.services">
                 <div class="some-service">
                     <input type="text" readonly="readonly" ng-model="elementServices_value.name" required="required" placeholder="Наименование услуги">
                 </div>
                 <div class="price">
-                    <input type="text" ng-model="elementServices_value.price" required="required" placeholder="Цена">
+                    <input type="number" ng-model="elementServices_value.price" placeholder="Цена" max="99999" min="0" step="1">
                 </div>
                 <div class="measure" ng-bind-html="preparePriceHTML(elementServices_value.measure)"></div>
+                <div class="delete"><a href="#" ng-click="removeService(elementServices_value)"><i class="fa fa-trash"></i></a></div>
             </div>
-        </div>
-        <a href="#">+ добавтиь позицию</a>
-        <button disabled="disabled">Отправить</button>
-
-
-        <!--
-        <div class="item template-service-hidden clearfix">
-            <div class="some-service">
-                <input type="text" readonly="readonly" required="required" placeholder="Наименование услуги">
-                <div class="sub">
-                    <div>Мебель на заказ</div>
-                    <div>Ремонтно-отделочные работы</div>
-                    <div>Дизайн интерьеров</div>
+            <div class="item clearfix" ng-if="model.newService">
+                <div class="some-service">
+                    <input class="select" type="text" readonly="readonly" required="required" placeholder="Наименование услуги" ng-click="showPopup()">
+                    <div class="sub" ng-if="model.showPopup">
+                        <!--                        <div ng-repeat="service in categories|filter:{parent_id:model.kindService._id}">{{service.val}}</div>-->
+                        <div ng-repeat="service in model.onlyNotMasterServices" ng-click="selectService(service)">{{service.val}}</div>
+                        <!--                        |filter:onlyNewServices(category, kind_service)-->
+                    </div>
                 </div>
-            </div>
-            <div class="price">
-                <input type="text" required="required" placeholder="Цена">
+                <div class="price">
+                    <input type="number" placeholder="Цена" max="99999" min="0" step="1">
+                </div>
+                <!--                <div class="measure" ng-bind-html="preparePriceHTML(elementServices_value.measure)"></div>-->
             </div>
         </div>
--->
+        <a class="link" href="#" ng-if="model.canAddNewService" ng-click="addNewService()">+ добавить позицию</a>
+        <button ng-click="close()">ОК</button>
+
     </div>
 </div>
 <!-- /Добавление услуг -->

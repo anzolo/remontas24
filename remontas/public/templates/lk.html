@@ -31,7 +31,7 @@
                 <div class="person clearfix">
                     <div class="photo">
                         <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}}" width="209" height="249" ng-if="data.uploadData.newAvatar==null">
-                        <img ngf-src="data.uploadData.newAvatar" ngf-resize="{width: 200, height: 200, quality: 0.9}">
+                        <img ngf-src="data.uploadData.avatar" ngf-resize="{width: 200, height: 200, quality: 0.9}">
                         <button class="btn changeAvatarButton" ng-click="changeAvatar()">Изменить</button>
                     </div>
 
@@ -98,10 +98,10 @@
 
 
                 <div class="fragment" ng-if="data.master != undefined && data.categories != undefined">
-                    <h2 class="text-center">Услуги <span>47</span></h2>
+                    <h2 class="text-center">Услуги <span>{{interfaceOptions.countServices}}</span></h2>
                     <!--                    <div class="service-list clearfix" ng-class="{height2: elementCategories_value.kind_services.length > 3}" ng-repeat="(elementCategories_key, elementCategories_value) in data.master.categories.sort(compareOrder)">-->
                     <!--                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in data.categories.sort(compareOrder)|filter:{type:'category'}|filter:onlyMasterCategory()">-->
-                    <div class="service-list clearfix" ng-class="{height2: data.kind_services.length > 3}">
+                    <div class="service-list clearfix" ng-class="{height2: data.kind_services.length > 3 && data.kind_services.length<7, height3: data.kind_services.length > 6}">
                         <!--1ng-if="elementCategories_value.visible"-->
 
 
@@ -127,7 +127,7 @@
                                                 <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
                                                 <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
                                                 <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
-                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value.val, elementKind_services_value.services)">Добавить услуги</a></span>
+                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value)">Изменить услуги</a></span>
                                             </td>
                                         </tr>
                             </table>
