@@ -1,0 +1,35 @@
+<div id="modal">
+    <div id="add-work">
+        <div class="close-modal" ng-click="closeWindow()"></div>
+        <div class="container">
+            <h2>Добавление работы</h2>
+            <p style="font-weight: 300">Максимум 24 фото</p>
+
+            <div class="works clearfix">
+                <a href="#" class="item" ng-repeat="photo in model.work.photos" ng-mouseenter="setCurrentPhoto(photo)" ng-mouseleave="setCurrentPhoto(undefined)">
+                    <div class="edit" ng-if="photo == model.currentPhoto">
+                        <div class="change">Заменить</div>
+                        <div class="del">Удалить</div>
+                    </div>
+                    <div class="img">
+
+                        <img ng-src="{{model.configUrl.img_url_work_path +photo.filename}}" ng-if="!photo.new" width="187" height="187">
+                        <img ngf-src="model.uploadData[photo.filename]" ng-if="photo.new" width="187" height="187">
+
+                    </div>
+                    <input placeholder="Описание фото" />
+                </a>
+
+            </div>
+
+            <div class="add">
+                <a href="#" ngf-select="addPhoto($file, $invalidFiles,work)" accept="image/*" ngf-max-size="2MB">+ добавить фото</a>
+                <p>Перетащите сюда файлы
+                    <br>для загрузки</p>
+            </div>
+
+            <button>Сохранить</button>
+        </div>
+
+    </div>
+</div>

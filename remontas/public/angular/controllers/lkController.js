@@ -18,6 +18,10 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
     $scope.saveMaster = saveMaster;
 
+    $scope.getImgLink = getImgLink;
+
+    $scope.editWorks = editWorks;
+
 
     loadData();
 
@@ -287,6 +291,45 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.interfaceOptions.countServices = count;
     }
 
+    // функции для блока "Работы"
+
+    function getImgLink(work) {
+        var srcPath = "";
+
+        if (work.photos.length > 0) {
+            srcPath = $scope.data.configUrl.img_url_work_path + work.photos[0].filename;
+        }
+
+        return srcPath;
+    }
+
+    function editWorks(work) {
+        var bodyRef = angular.element($document[0].body)
+        bodyRef.addClass('ovh');
+
+        var data = {
+            //                    kindService: kindService,
+            //                    categories: $scope.data.categories,
+            master: $scope.data.master,
+            configUrl: $scope.data.configUrl,
+            uploadData: $scope.data.uploadData
+        };
+
+        if (work != undefined) data.editedWork = work;
+
+        ModalService.showModal({
+            templateUrl: "/remontas/public/templates/modals/lkWorkManage.html",
+            controller: "lkWorkManageController",
+            inputs: {
+                data: data
+            }
+        }).then(function (modal) {
+            modal.close.then(function (result) {
+                bodyRef.removeClass('ovh');
+            });
+        });
+    }
+
 
     //    $scope.masterServiceArray = function (category, kind_service) {
     //        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
@@ -301,31 +344,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     //            else return [];
     //        } else return [];
     //    };
-
-
-
-    //    $scope.getImgLink = function (work) {
-    //            return "http://127.0.0.1:8080/storage/331539c3-bfef-4b41-a5a1-5fe1098de837.jpg"
-    //        }
-    //
-    //    var loadData = function () {
-    //
-    //        lkData.init({}, function (value, responseHeaders) {
-    //            $scope.categories = value.categories;
-    //            //            $scope.masterData = prepareMasterCategories(value.master, value.categories);
-    //            $scope.masterData = value.master;
-    //            //            $scope.tempMasterCategories = value.master.categories.slice();
-    //            //            $scope.tempMasterCategoriesSelect = [];
-    //            //            $scope.tempAdditional_service = value.master.additional_service.slice();
-    //        })
-    //
-    //    }
-    //
-    //    loadData();
-
-
-
-
 
     //
     //    

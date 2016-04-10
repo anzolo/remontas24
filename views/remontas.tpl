@@ -54,6 +54,7 @@
     <script src="/remontas/public/angular/controllers/lkController.js"></script>
     <script src="/remontas/public/angular/controllers/changeAvatarModalController.js"></script>
     <script src="/remontas/public/angular/controllers/changeServicesModalController.js"></script>
+    <script src="/remontas/public/angular/controllers/lkWorkManageController.js"></script>
 
     <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>
