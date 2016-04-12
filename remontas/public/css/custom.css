@@ -1886,7 +1886,7 @@ h2.master-counter span {
 }
 
 #add-work .works .item .edit {
-/*    display: none;*/
+    /*    display: none;*/
     background: rgba(255, 92, 15, 0.8);
     position: absolute;
     top: 0;
@@ -1964,6 +1964,15 @@ h2.master-counter span {
 
 #add-work .add p {
     margin-bottom: 0;
+}
+
+#add-work .description {
+    text-align: -webkit-center;
+    padding-bottom: 20px;
+}
+
+#add-work .description textarea {
+    width: 600px;
 }
 
 #add-service {

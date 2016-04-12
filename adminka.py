@@ -268,8 +268,6 @@ def adm_saveCategory():
 
             try:
                 conf.db.category_job.insert_one(newCategory)
-                Response.status = 200
-                return None
 
             except Exception as e:
                 print(e)
@@ -287,8 +285,6 @@ def adm_saveCategory():
                     {"$set": {"val": request.json["val"],
                               "measure": request.json["measure"]}}
                     )
-                Response.status = 200
-                return None
 
             except Exception as e:
                 print(e)

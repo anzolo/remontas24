@@ -1,14 +1,16 @@
-remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'close', 'data', function ($scope, $rootScope, close, data) {
+remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'close', 'data', 'Upload', function ($scope, $rootScope, close, data, Upload) {
     //Убрать скролл главного окна
 
     $scope.closeWindow = closeWindow;
 
     $scope.setCurrentPhoto = setCurrentPhoto;
 
+    $scope.addPhoto = addPhoto;
+
     $scope.model = {
         master: data.master,
         configUrl: data.configUrl,
-        uploadData: data.uploadDat,
+        uploadData: data.uploadData,
         currentPhoto: undefined
     }
 
@@ -28,6 +30,25 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
         $scope.model.currentPhoto = value;
     }
 
+    function addPhoto(file, errFiles, work) {
+        $scope.errFile = errFiles && errFiles[0];
+        if (file) {
+            var newPhoto = {
+                'description': "",
+                'filename': null
+            };
+
+            newPhoto.filename = createFileName(file.name);
+            newPhoto.new = true;
+
+            Upload.rename(file, newPhoto.filename);
+
+            $scope.model.uploadData[newPhoto.filename] = file;
+
+            $scope.model.work.photos.push(newPhoto);
+        }
+    }
+
     function closeWindow() {
         if ($scope.model.work.photos.length == 0) {
             var indexWork = $scope.model.work.photos.indexOf($scope.model.work);
@@ -36,6 +57,20 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
         }
 
         close();
+    }
+
+    var createFileName = function (filename) {
+
+        var newFileName = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+
+        var fileExt = filename.split('.').pop();
+
+        return newFileName + '.' + fileExt;
+
     }
 
 
