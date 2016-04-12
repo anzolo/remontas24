@@ -7,6 +7,10 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
     $scope.addPhoto = addPhoto;
 
+    $scope.deletePhoto = deletePhoto;
+
+    $scope.addFiles = addFiles;
+
     $scope.model = {
         master: data.master,
         configUrl: data.configUrl,
@@ -30,13 +34,24 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
         $scope.model.currentPhoto = value;
     }
 
-    function addPhoto(file, errFiles, work) {
+    function addPhoto(file, errFiles, photo) {
         $scope.errFile = errFiles && errFiles[0];
         if (file) {
-            var newPhoto = {
-                'description': "",
-                'filename': null
-            };
+            var replace = false;
+
+            if (photo) {
+                var newPhoto = photo;
+
+                if (photo.new) delete $scope.model.uploadData[photo.filename];
+
+                replace = true;
+
+            } else {
+                var newPhoto = {
+                    'description': "",
+                    'filename': null
+                };
+            }
 
             newPhoto.filename = createFileName(file.name);
             newPhoto.new = true;
@@ -45,9 +60,46 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
             $scope.model.uploadData[newPhoto.filename] = file;
 
-            $scope.model.work.photos.push(newPhoto);
+            if (!replace) $scope.model.work.photos.push(newPhoto);
         }
     }
+
+    function deletePhoto(photo) {
+
+        if (photo.new) delete $scope.model.uploadData[photo.filename];
+
+        var delIndex = $scope.model.work.photos.indexOf(photo);
+
+        $scope.model.work.photos.splice(delIndex, 1)
+
+    }
+
+    function addFiles(files) {
+        if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+
+                if ($scope.model.work.photos.length == 12) return;
+
+                var newPhoto = {
+                    'description': "",
+                    'filename': null
+                };
+
+                newPhoto.filename = createFileName(files[i].name);
+                newPhoto.new = true;
+
+                Upload.rename(files[i], newPhoto.filename);
+
+                $scope.model.uploadData[newPhoto.filename] = files[i];
+
+                $scope.model.work.photos.push(newPhoto);
+
+            };
+        }
+
+    };
+
+
 
     function closeWindow() {
         if ($scope.model.work.photos.length == 0) {

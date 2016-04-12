@@ -144,7 +144,8 @@
                             <a href="#" class="item" ng-repeat="work in data.master.works" ng-mouseenter="interfaceOptions.mouseOverWork[$index]=true" ng-mouseleave="interfaceOptions.mouseOverWork[$index]=false" ng-click="editWorks(work)">
                                 <div class="edit" ng-show="interfaceOptions.mouseOverWork[$index]"></div>
                                 <div class="img">
-                                    <img ng-src="{{getImgLink(work)}}" width="187" height="187">
+                                    <img ng-src="{{getImgLink(work)}}" ng-if="!isFirstPhotoNew(work)&&work.photos.length>0" width="187" height="187">
+                                    <img ngf-src="getImgLink(work)" ng-if="isFirstPhotoNew(work)" width="187" height="187">
                                 </div>
                                 <div class="title">{{work.description}}</div>
                             </a>

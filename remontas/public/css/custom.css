@@ -1853,6 +1853,8 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    max-height: 710px;
+    overflow: auto;
 }
 
 #add-work .close-modal {
@@ -1955,6 +1957,10 @@ h2.master-counter span {
     box-sizing: border-box;
     color: #808080;
     margin: 20px auto 40px auto;
+}
+
+.dragOver {
+    background-color: #ffe626;
 }
 
 #add-work .add a {

@@ -22,6 +22,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
     $scope.editWorks = editWorks;
 
+    $scope.isFirstPhotoNew = isFirstPhotoNew;
+
 
     loadData();
 
@@ -294,13 +296,22 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     // функции для блока "Работы"
 
     function getImgLink(work) {
-        var srcPath = "";
+        var result;
 
         if (work.photos.length > 0) {
-            srcPath = $scope.data.configUrl.img_url_work_path + work.photos[0].filename;
+            if (work.photos[0]["new"]) result = $scope.data.uploadData[work.photos[0].filename]
+            else result = $scope.data.configUrl.img_url_work_path + work.photos[0].filename;
         }
 
-        return srcPath;
+        return result;
+    }
+
+    function isFirstPhotoNew(work) {
+        if (work.photos.length > 0) {
+            return work.photos[0]["new"];
+        } else {
+            return false;
+        }
     }
 
     function editWorks(work) {

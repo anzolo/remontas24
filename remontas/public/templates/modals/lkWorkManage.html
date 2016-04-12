@@ -3,7 +3,7 @@
         <div class="close-modal" ng-click="closeWindow()"></div>
         <div class="container">
             <h2>Добавление работы</h2>
-            <p style="font-weight: 300">Максимум 24 фото</p>
+            <p style="font-weight: 300">Максимум 12 фото</p>
 
             <div class="description">
                 <textarea placeholder="Опишите работу в целом" ng-model="model.work.description"></textarea>
@@ -12,7 +12,7 @@
             <div class="works clearfix">
                 <a href="#" class="item" ng-repeat="photo in model.work.photos" ng-mouseenter="setCurrentPhoto(photo)" ng-mouseleave="setCurrentPhoto(undefined)">
                     <div class="edit" ng-if="photo == model.currentPhoto">
-                        <div class="change">Заменить</div>
+                        <div class="change" ngf-select="addPhoto($file, $invalidFiles, photo)" accept="image/*" ngf-max-size="2MB">Заменить</div>
                         <div class="del" ng-click="deletePhoto(photo)">Удалить</div>
                     </div>
                     <div class="img">
@@ -21,16 +21,17 @@
                         <img ngf-src="model.uploadData[photo.filename]" ng-if="photo.new" width="187" height="187">
 
                     </div>
-                    <input placeholder="Описание фото" />
+                    <input placeholder="Описание фото" ng-model="photo.description" />
                 </a>
 
             </div>
 
-            <div class="add">
-                <a href="#" ngf-select="addPhoto($file, $invalidFiles,work)" accept="image/*" ngf-max-size="2MB">+ добавить фото</a>
+            <div class="add" ng-if="model.work.photos.length<12" ngf-drop="addFiles($files)" ngf-drag-over-class="'dragOver'" ngf-multiple="true" accept="image/*" ngf-max-size="2MB">
+                <a href="#" ngf-select="addPhoto($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">+ добавить фото</a>
                 <p>Перетащите сюда файлы
                     <br>для загрузки</p>
             </div>
+            <div ngf-no-file-drop>Ваш браузер не поддерживает технологию Drag and Drop</div>
 
             <button>Сохранить</button>
         </div>
