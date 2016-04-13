@@ -2,7 +2,7 @@
     <div id="add-work">
         <div class="close-modal" ng-click="closeWindow()"></div>
         <div class="container">
-            <h2>Добавление работы</h2>
+            <h2>{{model.modeName}}</h2>
             <p style="font-weight: 300">Максимум 12 фото</p>
 
             <div class="description">
@@ -26,10 +26,11 @@
 
             </div>
 
-            <div class="add" ng-if="model.work.photos.length<12" ngf-drop="addFiles($files)" ngf-drag-over-class="'dragOver'" ngf-multiple="true" accept="image/*" ngf-max-size="2MB">
-                <a href="#" ngf-select="addPhoto($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB">+ добавить фото</a>
+            <div class="add" ng-if="model.work.photos.length<12" ngf-drop="addFiles($files,$invalidFiles)" ngf-drag-over-class="'dragOver'" ngf-multiple="true" accept="image/*" ngf-max-size="2MB" ngf-pattern="'image/*'">
+                <a href="#" ngf-select="addPhoto($file, $invalidFiles)" accept="image/*" ngf-max-size="2MB" ngf-pattern="'image/*'">+ добавить фото</a>
                 <p>Перетащите сюда файлы
                     <br>для загрузки</p>
+                <p class="errorMessage" ng-show="model.errorMsg!=''">{{model.errorMsg}}</p>
             </div>
             <div ngf-no-file-drop>Ваш браузер не поддерживает технологию Drag and Drop</div>
 

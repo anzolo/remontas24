@@ -3,7 +3,8 @@
     "parent_id" : null, 
     "type" : "category",
     "order" : NumberInt(1),
-    "val" : "Ремонтно-отделочные работы"
+    "val" : "Ремонтно-отделочные работы",
+    "measure" : ""
 }
 { 
     "_id" : ObjectId("56dd274bdfdb2e3885200bac"),
@@ -31,7 +32,8 @@
     "parent_id" : ObjectId("56dd193fdfdb2e3885200ba5"),
     "type" : "service",
     "order" : NumberInt(1), 
-    "val" : "Отделочные работы"
+    "val" : "Отделочные работы",
+    "measure" : ""
 }
 { 
     "_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
@@ -81,15 +83,15 @@
     "type" : "job",
     "order" : NumberInt(1), 
     "val" : "Оштукатуривание стен под маяк",
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
-{
+{ 
     "_id" : ObjectId("56dd2a52dfdb2e3885200bb7"),
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
     "type" : "job",
-    "order" : NumberInt(2),
+    "order" : NumberInt(2), 
     "val" : "Оштукатуривание стен визуальное равнение",
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56dd2a6ddfdb2e3885200bb8"),
@@ -97,7 +99,7 @@
     "type" : "job",
     "order" : NumberInt(3),
     "val" : "Шпатлевание стен",
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 { 
     "_id" : ObjectId("56dd2a7edfdb2e3885200bb9"),
@@ -105,108 +107,85 @@
     "type" : "job",
     "order" : NumberInt(4),
     "val" : "Грунтование стен",
-    "measure" : "м<sup>2</sup>"
-}
-{
-    "_id" : ObjectId("56ddcb222310400b88d21df3"),
-    "val" : "План напольных покрытий",
-    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
-    "type" : "job",
-    "order" : NumberInt(1), 
-    "measure" : "шт."
+    "measure" : "руб/м<sup>2</sup>"
 }
 { 
-    "_id" : ObjectId("56ddcb372310400b88d21df4"),
-    "val" : "233",
-    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
-    "type" : "job",
-    "order" : NumberInt(2), 
-    "measure" : ""
-}
-{
     "_id" : ObjectId("56e5a0fd2310400c30fbfc22"),
     "type" : "job",
     "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
     "order" : NumberInt(5),
-    "val" : "Установка унитаза"
-}
-{
-    "_id" : ObjectId("56e5a10d2310400c30fbfc23"),
-    "type" : "job",
-    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
-    "order" : NumberInt(6),
-    "val" : "Установка смесителя"
+    "val" : "Установка унитаза",
+    "measure" : "руб./ед."
 }
 { 
+    "_id" : ObjectId("56e5a10d2310400c30fbfc23"),
+    "type" : "job", 
+    "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
+    "order" : NumberInt(6),
+    "val" : "Установка смесителя",
+    "measure" : "руб./ед."
+}
+{
     "_id" : ObjectId("56e5a11d2310400c30fbfc24"),
     "type" : "job",
     "parent_id" : ObjectId("56dd280ddfdb2e3885200bb0"),
     "order" : NumberInt(7),
-    "val" : "Установка душевой кабины"
+    "val" : "Установка душевой кабины",
+    "measure" : "руб./ед."
 }
 {
     "_id" : ObjectId("56e5a1352310400c30fbfc25"),
     "type" : "job",
     "parent_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
-    "order" : NumberInt(1), 
+    "order" : NumberInt(1),
     "val" : "Сверление отверстий для установки розеток, выключателей и распределительных коробок",
-    "measure" : "руб/шт."
+    "measure" : "руб./шт."
 }
-{ 
+{
     "_id" : ObjectId("56e5a1422310400c30fbfc26"),
     "type" : "job",
     "parent_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
-    "order" : NumberInt(2), 
+    "order" : NumberInt(2),
     "val" : "Установка розетки, выключателя, распределительной коробки",
-    "measure" : "руб/шт."
+    "measure" : "руб./шт."
 }
-{ 
+{
     "_id" : ObjectId("56e5a19e23104023242596d8"),
     "type" : "job",
     "val" : "Матовые",
     "order" : NumberInt(1),
-    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2")
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2"),
+    "measure" : "руб/м<sup>2</sup>"
 }
-{ 
+{
     "_id" : ObjectId("56e5a1b523104023242596d9"),
-    "type" : "job", 
+    "type" : "job",
     "val" : "Глянцевые",
     "order" : NumberInt(2),
-    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2")
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2"),
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56e5a1c823104023242596da"),
     "type" : "job",
     "val" : "Установка закладной под люстру",
     "order" : NumberInt(1),
-    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3")
-}
-{
-    "_id" : ObjectId("56e5a1d623104023242596db"),
-    "type" : "job",
-    "val" : "Установка люстры",
-    "order" : NumberInt(2),
-    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3")
-}
-{
-    "_id" : ObjectId("56e5a1fa23104023242596dc"),
-    "type" : "job",
-    "val" : "Кухни",
-    "order" : NumberInt(1),
-    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4")
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "measure" : "руб./ед."
 }
 { 
-    "_id" : ObjectId("56e5a20923104023242596dd"),
+    "_id" : ObjectId("56e5a1d623104023242596db"),
     "type" : "job", 
-    "val" : "Шкафы-купе",
+    "val" : "Установка люстры",
     "order" : NumberInt(2),
-    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4")
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "measure" : "руб./ед."
 }
 {
     "_id" : ObjectId("56f2b5162310400e98ba63de"),
     "order" : NumberInt(5),
     "val" : "Поклейка стен обоями",
-    "measure" : "м<sup>2</sup>",
+    "measure" : "руб/м<sup>2</sup>",
     "type" : "job",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf")
 }
@@ -214,21 +193,21 @@
     "_id" : ObjectId("56f2b5cb2310400e98ba63df"),
     "order" : NumberInt(6),
     "val" : "Черновая стяжка пола под маяк",
-    "measure" : "м<sup>2</sup>",
+    "measure" : "руб/м<sup>2</sup>",
     "type" : "job", 
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf")
 }
 { 
     "_id" : ObjectId("56f2b63e23104001e8acda7a"),
-    "measure" : "м<sup>2</sup>",
+    "measure" : "руб/м<sup>2</sup>",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
-    "val" : "Черновая стяжка пола визуальное равнение",
+    "val" : "Черновая стяжка пола",
     "type" : "job",
     "order" : NumberInt(7)
 }
 { 
     "_id" : ObjectId("56f2b69523104001e8acda7b"),
-    "measure" : "м<sup>2</sup>",
+    "measure" : "руб/м<sup>2</sup>",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
     "val" : "Чистовая стяжка пола",
     "type" : "job",
@@ -236,7 +215,7 @@
 }
 { 
     "_id" : ObjectId("56f2b6b923104001e8acda7c"),
-    "measure" : "м<sup>2</sup>",
+    "measure" : "руб/м<sup>2</sup>",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
     "val" : "Укладка ламината",
     "type" : "job",
@@ -248,7 +227,7 @@
     "type" : "job",
     "val" : "Укладка линолеума",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56f2b7912310401b8ce020e3"),
@@ -256,7 +235,7 @@
     "type" : "job",
     "val" : "Укладка паркета",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56f2b7a62310401b8ce020e4"),
@@ -264,7 +243,7 @@
     "type" : "job",
     "val" : "Укладка паркетной доски",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56f2b7c42310401b8ce020e5"),
@@ -272,7 +251,7 @@
     "type" : "job",
     "val" : "Укладка керамической плитки",
     "parent_id" : ObjectId("56dd27bcdfdb2e3885200baf"),
-    "measure" : "м<sup>2</sup>"
+    "measure" : "руб/м<sup>2</sup>"
 }
 {
     "_id" : ObjectId("56f2b9b92310401d9ca5a673"),
@@ -349,8 +328,320 @@
 {
     "_id" : ObjectId("56f2ca7f23104022f4473d57"),
     "type" : "job",
-    "measure" : "руб/м.пог.",
+    "measure" : "руб./м.пог.",
     "parent_id" : ObjectId("56dd2866dfdb2e3885200bb1"),
     "val" : "Прокладка кабеля, проводов",
     "order" : NumberInt(4)
+}
+{
+    "_id" : ObjectId("570d25956c611d0f07ad9f4f"),
+    "order" : NumberInt(3),
+    "type" : "job",
+    "val" : "Сатиновые",
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2"),
+    "measure" : "руб/м<sup>2</sup>"
+}
+{
+    "_id" : ObjectId("570d25b86c611d0f07ad9f50"),
+    "order" : NumberInt(4),
+    "type" : "job",
+    "val" : "Тканевые",
+    "parent_id" : ObjectId("56dd288bdfdb2e3885200bb2"),
+    "measure" : "руб/м<sup>2</sup>"
+}
+{
+    "_id" : ObjectId("570d26fa6c611d0f08ad9f4f"),
+    "order" : NumberInt(3),
+    "type" : "job",
+    "val" : "Установка закладной под точечный светильник",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "measure" : "руб./ед."
+}
+{
+    "_id" : ObjectId("570d27316c611d0f07ad9f51"),
+    "order" : NumberInt(4),
+    "type" : "job",
+    "val" : "Установка точечного светильника",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "measure" : "руб./ед."
+}
+{
+    "_id" : ObjectId("570d27b46c611d0f08ad9f50"),
+    "order" : NumberInt(5),
+    "type" : "job",
+    "val" : "Установка потолочного карниза",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "measure" : "руб./п.м."
+}
+{
+    "_id" : ObjectId("570e6cf76c611d49e3c85c33"),
+    "val" : "Установка потолочного плинтуса",
+    "measure" : "руб./м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(6)
+}
+{
+    "_id" : ObjectId("570e6d446c611d49e3c85c34"),
+    "val" : "Установка решетки вентиляции",
+    "measure" : "ед.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(7)
+}
+{
+    "_id" : ObjectId("570e6d756c611d49e3c85c35"),
+    "val" : "Угол, если больше 4-х углов",
+    "measure" : "ед.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(8)
+}
+{
+    "_id" : ObjectId("570e6dab6c611d49e3c85c36"),
+    "val" : "Установка светодиодной ленты",
+    "measure" : "руб./м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(9)
+}
+{
+    "_id" : ObjectId("570e6e986c611d49e3c85c37"),
+    "val" : "Установка вентилятора",
+    "measure" : "ед.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(10)
+}
+{
+    "_id" : ObjectId("570e6f126c611d49e3c85c38"),
+    "val" : "Обвод трубы",
+    "measure" : "ед.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(11)
+}
+{
+    "_id" : ObjectId("570e6f3a6c611d49e3c85c39"),
+    "val" : "Спайка 2-х полотен",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28b8dfdb2e3885200bb3"),
+    "order" : NumberInt(12)
+}
+{
+    "_id" : ObjectId("570e6fda6c611d49e3c85c3b"),
+    "val" : "Кухни",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(3)
+}
+{
+    "_id" : ObjectId("570e6fee6c611d49e3c85c3c"),
+    "val" : "Шкафы-купе",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(4)
+}
+{
+    "_id" : ObjectId("570e70016c611d49e3c85c3d"),
+    "val" : "Детские",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(5)
+}
+{
+    "_id" : ObjectId("570e70126c611d49e3c85c3e"),
+    "val" : "Прихожие",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(6)
+}
+{
+    "_id" : ObjectId("570e70216c611d49e3c85c3f"),
+    "val" : "Гостиные",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(7)
+}
+{
+    "_id" : ObjectId("570e70396c611d49e3c85c40"),
+    "val" : "Спальни",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(8)
+}
+{
+    "_id" : ObjectId("570e705a6c611d49e3c85c41"),
+    "val" : "Прочее",
+    "measure" : "м.п.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd28e5dfdb2e3885200bb4"),
+    "order" : NumberInt(9)
+}
+{
+    "_id" : ObjectId("570e719c6c611d49e3c85c42"),
+    "val" : "Выезд на замер",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(3)
+}
+{
+    "_id" : ObjectId("570e71bc6c611d49e3c85c43"),
+    "val" : "Обмерочный план",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(4)
+}
+{
+    "_id" : ObjectId("570e72e96c611d49e3c85c44"),
+    "val" : "План перепланировки",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(5)
+}
+{
+    "_id" : ObjectId("570e72ff6c611d49e3c85c45"),
+    "val" : "План расстановки мебели",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(6)
+}
+{
+    "_id" : ObjectId("570e73176c611d49e3c85c46"),
+    "val" : "План потолков",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(7)
+}
+{
+    "_id" : ObjectId("570e73376c611d49e3c85c47"),
+    "val" : "План напольных покрытий",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(8)
+}
+{
+    "_id" : ObjectId("570e734c6c611d49e3c85c48"),
+    "val" : "План расположения розеток",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(9)
+}
+{
+    "_id" : ObjectId("570e736a6c611d49e3c85c49"),
+    "val" : "План освещения, линии включения",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(10)
+}
+{
+    "_id" : ObjectId("570e737f6c611d49e3c85c4a"),
+    "val" : "Развертки стен",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(11)
+}
+{
+    "_id" : ObjectId("570e739d6c611d49e3c85c4b"),
+    "val" : "Подбор мебели и материалов",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(12)
+}
+{
+    "_id" : ObjectId("570e73c26c611d49e3c85c4c"),
+    "val" : "Спецификация материалов",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(13)
+}
+{
+    "_id" : ObjectId("570e73fa6c611d49e3c85c4d"),
+    "val" : "Раскладка плитки",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(14)
+}
+{
+    "_id" : ObjectId("570e741c6c611d49e3c85c4e"),
+    "val" : "Спецификация мебели",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(15)
+}
+{
+    "_id" : ObjectId("570e74496c611d49e3c85c4f"),
+    "val" : "3D визуализация/эскизы",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(16)
+}
+{
+    "_id" : ObjectId("570e74606c611d49e3c85c50"),
+    "val" : "Авторский надзор",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(17)
+}
+{
+    "_id" : ObjectId("570e74866c611d49e3c85c51"),
+    "val" : "Разовый выезд (полный рабочий день)",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(18)
+}
+{
+    "_id" : ObjectId("570e74a76c611d49e3c85c52"),
+    "val" : "Разовый выезд (неполный рабочий день)",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(19)
+}
+{
+    "_id" : ObjectId("570e74bd6c611d49e3c85c53"),
+    "val" : "Выезд дизайнера в черте города",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(20)
+}
+{
+    "_id" : ObjectId("570e74d06c611d49e3c85c54"),
+    "val" : "Выезд дизайнера за город",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(21)
+}
+{
+    "_id" : ObjectId("570e757f6c611d49e3c85c55"),
+    "val" : "Виртуальная эскурсия",
+    "measure" : "руб.",
+    "type" : "job",
+    "parent_id" : ObjectId("56dd297ddfdb2e3885200bb5"),
+    "order" : NumberInt(22)
 }

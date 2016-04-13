@@ -15,11 +15,16 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
         master: data.master,
         configUrl: data.configUrl,
         uploadData: data.uploadData,
-        currentPhoto: undefined
+        currentPhoto: undefined,
+        modeName: "",
+        errorMsg: ""
     }
 
-    if (data.editedWork != undefined) $scope.model.work = data.editedWork
-    else {
+
+    if (data.editedWork != undefined) {
+        $scope.model.work = data.editedWork;
+        $scope.model.modeName = "Редактирование работы";
+    } else {
         var newWork = {
             'description': "",
             'photos': []
@@ -28,6 +33,9 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
         $scope.model.master.works.push(newWork);
 
         $scope.model.work = $scope.model.master.works[$scope.model.master.works.indexOf(newWork)];
+
+        $scope.model.modeName = "Добавление работы";
+
     }
 
     function setCurrentPhoto(value) {
@@ -35,7 +43,8 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
     }
 
     function addPhoto(file, errFiles, photo) {
-        $scope.errFile = errFiles && errFiles[0];
+        $scope.model.errorMsg = "";
+
         if (file) {
             var replace = false;
 
@@ -61,7 +70,21 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
             $scope.model.uploadData[newPhoto.filename] = file;
 
             if (!replace) $scope.model.work.photos.push(newPhoto);
+        };
+
+        if (errFiles.length > 0) {
+
+            $scope.model.errorMsg = "Не добавлено фото: " + errFiles[0].name + "."
+
+            if (errFiles[0].$error == "maxSize") {
+                $scope.model.errorMsg += " Размер файла больше допустимого. Максимальный размер: " + errFiles[0].$errorParam + ". Необходимо уменьшить файл перед добавлением.";
+            };
+            if (errFiles[0].$error == "pattern") {
+                $scope.model.errorMsg += " Добавлять можно только изображения. Данный файл не является изображением.";
+            };
+
         }
+
     }
 
     function deletePhoto(photo) {
@@ -74,7 +97,9 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
     }
 
-    function addFiles(files) {
+    function addFiles(files, invalidFiles) {
+        $scope.model.errorMsg = "";
+
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
 
@@ -95,8 +120,24 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
                 $scope.model.work.photos.push(newPhoto);
 
             };
-        }
+        };
 
+        console.log("invalidFiles: " + invalidFiles)
+
+        if (invalidFiles.length > 0) {
+            for (var i = 0; i < invalidFiles.length; i++) {
+
+                $scope.model.errorMsg += "Не добавлено фото: " + invalidFiles[i].name + "."
+
+                if (invalidFiles[i].$error == "maxSize") {
+                    $scope.model.errorMsg += " Размер файла больше допустимого. Максимальный размер: " + invalidFiles[i].$errorParam + ". Необходимо уменьшить файл перед добавлением.";
+                };
+                if (invalidFiles[i].$error == "pattern") {
+                    $scope.model.errorMsg += " Добавлять можно только изображения. Данный файл не является изображением.";
+                };
+
+            }
+        }
     };
 
 
