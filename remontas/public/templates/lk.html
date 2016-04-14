@@ -107,7 +107,7 @@
 
                         <!--                        <div class="clearfix" ng-class="{active: elementKind_services_value._id == interfaceOptions.checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.master.categories[elementCategories_key].kind_services.sort(compareOrder)">-->
                         <!--                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.categories.sort(compareOrder)|filter:{parent_id:elementCategories_value._id}">-->
-                        <div class="clearfix" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.kind_services">
+                        <div class="clearfix" ng-class="{active: elementKind_services_value._id == interfaceOptions.checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in data.kind_services">
                             <table>
                                 <caption>{{elementKind_services_value.name}}</caption>
                                 <col class="col1_table">

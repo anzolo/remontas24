@@ -55,7 +55,6 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
             return el._id == $scope.model.kindService._id
         }).parent_id;
 
-
         var categoryIndex = $scope.model.master.categories.findIndex(function (el) {
             return el._id == category_id
         });
@@ -72,26 +71,27 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
             price: 0
         }
 
-
-        //console.log(categoryIndex, kindServiceIndex, newService);
+        //console.log(newService);
         if (kindServiceIndex < 0) {
             var newKindService = {
                 _id: $scope.model.kindService._id,
-                name: $scope.model.kindService.val,
+                name: $scope.model.kindService.name,
                 order: $scope.model.kindService.order,
                 services: []
             };
             newKindService.services.push(newService);
 
             $scope.model.master.categories[categoryIndex].kind_services.push(newKindService);
-
-        } else $scope.model.kindService.services.push(newService);
+            $scope.model.kindService.services.push(newService);
+        } else {
+            $scope.model.master.categories[categoryIndex].kind_services[kindServiceIndex].services.push(newService);
+            $scope.model.kindService.services.push(newService);
+        };
 
         $scope.model.showPopup = false;
         $scope.model.newService = false;
 
         $scope.model.canAddNewService = onlyNewServices().length > 0;
-
     };
 
     function removeService(service) {
