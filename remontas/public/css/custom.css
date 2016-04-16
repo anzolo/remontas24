@@ -1785,6 +1785,13 @@ h2.master-counter span {
     box-sizing: border-box;
 }
 
+.my .works .item .title-container {
+    display: table;
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+}
+
 .my .works .item .title {
     display: table-cell;
     font-size: 15px;

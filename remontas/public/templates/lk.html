@@ -137,9 +137,9 @@
                     </div>
 
                     <div class="fragment">
-                        <h2 class="text-center">Работы <span>27</span></h2>
+                        <h2 class="text-center">Работы <span>{{data.master.works.length}}</span></h2>
                         <div class="works clearfix">
-                            <a href="#" class="item add open-modal" ng-click="editWorks()"></a>
+                            <a href="#" class="item add open-modal" ng-click="editWorks()" ng-if="data.master.works.length<12"></a>
 
                             <a href="#" class="item" ng-repeat="work in data.master.works" ng-mouseenter="interfaceOptions.mouseOverWork[$index]=true" ng-mouseleave="interfaceOptions.mouseOverWork[$index]=false" ng-click="editWorks(work)">
                                 <div class="edit" ng-show="interfaceOptions.mouseOverWork[$index]"></div>
@@ -147,7 +147,9 @@
                                     <img ng-src="{{getImgLink(work)}}" ng-if="!isFirstPhotoNew(work)&&work.photos.length>0" width="187" height="187">
                                     <img ngf-src="getImgLink(work)" ng-if="isFirstPhotoNew(work)" width="187" height="187">
                                 </div>
-                                <div class="title">{{work.description}}</div>
+                                <div class="title-container">
+                                    <div class="title">{{shrinkText(work.description)}}</div>
+                                </div>
                             </a>
 
                         </div>

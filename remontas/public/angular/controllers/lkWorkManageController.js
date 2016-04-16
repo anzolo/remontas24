@@ -122,8 +122,6 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
             };
         };
 
-        console.log("invalidFiles: " + invalidFiles)
-
         if (invalidFiles.length > 0) {
             for (var i = 0; i < invalidFiles.length; i++) {
 
