@@ -12,7 +12,7 @@
             <div class="works clearfix">
                 <a href="#" class="item" ng-repeat="photo in model.work.photos" ng-mouseenter="setCurrentPhoto(photo)" ng-mouseleave="setCurrentPhoto(undefined)">
                     <div class="edit" ng-if="photo == model.currentPhoto">
-                        <div class="change" ngf-select="addPhoto($file, $invalidFiles, photo)" accept="image/*" ngf-max-size="2MB">Заменить</div>
+                        <div class="change" ngf-select="addPhoto($file, $invalidFiles, photo)" accept="image/*" ngf-max-size="2MB" ngf-pattern="'image/*'">Заменить</div>
                         <div class="del" ng-click="deletePhoto(photo)">Удалить</div>
                     </div>
                     <div class="img">
@@ -34,7 +34,7 @@
             </div>
             <div ngf-no-file-drop>Ваш браузер не поддерживает технологию Drag and Drop</div>
 
-            <button>Сохранить</button>
+            <button ng-click="closeWindow()">Сохранить</button>
         </div>
 
     </div>

@@ -5,10 +5,12 @@
         <p style="font-weight: 300">Выберите квадратную картинку, формата JPEG или PNG</p>
 
 
-        <img ngf-src="avatar.file" ngf-resize="{width: 200, height: 200, quality: 0.9}">
+        <img ngf-src="model.file" ngf-resize="{width: 200, height: 200, quality: 0.9}">
 
-        <button ngf-select ng-model="avatar.file" ngf-pattern="'.jpg,.jpeg,.png'" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-resize="{width: 200, height:200, quality: .9, type: 'image/jpeg',
-                centerCrop: true}">ВЫБРАТЬ</button>
+        <div class="errorMsg">{{model.errorMsg}}</div>
+
+        <button ngf-select="selectPicture($file, $invalidFiles)" ngf-pattern="'.jpg,.jpeg,.png'" ngf-accept="'image/*'" ngf-max-size="500KB" ngf-resize="{width: 200, height:200, quality: .9, type: 'image/jpeg',
+                centerCrop: true}" ngf-pattern="'image/*'">ВЫБРАТЬ</button>
 
         <button ng-disabled="canSelect()" ng-click="acceptChange()">ПОДТВЕРДИТЬ</button>
 

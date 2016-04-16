@@ -812,6 +812,11 @@ h2.master-counter span {
     margin-bottom: 20px;
 }
 
+#changeAvatar .errorMsg {
+    margin-bottom: 10px;
+    color: red;
+}
+
 #order-btn {
     position: fixed;
     top: 50%;
