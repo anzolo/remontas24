@@ -41,7 +41,7 @@
 
     <div id="order-btn" class="open-modal" data-modal-name="order"></div>
 
-    <script type="text/javascript" src="/remontas/public/js/custom.js"></script>
+    <!--    <script type="text/javascript" src="/remontas/public/js/custom.js"></script>-->
 
     <!-- Модули -->
     <script src="/remontas/public/angular/remontas24Site.js"></script>

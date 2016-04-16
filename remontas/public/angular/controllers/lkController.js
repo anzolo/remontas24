@@ -17,21 +17,74 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     $scope.saveMaster = saveMaster;
+    $scope.showCategoriesMenu = showCategoriesMenu;
+    $scope.checkAdditionalService = checkAdditionalService;
+    $scope.isCheckedCategory = isCheckedCategory;
+    $scope.isCheckedAdditionalService = isCheckedAdditionalService;
+    $scope.showAdditionalServiceMenu = showAdditionalServiceMenu;
+    $scope.selectAdditionalService = selectAdditionalService;
+    $scope.preparePriceHTML = preparePriceHTML;
+    $scope.selectKindServices = selectKindServices;
+    $scope.compareOrder = compareOrder;
+    $scope.changeServices = changeServices;
+    $scope.onlyMasterCategory = onlyMasterCategory;
 
+    $scope.checkCategory = checkCategory;
+    $scope.selectCategories = selectCategories;
+    $scope.changeAvatar = changeAvatar;
     $scope.getImgLink = getImgLink;
-
     $scope.editWorks = editWorks;
-
     $scope.isFirstPhotoNew = isFirstPhotoNew;
-
     $scope.shrinkText = shrinkText;
 
 
     loadData();
 
+    /////////////////////////////////////////////////////////////////////////
+
+    //загрузка и сохранение
+
+    function loadData() {
+        lkData.init({}, function (data) {
+            if (data.status == "OK") {
+                $scope.data.master = JSON.parse(JSON.stringify(data.master));
+
+                $scope.data.configUrl = JSON.parse(JSON.stringify(data.configUrl));
+
+                $scope.data.categories = JSON.parse(JSON.stringify(data.categories));
+
+                $scope.data.kind_services = masterKindServiceArray();
+
+                calcCountServices();
+
+            } else if (data.status == "Error") {
+                console.error("Error:", data.note);
+                //                $state.go('adminka.masters');
+            }
+        });
+    }
+
+    function saveMaster() {
+
+        var connString = '/api/lk';
+
+        $scope.data.uploadData.master = Upload.json($scope.data.master);
+
+        Upload.upload({
+            url: connString,
+            data: $scope.data.uploadData
+
+        }).then(function (resp) {
+            loadData();
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        });
+
+    };
+
     //изменение аватарки
 
-    $scope.changeAvatar = function () {
+    function changeAvatar() {
         var bodyRef = angular.element($document[0].body)
         bodyRef.addClass('ovh'); // перенести в модальное окно аватарки
 
@@ -39,10 +92,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             templateUrl: "/remontas/public/templates/modals/changeAvatar.html",
             controller: "changeAvatarModalController"
         }).then(function (modal) {
-            // The modal object has the element built, if this is a bootstrap modal
-            // you can call 'modal' to show it, if it's a custom modal just show or hide
-            // it as you need to.
-            //            modal.element.modal();
             modal.close.then(function (result) {
                 $scope.data.uploadData.avatar = result;
                 bodyRef.removeClass('ovh');
@@ -51,7 +100,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     // Функции для меню категорий
-    $scope.showCategoriesMenu = function () {
+    function showCategoriesMenu() {
         if ($scope.interfaceOptions.showAddServices == false) {
             $scope.tempMasterCategoriesSelect = $scope.data.master.categories.slice();
             $scope.interfaceOptions.showCategory = true;
@@ -64,20 +113,20 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         //        return $scope.interfaceOptions.showCategory;
     }
 
-    $scope.selectCategories = function () {
+    function selectCategories() {
         //$scope.masterData.categories = $scope.tempMasterCategoriesSelect.slice();
         $scope.interfaceOptions.showCategory = false;
         $scope.data.kind_services = masterKindServiceArray();
         calcCountServices();
     }
 
-    $scope.isCheckedCategory = function (element) {
+    function isCheckedCategory(element) {
         return $scope.data.master.categories.findIndex(function (el) {
             return el._id == element._id;
         }) >= 0;
     };
 
-    $scope.checkCategory = function (element) {
+    function checkCategory(element) {
         var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
             return el._id == element._id
         });
@@ -108,7 +157,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
 
     // Функции для меню дополнительных видов работ
-    $scope.checkAdditionalService = function (element) {
+    function checkAdditionalService(element) {
         var categoryIndex = $scope.data.master.additional_service.indexOf(element);
 
         if (categoryIndex >= 0) {
@@ -119,11 +168,11 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }
     }
 
-    $scope.isCheckedAdditionalService = function (element) {
+    function isCheckedAdditionalService(element) {
         return $scope.data.master.additional_service.indexOf(element) >= 0
     }
 
-    $scope.showAdditionalServiceMenu = function () {
+    function showAdditionalServiceMenu() {
         if ($scope.interfaceOptions.showCategory == false) {
             $scope.interfaceOptions.showAddServices = true;
         }
@@ -133,67 +182,36 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         //        return $scope.interfaceOptions.showAddServices
     }
 
-    $scope.selectAdditionalService = function () {
+    function selectAdditionalService() {
         //        $scope.masterData.additional_service = $scope.tempAdditional_service.slice();
         $scope.interfaceOptions.showAddServices = false;
     }
 
 
-    // Функции для услуг
-    $scope.preparePriceHTML = function (price, measure) {
+    // Функции для блока "услуги"
+    function preparePriceHTML(price, measure) {
         var newValue = $sce.trustAsHtml(price + " " + measure);
         return newValue;
     };
 
-    $scope.selectKindServices = function (id) {
+    function selectKindServices(id) {
         if ($scope.interfaceOptions.checkKind_services != id) $scope.interfaceOptions.checkKind_services = id;
         else $scope.interfaceOptions.checkKind_services = null
     }
 
-    $scope.compareOrder = function (a, b) {
+    function compareOrder(a, b) {
         if (a.order < b.order) return -1;
         else if (a.order > b.order) return 1;
         else return 0;
     }
 
-    $scope.onlyMasterCategory = function () {
+    function onlyMasterCategory() {
         return function (category) {
             return $scope.data.master.categories.findIndex(function (el) {
                 return el._id == category._id
             }) >= 0
         };
     };
-
-    //прочие функции
-    function shrinkText(title) {
-        if (title.length > 50) {
-            return title.substring(0, 50) + "..."
-        } else return title;
-    }
-
-    /////////////////////
-
-
-    function loadData() {
-        lkData.init({}, function (data) {
-            if (data.status == "OK") {
-                $scope.data.master = JSON.parse(JSON.stringify(data.master));
-
-                $scope.data.configUrl = JSON.parse(JSON.stringify(data.configUrl));
-
-                $scope.data.categories = JSON.parse(JSON.stringify(data.categories));
-
-                $scope.data.kind_services = masterKindServiceArray();
-
-                calcCountServices();
-
-            } else if (data.status == "Error") {
-                console.error("Error:", data.note);
-                //                $state.go('adminka.masters');
-            }
-        });
-    }
-
 
     function masterKindServiceArray() {
         var result = [];
@@ -244,7 +262,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         } else return undefined;
     };
 
-    $scope.changeServices = function (kindService) {
+    function changeServices(kindService) {
         //        $scope.bodyRef = angular.element(document.querySelector('.my'))
         //         angular.element(document.getElementsByClassName("multi-files"));
         var bodyRef = angular.element($document[0].body)
@@ -267,27 +285,6 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         });
     }
 
-    function saveMaster() {
-
-        var connString = '/api/lk';
-
-        $scope.data.uploadData.master = Upload.json($scope.data.master);
-        //$scope.data.uploadData.avatar = $scope.data.avatar;
-
-        Upload.upload({
-            url: connString,
-            data: $scope.data.uploadData
-
-        }).then(function (resp) {
-            //console.log('Success uploaded. Response: ' + resp.data);
-
-            loadData();
-        }, function (resp) {
-            console.log('Error status: ' + resp.status);
-        });
-
-    };
-
     function calcCountServices() {
         var count = 0;
 
@@ -302,7 +299,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.interfaceOptions.countServices = count;
     }
 
+
     // функции для блока "Работы"
+
+    function shrinkText(title) {
+        if (title.length > 50) {
+            return title.substring(0, 50) + "..."
+        } else return title;
+    }
 
     function getImgLink(work) {
         var result;
@@ -349,94 +353,5 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             });
         });
     }
-
-
-    //    $scope.masterServiceArray = function (category, kind_service) {
-    //        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
-    //            return el._id == category._id
-    //        });
-    //        if (categoryIndex >= 0) {
-    //            var kindServiceIndex = $scope.data.master.categories[categoryIndex].kind_services.findIndex(function (el) {
-    //                return el._id == kind_service._id
-    //            });
-    //
-    //            if (kindServiceIndex >= 0) return $scope.data.master.categories[categoryIndex].kind_services[kindServiceIndex].services
-    //            else return [];
-    //        } else return [];
-    //    };
-
-    //
-    //    
-    //
-    //    function prepareMasterCategories(master, categories) {
-    //        var onlyCategories = categories.filter(function (el) {
-    //            return el.type == "category"
-    //        });
-    //        for (var i = 0; i < onlyCategories.length; i++) {
-    //            var categoryKey = master.categories.findIndex(function (el) {
-    //                return el._id == onlyCategories[i]._id
-    //            })
-    //
-    //            if (categoryKey < 0) {
-    //                var newKind_services = [];
-    //                var tempNewKind_services = categories.filter(function (el) {
-    //                    return el.parent_id == onlyCategories[i]._id
-    //                });
-    //                for (var x = 0; x < tempNewKind_services.length; x++) {
-    //                    var kind_service = {
-    //                        "_id": tempNewKind_services[x]._id,
-    //                        "name": tempNewKind_services[x].val,
-    //                        "order": tempNewKind_services[x].order,
-    //                        "services": []
-    //                    };
-    //                    newKind_services.push(kind_service);
-    //                }
-    //                var newCategory = {
-    //                    "_id": onlyCategories[i]._id,
-    //                    "name": onlyCategories[i].val,
-    //                    "order": onlyCategories[i].order,
-    //                    "visible": false,
-    //                    "kind_services": newKind_services
-    //                };
-    //                master.categories.push(newCategory);
-    //            } else {
-    //
-    //                master.categories[categoryKey].visible = true; //удалять перед сохранением.
-    //                var kindServices = categories.filter(function (el) {
-    //                    return el.parent_id == master.categories[categoryKey]._id
-    //                });
-    //                for (var y = 0; y < kindServices.length; y++) {
-    //                    if (master.categories[categoryKey].kind_services.findIndex(function (el) {
-    //                            return el._id == kindServices[y]._id
-    //                        }) < 0) {
-    //                        var kind_service = {
-    //                            "_id": kindServices[y]._id,
-    //                            "name": kindServices[y].val,
-    //                            "order": kindServices[y].order,
-    //                            "services": []
-    //                        };
-    //                        master.categories[categoryKey].kind_services.push(kind_service);
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        // НУЖНО отсортировать категории и виды работ
-    //        return master;
-    //    }
-    //
-    //    // Поиск категории в масстиве мастера по её ID
-    //    function findOfMasterCategoriesById(id) {
-    //        return function (element) {
-    //            return element._id == id;
-    //        }
-    //    }
-    //
-    //    // Поиск видов работ по ID категории
-    //    function findByParentId(id) {
-    //        return function (element) {
-    //            return element.parent_id == id;
-    //        }
-    //    }
-    //
 
 }]);

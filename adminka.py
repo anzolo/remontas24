@@ -4,9 +4,8 @@ import jwt
 import Crypto.PublicKey.RSA as RSA
 import datetime
 from bson.objectid import ObjectId
-import uuid
 import os
-from common import JSONEncoder
+import common
 import json
 
 import conf
@@ -117,7 +116,7 @@ def adm_getMaster(id):
                 result["note"] = str(e)
                 print(e)
 
-        return JSONEncoder().encode(result)
+        return common.JSONEncoder().encode(result)
     else:
         return abort(401, "Sorry, access denied.")
 
@@ -149,7 +148,7 @@ def adm_manageMasters():
             #сохранение аватарки, если выбрана. если не выбрана, то делается "нет фото"
             if avatarFile is not None:
 
-                avatarFile.filename = createFileName(avatarFile.raw_filename)
+                avatarFile.filename = common.createFileName(avatarFile.raw_filename)
                 newMaster["avatar"] = avatarFile.filename
 
                 avatarFile.save(conf.storage_path)
@@ -169,14 +168,14 @@ def adm_manageMasters():
             #если мастер уже существует
             if not isNewMaster:
 
-                syncFiles(newMaster, oldMaster, request)
+                common.syncFiles(newMaster, oldMaster, request)
 
                 conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": newMaster})
 
                 result["note"] = "Отредактирован существующий мастер"
 
             else: #если это создание нового мастера
-                syncFiles(newMaster, None, request)
+                common.syncFiles(newMaster, None, request)
                 result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
                 result["note"] = "Создан новый мастер"
 
@@ -192,51 +191,13 @@ def adm_manageMasters():
     else:
         return abort(401, "Sorry, access denied.")
 
-def createFileName(oldFilename):
-    filename, ext = os.path.splitext(oldFilename)
-    new_filename = str(uuid.uuid4())
-    return new_filename + ext
-
-def syncFiles(newMaster, oldMaster, request):
-    #создаем лист со всеми фотками которые есть в старом мастере
-    oldPhotos = []
-    if oldMaster is not None:
-        for work in oldMaster["works"]:
-            for photo in work["photos"]:
-                oldPhotos.append(photo["filename"])
-
-    for work in newMaster["works"]:
-        for photo in work["photos"]:
-            if "new" in photo:
-                if photo["new"]:
-                    #сохраняем файл
-                    del photo["new"]
-
-                    photoFile = request.files.get(photo["filename"])
-
-                    if photoFile is not None:
-                        photoFile.filename = createFileName(photoFile.raw_filename)
-                        photo["filename"] = photoFile.filename
-                        photoFile.save(conf.works_path)
-            else:
-                #исключаем фото, которое осталось в мастере из списка удаления
-                if oldPhotos.count(photo["filename"])>0:
-                    oldPhotos.remove(photo["filename"])
-
-    #удаляем фото, которых нет в новом мастере
-    for photo in oldPhotos:
-        oldFilePath = conf.works_path + photo
-        if os.path.isfile(oldFilePath):
-            os.remove(oldFilePath)
-
-
 # API админки. Сервис получения информации по категориям
 @route('/api/adminka/categories')
 def adm_getCategoriesList():
     result_check_rights = check_rights("admin", request)
     if result_check_rights["status"]:
         if request.params.method == "getAll":
-            return JSONEncoder().encode(list(conf.db.category_job.find()))
+            return common.JSONEncoder().encode(list(conf.db.category_job.find()))
     else:
         return abort(401, "Sorry, access denied.")
 

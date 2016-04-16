@@ -1,8 +1,8 @@
 from bottle import route, template, request, abort, static_file, Response
 from bson.objectid import ObjectId
 
-from common import JSONEncoder
 import adminka
+import common
 import conf
 import os
 import json
@@ -71,7 +71,7 @@ def rem_lkGetData():
                     lkResult["note"] = str(e)
                     print(e)
 
-            return JSONEncoder().encode(lkResult)
+            return common.JSONEncoder().encode(lkResult)
 
         # elif request.params.method == "123":
         #    pass
@@ -90,31 +90,29 @@ def rem_lkSaveData():
         result = {}
 
         try:
-            master = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
-            if master != None:
+            oldMaster = conf.db.masters.find_one({"_id": ObjectId(user["master_id"])})
+            if oldMaster != None:
 
                 newMaster = json.loads(request.forms.get("master"))
 
                 del newMaster["_id"]
 
-                upload = request.files.get("avatar")
+                avatarFile = request.files.get("avatar")
 
-                if upload != None:
-                    filename, ext = os.path.splitext(upload.raw_filename)
-                    new_filename = str(uuid.uuid4())
-                    upload.filename = new_filename + ext
+                if avatarFile is not None:
+                    avatarFile.filename = common.createFileName(avatarFile.raw_filename)
+                    newMaster["avatar"] = avatarFile.filename
 
-                    oldFilePath = conf.storage_path + master["avatar"]
+                    avatarFile.save(conf.storage_path)
 
+                    oldFilePath = conf.storage_path + oldMaster["avatar"]
                     if os.path.isfile(oldFilePath):
-                        if master["avatar"] != conf.img_no_avatar:
+                        if oldMaster["avatar"] != conf.img_no_avatar:
                             os.remove(oldFilePath)
                     else:  # Show an error ##
-                        print("Error: %s file not found" % master["avatar"])
+                        print("Error: %s file not found" % oldMaster["avatar"])
 
-                    newMaster["avatar"] = upload.filename
-
-                    upload.save(conf.storage_path)
+                common.syncFiles(newMaster, oldMaster, request)
 
                 conf.db.masters.update_one({"_id": ObjectId(user["master_id"])}, {"$set": newMaster})
 
