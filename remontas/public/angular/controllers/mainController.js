@@ -1,5 +1,7 @@
 remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', function ($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope) {
 
+    $scope.isAuth = AuthService.isAuthenticated;
+
     $scope.currentPage = "remontas.searchPage";
     $scope.isAuthOK = false;
 
