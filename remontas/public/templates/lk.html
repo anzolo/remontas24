@@ -69,7 +69,6 @@
                                     <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{data.master.categories.length}}" ng-click="showCategoriesMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено категории <strong>{{data.master.categories.length}}</strong></div>
                                         <div ng-repeat="element in data.categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
                                     </div>
@@ -79,7 +78,6 @@
                                     <input type="text" readonly="readonly" required="required" placeholder="Выбрано доп. услуг {{data.master.additional_service.length}}" ng-click="showAdditionalServiceMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showAddServices">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Отмечено доп. услуг <strong>{{tempAdditional_service.length}}</strong></div>
                                         <div ng-click="checkAdditionalService('contractWork')"><span ng-class="{active: isCheckedAdditionalService('contractWork')}">Работа по договору</span></div>
                                         <div ng-click="checkAdditionalService('masterOnHour')"><span ng-class="{active: isCheckedAdditionalService('masterOnHour')}">Услуга мастер на час</span></div>
                                         <abbr class="btn" ng-click="selectAdditionalService()">Выбрать</abbr>
