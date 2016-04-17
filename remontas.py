@@ -97,8 +97,6 @@ def rem_lkSaveData():
 
                 del newMaster["_id"]
 
-                conf.db.masters.update_one({"_id": ObjectId(user["master_id"])}, {"$set": newMaster})
-
                 avatarFile = request.files.get("avatar")
 
                 if avatarFile is not None:
@@ -116,7 +114,7 @@ def rem_lkSaveData():
 
                 common.syncFiles(newMaster, oldMaster, request)
 
-
+                conf.db.masters.update_one({"_id": ObjectId(user["master_id"])}, {"$set": newMaster})
 
                 result["status"] = "OK"
 

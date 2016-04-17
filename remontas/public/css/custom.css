@@ -2144,3 +2144,24 @@ h2.master-counter span {
 .ovh {
     overflow: hidden;
 }
+
+.loading {
+    background: rgba(255, 255, 255, 0.95);
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    display: table;
+}
+
+.loading div {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.loading div > span {
+    display: block;
+}

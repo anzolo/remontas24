@@ -7,7 +7,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         mouseOverWork: {},
         checkKind_services: null,
         countServices: 0,
-        countJobs: 0
+        countJobs: 0,
+        loading: false
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -65,6 +66,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     function saveMaster() {
+        $scope.loading = true;
 
         var connString = '/api/lk';
 
@@ -78,7 +80,10 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             loadData();
         }, function (resp) {
             console.log('Error status: ' + resp.status);
-        });
+        }).finally(function () {
+            // called no matter success or failure
+            $scope.loading = false;
+        });;
 
     };
 
