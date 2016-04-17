@@ -3,12 +3,12 @@
     <div id="add-service">
         <div class="close-modal" ng-click="close()"></div>
         <h2>Изменение услуг</h2>
-        <p>{{model.kindService.name}}</p>
+        <p>{{model.kindService.val}}</p>
 
         <div class="add-form">
-            <div class="item clearfix" ng-repeat="(elementServices_key, elementServices_value) in model.kindService.services">
+            <div class="item clearfix" ng-repeat="elementServices_value in model.masterKindService.services" ng-if="model.masterKindService != undefined">
                 <div class="some-service">
-                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" required="required" placeholder="Наименование услуги">
+                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" placeholder="Наименование услуги">
                 </div>
                 <div class="price">
                     <input type="number" ng-model="elementServices_value.price" placeholder="Цена" max="99999" min="0" step="1">
@@ -18,7 +18,7 @@
             </div>
             <div class="item clearfix" ng-if="model.newService">
                 <div class="some-service">
-                    <input class="select" type="text" readonly="readonly" required="required" placeholder="Наименование услуги" ng-click="showPopup()">
+                    <input class="select" type="text" readonly="readonly" placeholder="Наименование услуги" ng-click="showPopup()">
                     <div class="sub" ng-if="model.showPopup">
                         <!--                        <div ng-repeat="service in categories|filter:{parent_id:model.kindService._id}">{{service.val}}</div>-->
                         <div ng-repeat="service in model.onlyNotMasterServices" ng-click="selectService(service)">{{service.val}}</div>

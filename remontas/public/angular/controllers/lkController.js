@@ -277,7 +277,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             controller: "changeServicesModalController",
             inputs: {
                 data: {
-                    kindService: kindService,
+                    kindService_id: kindService._id,
                     categories: $scope.data.categories,
                     master: $scope.data.master
                 }
@@ -285,6 +285,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).then(function (modal) {
             modal.close.then(function (result) {
                 bodyRef.removeClass('ovh');
+                $scope.data.kind_services = masterKindServiceArray();
                 calcCountServices();
             });
         });
