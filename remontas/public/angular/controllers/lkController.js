@@ -8,7 +8,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         checkKind_services: null,
         countServices: 0,
         countJobs: 0,
-        loading: false
+        loading: false,
+        textIsChange: ""
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -37,7 +38,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.editWorks = editWorks;
     $scope.isFirstPhotoNew = isFirstPhotoNew;
     $scope.shrinkText = shrinkText;
-
+    $scope.changeText = changeText;
 
     loadData();
 
@@ -70,6 +71,9 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
         var connString = '/api/lk';
 
+        if ($scope.data.master.phone1 == undefined) $scope.data.master.phone1 = ""
+        if ($scope.data.master.phone2 == undefined) $scope.data.master.phone2 = ""
+
         $scope.data.uploadData.master = Upload.json($scope.data.master);
 
         Upload.upload({
@@ -100,6 +104,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             modal.close.then(function (result) {
                 $scope.data.uploadData.avatar = result;
                 bodyRef.removeClass('ovh');
+                saveMaster();
             });
         });
     }
@@ -123,6 +128,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         $scope.interfaceOptions.showCategory = false;
         $scope.data.kind_services = masterKindServiceArray();
         calcCountServices();
+        saveMaster();
     }
 
     function isCheckedCategory(element) {
@@ -138,7 +144,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
         if (categoryIndex >= 0) {
             $scope.data.master.categories.splice(categoryIndex, 1);
-        } else {
+            $scope.data.kind_services = masterKindServiceArray();
+        } else if ($scope.data.master.categories.length < 2) {
             var tempcategoryIndex = $scope.tempMasterCategoriesSelect.findIndex(function (el) {
                 return el._id == element._id
             });
@@ -156,8 +163,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 };
                 $scope.data.master.categories.push(newCategory);
             }
+            $scope.data.kind_services = masterKindServiceArray();
         }
-        $scope.data.kind_services = masterKindServiceArray();
     }
 
 
@@ -190,6 +197,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     function selectAdditionalService() {
         //        $scope.masterData.additional_service = $scope.tempAdditional_service.slice();
         $scope.interfaceOptions.showAddServices = false;
+        saveMaster();
     }
 
 
@@ -287,6 +295,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 bodyRef.removeClass('ovh');
                 $scope.data.kind_services = masterKindServiceArray();
                 calcCountServices();
+                saveMaster();
             });
         });
     }
@@ -356,8 +365,16 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).then(function (modal) {
             modal.close.then(function (result) {
                 bodyRef.removeClass('ovh');
+                saveMaster();
             });
         });
+    }
+
+    function changeText(element) {
+        if ($scope.interfaceOptions.textIsChange == element) {
+            $scope.interfaceOptions.textIsChange = '';
+            saveMaster();
+        }
     }
 
 }]);

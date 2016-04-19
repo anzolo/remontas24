@@ -18,6 +18,7 @@ remBackend.factory('lkData', ['$resource',
         });
                 }]);
 
+//Это вообще нужно ????
 remBackend.factory('masterMainData', ['$resource',
   function ($resource) {
         return $resource('/api/lk/mainDataSave');

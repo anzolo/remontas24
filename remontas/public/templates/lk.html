@@ -55,11 +55,11 @@
                             <div class="phones clearfix">
 
                                 <div class="phone-1">
-                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone1">
+                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone1" ng-change="interfaceOptions.textIsChange = 'phone1'" ng-blur="changeText('phone1')">
                                 </div>
 
                                 <div class="phone-2">
-                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone2">
+                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone2" ng-change="interfaceOptions.textIsChange = 'phone2'" ng-blur="changeText('phone2')">
                                 </div>
                             </div>
 
@@ -69,6 +69,7 @@
                                     <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{data.master.categories.length}}" ng-click="showCategoriesMenu()">
                                     <div class="sub" ng-if="interfaceOptions.showCategory">
                                         <!--<div>Услуга мастер на час</div>-->
+                                        <div class="counter">Выбирете не больше <strong>2-х</strong></div>
                                         <div ng-repeat="element in data.categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
                                         <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
                                     </div>
@@ -88,9 +89,9 @@
                         </div>
                         <div class="part-2">
                             <div>
-                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр." ng-model="data.master.detail"></textarea>
+                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр." ng-model="data.master.detail" ng-change="interfaceOptions.textIsChange = 'detail'" ng-blur="changeText('detail')"></textarea>
                             </div>
-                            <button class="btn saveMaster" ng-click="saveMaster()">Сохранить</button>
+                            <!--<button class="btn saveMaster" ng-click="saveMaster()">Сохранить</button>-->
                         </div>
                     </div>
                 </div>
