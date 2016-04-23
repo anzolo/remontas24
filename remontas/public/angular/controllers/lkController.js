@@ -1,8 +1,7 @@
 remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', '$document', function ($scope, lkData, masterMainData, $sce, ModalService, Upload, $document) {
 
     $scope.interfaceOptions = {
-        showCategory: false,
-        showAddServices: false,
+        showComboBox: "",
         newAvatar: null,
         mouseOverWork: {},
         checkKind_services: null,
@@ -94,6 +93,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     //изменение аватарки
 
     function changeAvatar() {
+        if ($scope.interfaceOptions.showComboBox != "") return;
         var bodyRef = angular.element($document[0].body)
         bodyRef.addClass('ovh'); // перенести в модальное окно аватарки
 
@@ -111,21 +111,15 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
     // Функции для меню категорий
     function showCategoriesMenu() {
-        if ($scope.interfaceOptions.showAddServices == false) {
+        if ($scope.interfaceOptions.showComboBox == "") {
             $scope.tempMasterCategoriesSelect = $scope.data.master.categories.slice();
-            $scope.interfaceOptions.showCategory = true;
+            $scope.interfaceOptions.showComboBox = "Category";
         }
-        //        $scope.interfaceOptions.showAddServices = false
-        //        if (!$scope.interfaceOptions.showCategory) {
-        //            $scope.tempMasterCategories = $scope.masterData.categories.slice();
-        //            $scope.tempMasterCategoriesSelect = $scope.masterData.categories.slice();
-        //        }
-        //        return $scope.interfaceOptions.showCategory;
     }
 
     function selectCategories() {
         //$scope.masterData.categories = $scope.tempMasterCategoriesSelect.slice();
-        $scope.interfaceOptions.showCategory = false;
+        $scope.interfaceOptions.showComboBox = "";
         $scope.data.kind_services = masterKindServiceArray();
         calcCountServices();
         saveMaster();
@@ -185,18 +179,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     function showAdditionalServiceMenu() {
-        if ($scope.interfaceOptions.showCategory == false) {
-            $scope.interfaceOptions.showAddServices = true;
+        if ($scope.interfaceOptions.showComboBox == "") {
+            $scope.interfaceOptions.showComboBox = 'AddServices';
         }
-        //        if (!$scope.interfaceOptions.showAddServices) {
-        //            $scope.tempAdditional_service = $scope.masterData.additional_service.slice();
-        //        }
-        //        return $scope.interfaceOptions.showAddServices
     }
 
     function selectAdditionalService() {
         //        $scope.masterData.additional_service = $scope.tempAdditional_service.slice();
-        $scope.interfaceOptions.showAddServices = false;
+        $scope.interfaceOptions.showComboBox = "";
         saveMaster();
     }
 
@@ -276,6 +266,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     };
 
     function changeServices(kindService) {
+        if ($scope.interfaceOptions.showComboBox != "") return;
         //        $scope.bodyRef = angular.element(document.querySelector('.my'))
         //         angular.element(document.getElementsByClassName("multi-files"));
         var bodyRef = angular.element($document[0].body)
@@ -343,6 +334,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     }
 
     function editWorks(work) {
+        if ($scope.interfaceOptions.showComboBox != "") return;
         var bodyRef = angular.element($document[0].body)
         bodyRef.addClass('ovh');
 

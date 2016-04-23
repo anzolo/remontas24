@@ -57,8 +57,9 @@ button[disabled="disabled"] {
 .changeAvatarButton {
     width: 180px;
     margin-top: 15px;
-    line-height: 35px;
-    position: absolute;
+    line-height: 37px;
+    /*    position: absolute;*/
+    display: block;
 }
 
 html,
