@@ -3,7 +3,7 @@ var remBackend = angular.module('remBackend', ['ngResource']);
 remBackend.factory('searchMasters', ['$resource',
   function ($resource) {
         return $resource('/api/main/searchMasters');
-                }]);
+}]);
 
 remBackend.factory('lkData', ['$resource',
   function ($resource) {
@@ -16,7 +16,21 @@ remBackend.factory('lkData', ['$resource',
             }
 
         });
-                }]);
+}]);
+
+remBackend.factory('masterData', ['$resource',
+  function ($resource) {
+        return function (masterId) {
+            return $resource('/api/master', {}, {
+                "init": {
+                    method: 'GET',
+                    params: {
+                        id: masterId
+                    }
+                }
+            });
+        }
+}]);
 
 //Это вообще нужно ????
 remBackend.factory('masterMainData', ['$resource',

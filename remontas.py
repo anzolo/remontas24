@@ -253,3 +253,12 @@ def calcScoreMaster(master_id):
             conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
 
             conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
+
+
+# API ремонтаса. получение данных по мастеру
+@route('/api/master')
+def rem_masterGetData():
+    print("ID -> "+request.params.id)
+    result = {"back": request.params.id}
+    result["status"] = "OK"
+    return result
