@@ -58,6 +58,10 @@ remontas24App.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, 
     return {
         responseError: function (response) {
             if (response.status === 401) {
+
+//                console.log("1")
+//                console.log(response);
+
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, response);
                 return {
                     transformRequest: [],
@@ -77,7 +81,7 @@ remontas24App.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, 
                 $rootScope.$broadcast(AUTH_EVENTS.sessionTimeout,
                     response);
             }
-            //console.log(response);
+
             return $q.reject(response);
         },
 
@@ -101,7 +105,11 @@ remontas24App.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, 
             if (response.status === 401) {
                 // handle the case where the user is not authenticated
 
+
             }
+
+//            console.log("2")
+//            console.log(response);
             return response || $q.when(response);
         }
     };

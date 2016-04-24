@@ -1,4 +1,4 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', '$document', function ($scope, lkData, masterMainData, $sce, ModalService, Upload, $document) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', function ($scope, lkData, masterMainData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS) {
 
     $scope.interfaceOptions = {
         showComboBox: "",
@@ -9,7 +9,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         countJobs: 0,
         loading: false,
         textIsChange: "",
-        showWhatIs:false
+        showWhatIs: false
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -85,7 +85,10 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).then(function (resp) {
             loadData();
         }, function (resp) {
-            console.log('Error status: ' + resp.status);
+            console.log('Error when try to save master. Status: ' + resp.status);
+
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+
         }).finally(function () {
             // called no matter success or failure
             $scope.loading = false;
