@@ -98,6 +98,20 @@ def rem_lkSaveData():
 
                 del newMaster["_id"]
 
+                if "email" in newMaster and "email" in oldMaster:
+                    newMaster["email"] = oldMaster["email"]
+                if "status" in newMaster and "status" in oldMaster:
+                    newMaster["status"] = oldMaster["status"]
+                if "kind_profile" in newMaster and "kind_profile" in oldMaster:
+                    newMaster["kind_profile"] = oldMaster["kind_profile"]
+                if "name" in newMaster and "name" in oldMaster:
+                    newMaster["name"] = oldMaster["name"]
+                if "sername" in newMaster and "sername" in oldMaster:
+                    newMaster["sername"] = oldMaster["sername"]
+                if "patronymic" in newMaster and "patronymic" in oldMaster:
+                    newMaster["patronymic"] = oldMaster["patronymic"]
+
+
                 avatarFile = request.files.get("avatar")
 
                 if avatarFile is not None:
