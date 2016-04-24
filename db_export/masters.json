@@ -1,115 +1,240 @@
 {
     "_id" : ObjectId("56addc7e036402f984c13037"),
     "name" : "Василий",
-    "jobs_count" : "7",
-    "avatar" : "331539c3-bfef-4b41-a5a1-5fe1098de837.jpg",
+    "status" : "active",
+    "score" : NumberInt(120),
+    "avatar" : "57084fea-9224-4e32-aa79-604c60d47216.png",
     "kind_profile" : "phys",
     "email" : "master@remontas24.ru",
     "sername" : "Петров",
     "patronymic" : "Петрович",
-    "phone1" : "9221111111",
+    "phone1" : "1111111111",
     "detail" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper.",
-    "phone2" : "1111111111",
+    "phone2" : "",
     "categories" : [
         {
-            "visible" : true,
-            "_id" : "56dd193fdfdb2e3885200ba5",
             "kind_services" : [
                 {
-                    "order" : NumberInt(1),
-                    "name" : "Отделочные работы",
+                    "_id" : "56dd2866dfdb2e3885200bb1",
+                    "order" : NumberInt(3),
+                    "name" : "Электромонтажные работы",
                     "services" : [
                         {
-                            "order" : NumberInt(2),
-                            "price" : NumberInt(300),
-                            "measure" : "м<sup>2</sup>",
-                            "_id" : "56dd2a52dfdb2e3885200bb7",
-                            "name" : "Оштукатуривание стен визуальное равнение"
+                            "price" : NumberInt(111),
+                            "order" : NumberInt(1),
+                            "_id" : "56e5a1352310400c30fbfc25",
+                            "measure" : "руб./шт.",
+                            "name" : "Сверление отверстий для установки розеток, выключателей и распределительных коробок"
                         },
                         {
+                            "price" : NumberInt(111),
+                            "order" : NumberInt(2),
+                            "_id" : "56e5a1422310400c30fbfc26",
+                            "measure" : "руб./шт.",
+                            "name" : "Установка розетки, выключателя, распределительной коробки"
+                        },
+                        {
+                            "price" : NumberInt(111),
                             "order" : NumberInt(3),
-                            "price" : NumberInt(100),
-                            "measure" : "м<sup>2</sup>",
-                            "_id" : "56dd2a6ddfdb2e3885200bb8",
-                            "name" : "Шпатлевание стен"
+                            "_id" : "56f2c7202310401ea4f4c314",
+                            "measure" : "м.пог.",
+                            "name" : "Штробление стен под провода"
+                        },
+                        {
+                            "price" : NumberInt(1111),
+                            "order" : NumberInt(4),
+                            "_id" : "56f2ca7f23104022f4473d57",
+                            "measure" : "руб./м.пог.",
+                            "name" : "Прокладка кабеля, проводов"
                         }
-                    ],
-                    "_id" : "56dd27bcdfdb2e3885200baf"
+                    ]
                 },
                 {
+                    "_id" : "56dd280ddfdb2e3885200bb0",
                     "order" : NumberInt(2),
                     "name" : "Сантехнические работы",
                     "services" : [
                         {
+                            "price" : NumberInt(222),
+                            "order" : NumberInt(5),
+                            "_id" : "56e5a0fd2310400c30fbfc22",
+                            "measure" : "руб./ед.",
+                            "name" : "Установка унитаза"
+                        },
+                        {
+                            "price" : NumberInt(33),
                             "order" : NumberInt(6),
-                            "price" : NumberInt(3000),
                             "_id" : "56e5a10d2310400c30fbfc23",
+                            "measure" : "руб./ед.",
                             "name" : "Установка смесителя"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(7),
+                            "_id" : "56e5a11d2310400c30fbfc24",
+                            "measure" : "руб./ед.",
+                            "name" : "Установка душевой кабины"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(8),
+                            "_id" : "56f2ba502310401d9ca5a677",
+                            "measure" : "руб/м.пог.",
+                            "name" : "Штробление стен под трубы"
+                        },
+                        {
+                            "price" : NumberInt(33),
+                            "order" : NumberInt(9),
+                            "_id" : "56f2ba732310401d9ca5a678",
+                            "measure" : "руб/у.т.",
+                            "name" : "Разводка ХВС, ГВС"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(10),
+                            "_id" : "56f2ba8a2310401d9ca5a679",
+                            "measure" : "руб/ед.",
+                            "name" : "Установка раковины (мойдодыр)"
+                        },
+                        {
+                            "price" : NumberInt(4),
+                            "order" : NumberInt(11),
+                            "_id" : "56f2ba9b2310401d9ca5a67a",
+                            "measure" : "руб/ед.",
+                            "name" : "Установка ванны"
                         }
-                    ],
-                    "_id" : "56dd280ddfdb2e3885200bb0"
+                    ]
                 },
                 {
-                    "order" : NumberInt(3),
-                    "name" : "Электромонтажные работы",
+                    "_id" : "56dd27bcdfdb2e3885200baf",
+                    "order" : NumberInt(1),
+                    "name" : "Отделочные работы",
                     "services" : [
-
-                    ],
-                    "_id" : "56dd2866dfdb2e3885200bb1"
+                        {
+                            "price" : NumberInt(111),
+                            "order" : NumberInt(1),
+                            "_id" : "56dd29e7dfdb2e3885200bb6",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Оштукатуривание стен под маяк"
+                        },
+                        {
+                            "price" : NumberInt(111),
+                            "order" : NumberInt(2),
+                            "_id" : "56dd2a52dfdb2e3885200bb7",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Оштукатуривание стен визуальное равнение"
+                        },
+                        {
+                            "price" : NumberInt(111),
+                            "order" : NumberInt(3),
+                            "_id" : "56dd2a6ddfdb2e3885200bb8",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Шпатлевание стен"
+                        },
+                        {
+                            "price" : NumberInt(222),
+                            "order" : NumberInt(4),
+                            "_id" : "56dd2a7edfdb2e3885200bb9",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Грунтование стен"
+                        },
+                        {
+                            "price" : NumberInt(333),
+                            "order" : NumberInt(5),
+                            "_id" : "56f2b5162310400e98ba63de",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Поклейка стен обоями"
+                        },
+                        {
+                            "price" : NumberInt(444),
+                            "order" : NumberInt(6),
+                            "_id" : "56f2b5cb2310400e98ba63df",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Черновая стяжка пола под маяк"
+                        },
+                        {
+                            "price" : NumberInt(555),
+                            "order" : NumberInt(7),
+                            "_id" : "56f2b63e23104001e8acda7a",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Черновая стяжка пола"
+                        },
+                        {
+                            "price" : NumberInt(666),
+                            "order" : NumberInt(8),
+                            "_id" : "56f2b69523104001e8acda7b",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Чистовая стяжка пола"
+                        },
+                        {
+                            "price" : NumberInt(444),
+                            "order" : NumberInt(9),
+                            "_id" : "56f2b6b923104001e8acda7c",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Укладка ламината"
+                        },
+                        {
+                            "price" : NumberInt(444),
+                            "order" : NumberInt(10),
+                            "_id" : "56f2b7792310401b8ce020e2",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Укладка линолеума"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(11),
+                            "_id" : "56f2b7912310401b8ce020e3",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Укладка паркета"
+                        },
+                        {
+                            "price" : NumberInt(4440),
+                            "order" : NumberInt(12),
+                            "_id" : "56f2b7a62310401b8ce020e4",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Укладка паркетной доски"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(13),
+                            "_id" : "56f2b7c42310401b8ce020e5",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Укладка керамической плитки"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(14),
+                            "_id" : "56f2b9b92310401d9ca5a673",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Монтаж потолков из ГКЛ"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(15),
+                            "_id" : "56f2b9d52310401d9ca5a674",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Косметический ремонт"
+                        },
+                        {
+                            "price" : NumberInt(44),
+                            "order" : NumberInt(16),
+                            "_id" : "56f2b9ef2310401d9ca5a675",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Капитальный ремонт"
+                        },
+                        {
+                            "price" : NumberInt(444),
+                            "order" : NumberInt(17),
+                            "_id" : "56f2ba002310401d9ca5a676",
+                            "measure" : "руб/м<sup>2</sup>",
+                            "name" : "Ремонт по дизайн проекту"
+                        }
+                    ]
                 }
             ],
             "order" : NumberInt(1),
+            "_id" : "56dd193fdfdb2e3885200ba5",
             "name" : "Ремонтно-отделочные работы"
-        },
-        {
-            "visible" : true,
-            "_id" : "56dd274bdfdb2e3885200bac",
-            "kind_services" : [
-                {
-                    "order" : NumberInt(1),
-                    "name" : "Материал полотна",
-                    "services" : [
-                        {
-                            "_id" : "56e5a19e23104023242596d8",
-                            "price" : NumberInt(0),
-                            "order" : NumberInt(1),
-                            "name" : "Матовые"
-                        }
-                    ],
-                    "_id" : "56dd288bdfdb2e3885200bb2"
-                },
-                {
-                    "order" : NumberInt(2),
-                    "name" : "Дополнительные работы",
-                    "services" : [
-
-                    ],
-                    "_id" : "56dd28b8dfdb2e3885200bb3"
-                }
-            ],
-            "order" : NumberInt(2),
-            "name" : "Натяжные потолки"
-        },
-        {
-            "visible" : true,
-            "_id" : "56dd2777dfdb2e3885200bad",
-            "kind_services" : [
-                {
-                    "order" : NumberInt(1),
-                    "name" : "Виды мебели",
-                    "services" : [
-                        {
-                            "order" : NumberInt(1),
-                            "price" : NumberInt(1000),
-                            "_id" : "56e5a1fa23104023242596dc",
-                            "name" : "Кухни"
-                        }
-                    ],
-                    "_id" : "56dd28e5dfdb2e3885200bb4"
-                }
-            ],
-            "order" : NumberInt(3),
-            "name" : "Мебель на заказ"
         }
     ],
     "additional_service" : [
@@ -121,12 +246,198 @@
             "description" : "123",
             "photos" : [
                 {
-                    "filename" : "17ef4489-6a28-41fc-be36-8b9dc8fd6c93.jpg",
-                    "description" : "321"
+                    "description" : "321",
+                    "filename" : "17ef4489-6a28-41fc-be36-8b9dc8fd6c93.jpg"
                 },
                 {
-                    "filename" : "8589c79e-e005-453e-ace8-fa3c37c77154.jpg",
-                    "description" : "951"
+                    "description" : "951",
+                    "filename" : "8589c79e-e005-453e-ace8-fa3c37c77154.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "b9dd0c87-77b2-47ae-bbfd-1e00453e52d8.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "ccbb8328-77a4-44c9-820a-a78eb3481b71.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "2add4886-802e-4112-a42a-c1036374798c.jpg"
+                }
+            ]
+        },
+        {
+            "description" : "32234234234",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "9ff27dc5-11da-462b-82ad-051a846093a7.JPG"
+                },
+                {
+                    "description" : "",
+                    "filename" : "09b2c796-0238-4ad1-8790-a045151ab270.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "9a64893a-982a-422b-8b50-bd7375ff35ce.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "3f135609-adaa-4dcf-97df-9b165d7ff505.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "30cd4aa3-3556-4426-b1ce-a8b21b47a714.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "ff98bc8e-9e95-4693-9b62-3c542da1f616.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "4f60e34c-a8f4-43f1-a9f4-f3b482233fba.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "fdaef954-ddbd-4e4c-a1e8-4ad01545b3e7.jpg"
+                }
+            ]
+        },
+        {
+            "description" : "3423234",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "9e7d6741-3c7e-4e7a-8971-35f13c775c58.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "026e430b-cc16-48a8-b014-534e31ad1d48.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "3098f8c2-74a6-4ab0-b8c9-137167ed5b8b.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "dbd1815b-d8f9-4d4d-b385-bc3e31fe78ec.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "18839b13-57a6-4894-8e07-e16afdac5642.jpg"
+                }
+            ]
+        },
+        {
+            "description" : "654654",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "2644568f-f55e-4ec9-9067-ee6d6cba0567.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "68ba09c4-c0ed-4926-aa2e-919e5e239e7d.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "c8e5f234-4cbc-49aa-9cf9-6548dda96744.JPG"
+                },
+                {
+                    "description" : "",
+                    "filename" : "c9c76fa2-4adb-46ab-9a00-0f4f8aaa61f0.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "85c09ce0-d30e-4b02-b292-a50048226c97.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "8f746317-14aa-43e6-8eaf-b272e383deca.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "502c9b60-dd0a-474a-a5d1-37842cafe341.jpg"
+                }
+            ]
+        },
+        {
+            "description" : "12312312312312312312312321312312315vrvtrvdtrhbyhbcybycgfybjgghnjgnjhnvnh",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "2cf2cd91-4836-4b6e-acb8-b30a10ead1ca.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "4206eb90-475f-496d-9ff2-5aca62b9a7a3.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "f838d5c9-6665-4589-a9d0-124db0d99f00.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "5f3412d9-ada6-47b1-b5bc-82c064be4e12.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "3da93e70-479a-4e1f-a2ae-e7aaacec37c8.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "e18d4630-09f2-4d13-9933-2f779d8f6dbf.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "3e789fe7-624b-4e73-a3d8-75d170d846b9.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "9068e0c1-13f9-4bef-963d-a32dbbef12c7.png"
+                },
+                {
+                    "description" : "",
+                    "filename" : "dd9d0645-e9d8-4e5c-9223-720f3a1047aa.png"
+                }
+            ]
+        },
+        {
+            "description" : "3223423432",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "4e2aec0b-77b0-4311-8627-d56f5a78bd88.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "6f91debd-cc39-428c-9d47-f749e53b2d9f.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "bb045abc-2710-4333-926b-effe3a33112a.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "dcf85ef9-2fa8-4f26-a58a-c81e704fbd43.jpg"
+                },
+                {
+                    "description" : "",
+                    "filename" : "8499a4e4-28f6-457d-b6dd-625117685145.JPG"
+                },
+                {
+                    "description" : "",
+                    "filename" : "af85bdf8-c7e9-476a-b2a0-45793643492f.jpg"
+                }
+            ]
+        },
+        {
+            "description" : "534534535",
+            "photos" : [
+                {
+                    "description" : "",
+                    "filename" : "b35871bd-0dbf-4aba-8a44-fd2d717257a4.jpg"
                 }
             ]
         }
@@ -652,19 +963,6 @@
     "detail" : "null",
     "phone1" : "3452370937",
     "phone2" : "9224877998"
-}
-{
-    "_id" : ObjectId("56dc7b102310402a88f397b7"),
-    "kind_profile" : "org",
-    "jobs_count" : "2",
-    "phone2" : "5666666666",
-    "patronymic" : "3",
-    "detail" : "66666",
-    "phone1" : "3333333333",
-    "avatar" : "94442855-9ea7-4785-8917-5e787dc9b884.jpg",
-    "name" : "2",
-    "sername" : "1",
-    "email" : "3"
 }
 {
     "_id" : ObjectId("57013ffd231040198cbb4130"),

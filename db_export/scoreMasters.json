@@ -1,0 +1,49 @@
+{
+    "_id" : ObjectId("571cadee8671340f8217f672"),
+    "details" : [
+        {
+            "details" : [
+                {
+                    "description" : "Загружено фото мастера/логотип компании",
+                    "status" : true
+                },
+                {
+                    "description" : "Заполнено 3 работы в портфолио с не менее 5-ю фотографиями",
+                    "status" : true
+                },
+                {
+                    "description" : "Заполнен контактный телефон",
+                    "status" : true
+                },
+                {
+                    "description" : "Заполнено более 50% цен на услуги",
+                    "status" : true
+                }
+            ],
+            "description" : "Заполнена основная информация",
+            "status" : true,
+            "score" : NumberInt(50)
+        },
+        {
+            "description" : "Заполнено 100% цен на услуги",
+            "status" : true,
+            "score" : NumberInt(15)
+        },
+        {
+            "description" : "Указано 2 номера телефона",
+            "status" : false,
+            "score" : NumberInt(5)
+        },
+        {
+            "description" : "Общее описание более 300 символов",
+            "status" : true,
+            "score" : NumberInt(10)
+        },
+        {
+            "description" : "Размещение выполненных работ. За каждую размещенную работу сверх минимального количества",
+            "status" : true,
+            "score" : NumberInt(45)
+        }
+    ],
+    "master_id" : ObjectId("56addc7e036402f984c13037")
+}
