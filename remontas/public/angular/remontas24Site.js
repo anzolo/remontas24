@@ -21,9 +21,7 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
         .state('remontas.profile', {
             url: "master/:id",
             templateUrl: "/remontas/public/templates/master.html",
-            controller: function ($scope) {
-                //                $scope.items = ["A", "List", "Of", "Items"];
-            }
+            controller: "masterController"
         })
         .state('remontas.lk', {
             url: "lk",
