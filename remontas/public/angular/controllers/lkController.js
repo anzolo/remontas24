@@ -92,6 +92,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).finally(function () {
             // called no matter success or failure
             $scope.loading = false;
+            $scope.data.uploadData = {};
         });;
 
     };
