@@ -993,7 +993,7 @@ h2.master-counter span {
 }
 
 .hint-window {
-    display: none;
+    /*    display: none;*/
     position: absolute;
     z-index: 99999;
     width: 465px;
@@ -1829,6 +1829,10 @@ h2.master-counter span {
     padding-bottom: 15px;
 }
 
+.my #hint-what-is-it h4 {
+    color: red;
+}
+
 .my #hint-what-is-it ul {
     margin: 15px 0 0;
     padding: 0;
@@ -1842,13 +1846,31 @@ h2.master-counter span {
 
 .my #hint-what-is-it li.ok {
     color: #ff5c0f;
+    background: transparent url('../img/icon-ok-orange.png') no-repeat 0 top;
+    padding-left: 30px;
+}
+
+.my #hint-what-is-it li.ok li.good {
+    color: #ff5c0f;
     background: transparent url('../img/icon-ok-orange.png') no-repeat 0 center;
     padding-left: 30px;
 }
 
 .my #hint-what-is-it li.comment {
     color: #636363;
-    background: transparent url('../img/icon-comment.png') no-repeat 0 center;
+    background: transparent url('../img/icon-close.png') no-repeat 0 top;
+    padding-left: 30px;
+}
+
+.my #hint-what-is-it li.comment li.bad {
+    color: #636363;
+    background: transparent url('../img/icon-close.png') no-repeat 0 center;
+    padding-left: 30px;
+}
+
+.my #hint-what-is-it li.comment li.good {
+    color: #ff5c0f;
+    background: transparent url('../img/icon-ok-orange.png') no-repeat 0 center;
     padding-left: 30px;
 }
 

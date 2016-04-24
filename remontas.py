@@ -40,9 +40,9 @@ def rem_doSearchMasters():
     for master in conf.db.masters.find():
         newMaster = {}
         newMaster["name"] = master["name"]
-        newMaster["jobs_count"] = str(master["jobs_count"]) + " работ"
+        #newMaster["jobs_count"] = str(len(master["works"])) + " работ"
         newMaster["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
-        newMaster["id"] = str(master["_id"])
+        newMaster["_id"] = str(master["_id"])
         result["masters"].append(newMaster)
     return result
 
@@ -62,6 +62,7 @@ def rem_lkGetData():
                     lkResult["master"] = master
                     lkResult["categories"] = list(conf.db.category_job.find())
                     lkResult["configUrl"] = conf.configUrl
+                    lkResult["scoreDetail"] = conf.db.scoreMasters.find_one({"master_id":ObjectId(user["master_id"])})
                     lkResult["status"] = "OK"
                 else:
                     lkResult["status"] = "Error"
@@ -116,6 +117,8 @@ def rem_lkSaveData():
 
                 conf.db.masters.update_one({"_id": ObjectId(user["master_id"])}, {"$set": newMaster})
 
+                calcScoreMaster(user["master_id"])
+
                 result["status"] = "OK"
 
             else:
@@ -131,22 +134,142 @@ def rem_lkSaveData():
     else:
         return abort(401, "Sorry, access denied.")
 
-@route('/api/lk/mainDataSave', method='POST')
-def rem_mainDataSave():
-    print("Hello")
-    result_check_rights = adminka.check_rights("master", request)
-    if result_check_rights["status"]:
-        try:
-            conf.db.masters.update(
-                {"_id": ObjectId(result_check_rights["master_id"])},
-                {
-                 "$set":{"phone1": request.json["phone1"],
-                 "phone2": request.json["phone2"],
-                 "detail": request.json["detail"]}
-                }
-                )
-            Response.status = 200
-            return None
-        except Exception as e:
-            abort(500, str(e))
-            print(e)
+# @route('/api/lk/mainDataSave', method='POST')
+# def rem_mainDataSave():
+#     print("Hello")
+#     result_check_rights = adminka.check_rights("master", request)
+#     if result_check_rights["status"]:
+#         try:
+#             conf.db.masters.update(
+#                 {"_id": ObjectId(result_check_rights["master_id"])},
+#                 {
+#                  "$set":{"phone1": request.json["phone1"],
+#                  "phone2": request.json["phone2"],
+#                  "detail": request.json["detail"]}
+#                 }
+#                 )
+#             Response.status = 200
+#             return None
+#         except Exception as e:
+#             abort(500, str(e))
+#             print(e)
+
+def calcScoreMaster(master_id):
+    master = conf.db.masters.find_one({"_id": ObjectId(master_id)})
+
+    score = 0
+    reset_to_register = False
+
+    scoreDecription = {"master_id":ObjectId(master_id),"details":[]}
+    scoreMainCriteria = []
+
+    if master != None:
+
+        del master["_id"]
+
+        if (master["status"]!="closed") and (master["status"]!="new"):
+
+            # критерий - нет аватарки
+            ballDescr = {"description": "Загружено фото мастера/логотип компании", "status":True}
+
+            if master["avatar"] == conf.img_no_avatar:
+                reset_to_register = True
+                ballDescr["status"] = False
+
+            scoreMainCriteria.append(ballDescr)
+
+            # критерий - есть 3 работы в портфолио в которых более 5 фото
+            ballDescr = {"description": "Заполнено 3 работы в портфолио с не менее 5-ю фотографиями", "status": True}
+
+            works = 0
+            for work in master["works"]:
+                if len(work["photos"])>=5:
+                    works+=1
+
+            if works<3:
+                reset_to_register = True
+                ballDescr["status"] = False
+
+            scoreMainCriteria.append(ballDescr)
+
+            # критерий - заполнен хотя бы один телефон
+            ballDescr = {"description": "Заполнен контактный телефон", "status": True}
+
+            if (len(master["phone1"])==0) and (len(master["phone2"])==0):
+                reset_to_register = True
+                ballDescr["status"] = False
+
+            scoreMainCriteria.append(ballDescr)
+
+            # критерий - прайс заполнен на 50% или более
+            ballDescr = {"description": "Заполнено более 50% цен на услуги", "status": True}
+
+            allServicesCount = 0
+            serviceWithPriceCount = 0
+            for category in master["categories"]:
+                for kindService in conf.db.category_job.find({"parent_id": ObjectId(category["_id"])}):
+                    allServicesCount+=conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
+                for kindServiceMaster in category["kind_services"]:
+                    for service in kindServiceMaster["services"]:
+                        if service["price"]>0:
+                            serviceWithPriceCount+=1
+
+            # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
+            if (allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5):
+                reset_to_register = True
+                ballDescr["status"] = False
+
+            scoreMainCriteria.append(ballDescr)
+
+            scoreDecription["details"].append({"description":"Заполнена основная информация","score":50, "details":scoreMainCriteria,"status":not reset_to_register})
+
+            # подсчтет остальных критериев
+            if not reset_to_register:
+
+                score+=50
+
+                #критерий - заполнено 100% цен на услуги - 15 баллов
+                ballDescr = {"description":"Заполнено 100% цен на услуги","score":15, "status":False}
+                if allServicesCount-serviceWithPriceCount==0:
+                    ballDescr["status"] = True
+                    score += 15
+
+                scoreDecription["details"].append(ballDescr)
+
+                # критерий - указано 2 номера телефона - 5 баллов
+                ballDescr = {"description": "Указано 2 номера телефона", "score": 5, "status": False}
+                if (len(master["phone1"])>0) and (len(master["phone2"])>0):
+                    ballDescr["status"] = True
+                    score += 5
+
+                scoreDecription["details"].append(ballDescr)
+
+                # критерий - описание услуг составляет более 300 символов – 10  баллов
+                ballDescr = {"description": "Общее описание более 300 символов", "score": 10, "status": False}
+                if len(master["detail"]) >= 300:
+                    ballDescr["status"] = True
+                    score += 10
+
+                scoreDecription["details"].append(ballDescr)
+
+                # критерий - за каждую размещённую в портфолио новую работу – 15 баллов
+                ballDescr = {"description": "Размещение выполненных работ", "score": 15, "status": False}
+                if works>3:
+                    ballDescr["status"] = True
+                    calcScore = (works - 3)*15
+                    ballDescr["score"] = calcScore
+                    score += calcScore
+
+                scoreDecription["details"].append(ballDescr)
+
+
+            if reset_to_register:
+                master["status"] = "register"
+            else:
+                master["status"] = "active"
+
+            master["score"] = score
+
+            conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
+
+            conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)

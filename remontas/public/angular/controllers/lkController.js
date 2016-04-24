@@ -8,7 +8,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         countServices: 0,
         countJobs: 0,
         loading: false,
-        textIsChange: ""
+        textIsChange: "",
+        showWhatIs:false
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -55,6 +56,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
                 $scope.data.categories = JSON.parse(JSON.stringify(data.categories));
 
                 $scope.data.kind_services = masterKindServiceArray();
+
+                $scope.data.scoreDetail = JSON.parse(JSON.stringify(data.scoreDetail.details));
 
                 calcCountServices();
 

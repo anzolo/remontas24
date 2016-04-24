@@ -44,7 +44,6 @@ def syncFiles(newMaster, oldMaster, request):
                         photoFile.filename = createFileName(photoFile.raw_filename)
                         photo["filename"] = photoFile.filename
                         photoFile.save(conf.works_path)
-                        #watermark(conf.works_path + photo["filename"], conf.works_path + photo["filename"],"storage/remontas24.svg")
                         watermarkPhoto(conf.works_path + photo["filename"], "storage/watermark.png", 'tile', 0.2)
             else:
                 #исключаем фото, которое осталось в мастере из списка удаления
@@ -98,3 +97,4 @@ def watermarkPhoto(photo, watermark, position, opacity=1):
     # composite the watermark with the layer
     photoWithWatermark = Image.composite(layer, im, layer)
     photoWithWatermark.save(photo,'PNG')
+
