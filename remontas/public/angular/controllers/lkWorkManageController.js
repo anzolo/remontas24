@@ -40,6 +40,7 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
     ///////////////////////////////////////////////////////////////////////////////////
 
+
     function setCurrentPhoto(value) {
         $scope.model.currentPhoto = value;
     }

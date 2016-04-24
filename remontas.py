@@ -127,32 +127,12 @@ def rem_lkSaveData():
         except Exception as e:
             result["status"] = "Error"
             result["note"] = str(e)
-            print(e)
+            print("Error: " + str(e))
 
         return result
 
     else:
         return abort(401, "Sorry, access denied.")
-
-# @route('/api/lk/mainDataSave', method='POST')
-# def rem_mainDataSave():
-#     print("Hello")
-#     result_check_rights = adminka.check_rights("master", request)
-#     if result_check_rights["status"]:
-#         try:
-#             conf.db.masters.update(
-#                 {"_id": ObjectId(result_check_rights["master_id"])},
-#                 {
-#                  "$set":{"phone1": request.json["phone1"],
-#                  "phone2": request.json["phone2"],
-#                  "detail": request.json["detail"]}
-#                 }
-#                 )
-#             Response.status = 200
-#             return None
-#         except Exception as e:
-#             abort(500, str(e))
-#             print(e)
 
 def calcScoreMaster(master_id):
     master = conf.db.masters.find_one({"_id": ObjectId(master_id)})

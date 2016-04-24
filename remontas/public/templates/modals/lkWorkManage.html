@@ -34,7 +34,7 @@
             </div>
             <div ngf-no-file-drop>Ваш браузер не поддерживает технологию Drag and Drop</div>
 
-            <button ng-click="closeWindow()">Сохранить</button>
+            <button ng-click="closeWindow()" ng-disabled="model.work.description.length == 0 || model.work.photos.length == 0">Сохранить</button>
         </div>
 
     </div>
