@@ -209,7 +209,7 @@ def calcScoreMaster(master_id):
                             serviceWithPriceCount+=1
 
             # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
-            if (allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5):
+            if ((allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5)) or (allServicesCount==0):
                 reset_to_register = True
                 ballDescr["status"] = False
 
