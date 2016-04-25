@@ -122,17 +122,17 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
     };
 
     function removeService(service) {
-        var serviceIndex = $scope.model.kindService.services.findIndex(function (el) {
+        var serviceIndex = $scope.model.masterKindService.services.findIndex(function (el) {
             return el._id == service._id
         });
 
         try {
-            $scope.model.kindService.services.splice(serviceIndex, 1);
+            $scope.model.masterKindService.services.splice(serviceIndex, 1);
 
-            if ($scope.model.kindService.services.length == 0) {
+            if ($scope.model.masterKindService.services.length == 0) {
 
                 var category_id = $scope.model.categories.find(function (el) {
-                    return el._id == $scope.model.kindService._id
+                    return el._id == $scope.model.masterKindService._id
                 }).parent_id;
 
 
@@ -141,7 +141,7 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
                 });
 
                 var kindServiceIndex = $scope.model.master.categories[categoryIndex].kind_services.findIndex(function (el) {
-                    return el._id == $scope.model.kindService._id
+                    return el._id == $scope.model.masterKindService._id
                 });
 
                 $scope.model.master.categories[categoryIndex].kind_services.splice(kindServiceIndex, 1);
