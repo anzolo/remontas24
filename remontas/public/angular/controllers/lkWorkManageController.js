@@ -143,14 +143,14 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
 
 
-    function closeWindow() {
+    function closeWindow(result) {
         if ($scope.model.work.photos.length == 0) {
             var indexWork = $scope.model.work.photos.indexOf($scope.model.work);
 
             $scope.model.master.works.splice(indexWork, 1)
         }
 
-        close();
+        close(result);
     }
 
     var createFileName = function (filename) {

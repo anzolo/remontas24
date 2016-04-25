@@ -1,6 +1,6 @@
 remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScope', '$sce', 'close', 'data', function ($scope, $rootScope, $sce, close, data) {
 
-    $scope.close = close;
+    $scope.closeWindow = closeWindow;
     $scope.model = {
         categories: data.categories,
         master: data.master,
@@ -28,6 +28,10 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
     $scope.model.canAddNewService = onlyNewServices().length > 0;
 
     /////////////////////////////////////////////////////////////////////
+
+    function closeWindow(result) {
+        close(result);
+    }
 
     function findKindService(id) {
         //        console.log("------------------->" + id);

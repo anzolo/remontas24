@@ -47,6 +47,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     //загрузка и сохранение
 
     function loadData() {
+        $scope.data.uploadData = {};
+
         lkData.init({}, function (data) {
             if (data.status == "OK") {
                 $scope.data.master = JSON.parse(JSON.stringify(data.master));
@@ -109,9 +111,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
             controller: "changeAvatarModalController"
         }).then(function (modal) {
             modal.close.then(function (result) {
-                $scope.data.uploadData.avatar = result;
                 bodyRef.removeClass('ovh');
-                saveMaster();
+
+                if (result) {
+                    $scope.data.uploadData.avatar = result;
+                    saveMaster();
+                } else loadData();
+
             });
         });
     }
@@ -291,9 +297,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).then(function (modal) {
             modal.close.then(function (result) {
                 bodyRef.removeClass('ovh');
-                $scope.data.kind_services = masterKindServiceArray();
-                calcCountServices();
-                saveMaster();
+
+                if (result) {
+                    $scope.data.kind_services = masterKindServiceArray();
+                    calcCountServices();
+                    saveMaster();
+                } else loadData();
+
             });
         });
     }
@@ -364,7 +374,11 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
         }).then(function (modal) {
             modal.close.then(function (result) {
                 bodyRef.removeClass('ovh');
-                saveMaster();
+
+                if (result) {
+                    saveMaster();
+                } else loadData();
+
             });
         });
     }

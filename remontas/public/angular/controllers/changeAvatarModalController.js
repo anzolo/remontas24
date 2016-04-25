@@ -1,7 +1,7 @@
 remontas24Site.controller('changeAvatarModalController', ['$scope', '$rootScope', 'close', function ($scope, $rootScope, close) {
     //Убрать скролл главного окна
 
-    $scope.close = close;
+    $scope.closeWindow = closeWindow;
 
     $scope.selectPicture = selectPicture;
 
@@ -41,6 +41,10 @@ remontas24Site.controller('changeAvatarModalController', ['$scope', '$rootScope'
             };
 
         }
+    }
+
+    function closeWindow() {
+        close()
     }
 
 }]);

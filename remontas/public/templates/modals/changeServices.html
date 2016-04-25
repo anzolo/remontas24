@@ -1,7 +1,7 @@
 <div id="modal">
     <!-- Добавление услуг -->
     <div id="add-service">
-        <div class="close-modal" ng-click="close()"></div>
+        <div class="close-modal" ng-click="closeWindow(false)"></div>
         <h2>Изменение услуг</h2>
         <p>{{model.kindService.val}}</p>
 
@@ -32,7 +32,7 @@
             </div>
         </div>
         <a class="link" href="#" ng-if="model.canAddNewService" ng-click="addNewService()">+ добавить позицию</a>
-        <button ng-click="close()">ОК</button>
+        <button ng-click="closeWindow(true)">ОК</button>
 
     </div>
 </div>

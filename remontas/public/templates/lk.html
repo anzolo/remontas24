@@ -34,7 +34,7 @@
                 <div class="person clearfix">
                     <div class="photo">
                         <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}}" width="209" height="249" ng-if="data.uploadData.avatar==null">
-                        <img ngf-src="data.uploadData.avatar" ngf-resize="{width: 200, height: 200, quality: 0.9}">
+                        <img ngf-src="data.uploadData.avatar" ngf-resize="{width: 200, height: 200, quality: 0.9}" ng-if="data.uploadData.avatar!=null">
                         <button class="btn changeAvatarButton" ng-click="changeAvatar()">Изменить</button>
                     </div>
 
