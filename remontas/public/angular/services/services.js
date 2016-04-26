@@ -18,22 +18,7 @@ remBackend.factory('lkData', ['$resource',
         });
 }]);
 
-remBackend.factory('masterData', ['$resource',
+remBackend.factory('masterOpenProfile', ['$resource',
   function ($resource) {
-        return function (masterId) {
-            return $resource('/api/master', {}, {
-                "init": {
-                    method: 'GET',
-                    params: {
-                        id: masterId
-                    }
-                }
-            });
-        }
+        return $resource('/api/masterOpenProfile/:masterId');
 }]);
-
-//Это вообще нужно ????
-remBackend.factory('masterMainData', ['$resource',
-  function ($resource) {
-        return $resource('/api/lk/mainDataSave');
-                }]);

@@ -197,15 +197,6 @@ body,
     top: 6px;
 }
 
-.footer a.logo-dp {
-    background: transparent url('../img/logo-dp.png') no-repeat;
-    width: 112px;
-    height: 28px;
-    display: inline-block;
-    float: left;
-    margin-top: 40px;
-}
-
 .footer .bottom-menu {
     float: left;
     list-style: none;

@@ -270,9 +270,33 @@ def calcScoreMaster(master_id):
 
 
 # API ремонтаса. получение данных по мастеру
-@route('/api/master')
-def rem_masterGetData():
-    print("ID -> "+request.params.id)
-    result = {"back": request.params.id}
-    result["status"] = "OK"
-    return result
+@route('/api/masterOpenProfile/<masterId>')
+def rem_masterGetData(masterId):
+    result = dict()
+
+    try:
+        master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
+        if master is not None:
+            result["master"] = master
+
+            #удалим лишние поля
+            if "_id" in result["master"]:
+                del result["master"]["_id"]
+            if "status" in result["master"]:
+                del result["master"]["status"]
+            if "score" in result["master"]:
+                del result["master"]["score"]
+            if "email" in result["master"]:
+                del result["master"]["email"]
+
+            result["configUrl"] = conf.configUrl
+            result["status"] = "OK"
+        else:
+            result["status"] = "Error"
+            result["note"] = "id not found"
+    except Exception as e:
+        result["status"] = "Error"
+        result["note"] = str(e)
+        print(e)
+
+    return common.JSONEncoder().encode(result)

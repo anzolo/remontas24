@@ -5,14 +5,7 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
 
     $stateProvider
         .state('remontas', {
-            //            url: "/",
             templateUrl: "/remontas/public/templates/mainPage.html"
-                //            templateUrl: "/remontas/public/templates/master.html"
-                //            views: {
-                //                "content": {
-                //                    templateUrl: "/adminka/restricted/views/dashboard.html"
-                //                }
-                //            }
         })
         .state('remontas.searchPage', {
             url: "/",

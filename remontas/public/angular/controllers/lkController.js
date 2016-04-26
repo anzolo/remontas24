@@ -1,4 +1,4 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', function ($scope, lkData, masterMainData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', function ($scope, lkData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS) {
 
     $scope.interfaceOptions = {
         showComboBox: "",

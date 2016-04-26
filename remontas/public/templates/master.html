@@ -1,22 +1,21 @@
-<div class="wrapper">
+<div class="wrapper" ng-if="model.master!=undefined">
     <div class="content">
 
         <div class="container">
-            <h1 class="text-center">Иннокентий Плиточкин</h1>
+            <h1 class="text-center">{{getNameMaster()}}</h1>
             <div class="about-extra clearfix">
                 <div class="corner"></div>
                 <div class="item compare">К сравнению</div>
-                <div class="item portfolio"><strong>24</strong> работы</div>
-                <div class="item phones">909 742 36 18
-                    <br/>922 765 45 98</div>
+                <div class="item portfolio"><strong>{{model.master.works.length}}</strong> работы</div>
+                <div class="item phones">{{model.master.phone1}}
+                    <br/>{{model.master.phone2}}</div>
             </div>
         </div>
 
         <div class="container">
             <h2 class="text-center">О мастере / Бригаде / Компании</h2>
             <div class="master-about">
-                <p><span class="citate-start"></span>Ремонт квартир - далеко не тривиальная задача, нужно обладать большим запасом терпения и сил. Не только от физических нагрузок, пыли, шума, потерянного времени, материальных расходов но и недовольных соседей. Ремонт — удовольствие отнюдь не для бедных. Инструменты, строительные материалы или услуги ремонтных компаний — это довольно затратно!</p>
-                <p>Но, все же каждый должен заниматься своим делом и если вы находитесь в поиске строительных бригад, вы обязательно должны познакомится с нашим коллективом. Замеры с расчетом стоимости работы и материалов, выполняются нашей бригадой бесплатно и не к чему вас не обязывают.<span class="citate-end"></span></p>
+                <p><span class="citate-start"></span>{{model.master.detail}}<span class="citate-end"></span></p>
             </div>
         </div>
 
@@ -32,18 +31,6 @@
                     <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                     <div class="more">
                         <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                     </div>
                     <a href="#" class="open-more">Посмотреть все</a>
                     <a href="#" class="close-more">Свернуть</a>
@@ -56,18 +43,6 @@
                     <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                     <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                     <div class="more">
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                         <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
                     </div>
                     <a href="#" class="open-more">Посмотреть все</a>
@@ -90,9 +65,9 @@
             <div class="gallery clearfix">
                 <a href="#" class="item user">
                     <div class="img">
-                        <img src="storage/img-user-1.png" width="187" height="187">
+                        <img ng-src="{{model.configUrl.img_url_path + model.master.avatar}}" width="187" height="187">
                     </div>
-                    <div class="title">Иннокентий</div>
+                    <div class="title">{{model.master.name}}</div>
                 </a>
 
                 <a href="storage/gallery/img-1.png" class="item fancybox" rel="group-1" title="Группа 1: Описание фото 1">
