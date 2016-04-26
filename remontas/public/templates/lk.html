@@ -114,8 +114,9 @@
                                 <caption>{{elementKind_services_value.name}}</caption>
                                 <col class="col1_table">
                                     <col class="col2_table">
-                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,5)">
-                                            <td class="job">{{elementServices_value.name}}</td>
+                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
+                                            <!--.slice(0,5)-->
+                                            <td class="job">{{shrinkServiceText(elementServices_value.name)}}</td>
                                             <td class="price" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
                                         </tr>
 
@@ -153,10 +154,9 @@
                                     <div class="title">{{shrinkText(work.description)}}</div>
                                 </div>
                             </a>
-
                         </div>
-
                     </div>
+
                 </div>
             </div>
 

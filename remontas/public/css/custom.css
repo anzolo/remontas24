@@ -1098,16 +1098,16 @@ h2.master-counter span {
 
 .service-list {
     position: relative;
-    height: 220px;
-    margin-bottom: 40px;
+    height: 266px;
+    /*margin-bottom: 40px;*/
 }
 
 .height2 {
-    height: 480px;
+    height: 534px;
 }
 
 .height3 {
-    height: 740px;
+    height: 802px;
 }
 
 .service-list > div {
@@ -1115,15 +1115,15 @@ h2.master-counter span {
     background: #fff;
     position: absolute;
     padding: 10px 15px;
-    width: 318px;
+    width: 378px;
     z-index: 999;
     border: 1px solid #fff;
-    min-height: 200px;
+    min-height: 244px;
 }
 
 .service-list table {
     table-layout: fixed;
-    width: 318px;
+    width: 378px;
     word-wrap: break-word;
 }
 
@@ -1135,7 +1135,7 @@ h2.master-counter span {
 .service-list table caption {
     font-size: 20px;
     font-weight: 500;
-    margin: 0px 10px 15px 10px;
+    margin: 0px 0px 15px 0px;
     padding-bottom: 15px;
     border-bottom: 1px solid #dfdfdf;
     text-align: center;
@@ -1146,7 +1146,7 @@ h2.master-counter span {
 }
 
 .service-list > div:nth-of-type(3n + 2) {
-    left: 415px;
+    left: 385px;
 }
 
 .service-list > div:nth-of-type(3n + 3) {
@@ -1156,13 +1156,13 @@ h2.master-counter span {
 .service-list > div:nth-of-type(4),
 .service-list > div:nth-of-type(5),
 .service-list > div:nth-of-type(6) {
-    top: 261px;
+    top: 268px;
 }
 
 .service-list > div:nth-of-type(7),
 .service-list > div:nth-of-type(8),
 .service-list > div:nth-of-type(9) {
-    top: 523px;
+    top: 536px;
 }
 
 .service-list table tr:last-of-type > td {
@@ -1190,24 +1190,29 @@ h2.master-counter span {
 */
 
 .service-list table col.col1_table {
-    width: 208px;
+    width: 288px;
 }
 
 .service-list table col.col2_table {
-    width: 110px;
+    width: 90px;
 }
 
 .service-list table td.job {
     color: #636363;
-    padding: 1px 5px 1px 10px;
+    padding: 1px 5px 1px 0px;
 }
 
 .service-list table td.price {
     color: #333;
-    padding: 1px 10px 1px 0px;
+    padding: 1px 0px 1px 0px;
+    text-align: center;
 }
 
-.service-list table td > span {
+.service-list table td.price span {
+    display: block;
+}
+
+.service-list table tr.footer_table span {
     float: right;
     margin-right: 10px;
 }

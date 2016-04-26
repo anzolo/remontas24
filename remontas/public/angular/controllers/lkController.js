@@ -39,6 +39,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
     $scope.isFirstPhotoNew = isFirstPhotoNew;
     $scope.shrinkText = shrinkText;
     $scope.changeText = changeText;
+    $scope.shrinkServiceText = shrinkServiceText;
 
     loadData();
 
@@ -205,8 +206,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', 'masterMainData',
 
 
     // Функции для блока "услуги"
+    function shrinkServiceText(title) {
+        if (title.length > 67) {
+            return title.substring(0, 66) + "..."
+        } else return title;
+    }
+
     function preparePriceHTML(price, measure) {
-        var newValue = $sce.trustAsHtml(price + " " + measure);
+        var newValue = $sce.trustAsHtml(price + "<span>" + measure + "</span>");
         return newValue;
     };
 
