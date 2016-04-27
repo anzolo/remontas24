@@ -35,6 +35,7 @@
             <div ngf-no-file-drop>Ваш браузер не поддерживает технологию Drag and Drop</div>
 
             <button ng-click="closeWindow(true)" ng-disabled="model.work.description.length == 0 || model.work.photos.length == 0">Сохранить</button>
+            <button class="delete-work-button" ng-click="deleteWork()">Удалить работу</button>
         </div>
 
     </div>

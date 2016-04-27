@@ -11,6 +11,8 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
     $scope.addFiles = addFiles;
 
+    $scope.deleteWork = deleteWork;
+
     $scope.model = {
         master: data.master,
         configUrl: data.configUrl,
@@ -40,6 +42,18 @@ remontas24Site.controller('lkWorkManageController', ['$scope', '$rootScope', 'cl
 
     ///////////////////////////////////////////////////////////////////////////////////
 
+
+    function deleteWork() {
+        $scope.model.work.photos.forEach(function (photo, i, arr) {
+            if (photo.new) delete $scope.model.uploadData[photo.filename];
+        });
+
+        var delIndex = $scope.model.master.works.indexOf($scope.model.work);
+
+        $scope.model.master.works.splice(delIndex, 1)
+
+        closeWindow(true);
+    }
 
     function setCurrentPhoto(value) {
         $scope.model.currentPhoto = value;

@@ -2017,6 +2017,11 @@ h2.master-counter span {
     width: 600px;
 }
 
+#add-work .delete-work-button {
+    background: red;
+    color: white;
+}
+
 #add-service {
     position: relative;
     z-index: 1000;
