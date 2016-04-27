@@ -5,6 +5,7 @@ remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$
     };
 
     $scope.getNameMaster = getNameMaster;
+    $scope.haveAdditionalService = haveAdditionalService;
 
     loadData($stateParams.id);
 
@@ -33,6 +34,10 @@ remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$
             console.error("Error: ", ex.message);
         }
 
+    };
+
+    function haveAdditionalService(service) {
+        return $scope.model.master.additional_service.indexOf(service) >= 0;
     }
 
 }]);

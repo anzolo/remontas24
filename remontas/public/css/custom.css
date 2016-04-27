@@ -1087,6 +1087,16 @@ h2.master-counter span {
     padding-top: 2px;
 }
 
+.about-extra .master-on-hour {
+    background: transparent url('../img/master-on-hour.png') no-repeat left center;
+}
+
+.about-extra .contract-work {
+    background: transparent url('../img/icon-doc_28.png') no-repeat left center;
+    float: right;
+    margin-right: 130px;
+}
+
 .service-list {
     position: relative;
     height: 266px;

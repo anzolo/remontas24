@@ -9,6 +9,8 @@
                 <div class="item portfolio"><strong>{{model.master.works.length}}</strong> работы</div>
                 <div class="item phones">{{model.master.phone1}}
                     <br/>{{model.master.phone2}}</div>
+                <div class="item master-on-hour" ng-if="haveAdditionalService('masterOnHour')">Мастер на час</div>
+                <div class="item contract-work" ng-if="haveAdditionalService('contractWork')">Работа по договору</div>
             </div>
         </div>
 
