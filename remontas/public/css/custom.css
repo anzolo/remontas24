@@ -1925,7 +1925,7 @@ h2.master-counter span {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    height: 100vh;
+    height: 90vh;
     widows: 100vh;
 }
 
