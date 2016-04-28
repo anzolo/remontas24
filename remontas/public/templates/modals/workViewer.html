@@ -1,0 +1,20 @@
+<div id="modal">
+    <div id="work-viewer">
+        <div class="close-modal" ng-click="closeWindow()"></div>
+        <div class="container">
+
+            <div class="center-box">
+                <div class="text">
+                    <p style="font-weight: 300">{{model.work.description}}</p>
+                </div>
+
+                <div class="left"></div>
+                <img ng-src="{{model.configUrl.img_url_work_path +model.currentPhoto.filename}}">
+
+                <div class="text">
+                    <p style="font-weight: 300">{{model.work.description}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>

@@ -1085,6 +1085,11 @@ h2.master-counter span {
 .about-extra .phones {
     background: transparent url('../img/icon-phone.png') no-repeat left center;
     padding-top: 2px;
+    font-weight: bold;
+}
+
+.about-extra .add-service-container {
+    margin-left: 100px;
 }
 
 .about-extra .master-on-hour {
@@ -1299,6 +1304,13 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.gallery .item .title-container {
+    display: table;
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
 }
 
 .gallery .item .title {
@@ -1878,6 +1890,61 @@ h2.master-counter span {
     color: #ff5c0f;
     background: transparent url('../img/icon-ok-orange.png') no-repeat 0 center;
     padding-left: 30px;
+}
+
+#work-viewer {
+    position: relative;
+    z-index: 1000;
+    color: #000;
+    background: #efefef;
+    line-height: normal;
+    margin: auto;
+    top: 0;
+    padding: 25px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: auto;
+    height: 100vh;
+}
+
+#work-viewer .close-modal {
+    top: 30px;
+    right: 30px;
+}
+
+#work-viewer .container {
+    display: table;
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+#work-viewer .container .center-box {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    height: 100vh;
+    widows: 100vh;
+}
+
+#work-viewer h2 {
+    margin: 0;
+}
+
+#work-viewer img {
+    /*    height: 80vh;*/
+    width: 90vh;
+}
+
+#work-viewer .text {
+    /*    width: 80vh;*/
+    word-wrap: break-word;
+}
+
+#work-viewer .left {
+    background: transparent url('../img/left-work-photo.png') no-repeat;
 }
 
 #add-work {

@@ -45,13 +45,14 @@
     <script src="/remontas/public/angular/remontas24Site.js"></script>
 
     <!-- Контроллеры -->
-    <script src="/remontas/public/angular/controllers/mainController.js"></script>
-    <script src="/remontas/public/angular/controllers/authRegFormController.js"></script>
-    <script src="/remontas/public/angular/controllers/lkController.js"></script>
-    <script src="/remontas/public/angular/controllers/changeAvatarModalController.js"></script>
-    <script src="/remontas/public/angular/controllers/changeServicesModalController.js"></script>
-    <script src="/remontas/public/angular/controllers/lkWorkManageController.js"></script>
-    <script src="/remontas/public/angular/controllers/masterController.js"></script>
+    <script src="/remontas/public/angular/controllers/mainWindow.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/authRegForm.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/lk.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/changeAvatarModal.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/changeServicesModalWindow.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/lkWorkManage.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/master.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/workViewer.controller.js"></script>
 
     <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>
