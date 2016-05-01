@@ -8,7 +8,8 @@
         <div class="add-form">
             <div class="item clearfix" ng-repeat="elementServices_value in model.masterKindService.services" ng-if="model.masterKindService != undefined">
                 <div class="some-service">
-                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" placeholder="Наименование услуги">
+                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" placeholder="Наименование услуги" title="{{elementServices_value.name}}" ng-if="elementServices_value.name.length > 55">
+                    <input type="text" readonly="readonly" ng-model="elementServices_value.name" placeholder="Наименование услуги" ng-if="elementServices_value.name.length <= 55">
                 </div>
                 <div class="price">
                     <input type="number" ng-model="elementServices_value.price" placeholder="Цена" max="99999" min="0" step="1">

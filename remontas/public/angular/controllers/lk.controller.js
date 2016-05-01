@@ -9,7 +9,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         countJobs: 0,
         loading: false,
         textIsChange: "",
-        showWhatIs: false
+        showWhatIs: false,
+        mouseOverService: []
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -40,6 +41,9 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     $scope.shrinkText = shrinkText;
     $scope.changeText = changeText;
     $scope.shrinkServiceText = shrinkServiceText;
+    $scope.mouseOverService = mouseOverService;
+    $scope.checkMouseOverService = checkMouseOverService;
+    $scope.clearMouseOverService = clearMouseOverService;
 
     loadData();
 
@@ -206,10 +210,39 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
 
 
     // Функции для блока "услуги"
-    function shrinkServiceText(title) {
+    function shrinkServiceText(kind_service, service, title) {
         if (title.length > 67) {
+            //        if (title.length > 20) {
+            if ($scope.interfaceOptions.mouseOverService[kind_service] == undefined) $scope.interfaceOptions.mouseOverService[kind_service] = [];
+            $scope.interfaceOptions.mouseOverService[kind_service][service] = {
+                "text": title,
+                "visible": false
+            };
             return title.substring(0, 66) + "..."
+                //            return title.substring(0, 20) + "..."
         } else return title;
+    }
+
+    function clearMouseOverService() {
+        $scope.interfaceOptions.mouseOverService.forEach(function (kind_service, i, arr) {
+            kind_service.forEach(function (service, i, arr) {
+                service.visible = false
+            })
+        });
+    }
+
+    function checkMouseOverService(kind_service, service) {
+        if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
+            if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
+                return $scope.interfaceOptions.mouseOverService[kind_service][service].visible
+        return false
+    }
+
+    function mouseOverService(kind_service, service, type = false) {
+        clearMouseOverService();
+        if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
+            if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
+                $scope.interfaceOptions.mouseOverService[kind_service][service].visible = type;
     }
 
     function preparePriceHTML(price, measure) {
