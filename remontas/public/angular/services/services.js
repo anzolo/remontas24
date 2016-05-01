@@ -22,3 +22,8 @@ remBackend.factory('masterOpenProfile', ['$resource',
   function ($resource) {
         return $resource('/api/masterOpenProfile/:masterId');
 }]);
+
+remBackend.factory('masterRegister', ['$resource',
+  function ($resource) {
+        return $resource('/api/masterRegister');
+}]);

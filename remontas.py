@@ -1,4 +1,4 @@
-from bottle import route, template, request, abort, static_file, Response
+from bottle import route, template, request, abort, static_file, url, redirect
 from bson.objectid import ObjectId
 
 import adminka
@@ -6,7 +6,6 @@ import common
 import conf
 import os
 import json
-import uuid
 
 
 # Ремонтас. По маршруту возвращается шаблон
@@ -149,124 +148,128 @@ def rem_lkSaveData():
         return abort(401, "Sorry, access denied.")
 
 def calcScoreMaster(master_id):
-    master = conf.db.masters.find_one({"_id": ObjectId(master_id)})
+    try:
+        master = conf.db.masters.find_one({"_id": ObjectId(master_id)})
 
-    score = 0
-    reset_to_register = False
+        score = 0
+        reset_to_register = False
 
-    scoreDecription = {"master_id":ObjectId(master_id),"details":[]}
-    scoreMainCriteria = []
+        scoreDecription = {"master_id":ObjectId(master_id),"details":[]}
+        scoreMainCriteria = []
 
-    if master != None:
+        if master != None:
 
-        del master["_id"]
+            del master["_id"]
 
-        if (master["status"]!="closed") and (master["status"]!="new"):
+            if (master["status"]!="closed") and (master["status"]!="new"):
 
-            # критерий - нет аватарки
-            ballDescr = {"description": "Загружено фото мастера/логотип компании", "status":True}
+                # критерий - нет аватарки
+                ballDescr = {"description": "Загружено фото мастера/логотип компании", "status":True}
 
-            if master["avatar"] == conf.img_no_avatar:
-                reset_to_register = True
-                ballDescr["status"] = False
+                if master["avatar"] == conf.img_no_avatar:
+                    reset_to_register = True
+                    ballDescr["status"] = False
 
-            scoreMainCriteria.append(ballDescr)
+                scoreMainCriteria.append(ballDescr)
 
-            # критерий - есть 3 работы в портфолио в которых более 5 фото
-            ballDescr = {"description": "Заполнено 3 работы в портфолио с не менее 5-ю фотографиями", "status": True}
+                # критерий - есть 3 работы в портфолио в которых более 5 фото
+                ballDescr = {"description": "Заполнено 3 работы в портфолио с не менее 5-ю фотографиями", "status": True}
 
-            works = 0
-            for work in master["works"]:
-                if len(work["photos"])>=5:
-                    works+=1
+                works = 0
+                for work in master["works"]:
+                    if len(work["photos"])>=5:
+                        works+=1
 
-            if works<3:
-                reset_to_register = True
-                ballDescr["status"] = False
+                if works<3:
+                    reset_to_register = True
+                    ballDescr["status"] = False
 
-            scoreMainCriteria.append(ballDescr)
+                scoreMainCriteria.append(ballDescr)
 
-            # критерий - заполнен хотя бы один телефон
-            ballDescr = {"description": "Заполнен контактный телефон", "status": True}
+                # критерий - заполнен хотя бы один телефон
+                ballDescr = {"description": "Заполнен контактный телефон", "status": True}
 
-            if (len(master["phone1"])==0) and (len(master["phone2"])==0):
-                reset_to_register = True
-                ballDescr["status"] = False
+                if (len(master["phone1"])==0) and (len(master["phone2"])==0):
+                    reset_to_register = True
+                    ballDescr["status"] = False
 
-            scoreMainCriteria.append(ballDescr)
+                scoreMainCriteria.append(ballDescr)
 
-            # критерий - прайс заполнен на 50% или более
-            ballDescr = {"description": "Заполнено более 50% цен на услуги", "status": True}
+                # критерий - прайс заполнен на 50% или более
+                ballDescr = {"description": "Заполнено более 50% цен на услуги", "status": True}
 
-            allServicesCount = 0
-            serviceWithPriceCount = 0
-            for category in master["categories"]:
-                for kindService in conf.db.category_job.find({"parent_id": ObjectId(category["_id"])}):
-                    allServicesCount+=conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
-                for kindServiceMaster in category["kind_services"]:
-                    for service in kindServiceMaster["services"]:
-                        if service["price"]>0:
-                            serviceWithPriceCount+=1
+                allServicesCount = 0
+                serviceWithPriceCount = 0
+                for category in master["categories"]:
+                    for kindService in conf.db.category_job.find({"parent_id": ObjectId(category["_id"])}):
+                        allServicesCount+=conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
+                    for kindServiceMaster in category["kind_services"]:
+                        for service in kindServiceMaster["services"]:
+                            if service["price"]>0:
+                                serviceWithPriceCount+=1
 
-            # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
-            if ((allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5)) or (allServicesCount==0):
-                reset_to_register = True
-                ballDescr["status"] = False
+                # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
+                if ((allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5)) or (allServicesCount==0):
+                    reset_to_register = True
+                    ballDescr["status"] = False
 
-            scoreMainCriteria.append(ballDescr)
+                scoreMainCriteria.append(ballDescr)
 
-            scoreDecription["details"].append({"description":"Заполнена основная информация","score":50, "details":scoreMainCriteria,"status":not reset_to_register})
+                scoreDecription["details"].append({"description":"Заполнена основная информация","score":50, "details":scoreMainCriteria,"status":not reset_to_register})
 
-            # подсчтет остальных критериев
-            if not reset_to_register:
+                # подсчтет остальных критериев
+                if not reset_to_register:
 
-                score+=50
+                    score+=50
 
-                #критерий - заполнено 100% цен на услуги - 15 баллов
-                ballDescr = {"description":"Заполнено 100% цен на услуги","score":15, "status":False}
-                if allServicesCount-serviceWithPriceCount==0:
-                    ballDescr["status"] = True
-                    score += 15
+                    #критерий - заполнено 100% цен на услуги - 15 баллов
+                    ballDescr = {"description":"Заполнено 100% цен на услуги","score":15, "status":False}
+                    if allServicesCount-serviceWithPriceCount==0:
+                        ballDescr["status"] = True
+                        score += 15
 
-                scoreDecription["details"].append(ballDescr)
+                    scoreDecription["details"].append(ballDescr)
 
-                # критерий - указано 2 номера телефона - 5 баллов
-                ballDescr = {"description": "Указано 2 номера телефона", "score": 5, "status": False}
-                if (len(master["phone1"])>0) and (len(master["phone2"])>0):
-                    ballDescr["status"] = True
-                    score += 5
+                    # критерий - указано 2 номера телефона - 5 баллов
+                    ballDescr = {"description": "Указано 2 номера телефона", "score": 5, "status": False}
+                    if (len(master["phone1"])>0) and (len(master["phone2"])>0):
+                        ballDescr["status"] = True
+                        score += 5
 
-                scoreDecription["details"].append(ballDescr)
+                    scoreDecription["details"].append(ballDescr)
 
-                # критерий - описание услуг составляет более 300 символов – 10  баллов
-                ballDescr = {"description": "Общее описание более 300 символов", "score": 10, "status": False}
-                if len(master["detail"]) >= 300:
-                    ballDescr["status"] = True
-                    score += 10
+                    # критерий - описание услуг составляет более 300 символов – 10  баллов
+                    ballDescr = {"description": "Общее описание более 300 символов", "score": 10, "status": False}
+                    if len(master["detail"]) >= 300:
+                        ballDescr["status"] = True
+                        score += 10
 
-                scoreDecription["details"].append(ballDescr)
+                    scoreDecription["details"].append(ballDescr)
 
-                # критерий - за каждую размещённую в портфолио новую работу – 15 баллов
-                ballDescr = {"description": "Размещение выполненных работ", "score": 15, "status": False}
-                if works>3:
-                    ballDescr["status"] = True
-                    calcScore = (works - 3)*15
-                    ballDescr["score"] = calcScore
-                    score += calcScore
+                    # критерий - за каждую размещённую в портфолио новую работу – 15 баллов
+                    ballDescr = {"description": "Размещение выполненных работ", "score": 15, "status": False}
+                    if works>3:
+                        ballDescr["status"] = True
+                        calcScore = (works - 3)*15
+                        ballDescr["score"] = calcScore
+                        score += calcScore
 
-                scoreDecription["details"].append(ballDescr)
+                    scoreDecription["details"].append(ballDescr)
 
 
-            if reset_to_register:
-                master["status"] = "register"
-            else:
-                master["status"] = "active"
+                if reset_to_register:
+                    master["status"] = "register"
+                else:
+                    master["status"] = "active"
 
-            master["score"] = score
+                master["score"] = score
 
-            conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
+                conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
+                conf.db.users_masters.update_one({"master_id": ObjectId(master_id)}, {"$set": {"status":master["status"]}})
 
-            conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
+                conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
+    except Exception as e:
+        print("Error: " + str(e))
 
 
 # API ремонтаса. получение данных по мастеру
@@ -300,3 +303,167 @@ def rem_masterGetData(masterId):
         print(e)
 
     return common.JSONEncoder().encode(result)
+
+@route('/api/masterRegister', method='POST')
+def rem_registerMaster():
+    #request.json["sername"]
+
+    result = dict()
+
+    try:
+    # проверка полноты запроса - есть все необходимые поля
+        if not ("kind_profile" in request.json):
+            result["status"] = "error"
+            result["errorType"] = "fieldMiss"
+            result["description"] = "Отсутствует обязательное поле для регистрации: " + "kind_profile"
+            return common.JSONEncoder().encode(result)
+        else:
+            if (request.json["kind_profile"]!="phys") and (request.json["kind_profile"]!="org"):
+                result["status"] = "error"
+                result["errorType"] = "fieldIncorrect"
+                result["description"] = "Некорректно заполнено одно из обязательных полей"
+                return common.JSONEncoder().encode(result)
+
+
+        if (not ("name" in request.json)) or (not ("email" in request.json)) or (not ("password" in request.json)):
+            result["status"] = "error"
+            result["errorType"] = "fieldMiss"
+            result["description"] = "Отсутствует обязательное поле для регистрации"
+            return common.JSONEncoder().encode(result)
+
+        if request.json["kind_profile"]=="phys":
+            if not ("sername" in request.json):
+                result["status"] = "error"
+                result["errorType"] = "fieldMiss"
+                result["description"] = "Отсутствует обязательное поле для регистрации"
+                return common.JSONEncoder().encode(result)
+
+        if len(request.json["email"])==0:
+            result["status"] = "error"
+            result["errorType"] = "emailBlank"
+            result["description"] = "Электронная почта не заполнена"
+            return common.JSONEncoder().encode(result)
+
+        # проверка емейла - емейл не занят
+        # if conf.db.users_masters.find({"login": request.json["email"]}).count()>0:
+        #     result["status"] = "error"
+        #     result["errorType"] = "emailAlreadyRegistered"
+        #     result["description"] = "С указаннымй email уже зарегистрирован мастер"
+        #     return common.JSONEncoder().encode(result)
+
+        # проверка пароля - если пустой, генерировать новый
+
+        # создание мастера в базе данных
+        masterUserId = createMaster(request.json, result)
+        if masterUserId==None:
+            return common.JSONEncoder().encode(result)
+
+        # уведомление по почте
+        if not sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
+            return common.JSONEncoder().encode(result)
+
+        result["status"] = "ok"
+        return common.JSONEncoder().encode(result)
+
+    except Exception as e:
+        print("Error: " + str(e))
+        result["status"] = "error"
+        result["errorType"] = "unknownError"
+        result["description"] = "Непредвиденная ошибка: " + str(e)
+        return common.JSONEncoder().encode(result)
+
+def createMaster(regParams, result):
+    try:
+
+        master = { "name" : regParams["name"],
+                   "status" : "new",
+                   "score" : 0,
+                   "avatar" : conf.img_no_avatar,
+                   "kind_profile" : regParams["kind_profile"],
+                   "email" : regParams["email"],
+                   "phone1" : "",
+                   "phone2": "",
+                   "detail" : "",
+                   "categories" : [],
+                   "additional_service" : [],
+                   "works" : []
+                   }
+
+        if regParams["kind_profile"]=="phys":
+            master["sername"] = regParams["sername"]
+            master["patronymic"] = regParams["patronymic"]
+
+        resultInsert = conf.db.masters.insert_one(master)
+
+        masterUser = {
+                        "login" : regParams["email"],
+                        "password" : regParams["password"],
+                        "master_id" : ObjectId(resultInsert.inserted_id),
+                        "checkEmailCode": common.createEmailCheckCode()
+                    }
+
+        resultInsert = conf.db.users_masters.insert_one(masterUser)
+
+        return resultInsert.inserted_id
+
+    except Exception as e:
+        print("Error: " + str(e))
+        result["status"] = "error"
+        result["errorType"] = "unknownError"
+        result["description"] = "Непредвиденная ошибка: " + str(e)
+        return None
+
+@route('/api/verifyMail/<code>', name="verifyMail")
+def rem_checkEmailCode(code):
+    try:
+        masterUser = conf.db.users_masters.find_one({"checkEmailCode": code})
+
+        if not masterUser==None:
+            # master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
+            conf.db.masters.update_one({"_id": masterUser["master_id"]},{"$set":{"status":"register"}})
+            conf.db.users_masters.update_one({"_id": masterUser["_id"]},{"$unset":{"checkEmailCode":""}})
+            sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
+    except Exception as e:
+        print("Error: " + str(e))
+
+    redirect('/')
+
+def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
+    try:
+        masterUser = conf.db.users_masters.find_one({"_id":ObjectId(masterUserId)})
+        master = conf.db.masters.find_one({"_id":masterUser["master_id"]})
+
+        siteURL = request.urlparts[0] +"://"+ request.urlparts[1] + url("verifyMail", code=masterUser["checkEmailCode"])
+
+        messageText = conf.messageRegisterMasterText.format(name=master["name"], siteURL = siteURL)
+        messageHTML = conf.messageRegisterMasterHTML.format(name=master["name"], siteURL = siteURL)
+
+        subject = "Регистрация на remontas24.ru"
+
+        common.sendMail(masterUser["login"], subject, messageText, messageHTML)
+
+        return True
+    except Exception as e:
+        print("Error: " + str(e))
+        result["status"] = "error"
+        result["errorType"] = "unknownError"
+        result["description"] = "Непредвиденная ошибка: " + str(e)
+        return False
+
+def sendNotificationAboutSuccesVerifyEmail(masterUserId):
+    try:
+        masterUser = conf.db.users_masters.find_one({"_id":ObjectId(masterUserId)})
+        master = conf.db.masters.find_one({"_id":masterUser["master_id"]})
+
+        siteURL = request.urlparts[0] +"://"+ request.urlparts[1]
+
+        messageText = conf.messageVerifyEmailText.format(name=master["name"], siteURL = siteURL)
+        messageHTML = conf.messageVerifyEmailHTML.format(name=master["name"], siteURL = siteURL)
+
+        subject = "Доступно заполнение портфолио в remontas24.ru"
+
+        common.sendMail(masterUser["login"], subject, messageText, messageHTML)
+
+        return True
+    except Exception as e:
+        print("Error: " + str(e))

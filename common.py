@@ -5,6 +5,10 @@ import conf
 import os
 import uuid
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from PIL import Image, ImageEnhance
 
 #  хранилище фото
@@ -22,6 +26,9 @@ def createFileName(oldFilename):
     filename, ext = os.path.splitext(oldFilename)
     new_filename = str(uuid.uuid4())
     return new_filename + ext
+
+def createEmailCheckCode():
+    return str(uuid.uuid4())
 
 def syncFiles(newMaster, oldMaster, request):
     #создаем лист со всеми фотками которые есть в старом мастере
@@ -98,3 +105,32 @@ def watermarkPhoto(photo, watermark, position, opacity=1):
     photoWithWatermark = Image.composite(layer, im, layer)
     photoWithWatermark.save(photo,'PNG')
 
+def sendMail(toAddress, subj, msg_text, msg_html):
+    try:
+        message = MIMEMultipart('alternative')
+        message['From'] = conf.fromAddress
+        message['To'] = toAddress
+        #message['Cc'] = 'Receiver2 Name <receiver2@server>'
+        message['Subject'] = subj
+
+        # Record the MIME types of both parts - text/plain and text/html.
+        part1 = MIMEText(msg_text, 'plain')
+        part2 = MIMEText(msg_html, 'html')
+
+        # Attach parts into message container.
+        # According to RFC 2046, the last part of a multipart message, in this case
+        # the HTML message, is best and preferred.
+        message.attach(part1)
+        message.attach(part2)
+
+        final_message = message.as_string()
+
+        server = smtplib.SMTP_SSL(conf.smtp_server, conf.smtp_port)
+        # server.starttls()
+        server.login(conf.mailLogin, conf.mailPassword)
+        server.sendmail(conf.mailLogin,
+                        [toAddress],
+                        final_message)
+        server.quit()
+    except Exception as e:
+        print("Error: " + str(e))

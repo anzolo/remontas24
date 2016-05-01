@@ -6,7 +6,7 @@ import adminka
 import remontas
 
 from bottle import debug
-debug(True)
+debug(conf.debug)
 
 # Run bottle internal test server when invoked directly ie: non-uxsgi mode
 if __name__ == '__main__':
