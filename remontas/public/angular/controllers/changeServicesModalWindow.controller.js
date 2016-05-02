@@ -150,6 +150,7 @@ remontas24Site.controller('changeServicesModalController', ['$scope', '$rootScop
 
                 $scope.model.master.categories[categoryIndex].kind_services.splice(kindServiceIndex, 1);
             }
+            $scope.model.canAddNewService = onlyNewServices().length > 0;
 
         } catch (ex) {
             console.error("Error: ", ex.message);
