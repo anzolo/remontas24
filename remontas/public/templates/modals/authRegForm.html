@@ -20,7 +20,7 @@
                     <div class="wrongCredentials" ng-show="model.wrongCredentials">Неверный логин или пароль</div>
                     <a href="#" class="open-modal" ng-click="model.showPasswordRecovery=true">Забыли пароль?</a>
                     <!--                    <button ng-click="login(model.credentials)">Вход</button>-->
-                    <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(credentials)">Вход</button>
+                    <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(model.credentials)">Вход</button>
                 </ng-form>
             </div>
 
