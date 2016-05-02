@@ -7,10 +7,13 @@
                 <div class="text">
                     <p style="font-weight: 300">{{model.work.description}}</p>
                 </div>
-
-                <div class="left"></div>
-                <img ng-src="{{model.configUrl.img_url_work_path +model.currentPhoto.filename}}">
-
+                <table class="image">
+                    <tr>
+                        <td class="left"><img ng-src="/remontas/public/img/left-work-photo.png"></td>
+                        <td class="centre"><img ng-src="{{model.configUrl.img_url_work_path +model.currentPhoto.filename}}"></td>
+                        <td class="right"><img ng-src="/remontas/public/img/right-work-photo.png"></td>
+                    </tr>
+                </table>
                 <div class="text">
                     <p style="font-weight: 300">{{model.work.description}}</p>
                 </div>
