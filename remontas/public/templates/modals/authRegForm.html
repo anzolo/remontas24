@@ -1,28 +1,31 @@
+<div class="loading" ng-if="model.loading">
+    <div><img src="\storage\spinner.gif"> <span>Идет загрузка</span></div>
+</div>
 <div id="modal">
     <!-- Вход/Регистрация -->
-    <div id="auth-tabs" class="active">
+    <div id="auth-tabs" class="active" ng-if="!model.showPasswordRecovery">
         <div class="close-modal" ng-click="closeWindow()"></div>
 
         <div class="tabs-header clearfix">
-            <div ng-class="{active: model.activeTab == 'auth'}" data-tab="tab-1" ng-click="model.activeTab = 'auth'">Вход</div>
-            <div ng-class="{active: model.activeTab == 'reg'}" data-tab="tab-2" ng-click="model.activeTab = 'reg'">Регистрация</div>
+            <div ng-class="{active: model.activeTab == 'auth'}" ng-click="model.activeTab = 'auth'">Вход</div>
+            <div ng-class="{active: model.activeTab == 'reg'}" ng-click="model.activeTab = 'reg'">Регистрация</div>
         </div>
 
         <div class="tabs-content clearfix">
             <div class="clearfix" id="tab-1" ng-class="{active: model.activeTab == 'auth'}">
                 <ng-form name="loginForm">
                     <!--                    <input type="email" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="model.credentials.username" />-->
-                    <input type="text" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="model.credentials.username" />
+                    <input type="email" name="login" placeholder="Email" required ng-class="{required: loginForm.login.$invalid}" ng-model="model.credentials.username" />
                     <input type="password" name="pass" placeholder="Пароль" required ng-class="{required: loginForm.pass.$invalid}" ng-model="model.credentials.password" />
                     <div class="wrongCredentials" ng-show="model.wrongCredentials">Неверный логин или пароль</div>
-                    <a href="#" class="open-modal" data-modal-name="forget">Забыли пароль?</a>
-                    <button ng-click="login(model.credentials)">Вход</button>
-                    <!-- <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(credentials)">Вход</button> -->
+                    <a href="#" class="open-modal" ng-click="model.showPasswordRecovery=true">Забыли пароль?</a>
+                    <!--                    <button ng-click="login(model.credentials)">Вход</button>-->
+                    <button ng-disabled="loginForm.pass.$invalid||loginForm.login.$invalid" ng-click="login(credentials)">Вход</button>
                 </ng-form>
             </div>
 
             <div class="clearfix" id="tab-2" ng-class="{active: model.activeTab == 'reg'}">
-                <div ng-if="!model.registerError">
+                <div ng-if="!model.registerError&&!model.showResgisterMessage">
                     <div style="text-align: center">Кто вы?</div>
 
                     <div class="sub-tabs-header clearfix">
@@ -37,8 +40,8 @@
                             <input type="text" placeholder="Отчество" ng-model="model.regForm.patronymic" />
                             <input type="email" name="email" placeholder="Ваш email" ng-model="model.regForm.email" required ng-class="{required: regPhysForm.email.$invalid}" />
                             <input type="password" name="password" placeholder="Пароль" ng-model="model.regForm.password" required ng-class="{required: regPhysForm.password.$invalid}" />
-                            <a href="#" class="open-hint" data-hint-name="hint-what-gives">Что даёт?</a>
-                            <button ng-click="sendRegisterRequest()">Регистрация</button>
+                            <a href="#" class="open-hint" ng-mouseenter="model.showWhyPopup = true" ng-mouseleave="model.showWhyPopup = false">Что даёт?</a>
+                            <button ng-click="sendRegisterRequest()" ng-disabled="regPhysForm.password.$invalid||regPhysForm.email.$invalid||regPhysForm.sername.$invalid||regPhysForm.name.$invalid">Регистрация</button>
                         </ng-form>
                     </div>
 
@@ -47,16 +50,16 @@
                             <input type="text" name="name" placeholder="Название компании" ng-model="model.regForm.name" required ng-class="{required: regOrgForm.name.$invalid}" />
                             <input type="email" name="email" placeholder="Ваш email" ng-model="model.regForm.email" required ng-class="{required: regOrgForm.email.$invalid}" />
                             <input type="password" name="password" placeholder="Пароль" ng-model="model.regForm.password" required ng-class="{required: regOrgForm.password.$invalid}" />
-                            <a href="#" class="open-hint" data-hint-name="hint-what-gives">Что даёт?</a>
-                            <button ng-click="sendRegisterRequest()">Регистрация</button>
+                            <a href="#" class="open-hint" ng-mouseenter="model.showWhyPopup = true" ng-mouseleave="model.showWhyPopup = false">Что даёт?</a>
+                            <button ng-click="sendRegisterRequest()" ng-disabled="regOrgForm.password.$invalid||regOrgForm.email.$invalid||regOrgForm.name.$invalid">Регистрация</button>
                         </ng-form>
                     </div>
 
                     <!-- Что даёт регистрация? -->
-                    <div id="hint-what-gives" class="hint-window">
+                    <div id="hint-what-gives" class="hint-window" ng-if="model.showWhyPopup">
                         <div class="corner"></div>
                         <div class="body">
-                            <p>Какой-то HTML-инфотекст</p>
+                            <p>Доступ в личный кабинет, возможность заполнить портфолио, услуги и цены, получать заявки от посетителей сайта</p>
                         </div>
                     </div>
                     <!-- /Что даёт регистрация? -->
@@ -68,8 +71,30 @@
                     <button ng-click="registerOnceMore()">Попробовать еще раз</button>
                 </div>
 
+                <div ng-if="model.showResgisterMessage">
+                    <div style="text-align: center">Спасибо за регистрацию! Дальнейшие инструкции отправлены на указанный Вами email</div>
+                </div>
+
             </div>
         </div>
     </div>
+
+    <div id="forget" ng-if="model.showPasswordRecovery">
+        <div class="close-modal" ng-click="closeWindow()"></div>
+        <div ng-if="!model.showRecoveryPasswordMessage">
+            <h4>Восстановление пароля</h4>
+            <p style="font-weight: 300">Введите email указанный при регистрации</p>
+            <ng-form name="passwordRecovery">
+                <input type="email" name="email" placeholder="Email" required ng-model="model.passwordRecoverForm.email" ng-class="{required: passwordRecovery.email.$invalid}" />
+                <button ng-click="sendPasswordRecoveryRequest()" ng-disabled="passwordRecovery.email.$invalid">Отправить</button>
+            </ng-form>
+        </div>
+
+        <div ng-if="model.showRecoveryPasswordMessage">
+            <div style="text-align: center">На Вашу электронную почту выслан новый пароль</div>
+        </div>
+
+    </div>
+
     <!-- /Вход/Регистрация -->
 </div>

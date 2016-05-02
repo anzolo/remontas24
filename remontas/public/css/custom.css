@@ -956,7 +956,7 @@ h2.master-counter span {
 }
 
 #forget {
-    display: none;
+    /*    display: none;*/
     position: relative;
     z-index: 9999;
     color: #000;

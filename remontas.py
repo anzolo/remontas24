@@ -70,6 +70,7 @@ def rem_lkGetData():
                     lkResult["status"] = "Error"
                     lkResult["note"] = str(e)
                     print(e)
+                    common.writeToLog("error", str(e))
 
             return common.JSONEncoder().encode(lkResult)
 
@@ -141,6 +142,7 @@ def rem_lkSaveData():
             result["status"] = "Error"
             result["note"] = str(e)
             print("Error: " + str(e))
+            common.writeToLog("error", str(e))
 
         return result
 
@@ -270,6 +272,7 @@ def calcScoreMaster(master_id):
                 conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
     except Exception as e:
         print("Error: " + str(e))
+        common.writeToLog("error", str(e))
 
 
 # API ремонтаса. получение данных по мастеру
@@ -301,6 +304,7 @@ def rem_masterGetData(masterId):
         result["status"] = "Error"
         result["note"] = str(e)
         print(e)
+        common.writeToLog("error", str(e))
 
     return common.JSONEncoder().encode(result)
 
@@ -370,6 +374,7 @@ def rem_registerMaster():
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
+        common.writeToLog("error", str(e))
         return common.JSONEncoder().encode(result)
 
 def createMaster(regParams, result):
@@ -411,6 +416,7 @@ def createMaster(regParams, result):
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
+        common.writeToLog("error", str(e))
         return None
 
 @route('/api/verifyMail/<code>', name="verifyMail")
@@ -425,6 +431,7 @@ def rem_checkEmailCode(code):
             sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
     except Exception as e:
         print("Error: " + str(e))
+        common.writeToLog("error", str(e))
 
     redirect('/')
 
@@ -448,6 +455,7 @@ def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
+        common.writeToLog("error", str(e))
         return False
 
 def sendNotificationAboutSuccesVerifyEmail(masterUserId):
@@ -467,3 +475,43 @@ def sendNotificationAboutSuccesVerifyEmail(masterUserId):
         return True
     except Exception as e:
         print("Error: " + str(e))
+        common.writeToLog("error", str(e))
+
+@route('/api/masterResetPassword', method='POST')
+def rem_resetMasterPassword():
+    result = dict()
+
+    try:
+        #найти юзера мастера
+        masterUser = conf.db.users_masters.find_one({"login": request.json["email"]})
+        master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
+
+        #сгенерировать и установить новый пароль
+
+        newPassword = common.generatePassword(8)
+
+        conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {"$set": {"password": newPassword}})
+
+        #отправить уведомление на email
+
+        siteURL = request.urlparts[0] + "://" + request.urlparts[1]
+
+        messageText = conf.messagePasswordRecoveryEmailText.format(name=master["name"], siteURL=siteURL, password=newPassword)
+        messageHTML = conf.messagePasswordRecoveryEmailHTML.format(name=master["name"], siteURL=siteURL, password=newPassword)
+
+        subject = "Восстановление пароля на remontas24.ru"
+
+        common.sendMail(masterUser["login"], subject, messageText, messageHTML)
+
+        #вернуть ответ на клиента, что все ок
+        result["status"] = "ok"
+
+        return result
+
+    except Exception as e:
+        print("Error: " + str(e))
+        result["status"] = "error"
+        result["errorType"] = "unknownError"
+        result["description"] = "Непредвиденная ошибка: " + str(e)
+        common.writeToLog("error", str(e))
+        return common.JSONEncoder().encode(result)

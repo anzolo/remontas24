@@ -100,7 +100,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             // called no matter success or failure
             $scope.loading = false;
             $scope.data.uploadData = {};
-        });;
+        });
 
     };
 

@@ -11,6 +11,10 @@ from email.mime.multipart import MIMEMultipart
 
 from PIL import Image, ImageEnhance
 
+from datetime import datetime
+
+from os import urandom
+
 #  хранилище фото
 @route('/storage/<filename:path>')
 def storage(filename):
@@ -31,37 +35,41 @@ def createEmailCheckCode():
     return str(uuid.uuid4())
 
 def syncFiles(newMaster, oldMaster, request):
-    #создаем лист со всеми фотками которые есть в старом мастере
-    oldPhotos = []
-    if oldMaster is not None:
-        for work in oldMaster["works"]:
+    try:
+        #создаем лист со всеми фотками которые есть в старом мастере
+        oldPhotos = []
+        if oldMaster is not None:
+            for work in oldMaster["works"]:
+                for photo in work["photos"]:
+                    oldPhotos.append(photo["filename"])
+
+        for work in newMaster["works"]:
             for photo in work["photos"]:
-                oldPhotos.append(photo["filename"])
+                if "new" in photo:
+                    if photo["new"]:
+                        #сохраняем файл
+                        del photo["new"]
 
-    for work in newMaster["works"]:
-        for photo in work["photos"]:
-            if "new" in photo:
-                if photo["new"]:
-                    #сохраняем файл
-                    del photo["new"]
+                        photoFile = request.files.get(photo["filename"])
 
-                    photoFile = request.files.get(photo["filename"])
+                        if photoFile is not None:
+                            photoFile.filename = createFileName(photoFile.raw_filename)
+                            photo["filename"] = photoFile.filename
+                            photoFile.save(conf.works_path)
+                            watermarkPhoto(conf.works_path + photo["filename"], "storage/watermark.png", 'tile', 0.2)
+                else:
+                    #исключаем фото, которое осталось в мастере из списка удаления
+                    if oldPhotos.count(photo["filename"])>0:
+                        oldPhotos.remove(photo["filename"])
 
-                    if photoFile is not None:
-                        photoFile.filename = createFileName(photoFile.raw_filename)
-                        photo["filename"] = photoFile.filename
-                        photoFile.save(conf.works_path)
-                        watermarkPhoto(conf.works_path + photo["filename"], "storage/watermark.png", 'tile', 0.2)
-            else:
-                #исключаем фото, которое осталось в мастере из списка удаления
-                if oldPhotos.count(photo["filename"])>0:
-                    oldPhotos.remove(photo["filename"])
-
-    #удаляем фото, которых нет в новом мастере
-    for photo in oldPhotos:
-        oldFilePath = conf.works_path + photo
-        if os.path.isfile(oldFilePath):
-            os.remove(oldFilePath)
+        #удаляем фото, которых нет в новом мастере
+        for photo in oldPhotos:
+            oldFilePath = conf.works_path + photo
+            if os.path.isfile(oldFilePath):
+                os.remove(oldFilePath)
+    except Exception as e:
+        print("Error: " + str(e))
+        writeToLog("error", str(e))
 
 def reduce_opacity(im, opacity):
     """Returns an image with reduced opacity."""
@@ -132,5 +140,28 @@ def sendMail(toAddress, subj, msg_text, msg_html):
                         [toAddress],
                         final_message)
         server.quit()
+
+        writeToLog("email", toAddress + " : " + msg_text)
     except Exception as e:
         print("Error: " + str(e))
+        writeToLog("error", toAddress + " : " + str(e))
+
+def writeToLog(type, message):
+    try:
+        record = {"when":datetime.now(), "type":type, "message":message}
+
+        conf.db.logs.insert_one(record)
+    except Exception as e:
+        print("Error: " + str(e))
+
+def generatePassword(length):
+    if not isinstance(length, int) or length < 8:
+        raise ValueError("temp password must have positive length")
+
+    chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjklmnopqrstuvwxyz123456789012345"
+
+    ran = urandom(length)
+    print(str(ran))
+    for c in urandom(length):
+        print(c)
+    return "".join([chars[c % len(chars)] for c in urandom(length)])

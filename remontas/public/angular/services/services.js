@@ -27,3 +27,8 @@ remBackend.factory('masterRegister', ['$resource',
   function ($resource) {
         return $resource('/api/masterRegister');
 }]);
+
+remBackend.factory('masterResetPassword', ['$resource',
+  function ($resource) {
+        return $resource('/api/masterResetPassword');
+}]);
