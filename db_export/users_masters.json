@@ -2,11 +2,18 @@
     "_id" : ObjectId("56dad61fdfdb916c6afe9663"),
     "login" : "1",
     "password" : "1",
-    "master_id" : ObjectId("56addc7e036402f984c13037")
+    "master_id" : ObjectId("56addc7e036402f984c13037"),
+    "status" : "register"
 }
 {
     "_id" : ObjectId("56daed60dfdb916c6afe9665"),
     "login" : "2",
     "password" : "2",
     "master_id" : ObjectId("56addca1036402f984c13038")
+}
+{
+    "_id" : ObjectId("5726413623104023bca02638"),
+    "master_id" : ObjectId("5726413623104023bca02637"),
+    "login" : "alzolotov@gmail.com",
+    "password" : "2bdxktB0"
 }
