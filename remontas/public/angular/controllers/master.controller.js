@@ -1,4 +1,9 @@
-remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$stateParams', 'ModalService', function ($scope, masterOpenProfile, $stateParams, ModalService) {
+remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProfile', '$stateParams', 'ModalService', function ($scope, $sce, masterOpenProfile, $stateParams, ModalService) {
+
+    $scope.interfaceOptions = {
+        checkKind_services: null,
+        mouseOverService: []
+    }
 
     $scope.model = {
         master: undefined
@@ -9,6 +14,14 @@ remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$
     $scope.getImgLink = getImgLink;
     $scope.shrinkText = shrinkText;
     $scope.openViewer = openViewer;
+    $scope.compareOrder = compareOrder;
+    $scope.preparePriceHTML = preparePriceHTML;
+    $scope.shrinkServiceText = shrinkServiceText;
+    $scope.mouseOverService = mouseOverService;
+    $scope.checkMouseOverService = checkMouseOverService;
+    $scope.clearMouseOverService = clearMouseOverService;
+    $scope.selectKindServices = selectKindServices;
+    $scope.showPhone = showPhone;
 
 
     loadData($stateParams.id);
@@ -23,6 +36,7 @@ remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$
 
             $scope.model.configUrl = JSON.parse(JSON.stringify(value.configUrl));
 
+            $scope.model.kind_services = masterKindServiceArray();
         });
     }
 
@@ -76,4 +90,74 @@ remontas24Site.controller('masterController', ['$scope', 'masterOpenProfile', '$
         });
     };
 
-            }]);
+    function compareOrder(a, b) {
+        if (a.order < b.order) return -1;
+        else if (a.order > b.order) return 1;
+        else return 0;
+    }
+
+    function masterKindServiceArray() {
+        var result = [];
+        var category = $scope.model.master.categories.sort(compareOrder);
+        category.forEach(function (cat, i, arr) {
+            var kindService = cat.kind_services.sort(compareOrder);
+            kindService.forEach(function (kser, i, arr) {
+                result.push(kser)
+            });
+        });
+        return result;
+    };
+
+    function shrinkServiceText(kind_service, service, title) {
+        if (title.length > 67) {
+            //        if (title.length > 20) {
+            if ($scope.interfaceOptions.mouseOverService[kind_service] == undefined) $scope.interfaceOptions.mouseOverService[kind_service] = [];
+            $scope.interfaceOptions.mouseOverService[kind_service][service] = {
+                "text": title,
+                "visible": false
+            };
+            return title.substring(0, 66) + "..."
+                //            return title.substring(0, 20) + "..."
+        } else return title;
+    }
+
+    function clearMouseOverService() {
+        $scope.interfaceOptions.mouseOverService.forEach(function (kind_service, i, arr) {
+            kind_service.forEach(function (service, i, arr) {
+                service.visible = false
+            })
+        });
+    }
+
+    function checkMouseOverService(kind_service, service) {
+        if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
+            if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
+                return $scope.interfaceOptions.mouseOverService[kind_service][service].visible
+        return false
+    }
+
+    function mouseOverService(kind_service, service, type = false) {
+        clearMouseOverService();
+        if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
+            if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
+                $scope.interfaceOptions.mouseOverService[kind_service][service].visible = type;
+    }
+
+    function preparePriceHTML(price, measure) {
+        var newValue = $sce.trustAsHtml(price + "<span>" + measure + "</span>");
+        return newValue;
+    };
+
+    function selectKindServices(id) {
+        if ($scope.interfaceOptions.checkKind_services != id) $scope.interfaceOptions.checkKind_services = id;
+        else $scope.interfaceOptions.checkKind_services = null
+    }
+
+    function showPhone(phone) {
+        if (phone != "") {
+            return "+7 (" + phone.substr(0, 3) + ") " + phone.substr(3, 3) + " " + phone.substr(6, 2) + " " + phone.substr(8, 2);
+        }
+        return phone;
+    }
+
+}]);

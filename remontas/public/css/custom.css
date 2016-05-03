@@ -56,7 +56,7 @@ button[disabled="disabled"] {
 
 .changeAvatarButton {
     width: 180px;
-    margin-top: 15px;
+    margin-top: 18px;
     line-height: 37px;
     /*    position: absolute;*/
     display: block;
@@ -1108,11 +1108,11 @@ h2.master-counter span {
     /*margin-bottom: 40px;*/
 }
 
-.height2 {
+.service-list.height2 {
     height: 534px;
 }
 
-.height3 {
+.service-list.height3 {
     height: 802px;
 }
 
@@ -1239,8 +1239,15 @@ h2.master-counter span {
 .service-list table a.close-more {
     color: #333;
     border-bottom: 1px solid #333;
+}
+
+.service-list table a:not(.public).open-more,
+.service-list table a:not(.public).close-more {
     margin-left: 10px;
-    column-width: 100px;
+}
+
+.service-list table .public {
+    text-align: center;
 }
 
 .service-list table a.add-service:before {
@@ -1298,6 +1305,12 @@ h2.master-counter span {
     width: 184px;
     height: 184px;
     margin: auto;
+}
+
+.gallery .item .img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .gallery .item .img div {
@@ -1630,11 +1643,20 @@ h2.master-counter span {
 .my .photo {
     float: left;
     margin-right: 35px;
+    width: 180px;
+    height: 245px;
+}
+
+.my .photo .img {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
 }
 
 .my .photo img {
-    height: 180px;
-    width: 180px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .my .fields {
@@ -1803,6 +1825,12 @@ h2.master-counter span {
     margin: auto;
 }
 
+.my .works .item .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .my .works .item .img div {
     background: #fff;
     position: relative;
@@ -1907,7 +1935,7 @@ h2.master-counter span {
     line-height: normal;
     margin: auto;
     top: 0;
-    /*    padding: 25px;*/
+    padding: 25px;
     text-align: center;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1926,6 +1954,7 @@ h2.master-counter span {
     table-layout: fixed;
     word-wrap: break-word;
     width: 100%;
+    height: 100%
 }
 
 #work-viewer .container .center-box {
@@ -1946,38 +1975,78 @@ h2.master-counter span {
 }
 
 #work-viewer .image {
-    /*    display: table;*/
-    /*    width: 100vmin;*/
+    width: 100vmin;
     /*    width: 100vw;*/
     /*    background: lightblue;*/
+    position: relative;
+    /*    width: 70%;*/
+    margin: auto;
 }
 
-#work-viewer .left {
-    /*    background: transparent url('../img/left-work-photo.png') no-repeat;*/
-    /*    background: yellow;*/
-    /*    display: table-cell;*/
-    /*    position: relative;*/
-    /*    float: left;*/
-    width: 5%;
-    /*    min-width: 21px;*/
-}
-
-#work-viewer .centre img {
+#work-viewer img {
     /*    height: 80vh;*/
     /*    width: 90vh;*/
-    /*    display: table-cell;*/
     /*    position: relative;*/
     width: 100%;
 }
 
-#work-viewer .right {
-    /*    background: transparent url('../img/right-work-photo.png') no-repeat;*/
-    /*    background: yellow;*/
-    /*    display: table-cell;*/
-    /*    position: relative;*/
-    /*    float: right;*/
-    width: 5%;
-    /*    min-width: 21px;*/
+#work-viewer .nav {
+    position: absolute;
+    top: 0;
+    width: 40%;
+    /*    width: 41px;*/
+    height: 100%;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#work-viewer .nav div {
+    position: absolute;
+    cursor: pointer;
+    width: 41px;
+    /*    height: 100%;*/
+    height: 50%;
+    top: 25%;
+}
+
+#work-viewer .left,
+#work-viewer .left div {
+    left: 0;
+}
+
+#work-viewer .right,
+#work-viewer .right div {
+    right: 0;
+}
+
+#work-viewer .nav span {
+    position: absolute;
+    top: 50%;
+    width: 21px;
+    height: 122px;
+    margin-top: -61px;
+    cursor: pointer;
+}
+
+#work-viewer .left span {
+    left: 10px;
+}
+
+#work-viewer .right span {
+    right: 10px;
+}
+
+#work-viewer .nav:hover div {
+    background: yellow;
+    opacity: 0.4;
+}
+
+#work-viewer .left:hover span {
+    background: transparent url('../img/left-work-photo.png') no-repeat;
+}
+
+#work-viewer .right:hover span {
+    background: transparent url('../img/right-work-photo.png') no-repeat;
 }
 
 #add-work {
@@ -2066,6 +2135,14 @@ h2.master-counter span {
     width: 181px;
     height: 181px;
     margin: auto;
+}
+
+#add-work .works .item .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /*    width: 100%;*/
+    /*    height: auto;*/
 }
 
 #add-work .works .item input {

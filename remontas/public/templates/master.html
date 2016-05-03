@@ -7,8 +7,9 @@
                 <div class="corner"></div>
                 <div class="item compare">К сравнению</div>
                 <div class="item portfolio"><strong>{{model.master.works.length}}</strong> работы</div>
-                <div class="item phones">{{model.master.phone1}}
-                    <br/>{{model.master.phone2}}</div>
+                <div class="item phones">{{showPhone(model.master.phone1)}}
+                    <br>{{showPhone(model.master.phone2)}}
+                </div>
                 <div class="item add-service-container">
                     <div class="item master-on-hour" ng-if="haveAdditionalService('masterOnHour')">Мастер на час</div>
                     <div class="item contract-work" ng-if="haveAdditionalService('contractWork')">Работа по договору</div>
@@ -25,39 +26,31 @@
 
         <div class="container">
             <h2 class="text-center"><strong>Услуги</strong></h2>
-            <div class="service-list clearfix">
-                <div id="list-1" class="clearfix">
-                    <h3>Ремонтно-отделоные работы</h3>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div class="more">
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    </div>
-                    <a href="#" class="open-more">Посмотреть все</a>
-                    <a href="#" class="close-more">Свернуть</a>
-                </div>
-                <div id="list-2" class="clearfix">
-                    <h3>Ванные комнаты и сан. узлы</h3>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div class="more">
-                        <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    </div>
-                    <a href="#" class="open-more">Посмотреть все</a>
-                    <a href="#" class="close-more">Свернуть</a>
-                </div>
-                <div id="list-3" class="clearfix">
-                    <h3>Электромонтажные работы</h3>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
-                    <div>Укладка плитки<span>200 руб/м<sup>2</sup></span></div>
+            <div class="service-list clearfix" ng-class="{height2: model.kind_services.length > 3 && model.kind_services.length < 7, height3: model.kind_services.length > 6}">
+                <div class="clearfix" ng-class="{active: elementKind_services_value._id == interfaceOptions.checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in model.kind_services">
+                    <table>
+                        <caption>{{elementKind_services_value.name}}</caption>
+                        <col class="col1_table">
+                            <col class="col2_table">
+                                <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
+
+                                <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
+
+                                <tr class="public footer_table">
+                                    <td colspan="2">
+                                        <a href="#" class="public open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 5" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                        <a href="#" class="public close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
+                                    </td>
+                                </tr>
+                    </table>
                 </div>
             </div>
         </div>

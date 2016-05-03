@@ -4,15 +4,29 @@ remontas24Site.controller('workViewerController', ['$scope', 'close', 'data', '$
     bodyRef.addClass('ovh');
 
     $scope.closeWindow = closeWindow;
+    $scope.nextPhoto = nextPhoto;
+    $scope.previousPhoto = previousPhoto;
 
     $scope.model = {
         work: data.work,
         configUrl: data.configUrl,
-        currentPhoto: data.work.photos[0],
+        indexCurrentPhoto: 0,
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////
+
+    function nextPhoto() {
+        if ($scope.model.indexCurrentPhoto + 1 < $scope.model.work.photos.length)
+            ++$scope.model.indexCurrentPhoto;
+        else $scope.model.indexCurrentPhoto = 0;
+    }
+
+    function previousPhoto() {
+        if ($scope.model.indexCurrentPhoto - 1 < 0)
+            $scope.model.indexCurrentPhoto = $scope.model.work.photos.length - 1;
+        else --$scope.model.indexCurrentPhoto;
+    }
 
     function closeWindow() {
 

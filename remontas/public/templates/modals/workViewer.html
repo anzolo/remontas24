@@ -2,22 +2,24 @@
     <div id="work-viewer">
         <div class="close-modal" ng-click="closeWindow()"></div>
         <div class="container">
-
             <div class="center-box">
                 <div class="text">
                     <p style="font-weight: 300">{{model.work.description}}</p>
                 </div>
-                <table class="image">
-                    <tr>
-                        <td class="left"><img ng-src="/remontas/public/img/left-work-photo.png"></td>
-                        <td class="centre"><img ng-src="{{model.configUrl.img_url_work_path +model.currentPhoto.filename}}"></td>
-                        <td class="right"><img ng-src="/remontas/public/img/right-work-photo.png"></td>
-                    </tr>
-                </table>
+
+                <div class="image">
+                    <img ng-src="{{model.configUrl.img_url_work_path+model.work.photos[model.indexCurrentPhoto].filename}}">
+                    <a href="#" class="left nav" ng-click="previousPhoto()" ng-if="model.work.photos.length > 1">
+                        <div><span></span></div>
+                    </a>
+                    <a href="#" class="right nav" ng-click="nextPhoto()" ng-if="model.work.photos.length > 1">
+                        <div><span></span></div>
+                    </a>
+                </div>
+
                 <div class="text">
-                    <p style="font-weight: 300">{{model.work.description}}</p>
+                    <p style="font-weight: 300">{{model.work.photos[model.indexCurrentPhoto].description}}</p>
                 </div>
             </div>
-
         </div>
     </div>
