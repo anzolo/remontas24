@@ -30,20 +30,37 @@ def static(access, filename):
 # API ремонтаса. получение списка мастеров для главной странице по фильтру
 @route('/api/main/searchMasters')
 def rem_doSearchMasters():
-    result = {"filter": {"first_job": None, "second_job": None, "extra_jobs": {}}, "masters_count": 80, "current_page": 3, "max_page": 6, "masters": []}
+    # result = {"filter": {"first_job": None, "second_job": None, "extra_jobs": {}}, "masters_count": 80, "current_page": 3, "max_page": 6, "masters": []}
 
     # perfect_master = {'name':"Петр", 'foto':img_path + "img-user-1.png", 'jobs_count':"5 работ", 'guid':"id", 'link':"src"}
 
     # for master in range(15):
     #    result["masters"].append(perfect_master)
-    for master in conf.db.masters.find():
-        newMaster = {}
-        newMaster["name"] = master["name"]
-        #newMaster["jobs_count"] = str(len(master["works"])) + " работ"
-        newMaster["avatar"] = conf.img_url_path + master.get("avatar", conf.img_no_avatar)
-        newMaster["_id"] = str(master["_id"])
-        result["masters"].append(newMaster)
-    return result
+
+    result = dict()
+
+
+    masters = conf.db.masters.find({"score": {"$gte": 0}}).sort("score", -1)
+
+    result["count"] = masters.count()
+    result["masters"] = []
+    result["configUrl"] = conf.configUrl
+
+    for master in masters:
+        bufMaster = {"_id":master["_id"],
+                     "name": master["name"],
+                     "avatar": master["avatar"],
+                     "count_works":len(master["works"])}
+        result["masters"].append(bufMaster)
+
+    return common.JSONEncoder().encode(result)
+
+    # разбираем фильтр пришедший от клиента
+
+    # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
+
+    #
+
 
 
 # API ремонтаса. получение данных для личного кабинета

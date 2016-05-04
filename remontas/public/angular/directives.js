@@ -2,10 +2,11 @@ remontas24Site.directive('mastersSearchBox', function () {
     return {
         restrict: 'E',
         scope: {
-            masters: '=masters',
-            mastersCount: '=mastersCount',
-            maxPage: '=maxPage',
-            currentPage: '=currentPage'
+            data:'=data'
+//            masters: '=masters',
+    //            mastersCount: '=mastersCount',
+    //            maxPage: '=maxPage',
+    //            currentPage: '=currentPage'
         },
         link: function (scope, element) {
             scope.getNumber = function (num) {

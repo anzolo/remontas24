@@ -1,14 +1,23 @@
 remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', function ($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope) {
 
+    $scope.model = {
+        searchBox: {}
+    };
+
     $scope.currentPage = "remontas.searchPage";
     $scope.isAuthOK = false;
     $scope.showMasteramPodmenu = false;
-    //    $scope.lkButtonName = "Мастерам";
 
 
-    $scope.isAuth = AuthService.isAuthenticated();
 
-    $scope.searchResult = searchMasters.get();
+
+    $scope.isAuth = AuthService.isAuthenticated;
+
+    $scope.searchResult = searchMasters.get({}, function (data) {
+        $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
+        $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
+        $scope.model.searchBox.count_masters = data.count;
+    });
 
     $scope.setMasteramPodmenuVisible = setMasteramPodmenuVisible;
     $scope.showAuthRegForm = showAuthRegForm;
@@ -67,4 +76,4 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.isAuthOK = false;
         $state.go('remontas.searchPage');
     };
-}]);
+            }]);

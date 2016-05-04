@@ -1,11 +1,11 @@
-<h2 class="master-counter"><span>{{mastersCount}}</span> мастеров на ваш выбор</h2>
+<h2 class="master-counter"><span>{{data.count_masters}}</span> мастеров на ваш выбор</h2>
 <div class="selection clearfix">
 
-    <a href="#" ui-sref="remontas.profile({ id: master._id })" class="item" ng-repeat="master in masters">
+    <a href="#" ui-sref="remontas.profile({ id: master._id })" class="item" ng-repeat="master in data.masters">
         <div class="favorite "></div>
         <div class="img ">
-            <img ng-src="{{master.avatar}}" width="187 " height="187 ">
-            <div>{{master.jobs_count}}</div>
+            <img ng-src="{{data.configUrl.img_url_path + master.avatar}}" width="187 " height="187 ">
+            <div>{{master.count_works}}</div>
         </div>
         <div class="name ">{{master.name}}</div>
     </a>
