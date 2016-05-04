@@ -6,7 +6,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     //    $scope.lkButtonName = "Мастерам";
 
 
-    $scope.isAuth = AuthService.isAuthenticated;
+    $scope.isAuth = AuthService.isAuthenticated();
 
     $scope.searchResult = searchMasters.get();
 
