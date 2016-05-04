@@ -78,14 +78,7 @@ remontas24Site.controller('authRegFormController', ['$scope', '$rootScope', 'clo
     };
 
     function login(credentials) {
-        AuthService.login(credentials).then(function () {
-
-                if (AuthService.isAuthenticated) {
-                    //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                } else {
-
-                }
-            },
+        AuthService.login(credentials).then(function () {},
             function () {
                 console.log("Error while authorisation")
             });

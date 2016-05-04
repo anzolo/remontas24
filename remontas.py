@@ -142,7 +142,7 @@ def rem_lkSaveData():
             result["status"] = "Error"
             result["note"] = str(e)
             print("Error: " + str(e))
-            common.writeToLog("error", str(e))
+            common.writeToLog("error", "rem_lkSaveData: " + str(e))
 
         return result
 
@@ -163,7 +163,7 @@ def calcScoreMaster(master_id):
 
             del master["_id"]
 
-            if (master["status"]!="closed") and (master["status"]!="new"):
+            if (master["status"]!="closed"):
 
                 # критерий - нет аватарки
                 ballDescr = {"description": "Загружено фото мастера/логотип компании", "status":True}
@@ -259,10 +259,13 @@ def calcScoreMaster(master_id):
                     scoreDecription["details"].append(ballDescr)
 
 
-                if reset_to_register:
-                    master["status"] = "register"
+                if not master["status"]!="new":
+                    if reset_to_register:
+                        master["status"] = "register"
+                    else:
+                        master["status"] = "active"
                 else:
-                    master["status"] = "active"
+                    master["status"] = "new"
 
                 master["score"] = score
 
@@ -272,7 +275,7 @@ def calcScoreMaster(master_id):
                 conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
     except Exception as e:
         print("Error: " + str(e))
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "calcScoreMaster: " + str(e))
 
 
 # API ремонтаса. получение данных по мастеру
@@ -304,7 +307,7 @@ def rem_masterGetData(masterId):
         result["status"] = "Error"
         result["note"] = str(e)
         print(e)
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "rem_masterGetData: " + str(e))
 
     return common.JSONEncoder().encode(result)
 
@@ -374,7 +377,7 @@ def rem_registerMaster():
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "rem_registerMaster: " + str(e))
         return common.JSONEncoder().encode(result)
 
 def createMaster(regParams, result):
@@ -410,6 +413,8 @@ def createMaster(regParams, result):
 
         resultInsert = conf.db.users_masters.insert_one(masterUser)
 
+        calcScoreMaster(masterUser["master_id"])
+
         return resultInsert.inserted_id
 
     except Exception as e:
@@ -417,7 +422,7 @@ def createMaster(regParams, result):
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "createMaster: " + str(e))
         return None
 
 @route('/api/verifyMail/<code>', name="verifyMail")
@@ -433,7 +438,7 @@ def rem_checkEmailCode(code):
             sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
     except Exception as e:
         print("Error: " + str(e))
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "rem_checkEmailCode: " + str(e))
 
     redirect('/')
 
@@ -477,7 +482,7 @@ def sendNotificationAboutSuccesVerifyEmail(masterUserId):
         return True
     except Exception as e:
         print("Error: " + str(e))
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "sendNotificationAboutSuccesVerifyEmail: " + str(e))
 
 @route('/api/masterResetPassword', method='POST')
 def rem_resetMasterPassword():
@@ -515,5 +520,5 @@ def rem_resetMasterPassword():
         result["status"] = "error"
         result["errorType"] = "unknownError"
         result["description"] = "Непредвиденная ошибка: " + str(e)
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "rem_resetMasterPassword: " + str(e))
         return common.JSONEncoder().encode(result)

@@ -69,7 +69,7 @@ def syncFiles(newMaster, oldMaster, request):
                 os.remove(oldFilePath)
     except Exception as e:
         print("Error: " + str(e))
-        writeToLog("error", str(e))
+        writeToLog("error", "syncFiles: " + str(e))
 
 def reduce_opacity(im, opacity):
     """Returns an image with reduced opacity."""

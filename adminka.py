@@ -61,7 +61,7 @@ def do_login(role):
 
     except Exception as e:
         print("Error: " + str(e))
-        common.writeToLog("error", str(e))
+        common.writeToLog("error", "do_login: " + str(e))
 
 
 # API админки. получение списка всех мастеров
