@@ -404,7 +404,8 @@ def createMaster(regParams, result):
                         "login" : regParams["email"],
                         "password" : regParams["password"],
                         "master_id" : ObjectId(resultInsert.inserted_id),
-                        "checkEmailCode": common.createEmailCheckCode()
+                        "checkEmailCode": common.createEmailCheckCode(),
+                        "status": "new"
                     }
 
         resultInsert = conf.db.users_masters.insert_one(masterUser)
@@ -427,7 +428,8 @@ def rem_checkEmailCode(code):
         if not masterUser==None:
             # master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
             conf.db.masters.update_one({"_id": masterUser["master_id"]},{"$set":{"status":"register"}})
-            conf.db.users_masters.update_one({"_id": masterUser["_id"]},{"$unset":{"checkEmailCode":""}})
+            # conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {})
+            conf.db.users_masters.update_one({"_id": masterUser["_id"]},{"$unset":{"checkEmailCode":""},"$set": {"status": "register"}})
             sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
     except Exception as e:
         print("Error: " + str(e))

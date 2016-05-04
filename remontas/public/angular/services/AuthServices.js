@@ -1,10 +1,13 @@
-remontas24Site.factory('AuthService', function ($http, Session, $rootScope, $q) {
+remontas24Site.factory('AuthService', function ($http, Session, $rootScope, $q, AUTH_EVENTS) {
     return {
         login: function (credentials) {
             return $http
                 .post('/api/login/master', credentials)
                 .then(function (res) {
-                    Session.create(res.data.token, res.data.username);
+                    if (res.data.status == "success") {
+                        Session.create(res.data.token, res.data.username);
+                        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    } else $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
         },
         logout: function () {

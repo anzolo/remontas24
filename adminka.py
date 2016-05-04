@@ -39,24 +39,29 @@ def adm_static(access, filename):
 # API админки. по логину-паролю возвращаем пользователя
 @route('/api/login/<role>', method='POST')
 def do_login(role):
-    result = {"status": "forbidden",
-              "user_id": None,
-              "role": None
-             }
+    try:
+        result = {"status": "forbidden",
+                  "user_id": None,
+                  "role": None
+                 }
 
-    if role == "admin":
-        result = check_login_admin(request.json["username"], request.json["password"], result)
-    elif role == "master":
-        result = check_login_master(request.json["username"], request.json["password"], result)
-    else:
-        return abort(401, "Неверный логин или пароль.")
+        if role == "admin":
+            result = check_login_admin(request.json["username"], request.json["password"], result)
+        elif role == "master":
+            result = check_login_master(request.json["username"], request.json["password"], result)
 
-    if result["status"] == "success":
-        result = create_session(result)
-        del result["user_id"]
-        return result
-    else:
-        return abort(401, "Неверный логин или пароль.")
+        if result["status"] == "success":
+            result = create_session(result)
+            del result["user_id"]
+            return result
+        else:
+            del result["user_id"]
+            del result["role"]
+            return result
+
+    except Exception as e:
+        print("Error: " + str(e))
+        common.writeToLog("error", str(e))
 
 
 # API админки. получение списка всех мастеров
@@ -287,7 +292,7 @@ def check_rights(role, rq):
 def check_login_admin(username, password, result):
     users = conf.db.users_adminka
     user = users.find_one({"username": username, "password": password})
-    if user is not None:
+    if (user is not None):
         result["status"] = "success"
         result["user_id"] = str(user["_id"])
         result["username"] = username
@@ -299,7 +304,7 @@ def check_login_admin(username, password, result):
 def check_login_master(login, password, result):
     users = conf.db.users_masters
     user = users.find_one({"login": login, "password": password})
-    if user != None:
+    if (user is not None) and (user["status"]!="new") and (user["status"]!="closed"):
         result["status"] = "success"
         result["user_id"] = str(user["_id"])
         result["username"] = login

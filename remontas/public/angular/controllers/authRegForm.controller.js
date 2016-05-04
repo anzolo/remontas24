@@ -44,6 +44,10 @@ remontas24Site.controller('authRegFormController', ['$scope', '$rootScope', 'clo
         $state.go('remontas.lk');
     });
 
+    $scope.$on(AUTH_EVENTS.loginFailed, function () {
+        $scope.model.wrongCredentials = true;
+    });
+
     /////////////////////////////////////////////////////////////////////////////////
 
     function sendPasswordRecoveryRequest() {
@@ -75,14 +79,15 @@ remontas24Site.controller('authRegFormController', ['$scope', '$rootScope', 'clo
 
     function login(credentials) {
         AuthService.login(credentials).then(function () {
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
-                //$scope.currentUser = Session.username();
+                if (AuthService.isAuthenticated) {
+                    //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                } else {
 
+                }
             },
             function () {
-                //                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                $scope.wrongCredentials = true;
+                console.log("Error while authorisation")
             });
     };
 
