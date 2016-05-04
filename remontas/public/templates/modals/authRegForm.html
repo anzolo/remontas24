@@ -68,7 +68,7 @@
 
                 <div ng-if="model.registerError">
                     <div style="text-align: center">При попытке зарегистрироваться, произошла ошибка: {{model.errorMessage}}</div>
-                    <button ng-click="registerOnceMore()">Попробовать еще раз</button>
+                    <button class="errorRegButton" ng-click="registerOnceMore()">Попробовать еще раз</button>
                 </div>
 
                 <div ng-if="model.showResgisterMessage">

@@ -781,6 +781,11 @@ h2.master-counter span {
     display: block;
 }
 
+#auth-tabs .tabs-content .errorRegButton {
+    width: 330px;
+    float: none;
+}
+
 #changeAvatar {
     /*    display: none;*/
     position: relative;

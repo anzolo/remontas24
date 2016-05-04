@@ -1,6 +1,6 @@
 remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', function ($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope) {
 
-    $scope.currentPage = "remontas.searchPage";
+    //    $scope.currentPage = "remontas.searchPage";
     $scope.isAuthOK = false;
     $scope.showMasteramPodmenu = false;
     //    $scope.lkButtonName = "Мастерам";
@@ -18,12 +18,12 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    $rootScope.$on('$stateChangeSuccess',
-        function (event, toState, toParams, fromState, fromParams) {
-
-            $scope.currentPage = toState.name;
-
-        })
+    //    $rootScope.$on('$stateChangeSuccess',
+    //        function (event, toState, toParams, fromState, fromParams) {
+    //
+    //            $scope.currentPage = toState.name;
+    //
+    //        })
 
     $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
         AuthService.logout();
@@ -32,7 +32,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function () {
 
-        $scope.currentPage = "lk";
+        //        $scope.currentPage = "lk";
         $scope.isAuthOK = true;
     });
 

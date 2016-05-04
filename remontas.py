@@ -259,7 +259,7 @@ def calcScoreMaster(master_id):
                     scoreDecription["details"].append(ballDescr)
 
 
-                if not master["status"]!="new":
+                if not master["status"]=="new":
                     if reset_to_register:
                         master["status"] = "register"
                     else:
@@ -352,11 +352,11 @@ def rem_registerMaster():
             return common.JSONEncoder().encode(result)
 
         # проверка емейла - емейл не занят
-        # if conf.db.users_masters.find({"login": request.json["email"]}).count()>0:
-        #     result["status"] = "error"
-        #     result["errorType"] = "emailAlreadyRegistered"
-        #     result["description"] = "С указаннымй email уже зарегистрирован мастер"
-        #     return common.JSONEncoder().encode(result)
+        if conf.db.users_masters.find({"login": request.json["email"]}).count()>0:
+            result["status"] = "error"
+            result["errorType"] = "emailAlreadyRegistered"
+            result["description"] = "С указанным ящиком электронной почты уже зарегистрирован мастер"
+            return common.JSONEncoder().encode(result)
 
         # проверка пароля - если пустой, генерировать новый
 
