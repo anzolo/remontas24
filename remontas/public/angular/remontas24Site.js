@@ -23,7 +23,7 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
         })
         .state('remontas.compareList', {
             url: "compare",
-            templateUrl: "/adminka/restricted/views/master.html",
+            templateUrl: "/remontas/public/templates/comparison.html",
             controller: function ($scope) {
                 //                $scope.items = ["A", "List", "Of", "Items"];
             }
