@@ -327,7 +327,7 @@ h2 {
 }
 
 .filter > div .sub {
-    display: none;
+    /*    display: none;*/
     position: absolute;
     background: #f9f9f9 url('../img/icon-select.png') no-repeat 270px 16px;
     border: 1px solid #f5f5f5;
@@ -361,26 +361,31 @@ h2 {
     background: #ececec;
 }
 
+.filter > .service-2 .counter,
 .filter > .service-3 .counter {
     font-size: 14px;
     color: #808080;
 }
 
+.filter > .service-2 .counter strong,
 .filter > .service-3 .counter strong {
     font-weight: normal;
 }
 
+.filter > .service-2 span,
 .filter > .service-3 span {
     background: transparent url('../img/icon-filter-unchecked.png') no-repeat left center;
     color: #808080;
     padding-left: 25px;
 }
 
+.filter > .service-2 span.active,
 .filter > .service-3 span.active {
     background: transparent url('../img/icon-filter-checked.png') no-repeat left center;
     color: #333;
 }
 
+.filter > .service-2 .btn,
 .filter > .service-3 .btn {
     margin-top: 10px;
     line-height: normal;

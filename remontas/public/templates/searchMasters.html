@@ -2,25 +2,22 @@
     <h2 class="text-center">Подбор мастера</h2>
     <div class="filter clearfix">
         <div class="service-1">
-            <input type="text" readonly="readonly" required="required" placeholder="Выберите услугу">
-            <div class="sub">
-                <div>Натяжные потолки</div>
-                <div>Мебель на заказ</div>
-                <div>Ремонтно-отделочные работы</div>
-                <div>Дизайн интерьеров</div>
+            <input type="text" readonly="readonly" placeholder="Выберите категорию" value="{{model.filter['name']}}" ng-click="showFiltersMenu('Category')">
+            <div class="sub" ng-if="showComboBox=='Category'">
+                <div ng-repeat="element in model.categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)">{{element.val}}</div>
             </div>
         </div>
         <div class="service-2">
-            <input type="text" readonly="readonly" required="required" placeholder="Выберите услугу">
-            <div class="sub">
-                <div>Ремонт квартир</div>
-                <div>Ремонт офисов</div>
-                <div>Ремонт ванной</div>
+            <input type="text" readonly="readonly" ng-disabled="!model.filter['check']" placeholder="Выберите услуги" value="{{countCheckedServices}}" ng-click="showFiltersMenu('Service')">
+            <div class="sub" ng-if="showComboBox=='Service'">
+                <div ng-repeat="element in model.filter['kind_services']" ng-click="CheckService(element)"><span ng-class="{active: element['check']}">{{element.name}}</span></div>
+                <!--                ng-class="{active: isCheckedCategory(element)}"-->
+                <abbr class="btn" ng-click="selectServices()">Выбрать</abbr>
             </div>
         </div>
         <div class="service-3">
-            <input type="text" readonly="readonly" required="required" placeholder="Услуга мастер на час">
-            <div class="sub">
+            <input type="text" readonly="readonly" required="required" placeholder="Услуга мастер на час" ng-click="showFiltersMenu('AddServices')">
+            <div class="sub" ng-if="showComboBox=='AddServices'">
                 <div>Услуга мастер на час</div>
                 <div class="counter">Отмечено услуг <strong>0</strong></div>
                 <div><span>Работа по договору</span></div>

@@ -59,11 +59,13 @@ def rem_doSearchMasters():
     cut_list_masters = masters[begin:end]
 
     for master in cut_list_masters:
-        bufMaster = {"_id":master["_id"],
+        bufMaster = {"_id": master["_id"],
                      "name": master["name"],
                      "avatar": master["avatar"],
-                     "count_works":len(master["works"])}
+                     "count_works": len(master["works"])}
         result["masters"].append(bufMaster)
+
+    result["categories"] = list(conf.db.category_job.find())
 
     return common.JSONEncoder().encode(result)
 
@@ -72,7 +74,6 @@ def rem_doSearchMasters():
     # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
 
     #
-
 
 
 # API ремонтаса. получение данных для личного кабинета
@@ -90,7 +91,7 @@ def rem_lkGetData():
                     lkResult["master"] = master
                     lkResult["categories"] = list(conf.db.category_job.find())
                     lkResult["configUrl"] = conf.configUrl
-                    lkResult["scoreDetail"] = conf.db.scoreMasters.find_one({"master_id":ObjectId(user["master_id"])})
+                    lkResult["scoreDetail"] = conf.db.scoreMasters.find_one({"master_id": ObjectId(user["master_id"])})
                     lkResult["status"] = "OK"
                 else:
                     lkResult["status"] = "Error"
@@ -140,7 +141,6 @@ def rem_lkSaveData():
                 if "patronymic" in newMaster and "patronymic" in oldMaster:
                     newMaster["patronymic"] = oldMaster["patronymic"]
 
-
                 avatarFile = request.files.get("avatar")
 
                 if avatarFile is not None:
@@ -178,6 +178,7 @@ def rem_lkSaveData():
     else:
         return abort(401, "Sorry, access denied.")
 
+
 def calcScoreMaster(master_id):
     try:
         master = conf.db.masters.find_one({"_id": ObjectId(master_id)})
@@ -185,17 +186,17 @@ def calcScoreMaster(master_id):
         score = 0
         reset_to_register = False
 
-        scoreDecription = {"master_id":ObjectId(master_id),"details":[]}
+        scoreDecription = {"master_id": ObjectId(master_id), "details": []}
         scoreMainCriteria = []
 
-        if master != None:
+        if master is not None:
 
             del master["_id"]
 
-            if (master["status"]!="closed"):
+            if master["status"] != "closed":
 
                 # критерий - нет аватарки
-                ballDescr = {"description": "Загружено фото мастера/логотип компании", "status":True}
+                ballDescr = {"description": "Загружено фото мастера/логотип компании", "status": True}
 
                 if master["avatar"] == conf.img_no_avatar:
                     reset_to_register = True
@@ -208,10 +209,10 @@ def calcScoreMaster(master_id):
 
                 works = 0
                 for work in master["works"]:
-                    if len(work["photos"])>=5:
-                        works+=1
+                    if len(work["photos"]) >= 5:
+                        works += 1
 
-                if works<3:
+                if works < 3:
                     reset_to_register = True
                     ballDescr["status"] = False
 
@@ -220,7 +221,7 @@ def calcScoreMaster(master_id):
                 # критерий - заполнен хотя бы один телефон
                 ballDescr = {"description": "Заполнен контактный телефон", "status": True}
 
-                if (len(master["phone1"])==0) and (len(master["phone2"])==0):
+                if (len(master["phone1"]) == 0) and (len(master["phone2"]) == 0):
                     reset_to_register = True
                     ballDescr["status"] = False
 
@@ -233,29 +234,29 @@ def calcScoreMaster(master_id):
                 serviceWithPriceCount = 0
                 for category in master["categories"]:
                     for kindService in conf.db.category_job.find({"parent_id": ObjectId(category["_id"])}):
-                        allServicesCount+=conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
+                        allServicesCount += conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
                     for kindServiceMaster in category["kind_services"]:
                         for service in kindServiceMaster["services"]:
-                            if service["price"]>0:
-                                serviceWithPriceCount+=1
+                            if service["price"] > 0:
+                                serviceWithPriceCount += 1
 
                 # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
-                if ((allServicesCount>0) and ((serviceWithPriceCount/allServicesCount)<0.5)) or (allServicesCount==0):
+                if ((allServicesCount > 0) and ((serviceWithPriceCount/allServicesCount) < 0.5)) or (allServicesCount == 0):
                     reset_to_register = True
                     ballDescr["status"] = False
 
                 scoreMainCriteria.append(ballDescr)
 
-                scoreDecription["details"].append({"description":"Заполнена основная информация","score":50, "details":scoreMainCriteria,"status":not reset_to_register})
+                scoreDecription["details"].append({"description": "Заполнена основная информация", "score": 50, "details": scoreMainCriteria, "status": not reset_to_register})
 
                 # подсчтет остальных критериев
                 if not reset_to_register:
 
-                    score+=50
+                    score += 50
 
-                    #критерий - заполнено 100% цен на услуги - 15 баллов
-                    ballDescr = {"description":"Заполнено 100% цен на услуги","score":15, "status":False}
-                    if allServicesCount-serviceWithPriceCount==0:
+                    # критерий - заполнено 100% цен на услуги - 15 баллов
+                    ballDescr = {"description": "Заполнено 100% цен на услуги", "score": 15, "status": False}
+                    if allServicesCount-serviceWithPriceCount == 0:
                         ballDescr["status"] = True
                         score += 15
 
@@ -263,7 +264,7 @@ def calcScoreMaster(master_id):
 
                     # критерий - указано 2 номера телефона - 5 баллов
                     ballDescr = {"description": "Указано 2 номера телефона", "score": 5, "status": False}
-                    if (len(master["phone1"])>0) and (len(master["phone2"])>0):
+                    if (len(master["phone1"]) > 0) and (len(master["phone2"]) > 0):
                         ballDescr["status"] = True
                         score += 5
 
@@ -279,7 +280,7 @@ def calcScoreMaster(master_id):
 
                     # критерий - за каждую размещённую в портфолио новую работу – 15 баллов
                     ballDescr = {"description": "Размещение выполненных работ", "score": 15, "status": False}
-                    if works>3:
+                    if works > 3:
                         ballDescr["status"] = True
                         calcScore = (works - 3)*15
                         ballDescr["score"] = calcScore
@@ -287,8 +288,7 @@ def calcScoreMaster(master_id):
 
                     scoreDecription["details"].append(ballDescr)
 
-
-                if not master["status"]=="new":
+                if not master["status"] == "new":
                     if reset_to_register:
                         master["status"] = "register"
                     else:
@@ -299,9 +299,9 @@ def calcScoreMaster(master_id):
                 master["score"] = score
 
                 conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
-                conf.db.users_masters.update_one({"master_id": ObjectId(master_id)}, {"$set": {"status":master["status"]}})
+                conf.db.users_masters.update_one({"master_id": ObjectId(master_id)}, {"$set": {"status": master["status"]}})
 
-                conf.db.scoreMasters.replace_one({"master_id":ObjectId(master_id)},scoreDecription,True)
+                conf.db.scoreMasters.replace_one({"master_id": ObjectId(master_id)}, scoreDecription, True)
     except Exception as e:
         print("Error: " + str(e))
         common.writeToLog("error", "calcScoreMaster: " + str(e))
@@ -317,7 +317,7 @@ def rem_masterGetData(masterId):
         if master is not None:
             result["master"] = master
 
-            #удалим лишние поля
+            # удалим лишние поля
             if "_id" in result["master"]:
                 del result["master"]["_id"]
             if "status" in result["master"]:
@@ -340,9 +340,10 @@ def rem_masterGetData(masterId):
 
     return common.JSONEncoder().encode(result)
 
+
 @route('/api/masterRegister', method='POST')
 def rem_registerMaster():
-    #request.json["sername"]
+    # request.json["sername"]
 
     result = dict()
 
@@ -354,12 +355,11 @@ def rem_registerMaster():
             result["description"] = "Отсутствует обязательное поле для регистрации: " + "kind_profile"
             return common.JSONEncoder().encode(result)
         else:
-            if (request.json["kind_profile"]!="phys") and (request.json["kind_profile"]!="org"):
+            if (request.json["kind_profile"] != "phys") and (request.json["kind_profile"] != "org"):
                 result["status"] = "error"
                 result["errorType"] = "fieldIncorrect"
                 result["description"] = "Некорректно заполнено одно из обязательных полей"
                 return common.JSONEncoder().encode(result)
-
 
         if (not ("name" in request.json)) or (not ("email" in request.json)) or (not ("password" in request.json)):
             result["status"] = "error"
@@ -367,21 +367,21 @@ def rem_registerMaster():
             result["description"] = "Отсутствует обязательное поле для регистрации"
             return common.JSONEncoder().encode(result)
 
-        if request.json["kind_profile"]=="phys":
+        if request.json["kind_profile"] == "phys":
             if not ("sername" in request.json):
                 result["status"] = "error"
                 result["errorType"] = "fieldMiss"
                 result["description"] = "Отсутствует обязательное поле для регистрации"
                 return common.JSONEncoder().encode(result)
 
-        if len(request.json["email"])==0:
+        if len(request.json["email"]) == 0:
             result["status"] = "error"
             result["errorType"] = "emailBlank"
             result["description"] = "Электронная почта не заполнена"
             return common.JSONEncoder().encode(result)
 
         # проверка емейла - емейл не занят
-        if conf.db.users_masters.find({"login": request.json["email"]}).count()>0:
+        if conf.db.users_masters.find({"login": request.json["email"]}).count() > 0:
             result["status"] = "error"
             result["errorType"] = "emailAlreadyRegistered"
             result["description"] = "С указанным ящиком электронной почты уже зарегистрирован мастер"
@@ -391,7 +391,7 @@ def rem_registerMaster():
 
         # создание мастера в базе данных
         masterUserId = createMaster(request.json, result)
-        if masterUserId==None:
+        if masterUserId is None:
             return common.JSONEncoder().encode(result)
 
         # уведомление по почте
@@ -409,33 +409,34 @@ def rem_registerMaster():
         common.writeToLog("error", "rem_registerMaster: " + str(e))
         return common.JSONEncoder().encode(result)
 
+
 def createMaster(regParams, result):
     try:
 
-        master = { "name" : regParams["name"],
-                   "status" : "new",
-                   "score" : 0,
-                   "avatar" : conf.img_no_avatar,
-                   "kind_profile" : regParams["kind_profile"],
-                   "email" : regParams["email"],
-                   "phone1" : "",
-                   "phone2": "",
-                   "detail" : "",
-                   "categories" : [],
-                   "additional_service" : [],
-                   "works" : []
-                   }
+        master = {"name": regParams["name"],
+                  "status": "new",
+                  "score": 0,
+                  "avatar": conf.img_no_avatar,
+                  "kind_profile": regParams["kind_profile"],
+                  "email": regParams["email"],
+                  "phone1": "",
+                  "phone2": "",
+                  "detail": "",
+                  "categories": [],
+                  "additional_service": [],
+                  "works": []
+                  }
 
-        if regParams["kind_profile"]=="phys":
+        if regParams["kind_profile"] == "phys":
             master["sername"] = regParams["sername"]
             master["patronymic"] = regParams["patronymic"]
 
         resultInsert = conf.db.masters.insert_one(master)
 
         masterUser = {
-                        "login" : regParams["email"],
-                        "password" : regParams["password"],
-                        "master_id" : ObjectId(resultInsert.inserted_id),
+                        "login": regParams["email"],
+                        "password": regParams["password"],
+                        "master_id": ObjectId(resultInsert.inserted_id),
                         "checkEmailCode": common.createEmailCheckCode(),
                         "status": "new"
                     }
@@ -454,16 +455,17 @@ def createMaster(regParams, result):
         common.writeToLog("error", "createMaster: " + str(e))
         return None
 
+
 @route('/api/verifyMail/<code>', name="verifyMail")
 def rem_checkEmailCode(code):
     try:
         masterUser = conf.db.users_masters.find_one({"checkEmailCode": code})
 
-        if not masterUser==None:
+        if masterUser is not None:
             # master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
-            conf.db.masters.update_one({"_id": masterUser["master_id"]},{"$set":{"status":"register"}})
+            conf.db.masters.update_one({"_id": masterUser["master_id"]}, {"$set": {"status": "register"}})
             # conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {})
-            conf.db.users_masters.update_one({"_id": masterUser["_id"]},{"$unset":{"checkEmailCode":""},"$set": {"status": "register"}})
+            conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {"$unset": {"checkEmailCode": ""}, "$set": {"status": "register"}})
             sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
     except Exception as e:
         print("Error: " + str(e))
@@ -471,15 +473,16 @@ def rem_checkEmailCode(code):
 
     redirect('/')
 
+
 def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
     try:
-        masterUser = conf.db.users_masters.find_one({"_id":ObjectId(masterUserId)})
-        master = conf.db.masters.find_one({"_id":masterUser["master_id"]})
+        masterUser = conf.db.users_masters.find_one({"_id": ObjectId(masterUserId)})
+        master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
 
-        siteURL = request.urlparts[0] +"://"+ request.urlparts[1] + url("verifyMail", code=masterUser["checkEmailCode"])
+        siteURL = request.urlparts[0] + "://" + request.urlparts[1] + url("verifyMail", code=masterUser["checkEmailCode"])
 
-        messageText = conf.messageRegisterMasterText.format(name=master["name"], siteURL = siteURL)
-        messageHTML = conf.messageRegisterMasterHTML.format(name=master["name"], siteURL = siteURL)
+        messageText = conf.messageRegisterMasterText.format(name=master["name"], siteURL=siteURL)
+        messageHTML = conf.messageRegisterMasterHTML.format(name=master["name"], siteURL=siteURL)
 
         subject = "Регистрация на remontas24.ru"
 
@@ -494,15 +497,16 @@ def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
         common.writeToLog("error", str(e))
         return False
 
+
 def sendNotificationAboutSuccesVerifyEmail(masterUserId):
     try:
-        masterUser = conf.db.users_masters.find_one({"_id":ObjectId(masterUserId)})
-        master = conf.db.masters.find_one({"_id":masterUser["master_id"]})
+        masterUser = conf.db.users_masters.find_one({"_id": ObjectId(masterUserId)})
+        master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
 
-        siteURL = request.urlparts[0] +"://"+ request.urlparts[1]
+        siteURL = request.urlparts[0] + "://" + request.urlparts[1]
 
-        messageText = conf.messageVerifyEmailText.format(name=master["name"], siteURL = siteURL)
-        messageHTML = conf.messageVerifyEmailHTML.format(name=master["name"], siteURL = siteURL)
+        messageText = conf.messageVerifyEmailText.format(name=master["name"], siteURL=siteURL)
+        messageHTML = conf.messageVerifyEmailHTML.format(name=master["name"], siteURL=siteURL)
 
         subject = "Доступно заполнение портфолио в remontas24.ru"
 
@@ -513,22 +517,23 @@ def sendNotificationAboutSuccesVerifyEmail(masterUserId):
         print("Error: " + str(e))
         common.writeToLog("error", "sendNotificationAboutSuccesVerifyEmail: " + str(e))
 
+
 @route('/api/masterResetPassword', method='POST')
 def rem_resetMasterPassword():
     result = dict()
 
     try:
-        #найти юзера мастера
+        # найти юзера мастера
         masterUser = conf.db.users_masters.find_one({"login": request.json["email"]})
         master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
 
-        #сгенерировать и установить новый пароль
+        # сгенерировать и установить новый пароль
 
         newPassword = common.generatePassword(8)
 
         conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {"$set": {"password": newPassword}})
 
-        #отправить уведомление на email
+        # отправить уведомление на email
 
         siteURL = request.urlparts[0] + "://" + request.urlparts[1]
 
@@ -539,7 +544,7 @@ def rem_resetMasterPassword():
 
         common.sendMail(masterUser["login"], subject, messageText, messageHTML)
 
-        #вернуть ответ на клиента, что все ок
+        # вернуть ответ на клиента, что все ок
         result["status"] = "ok"
 
         return result

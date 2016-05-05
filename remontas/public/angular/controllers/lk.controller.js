@@ -177,7 +177,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             }
             $scope.data.kind_services = masterKindServiceArray();
         }
-    }
+    };
 
 
     // Функции для меню дополнительных видов работ
@@ -190,23 +190,23 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             // var categoryDict = $scope.categories.find();
             $scope.data.master.additional_service.push(element);
         }
-    }
+    };
 
     function isCheckedAdditionalService(element) {
         return $scope.data.master.additional_service.indexOf(element) >= 0
-    }
+    };
 
     function showAdditionalServiceMenu() {
         if ($scope.interfaceOptions.showComboBox == "") {
             $scope.interfaceOptions.showComboBox = 'AddServices';
         }
-    }
+    };
 
     function selectAdditionalService() {
         //        $scope.masterData.additional_service = $scope.tempAdditional_service.slice();
         $scope.interfaceOptions.showComboBox = "";
         saveMaster();
-    }
+    };
 
 
     // Функции для блока "услуги"
@@ -221,7 +221,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             return title.substring(0, 66) + "..."
                 //            return title.substring(0, 20) + "..."
         } else return title;
-    }
+    };
 
     function clearMouseOverService() {
         $scope.interfaceOptions.mouseOverService.forEach(function (kind_service, i, arr) {
@@ -229,14 +229,14 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
                 service.visible = false
             })
         });
-    }
+    };
 
     function checkMouseOverService(kind_service, service) {
         if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
             if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
                 return $scope.interfaceOptions.mouseOverService[kind_service][service].visible
         return false
-    }
+    };
 
     function mouseOverService(kind_service, service, type) {
         if (type == undefined) type = false;
@@ -244,7 +244,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
             if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
                 $scope.interfaceOptions.mouseOverService[kind_service][service].visible = type;
-    }
+    };
 
     function preparePriceHTML(price, measure) {
         var newValue = $sce.trustAsHtml(price + "<span>" + measure + "</span>");
@@ -254,13 +254,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     function selectKindServices(id) {
         if ($scope.interfaceOptions.checkKind_services != id) $scope.interfaceOptions.checkKind_services = id;
         else $scope.interfaceOptions.checkKind_services = null
-    }
+    };
 
     function compareOrder(a, b) {
         if (a.order < b.order) return -1;
         else if (a.order > b.order) return 1;
         else return 0;
-    }
+    };
 
     function onlyMasterCategory() {
         return function (category) {
