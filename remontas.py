@@ -6,6 +6,7 @@ import common
 import conf
 import os
 import json
+import math
 
 
 # Ремонтас. По маршруту возвращается шаблон
@@ -39,14 +40,25 @@ def rem_doSearchMasters():
 
     result = dict()
 
+    page = int(request.query.page)
 
-    masters = conf.db.masters.find({"score": {"$gte": 0}}).sort("score", -1)
+    masters = list(conf.db.masters.find({"score": {"$gte": 0}}).sort("score", -1))
 
-    result["count"] = masters.count()
+    result["count"] = len(masters)
     result["masters"] = []
     result["configUrl"] = conf.configUrl
 
-    for master in masters:
+    max_page = int(math.ceil(result["count"]/conf.max_masters_batch))
+
+    begin = (page-1)*conf.max_masters_batch
+    end = begin + conf.max_masters_batch
+
+    result["max_page"] = max_page
+    result["current_page"] = page
+
+    cut_list_masters = masters[begin:end]
+
+    for master in cut_list_masters:
         bufMaster = {"_id":master["_id"],
                      "name": master["name"],
                      "avatar": master["avatar"],

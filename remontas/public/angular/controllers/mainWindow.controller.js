@@ -1,29 +1,24 @@
 remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', function ($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope) {
 
     $scope.model = {
-        searchBox: {}
+        searchBox: {},
+
     };
 
     $scope.currentPage = "remontas.searchPage";
     $scope.isAuthOK = false;
     $scope.showMasteramPodmenu = false;
 
-
-
-
     $scope.isAuth = AuthService.isAuthenticated;
-
-    $scope.searchResult = searchMasters.get({}, function (data) {
-        $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
-        $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
-        $scope.model.searchBox.count_masters = data.count;
-    });
 
     $scope.setMasteramPodmenuVisible = setMasteramPodmenuVisible;
     $scope.showAuthRegForm = showAuthRegForm;
     $scope.logout = logout;
     $scope.nameOfMasterMenu = nameOfMasterMenu;
+    $scope.loadMasters = loadMasters;
 
+
+    loadMasters(1);
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,6 +39,19 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.currentPage = "lk";
         $scope.isAuthOK = true;
     });
+
+    function loadMasters(page) {
+        $scope.searchResult = searchMasters.get({
+            "page": page
+        }, function (data) {
+            $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
+            $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
+            $scope.model.searchBox.count_masters = data.count;
+            $scope.model.searchBox.max_page = data.max_page;
+            $scope.model.searchBox.current_page = data.current_page;
+            $scope.model.searchBox.loadMasters = $scope.loadMasters;
+        });
+    }
 
     function nameOfMasterMenu() {
         if (AuthService.isAuthenticated()) {

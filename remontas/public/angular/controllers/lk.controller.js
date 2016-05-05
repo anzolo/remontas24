@@ -238,7 +238,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         return false
     }
 
-    function mouseOverService(kind_service, service, type = false) {
+    function mouseOverService(kind_service, service, type) {
+        if (type == undefined) type = false;
         clearMouseOverService();
         if ($scope.interfaceOptions.mouseOverService[kind_service] != undefined)
             if ($scope.interfaceOptions.mouseOverService[kind_service][service] != undefined)
