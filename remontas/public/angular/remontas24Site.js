@@ -29,17 +29,17 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
             }
         })
         .state('remontas.about', {
-            url: "adminka/masters/edit/:id",
-            templateUrl: "/adminka/restricted/views/master.html",
+            url: "about",
+            templateUrl: "/remontas/public/templates/about.html",
             controller: function ($scope) {
-                $scope.mode = "edit";
+                //                $scope.mode = "edit";
             }
         })
-        .state('remontas.oferta', {
-            url: "adminka/masters/edit/:id",
-            templateUrl: "/adminka/restricted/views/master.html",
+        .state('remontas.agreement', {
+            url: "agreement",
+            templateUrl: "/remontas/public/templates/agreement.html",
             controller: function ($scope) {
-                $scope.mode = "edit";
+                //                $scope.mode = "edit";
             }
         })
 
