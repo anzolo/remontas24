@@ -111,7 +111,7 @@ def watermarkPhoto(photo, watermark, position, opacity=1):
         layer.paste(mark, position)
     # composite the watermark with the layer
     photoWithWatermark = Image.composite(layer, im, layer)
-    photoWithWatermark.save(photo,'JPEG', quality=50, optimize=True, progressive=True)
+    photoWithWatermark.save(photo,'JPEG', quality=60, optimize=True, progressive=True)
 
 def sendMail(toAddress, subj, msg_text, msg_html):
     try:

@@ -13,20 +13,17 @@
                     <th>#</th>
                     <th>Аватарка</th>
                     <th>Прочие данные</th>
-                    <!--                    <th>Имя</th>-->
 
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="master in result.masters">
+                <tr ng-repeat="master in model.masters">
 
                     <td> {{$index + 1}}</td>
                     <td>
-                        <a href="#" ui-sref="adminka.editMaster({ id: master.id })"><img ng-src="{{master.avatar}}"></a>
+                        <a href="#" ui-sref="adminka.editMaster({ id: master._id })"><img ng-src="{{model.configUrl.img_url_path+master.avatar}}"></a>
                     </td>
                     <td>{{master.name+'; ' +master.kind_profile+'; ' +master.email}}</td>
-
-
                 </tr>
 
             </tbody>

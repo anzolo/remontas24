@@ -2,8 +2,15 @@ var remBackend = angular.module('remBackend', ['ngResource']);
 
 remBackend.factory('masters', ['$resource',
   function ($resource) {
-        return $resource('/api/adminka/masters/:id');
-                }]);
+        return $resource('/api/adminka/masters/:id', {}, {
+            "deleteMaster": {
+                method: 'GET',
+                params: {
+                    method: "deleteMaster"
+                }
+            }
+        });
+}]);
 
 remBackend.factory('category', ['$resource',
   function ($resource) {

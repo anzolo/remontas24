@@ -69,22 +69,26 @@ def do_login(role):
 def adm_getMastersList():
     result_check_rights = check_rights("admin", request)
     if result_check_rights["status"]:
+        if request.params.method == "deleteMaster":
+            return deleteMaster(request.params.id_to_delete)
+        else:
+            masters_list = []
+            result = {}
 
-        masters_list = []
-        result = {}
+            for master in conf.db.masters.find():
+                new_master = {}
+                new_master["name"] = master["name"]
+                new_master["_id"] = master["_id"]
+                new_master["avatar"] = master["avatar"]
+                # new_master["works_count"] = len(master["works"])
+                new_master["kind_profile"] = master["kind_profile"]
+                new_master["email"] = master["email"]
+                masters_list.append(new_master)
 
-        for master in conf.db.masters.find():
-            new_master = {}
-            new_master["name"] = master["name"]
-            new_master["id"] = str(master["_id"])
-            new_master["avatar"] = "/storage/" + master.get("avatar", conf.img_no_avatar)
-            new_master["jobs_count"] = master["jobs_count"]
-            new_master["kind_profile"] = master["kind_profile"]
-            new_master["email"] = master["email"]
-            masters_list.append(new_master)
+            result["masters"] = masters_list
+            result["configUrl"] = conf.configUrl
 
-        result["masters"] = masters_list
-        return result
+            return common.JSONEncoder().encode(result)
     else:
         return abort(401, "Sorry, access denied.")
 
@@ -260,6 +264,43 @@ def adm_saveCategory():
     else:
         return abort(401, "Sorry, access denied.")
 
+def deleteMaster(id):
+    result = dict()
+
+    try:
+        master = conf.db.masters.find_one({"_id": ObjectId(id)})
+
+        if not master is None:
+
+            # удаляем все фото
+            for work in master["works"]:
+                for photo in work["photos"]:
+                    deleteFilePath = conf.works_path + photo["filename"]
+                    if os.path.isfile(deleteFilePath):
+                        os.remove(deleteFilePath)
+
+            # удаляем автарку
+            if master["avatar"]!=conf.img_no_avatar:
+                deleteFilePath = conf.works_path + master["avatar"]
+                if os.path.isfile(deleteFilePath):
+                    os.remove(deleteFilePath)
+
+            # удаляем мастера из БД
+            conf.db.masters.delete_one({'_id': ObjectId(id)})
+
+            result["status"] = "OK"
+        else:
+            result["status"] = "Error"
+            result["note"] = "master not found"
+
+        return result
+
+    except Exception as e:
+        result["status"] = "Error"
+        result["note"] = str(e)
+        print("Error: " + str(e))
+        common.writeToLog("error", "rem_lkSaveData: " + str(e))
+        return result
 
 # проверка прав на запрос к api на основе информации зашифрованной в токене
 def check_rights(role, rq):

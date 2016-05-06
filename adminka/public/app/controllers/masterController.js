@@ -1,10 +1,13 @@
 remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', 'category', function ($scope, masters, $state, Upload, $stateParams, category) {
+    $scope.model = {
+        deleteConfirm: false
+    };
+
     $scope.master = {
         name: "",
         sername: "",
         patronymic: "",
         email: "",
-        jobs_count: 0,
         avatar: "",
         kind_profile: "phys",
         detail: "",
@@ -15,7 +18,28 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         works: []
     };
 
-    //categories при создании нового мастера нужно загружать справочник
+    $scope.deleteMaster = deleteMaster;
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    function deleteMaster() {
+        masters.deleteMaster({
+            id_to_delete: $stateParams.id
+        }, function (data) {
+            if (data.status == "OK") {
+                console.log("Мастер успешно удален");
+
+            } else if (data.status == "Error") {
+                console.error("Ошибка про удалении: ", data.note);
+
+            };
+            $state.go('adminka.masters');
+        });
+
+    }
 
     $scope.saveStatus = {
         show: false,
@@ -34,7 +58,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     //    var masterID = $stateParams.id;
 
     $scope.loadMaster = function () {
-        var editMaster = masters.get({
+        masters.get({
             id: $stateParams.id
         }, function (data) {
             if (data.status == "OK") {
@@ -50,9 +74,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
                 $state.go('adminka.masters');
-            } else {
-                $state.go('adminka.masters');
-            }
+            };
         });
     }
 
