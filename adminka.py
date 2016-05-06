@@ -184,6 +184,8 @@ def adm_manageMasters():
                 result["note"] = "Отредактирован существующий мастер"
 
             else: #если это создание нового мастера
+                newMaster["status"] = "new"
+                newMaster["score"] = 0
                 common.syncFiles(newMaster, None, request)
                 result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
                 result["note"] = "Создан новый мастер"
@@ -264,6 +266,7 @@ def adm_saveCategory():
     else:
         return abort(401, "Sorry, access denied.")
 
+# удаление мастера
 def deleteMaster(id):
     result = dict()
 
@@ -301,6 +304,31 @@ def deleteMaster(id):
         print("Error: " + str(e))
         common.writeToLog("error", "rem_lkSaveData: " + str(e))
         return result
+
+# сервис управления пользователями
+@route('/api/adminka/usersManage')
+def adm_manageUsers():
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
+        if request.params.method == "getAllUsersMasters":
+            users_list = []
+            result = {}
+
+            for user in conf.db.users_masters.find():
+                tempUser = {}
+                tempUser["master_id"] = user["master_id"]
+                tempUser["status"] = user["status"]
+                tempUser["login"] = user["login"]
+                tempUser["password"] = user["password"]
+
+                users_list.append(tempUser)
+
+            result["users"] = users_list
+            # result["configUrl"] = conf.configUrl
+
+            return common.JSONEncoder().encode(result)
+    else:
+        return abort(401, "Sorry, access denied.")
 
 # проверка прав на запрос к api на основе информации зашифрованной в токене
 def check_rights(role, rq):
@@ -368,3 +396,5 @@ def create_session(result):
     result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes_admin if result["role"] == "admin" else conf.session_time_out_minutes_master))
 
     return result
+
+

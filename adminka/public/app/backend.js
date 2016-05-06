@@ -12,6 +12,18 @@ remBackend.factory('masters', ['$resource',
         });
 }]);
 
+remBackend.factory('usersManage', ['$resource',
+  function ($resource) {
+        return $resource('/api/adminka/usersManage', {}, {
+            "getAllUsersMasters": {
+                method: 'GET',
+                params: {
+                    method: "getAllUsersMasters"
+                }
+            }
+        });
+}]);
+
 remBackend.factory('category', ['$resource',
   function ($resource) {
         return $resource('/api/adminka/categories', {}, {

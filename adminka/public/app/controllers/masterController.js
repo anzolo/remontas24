@@ -33,7 +33,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
                 console.log("Мастер успешно удален");
 
             } else if (data.status == "Error") {
-                console.error("Ошибка про удалении: ", data.note);
+                console.error("Ошибка при удалении: ", data.note);
 
             };
             $state.go('adminka.masters');

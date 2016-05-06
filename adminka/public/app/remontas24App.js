@@ -26,6 +26,11 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
             templateUrl: "/adminka/restricted/views/masters.html",
             controller: "mastersController"
         })
+        .state('adminka.usersMasters', {
+            url: "/adminka/usersMasters",
+            templateUrl: "/adminka/restricted/views/usersMasters.html",
+            controller: "usersMastersController"
+        })
         .state('adminka.newMaster', {
             url: "/adminka/masters/new",
             templateUrl: "/adminka/restricted/views/master.html",
@@ -40,6 +45,11 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
             url: "/adminka/categories",
             templateUrl: "/adminka/restricted/views/categories.html",
             controller: "categoriesController"
+        })
+        .state('adminka.logs', {
+            url: "/adminka/logs",
+            templateUrl: "/adminka/restricted/views/logs.html",
+            controller: "logsController"
         })
         .state('adminka.category', {
             url: "/adminka/categories",

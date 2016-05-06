@@ -1,0 +1,41 @@
+<div id="page-wrapper">
+
+    <!--
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button type="button" id="myButton" class="btn btn-primary" ng-click="newMaster()">Создать</button>
+        </div>
+    </div>
+-->
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Статус</th>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                    <th>Профиль мастера</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in model.users">
+
+                    <td> {{$index + 1}}</td>
+                    <td> {{user.status}}</td>
+                    <td> {{user.login}}</td>
+                    <td> {{user.password}}</td>
+                    <td>
+                        <a href="#" ui-sref="adminka.editMaster({ id: user.master_id })">{{user.master_id}}</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.table-responsive -->
+
+
+</div>

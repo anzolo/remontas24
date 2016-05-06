@@ -99,12 +99,22 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a ui-sref="adminka.masters"><i class="fa fa-users fa-fw"></i> Мастера</a>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Мастера</a>
+                            <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                                <li>
+                                    <a ui-sref="adminka.masters"><i class="fa fa-users fa-fw"></i> Профили</a>
+                                </li>
+                                <li>
+                                    <a ui-sref="adminka.usersMasters"><i class="fa fa-sign-in" aria-hidden="true"></i> Пользователи</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a ui-sref="adminka.categories"><i class="fa fa-sitemap"></i> Категории</a>
                         </li>
-
+                        <li>
+                            <a ui-sref="adminka.categories"><i class="fa fa-align-justify" aria-hidden="true"></i> Логи</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
