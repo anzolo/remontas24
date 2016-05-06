@@ -29,19 +29,16 @@ def static(access, filename):
 
 
 # API ремонтаса. получение списка мастеров для главной странице по фильтру
-@route('/api/main/searchMasters')
+@route('/api/main/searchMasters', method='POST')
 def rem_doSearchMasters():
-    # result = {"filter": {"first_job": None, "second_job": None, "extra_jobs": {}}, "masters_count": 80, "current_page": 3, "max_page": 6, "masters": []}
-
-    # perfect_master = {'name':"Петр", 'foto':img_path + "img-user-1.png", 'jobs_count':"5 работ", 'guid':"id", 'link':"src"}
-
-    # for master in range(15):
-    #    result["masters"].append(perfect_master)
-
     result = dict()
 
-    page = int(request.query.page)
+    page = request.json["page"]
 
+    # разбираем фильтр пришедший от клиента
+
+
+    # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
     masters = list(conf.db.masters.find({"score": {"$gte": 0}}).sort("score", -1))
 
     result["count"] = len(masters)
@@ -66,14 +63,9 @@ def rem_doSearchMasters():
         result["masters"].append(bufMaster)
 
     result["categories"] = list(conf.db.category_job.find())
+    result["additionalServicesDict"] = conf.addServicesDict
 
     return common.JSONEncoder().encode(result)
-
-    # разбираем фильтр пришедший от клиента
-
-    # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
-
-    #
 
 
 # API ремонтаса. получение данных для личного кабинета

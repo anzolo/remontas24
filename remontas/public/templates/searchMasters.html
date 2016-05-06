@@ -2,94 +2,92 @@
     <h2 class="text-center">Подбор мастера</h2>
     <div class="filter clearfix">
         <div class="service-1">
-            <input type="text" readonly="readonly" placeholder="Выберите категорию" value="{{model.filter['name']}}" ng-click="showFiltersMenu('Category')">
+            <input type="text" readonly="readonly" placeholder="{{model.filter.category.val}}" value="{{model.filter.category.val}}" ng-click="showFiltersMenu('Category')">
             <div class="sub" ng-if="showComboBox=='Category'">
                 <div ng-repeat="element in model.categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)">{{element.val}}</div>
             </div>
         </div>
         <div class="service-2">
-            <input type="text" readonly="readonly" ng-disabled="!model.filter['check']" placeholder="Выберите услуги" value="{{countCheckedServices}}" ng-click="showFiltersMenu('Service')">
+            <input type="text" readonly="readonly" ng-disabled="model.filter.category._id=='all-category'" placeholder="{{model.placeholderForServices}}" value="{{model.placeholderForServices}}" ng-click="showFiltersMenu('Service')">
             <div class="sub" ng-if="showComboBox=='Service'">
-                <div ng-repeat="element in model.filter['kind_services']" ng-click="CheckService(element)"><span ng-class="{active: element['check']}">{{element.name}}</span></div>
-                <!--                ng-class="{active: isCheckedCategory(element)}"-->
-                <abbr class="btn" ng-click="selectServices()">Выбрать</abbr>
+                <div ng-repeat="element in model.categories | filter:{'type':'service', 'parent_id':model.filter.category._id} | orderBy:'order'" ng-click="CheckService(element)"><span ng-class="{active: model.filter.services.indexOf(element)>=0}">{{element.val}}</span></div>
+                <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>
         </div>
         <div class="service-3">
-            <input type="text" readonly="readonly" required="required" placeholder="Услуга мастер на час" ng-click="showFiltersMenu('AddServices')">
+            <input type="text" readonly="readonly" placeholder="{{'Выбрано доп. услуг: '+model.filter.addServices.length}}" ng-click="showFiltersMenu('AddServices')">
             <div class="sub" ng-if="showComboBox=='AddServices'">
-                <div>Услуга мастер на час</div>
-                <div class="counter">Отмечено услуг <strong>0</strong></div>
-                <div><span>Работа по договору</span></div>
-                <div><span>Услуга мастер на час</span></div>
-                <abbr class="btn">Выбрать</abbr>
+                <!--                <div>Услуга мастер на час</div>-->
+                <div ng-repeat="element in model.additionalServicesDict" ng-click="checkAddService(element)"><span ng-class="{active: model.filter.addServices.indexOf(element)>=0}">{{element.name}}</span></div>
+
+                <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>
         </div>
-        <button disabled="disabled">Подобрать</button>
+        <button>Подобрать</button>
     </div>
 
-    <masters-search-box data="model.searchBox"></masters-search-box>
+    <masters-search-box data="model.searchBox "></masters-search-box>
 
 </div>
 
-<div class="container">
-    <h2 class="text-center">Преимущества</h2>
-    <div class="privilege clearfix">
-        <a href="#" class="block item">
+<div class="container ">
+    <h2 class="text-center ">Преимущества</h2>
+    <div class="privilege clearfix ">
+        <a href="# " class="block item ">
             <h2>&laquo;Живая база&raquo;<br/>мастеров</h2>
-            <div class="img"><img src="/remontas/public/img/icon-big-phone.png" width="68" height="76"></div>
+            <div class="img "><img src="/remontas/public/img/icon-big-phone.png " width="68 " height="76 "></div>
             <p>Мы лично позвонили
                 <br/>каждому мастеру</p>
         </a>
-        <a href="#" class="block item">
+        <a href="# " class="block item ">
             <h2>Экономия времени <br/>и средств</h2>
-            <div class="img"><img src="/remontas/public/img/icon-big-clock.png" width="68" height="84"></div>
+            <div class="img "><img src="/remontas/public/img/icon-big-clock.png " width="68 " height="84 "></div>
             <p>Выберите понравившихся
                 <br/>мастеров и сравните их цены</p>
         </a>
-        <a href="#" class="block item">
+        <a href="# " class="block item ">
             <h2>Ремонт &laquo;под ключ&raquo;<br/>на одном сайте</h2>
-            <div class="img"><img src="/remontas/public/img/icon-big-brush.png" width="76" height="80"></div>
+            <div class="img "><img src="/remontas/public/img/icon-big-brush.png " width="76 " height="80 "></div>
             <p>Создайте свой уют
                 <br/>на одном сайте</p>
         </a>
     </div>
 </div>
 
-<div class="container">
-    <h2 class="text-center">Как пользоваться</h2>
-    <div class="block how-to-use clearfix">
-        <div class="item">
+<div class="container ">
+    <h2 class="text-center ">Как пользоваться</h2>
+    <div class="block how-to-use clearfix ">
+        <div class="item ">
             <h2>Подберите</h2>
-            <img src="/remontas/public/img/round-1.png" width="88" height="88">
+            <img src="/remontas/public/img/round-1.png " width="88 " height="88 ">
             <p>мастера
                 <br/>из списка</p>
         </div>
-        <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-        <div class="item">
+        <div class="item arrow "><img src="/remontas/public/img/arrow-yellow-right.png " width="40 " height="32 "></div>
+        <div class="item ">
             <h2>Добавьте</h2>
-            <img src="/remontas/public/img/round-2.png" width="88" height="88">
+            <img src="/remontas/public/img/round-2.png " width="88 " height="88 ">
             <p>мастеров
                 <br/>к списку сравнения</p>
         </div>
-        <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-        <div class="item">
+        <div class="item arrow "><img src="/remontas/public/img/arrow-yellow-right.png " width="40 " height="32 "></div>
+        <div class="item ">
             <h2>Сравните</h2>
-            <img src="/remontas/public/img/round-3.png" width="88" height="88">
+            <img src="/remontas/public/img/round-3.png " width="88 " height="88 ">
             <p>услуги и цены
                 <br/>выбранных мастеров</p>
         </div>
-        <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-        <div class="item">
+        <div class="item arrow "><img src="/remontas/public/img/arrow-yellow-right.png " width="40 " height="32 "></div>
+        <div class="item ">
             <h2>Позвоните</h2>
-            <img src="/remontas/public/img/round-4.png" width="88" height="88">
+            <img src="/remontas/public/img/round-4.png " width="88 " height="88 ">
             <p>выбранному
                 <br/>мастеру</p>
         </div>
-        <div class="item arrow"><img src="/remontas/public/img/arrow-yellow-right.png" width="40" height="32"></div>
-        <div class="item">
+        <div class="item arrow "><img src="/remontas/public/img/arrow-yellow-right.png " width="40 " height="32 "></div>
+        <div class="item ">
             <h2>Не смогли</h2>
-            <img src="/remontas/public/img/round-5.png" width="88" height="88">
+            <img src="/remontas/public/img/round-5.png " width="88 " height="88 ">
             <p>подобрать мастера?
                 <br/>Нет времени?
                 <br/>Оставьте заявку</p>

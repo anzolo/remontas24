@@ -4,8 +4,12 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         searchBox: {},
         categories: [],
         filter: {
-            "check": false
-        }
+            //            "check": false
+            "category": null,
+            "services": [],
+            "addServices": []
+        },
+        placeholderForServices: ""
     };
 
     $scope.showComboBox = "";
@@ -23,10 +27,11 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.loadMasters = loadMasters;
     $scope.showFiltersMenu = showFiltersMenu;
     $scope.checkCategory = checkCategory;
-    $scope.selectServices = selectServices;
+    $scope.closePopup = closePopup;
     $scope.CheckService = CheckService;
+    $scope.checkAddService = checkAddService;
 
-    loadMasters(1);
+    loadMasters(1, $scope.model.filter);
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,9 +53,10 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.isAuthOK = true;
     });
 
-    function loadMasters(page) {
-        $scope.searchResult = searchMasters.get({
-            "page": page
+    function loadMasters(page, filter) {
+        $scope.searchResult = searchMasters.searchMasters({
+            "page": page,
+            "filter": filter
         }, function (data) {
             $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
             $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
@@ -58,7 +64,26 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.searchBox.max_page = data.max_page;
             $scope.model.searchBox.current_page = data.current_page;
             $scope.model.searchBox.loadMasters = $scope.loadMasters;
+
+            $scope.model.additionalServicesDict = JSON.parse(JSON.stringify(data.additionalServicesDict));
+
             $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
+
+            categoryAll = {
+                "_id": "all-category",
+                "measure": "",
+                "order": -1,
+                "parent_id": null,
+                "type": "category",
+                "val": "Все категории"
+            };
+
+            $scope.model.categories.push(categoryAll);
+
+            $scope.model.filter.category = $scope.model.categories[$scope.model.categories.length - 1];
+
+            $scope.model.placeholderForServices = "Все услуги";
+
         });
     }
 
@@ -104,44 +129,45 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         if ($scope.showComboBox == "") $scope.showComboBox = menu;
     };
 
-    function selectServices() {
+    function closePopup() {
         $scope.showComboBox = "";
     };
 
     function checkCategory(element) {
-        $scope.showComboBox = ""
-        $scope.countCheckedServices = "";
-        var newCategory = {
-            "check": true,
-            "_id": element._id,
-            "name": element.val,
-            "kind_services": []
-        };
+        $scope.showComboBox = "";
+        $scope.model.filter.category = element;
 
-        var kind_services = $scope.model.categories.filter(function (el1) {
-            return el1.parent_id == element._id
-        }).sort(compareOrder);
+        $scope.model.placeholderForServices = "Все услуги";
+        $scope.model.filter.services.length = 0;
 
-        kind_services.forEach(function (kser, i, arr) {
-            var newKindService = {
-                "_id": kser._id,
-                "name": kser.val,
-                "order": kser.order,
-                "check": false
-            };
-            newCategory["kind_services"].push(newKindService)
-        });
-
-        $scope.model.filter = newCategory;
     };
 
     function CheckService(element) {
-        element['check'] = !element['check'];
-        var count = 0;
-        $scope.model.filter["kind_services"].forEach(function (kser, i, arr) {
-            if (kser["check"]) count++;
-        });
-        $scope.countCheckedServices = "Выбрано услуг " + count;
+
+        var indexOfEl = $scope.model.filter.services.indexOf(element);
+
+        if (indexOfEl >= 0) {
+            $scope.model.filter.services.splice(indexOfEl, 1);
+        } else $scope.model.filter.services.push(element);
+
+        var maxServices = $scope.model.categories.filter(function (el1) {
+            return el1.parent_id == element.parent_id
+        }).length;
+
+        if ($scope.model.filter.services.length == 0 || $scope.model.filter.services.length == maxServices) {
+            $scope.model.placeholderForServices = "Все услуги"
+        } else
+            $scope.model.placeholderForServices = "Выбрано услуг " + $scope.model.filter.services.length;
+    };
+
+    function checkAddService(element) {
+
+        var indexOfEl = $scope.model.filter.addServices.indexOf(element);
+
+        if (indexOfEl >= 0) {
+            $scope.model.filter.addServices.splice(indexOfEl, 1);
+        } else $scope.model.filter.addServices.push(element);
+
     };
 
 }]);
