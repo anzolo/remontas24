@@ -35,11 +35,33 @@ def rem_doSearchMasters():
 
     page = request.json["page"]
 
+    filter = request.json["filter"]
     # разбираем фильтр пришедший от клиента
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}]}
+
+    if len(filter["kindServices"]) != 0 and len(filter["kindServices"]) != kindServicesCount(filter["category"]):
+        for kind_service in filter["kindServices"]:
+            # query["$and"].append({"categories.kind_services._id": kind_service["_id"]})
+            query["$and"].append({"categories.kind_services": {'$elemMatch': { "_id":kind_service["_id"], "services":{'$elemMatch':{"price":{"$gt": 0}}}}}})
+    elif (filter["category"] is not None) and filter["category"]["_id"] != "all-category":
+        # фильтруем только по категории
+        query["$and"].append({"categories._id": filter["category"]["_id"]})
+        query["$and"].append({"categories.kind_services.services.price": { "$gt": 0}})
+
+
+    if len(filter["addServices"]) > 0:
+        for add_service in filter["addServices"]:
+            query["$and"].append({ "additional_service": { '$elemMatch': { '$in': [add_service["_id"]] } } })
+
+    # if filter["category"] is None or filter["category"]["_id"]=="all-category":
+    #     if len(filter["services"])==0:
+    #         if len(filter["addServices"])==0:
+    #             query = { '$and': [ { 'score': { '$gt': 0 } }, { 'status': 'active' } ] }
+
 
 
     # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
-    masters = list(conf.db.masters.find({ "$and": [ { "score": { "$gt": 0 } }, { "status": "active" } ] }).sort("score", -1))
+    masters = list(conf.db.masters.find(query).sort("score", -1))
 
     result["count"] = len(masters)
     result["masters"] = []
@@ -67,6 +89,9 @@ def rem_doSearchMasters():
 
     return common.JSONEncoder().encode(result)
 
+
+def kindServicesCount(category):
+    return conf.db.category_job.find({"parent_id": category["_id"]}).count()
 
 # API ремонтаса. получение данных для личного кабинета
 @route('/api/lk')

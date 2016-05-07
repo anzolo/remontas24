@@ -10,7 +10,7 @@
         <div class="service-2">
             <input type="text" readonly="readonly" ng-disabled="model.filter.category._id=='all-category'" placeholder="{{model.placeholderForServices}}" value="{{model.placeholderForServices}}" ng-click="showFiltersMenu('Service')">
             <div class="sub" ng-if="showComboBox=='Service'">
-                <div ng-repeat="element in model.categories | filter:{'type':'service', 'parent_id':model.filter.category._id} | orderBy:'order'" ng-click="CheckService(element)"><span ng-class="{active: model.filter.services.indexOf(element)>=0}">{{element.val}}</span></div>
+                <div ng-repeat="element in model.categories | filter:{'type':'service', 'parent_id':model.filter.category._id} | orderBy:'order'" ng-click="CheckService(element)"><span ng-class="{active: model.filter.kindServices.indexOf(element)>=0}">{{element.val}}</span></div>
                 <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>
         </div>
-        <button>Подобрать</button>
+        <button ng-click="loadMasters(1)">Подобрать</button>
     </div>
 
     <masters-search-box data="model.searchBox "></masters-search-box>

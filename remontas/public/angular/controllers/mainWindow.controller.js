@@ -4,9 +4,8 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         searchBox: {},
         categories: [],
         filter: {
-            //            "check": false
             "category": null,
-            "services": [],
+            "kindServices": [],
             "addServices": []
         },
         placeholderForServices: ""
@@ -31,7 +30,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.CheckService = CheckService;
     $scope.checkAddService = checkAddService;
 
-    loadMasters(1, $scope.model.filter);
+    loadMasters(1);
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,11 +52,17 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.isAuthOK = true;
     });
 
-    function loadMasters(page, filter) {
+    function loadMasters(page) {
         $scope.searchResult = searchMasters.searchMasters({
             "page": page,
-            "filter": filter
+            "filter": $scope.model.filter
         }, function (data) {
+            $scope.model.filter = {
+                "category": null,
+                "kindServices": [],
+                "addServices": []
+            }
+
             $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
             $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
             $scope.model.searchBox.count_masters = data.count;
@@ -138,26 +143,26 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.model.filter.category = element;
 
         $scope.model.placeholderForServices = "Все услуги";
-        $scope.model.filter.services.length = 0;
+        $scope.model.filter.kindServices.length = 0;
 
     };
 
     function CheckService(element) {
 
-        var indexOfEl = $scope.model.filter.services.indexOf(element);
+        var indexOfEl = $scope.model.filter.kindServices.indexOf(element);
 
         if (indexOfEl >= 0) {
-            $scope.model.filter.services.splice(indexOfEl, 1);
-        } else $scope.model.filter.services.push(element);
+            $scope.model.filter.kindServices.splice(indexOfEl, 1);
+        } else $scope.model.filter.kindServices.push(element);
 
         var maxServices = $scope.model.categories.filter(function (el1) {
             return el1.parent_id == element.parent_id
         }).length;
 
-        if ($scope.model.filter.services.length == 0 || $scope.model.filter.services.length == maxServices) {
+        if ($scope.model.filter.kindServices.length == 0 || $scope.model.filter.kindServices.length == maxServices) {
             $scope.model.placeholderForServices = "Все услуги"
         } else
-            $scope.model.placeholderForServices = "Выбрано услуг " + $scope.model.filter.services.length;
+            $scope.model.placeholderForServices = "Выбрано услуг " + $scope.model.filter.kindServices.length;
     };
 
     function checkAddService(element) {
