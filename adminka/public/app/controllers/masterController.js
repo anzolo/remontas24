@@ -70,6 +70,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
                 if ($scope.master.categories == null) $scope.master.categories = [];
                 if ($scope.master.additional_service == null) $scope.master.additional_service = [];
+                if ($scope.master.works == null) $scope.master.works = [];
 
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);

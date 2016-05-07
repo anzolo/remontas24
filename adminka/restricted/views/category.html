@@ -53,6 +53,13 @@
             </div>
             <button class="btn btn-default" ng-click="saveCategory()">Сохранить</button>
             <button class="btn btn-default" ui-sref="adminka.categories">Отмена</button>
+
+            <label class="pull-right" ng-if="element != null">Я понимаю, что делаю
+                <input type="checkbox" ng-model="model.deleteConfirm">
+            </label>
+            <br/>
+            <button type="submit" class="btn btn-danger pull-right" ng-click="deleteCategory()" ng-disabled="!model.deleteConfirm" ng-if="element != null">Удалить элемент</button>
+
         </div>
 
     </div>

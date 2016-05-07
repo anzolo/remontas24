@@ -183,12 +183,16 @@ def adm_manageMasters():
 
                 result["note"] = "Отредактирован существующий мастер"
 
+                common.calcScoreMaster(master_id)
+
             else: #если это создание нового мастера
                 newMaster["status"] = "new"
                 newMaster["score"] = 0
                 common.syncFiles(newMaster, None, request)
                 result["new_id"] = str(conf.db.masters.insert_one(newMaster).inserted_id)
                 result["note"] = "Создан новый мастер"
+
+                common.calcScoreMaster(conf.db.masters.insert_one(newMaster).inserted_id)
 
             result["status"] = "OK"
 
@@ -245,7 +249,6 @@ def adm_saveCategory():
                 print(e)
                 return abort(500, str(e))
 
-
         elif request.params.method == "saveEdited":
             try:
                 if not ("measure" in request.json):
@@ -262,9 +265,83 @@ def adm_saveCategory():
                 print(e)
                 return abort(500, str(e))
 
+        elif request.params.method == "delete":
+            categoryElement = conf.db.category_job.find_one({"_id":ObjectId(request.json['id'])})
+
+            if not categoryElement is None:
+                # это категория
+
+                if categoryElement["type"]=="category":
+                    deleteCategory(categoryElement["_id"])
+
+                # это вид услуг
+                if categoryElement["type"] == "service":
+                    deleteKindService(categoryElement["_id"])
+
+                # это услуга
+                if categoryElement["type"] == "job":
+                    deleteService(categoryElement["_id"])
+
+            return {"status":"OK"}
 
     else:
         return abort(401, "Sorry, access denied.")
+
+def deleteCategory(id):
+
+    masters = list(conf.db.masters.find({"categories._id": str(id)}))
+
+    for master in masters:
+        tempCategory=None
+        for category in master["categories"]:
+            if category["_id"]==str(id):
+                tempCategory = category
+        if not tempCategory is None:
+            master["categories"].remove(tempCategory)
+            tempCategory = None
+            conf.db.masters.replace_one({"_id":master["_id"]}, master)
+
+    conf.db.category_job.delete_one({'_id': ObjectId(id)})
+
+def deleteKindService(id):
+    masters = list(conf.db.masters.find({"categories.kind_services._id": str(id)}))
+
+    for master in masters:
+        tempKindService = None
+        for category in master["categories"]:
+            for kindService in category["kind_services"]:
+                if kindService["_id"] == str(id):
+                    tempKindService = kindService
+            if not tempKindService is None:
+                category["kind_services"].remove(tempKindService)
+                tempKindService = None
+        conf.db.masters.replace_one({"_id": master["_id"]},master)
+
+    conf.db.category_job.delete_one({'_id': ObjectId(id)})
+
+def deleteService(id):
+    masters = list(conf.db.masters.find({"categories.kind_services.services._id": str(id)}))
+
+    for master in masters:
+        tempService = None
+        tempKindService = None
+        for category in master["categories"]:
+            for kindService in category["kind_services"]:
+                for service in kindService["services"]:
+                    if service["_id"] == str(id):
+                        tempService = service
+                if not tempService is None:
+                    kindService["services"].remove(tempService)
+                    tempService = None
+                if len(kindService["services"])==0:
+                    tempKindService = kindService
+            if not tempKindService is None:
+                category["kind_services"].remove(tempKindService)
+                tempKindService = None
+        conf.db.masters.replace_one({"_id": master["_id"]}, master)
+
+    conf.db.category_job.delete_one({'_id': ObjectId(id)})
+
 
 # удаление мастера
 def deleteMaster(id):

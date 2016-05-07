@@ -165,3 +165,134 @@ def generatePassword(length):
     for c in urandom(length):
         print(c)
     return "".join([chars[c % len(chars)] for c in urandom(length)])
+
+# обновление баллов мастера
+def calcScoreMaster(master_id):
+    try:
+        master = conf.db.masters.find_one({"_id": ObjectId(master_id)})
+
+        if not "status" in master:
+            master["status"] = "new"
+
+        score = 0
+        reset_to_register = False
+
+        scoreDecription = {"master_id": ObjectId(master_id), "details": []}
+        scoreMainCriteria = []
+
+        if master is not None:
+
+            del master["_id"]
+
+            if master["status"] != "closed":
+
+                # критерий - нет аватарки
+                ballDescr = {"description": "Загружено фото мастера/логотип компании", "status": True}
+
+                if master["avatar"] == conf.img_no_avatar:
+                    reset_to_register = True
+                    ballDescr["status"] = False
+
+                scoreMainCriteria.append(ballDescr)
+
+                # критерий - есть 3 работы в портфолио в которых более 5 фото
+                ballDescr = {"description": "Заполнено 3 работы в портфолио с не менее 5-ю фотографиями", "status": True}
+
+                works = 0
+                for work in master["works"]:
+                    if len(work["photos"]) >= 5:
+                        works += 1
+
+                if works < 3:
+                    reset_to_register = True
+                    ballDescr["status"] = False
+
+                scoreMainCriteria.append(ballDescr)
+
+                # критерий - заполнен хотя бы один телефон
+                ballDescr = {"description": "Заполнен контактный телефон", "status": True}
+
+                if (len(master["phone1"]) == 0) and (len(master["phone2"]) == 0):
+                    reset_to_register = True
+                    ballDescr["status"] = False
+
+                scoreMainCriteria.append(ballDescr)
+
+                # критерий - прайс заполнен на 50% или более
+                ballDescr = {"description": "Заполнено более 50% цен на услуги", "status": True}
+
+                allServicesCount = 0
+                serviceWithPriceCount = 0
+                for category in master["categories"]:
+                    for kindService in conf.db.category_job.find({"parent_id": ObjectId(category["_id"])}):
+                        allServicesCount += conf.db.category_job.find({"parent_id": kindService["_id"]}).count()
+                    for kindServiceMaster in category["kind_services"]:
+                        for service in kindServiceMaster["services"]:
+                            if service["price"] > 0:
+                                serviceWithPriceCount += 1
+
+                # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
+                if ((allServicesCount > 0) and ((serviceWithPriceCount/allServicesCount) < 0.5)) or (allServicesCount == 0):
+                    reset_to_register = True
+                    ballDescr["status"] = False
+
+                scoreMainCriteria.append(ballDescr)
+
+                scoreDecription["details"].append({"description": "Заполнена основная информация", "score": 50, "details": scoreMainCriteria, "status": not reset_to_register})
+
+                # подсчтет остальных критериев
+                if not reset_to_register:
+
+                    score += 50
+
+                    # критерий - заполнено 100% цен на услуги - 15 баллов
+                    ballDescr = {"description": "Заполнено 100% цен на услуги", "score": 15, "status": False}
+                    if allServicesCount-serviceWithPriceCount == 0:
+                        ballDescr["status"] = True
+                        score += 15
+
+                    scoreDecription["details"].append(ballDescr)
+
+                    # критерий - указано 2 номера телефона - 5 баллов
+                    ballDescr = {"description": "Указано 2 номера телефона", "score": 5, "status": False}
+                    if (len(master["phone1"]) > 0) and (len(master["phone2"]) > 0):
+                        ballDescr["status"] = True
+                        score += 5
+
+                    scoreDecription["details"].append(ballDescr)
+
+                    # критерий - описание услуг составляет более 300 символов – 10  баллов
+                    ballDescr = {"description": "Общее описание более 300 символов", "score": 10, "status": False}
+                    if len(master["detail"]) >= 300:
+                        ballDescr["status"] = True
+                        score += 10
+
+                    scoreDecription["details"].append(ballDescr)
+
+                    # критерий - за каждую размещённую в портфолио новую работу – 15 баллов
+                    ballDescr = {"description": "Размещение выполненных работ", "score": 15, "status": False}
+                    if works > 3:
+                        ballDescr["status"] = True
+                        calcScore = (works - 3)*15
+                        ballDescr["score"] = calcScore
+                        score += calcScore
+
+                    scoreDecription["details"].append(ballDescr)
+
+                if not master["status"] == "new":
+                    if reset_to_register:
+                        master["status"] = "register"
+                    else:
+                        master["status"] = "active"
+                else:
+                    master["status"] = "new"
+
+                master["score"] = score
+
+                conf.db.masters.update_one({"_id": ObjectId(master_id)}, {"$set": master})
+                conf.db.users_masters.update_one({"master_id": ObjectId(master_id)}, {"$set": {"status": master["status"]}})
+
+                conf.db.scoreMasters.replace_one({"master_id": ObjectId(master_id)}, scoreDecription, True)
+    except Exception as e:
+        print("Error: " + str(e))
+        writeToLog("error", "calcScoreMaster: " + str(e))

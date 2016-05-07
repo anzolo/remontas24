@@ -45,6 +45,12 @@ remBackend.factory('category', ['$resource',
                 params: {
                     method: "saveEdited"
                 }
+            },
+            "delete": {
+                method: 'POST',
+                params: {
+                    method: "delete"
+                }
             }
         });
                 }]);
