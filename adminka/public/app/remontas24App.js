@@ -51,6 +51,11 @@ remontas24App.config(function ($stateProvider, $urlRouterProvider, $locationProv
             templateUrl: "/adminka/restricted/views/logs.html",
             controller: "logsController"
         })
+        .state('adminka.operations', {
+            url: "/adminka/operations",
+            templateUrl: "/adminka/restricted/views/operations.html",
+            controller: "operationsController"
+        })
         .state('adminka.category', {
             url: "/adminka/categories",
             templateUrl: "/adminka/restricted/views/category.html",

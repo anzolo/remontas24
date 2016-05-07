@@ -7,11 +7,14 @@ from bson.objectid import ObjectId
 import os
 import common
 import json
-
+import random
+from random import randint
+import string
 import conf
 
+
 from bottle import debug
-debug(True)
+debug(conf.debug)
 
 
 # Админка. По маршруту возвращается шаблон
@@ -320,6 +323,7 @@ def deleteKindService(id):
 
     conf.db.category_job.delete_one({'_id': ObjectId(id)})
 
+
 def deleteService(id):
     masters = list(conf.db.masters.find({"categories.kind_services.services._id": str(id)}))
 
@@ -344,6 +348,167 @@ def deleteService(id):
     conf.db.category_job.delete_one({'_id': ObjectId(id)})
 
 
+# API админки. Выполнение специальных операций
+@route('/api/adminka/Operations')
+def adm_runOperation():
+    result_check_rights = check_rights("admin", request)
+    if result_check_rights["status"]:
+        if request.params.operation == "generateTestMasters":
+            generateTestMasters(2000)
+            return {"status":"OK"}
+    else:
+        return abort(401, "Sorry, access denied.")
+
+def generateTestMasters(count):
+    try:
+        for i in range(count):
+            # иницаиализируем мастера
+            master = dict()
+
+            detailPattern = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper."
+            master["detail"] = detailPattern[0:randint(100, 500)]
+
+            status_list = ["new","register","active", "closed"]
+            kind_profile_list = ["org","phys"]
+
+            #avatars_list = load
+            #workPhoto_list = load
+
+            # randint(0, 9)
+
+            master["status"] = status_list[randint(0, 3)]
+            master["name"] = "Мастер " + str(i)
+            master["kind_profile"] = kind_profile_list[randint(0, 1)]
+
+            if master["kind_profile"]=="phys":
+                master["sername"] = "Мастеров"
+                master["patronymic"] = "Мастерович"
+
+            master["email"] = "".join(
+                random.choice(string.ascii_lowercase + string.digits) for x in range(8)) + "@mail.ru"
+
+
+            master["additional_service"] = []
+            master["works"] = []
+            master["categories"] = []
+
+            master["score"] = 0
+            master["phone1"] = ""
+            master["phone2"] = ""
+            master["avatar"] = conf.img_no_avatar
+
+
+            if master["status"]!="new":
+                master["phone1"] = str(randint(9220000000, 9999999999))
+
+                phone_count = randint(1, 2)
+
+                if phone_count==2:
+                    master["phone2"] = str(randint(9220000000, 9999999999))
+
+
+
+                with open('storage/avatars.txt') as my_file:
+                    avatars_list = my_file.read().splitlines()
+
+                master["avatar"] = avatars_list[randint(0, len(avatars_list)-1)]
+
+                # заполняем доп. услуги
+                case_add_service = randint(0, 2)
+                # 0 - ничего не выбрано
+                if case_add_service == 1: # выбран 1
+                    pos = randint(0, 1)
+                    master["additional_service"].append(conf.addServicesDict[pos]["_id"])
+                elif case_add_service == 2: # выбраны все
+                    master["additional_service"].append(conf.addServicesDict[0]["_id"])
+                    master["additional_service"].append(conf.addServicesDict[1]["_id"])
+
+
+                # заполняем работы
+                with open('storage/photos.txt') as my_file:
+                    photos_list = my_file.read().splitlines()
+
+                count_works = randint(0, 11)
+
+                for i in range(count_works):
+                    newWork = {"description": "ремонт в квартире " + str(i), "photos":[]}
+
+                    count_photos = randint(1, 12)
+                    for p in range(count_photos):
+                        newPhoto = {"description":"Фото "+str(p),"filename":photos_list[randint(0, len(photos_list)-1)]}
+                        newWork["photos"].append(newPhoto)
+
+                    master["works"].append(newWork)
+
+                print(photos_list)
+
+                # заполняем категории-виды_работ-услуги
+
+
+                category_list = list(conf.db.category_job.find({"type":"category"}))
+
+                count_category = randint(0, 2)
+
+                for c in range(count_category):
+                    category = category_list[randint(0, len(category_list)-1)]
+
+                    newCategory = dict()
+                    newCategory["name"] = category["val"]
+                    newCategory["order"] = category["order"]
+                    newCategory["_id"] = str(category["_id"])
+                    newCategory["kind_services"]=[]
+
+                    kindServices_list = list(conf.db.category_job.find({"parent_id": category["_id"]}))
+
+                    for kindService in kindServices_list:
+                        newKindService = dict()
+
+                        newKindService["name"] = kindService["val"]
+                        newKindService["order"] = kindService["order"]
+                        newKindService["_id"] = str(kindService["_id"])
+                        newKindService["services"]=[]
+
+                        services_list = list(conf.db.category_job.find({"parent_id": kindService["_id"]}))
+                        count_services = randint(0, len(services_list)-1)
+
+                        for s in range(count_services):
+                            service = services_list[randint(0, len(services_list)-1)]
+                            newService = dict()
+                            newService["_id"] = str(service["_id"])
+                            newService["order"] = service["order"]
+                            newService["measure"] = service["measure"]
+                            newService["name"] = service["val"]
+                            newService["price"] = randint(0,10000)
+
+                            newKindService["services"].append(newService)
+                            services_list.remove(service)
+
+                        newCategory["kind_services"].append(newKindService)
+
+                    master["categories"].append(newCategory)
+                    category_list.remove(category)
+
+
+                print(master)
+
+            # сохраняем мастера
+            result = conf.db.masters.insert_one(master)
+
+            # создать пользователя
+            newUser = {"master_id": ObjectId(result.inserted_id),
+                        "status": master["status"],
+                        "login": master["email"],
+                        "password": "123"}
+
+            conf.db.users_masters.insert_one(newUser)
+
+            # считаем баллы
+            common.calcScoreMaster(result.inserted_id)
+
+
+    except Exception as e:
+        print(e)
+
 # удаление мастера
 def deleteMaster(id):
     result = dict()
@@ -365,6 +530,8 @@ def deleteMaster(id):
                 deleteFilePath = conf.works_path + master["avatar"]
                 if os.path.isfile(deleteFilePath):
                     os.remove(deleteFilePath)
+
+            conf.db.scoreMasters.delete_one({"master_id":ObjectId(id)})
 
             # удаляем мастера из БД
             conf.db.masters.delete_one({'_id': ObjectId(id)})
@@ -474,5 +641,7 @@ def create_session(result):
     result["token"] = jwt.generate_jwt(payload, priv_key, 'PS256', datetime.timedelta(minutes=conf.session_time_out_minutes_admin if result["role"] == "admin" else conf.session_time_out_minutes_master))
 
     return result
+
+
 
 

@@ -1,0 +1,8 @@
+<div id="page-wrapper">
+    <label>Я понимаю, что делаю
+        <input type="checkbox" ng-model="model.deleteConfirm">
+    </label>
+    <br/>
+    <button type="submit" class="btn btn-danger" ng-click="runOperation('generateTestMasters')" ng-disabled="!model.deleteConfirm">Сгенерировать тестовых мастеров 2000шт.</button>
+
+</div>

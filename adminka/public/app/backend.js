@@ -24,6 +24,11 @@ remBackend.factory('usersManage', ['$resource',
         });
 }]);
 
+remBackend.factory('Operations', ['$resource',
+  function ($resource) {
+        return $resource('/api/adminka/Operations');
+}]);
+
 remBackend.factory('category', ['$resource',
   function ($resource) {
         return $resource('/api/adminka/categories', {}, {
