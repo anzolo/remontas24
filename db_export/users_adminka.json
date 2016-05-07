@@ -1,10 +1,15 @@
-{
-    "_id" : ObjectId("569263ea0364016894399a44"),
-    "username" : "admin@ya.ru",
-    "password" : "1"
+{ 
+    "_id" : ObjectId("569263ea0364016894399a44"), 
+    "username" : "alzolotov@gmail.com", 
+    "password" : "ko5K3R6G"
 }
-{
-    "_id" : ObjectId("5692645e0364016894399a46"),
-    "username" : "ad@ya.ru",
-    "password" : "1"
+{ 
+    "_id" : ObjectId("5692645e0364016894399a46"), 
+    "username" : "agkrishtalev@gmail.com", 
+    "password" : "UMgyjx8z"
+}
+{ 
+    "_id" : ObjectId("572e316257dbf5017374f86e"), 
+    "username" : "biruk1411@gmail.com", 
+    "password" : "4XAB8vTz"
 }
