@@ -171,9 +171,6 @@ def rem_lkSaveData():
         return abort(401, "Sorry, access denied.")
 
 
-
-
-
 # API ремонтаса. получение данных по мастеру
 @route('/api/masterOpenProfile/<masterId>')
 def rem_masterGetData(masterId):
@@ -182,17 +179,19 @@ def rem_masterGetData(masterId):
     try:
         master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
         if master is not None:
-            result["master"] = master
+
 
             # удалим лишние поля
-            if "_id" in result["master"]:
-                del result["master"]["_id"]
-            if "status" in result["master"]:
-                del result["master"]["status"]
-            if "score" in result["master"]:
-                del result["master"]["score"]
-            if "email" in result["master"]:
-                del result["master"]["email"]
+            if "_id" in master:
+                del master["_id"]
+            if "status" in master:
+                del master["status"]
+            if "score" in master:
+                del master["score"]
+            if "email" in master:
+                del master["email"]
+
+            result["master"] = clearMasterFromBadData(master)
 
             result["configUrl"] = conf.configUrl
             result["status"] = "OK"
@@ -206,6 +205,37 @@ def rem_masterGetData(masterId):
         common.writeToLog("error", "rem_masterGetData: " + str(e))
 
     return common.JSONEncoder().encode(result)
+
+def clearMasterFromBadData(master):
+    # удаляем пустые категории и нулевые услуги
+
+    categoryDeleteList = []
+    kindServicesDeleteList = []
+    servicesDeleteList = []
+
+    for category in master["categories"]:
+        # ищем пустые виды услуг, добавляем в список к удалению
+        for kindService in category["kind_services"]:
+            for service in kindService["services"]:
+                if service["price"]==0:
+                    servicesDeleteList.append(service)
+            for service in servicesDeleteList:
+                kindService["services"].remove(service)
+            servicesDeleteList=[]
+            if len(kindService["services"]) == 0:
+                kindServicesDeleteList.append(kindService)
+        # удаляем все виды услуг из списка удаления
+        for kindService in kindServicesDeleteList:
+            category["kind_services"].remove(kindService)
+        kindServicesDeleteList=[]
+        if len(category["kind_services"]) == 0:
+            categoryDeleteList.append(category)
+
+    for category in categoryDeleteList:
+        master["categories"].remove(category)
+
+    return master
+
 
 
 @route('/api/masterRegister', method='POST')
