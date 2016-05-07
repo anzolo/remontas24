@@ -68,6 +68,8 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
                 $scope.categories = JSON.parse(JSON.stringify(data.categories));
 
+                $scope.scoreDetail = JSON.parse(JSON.stringify(data.scoreDetail));
+
                 if ($scope.master.categories == null) $scope.master.categories = [];
                 if ($scope.master.additional_service == null) $scope.master.additional_service = [];
                 if ($scope.master.works == null) $scope.master.works = [];

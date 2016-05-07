@@ -114,6 +114,7 @@ def adm_getMaster(id):
                 result["status"] = "OK"
                 result["master"] = master
                 result["categories"] = list(conf.db.category_job.find())
+                result["scoreDetail"] = conf.db.scoreMasters.find_one({"master_id": ObjectId(id)})
                 result["configUrl"] = conf.configUrl
 
             else:
