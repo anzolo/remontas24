@@ -39,7 +39,7 @@ def rem_doSearchMasters():
 
 
     # забираем мастеров из базы в соответствии с фильтром; берем только активных; сортируем по убыванию баллам
-    masters = list(conf.db.masters.find({"score": {"$gte": 0}}).sort("score", -1))
+    masters = list(conf.db.masters.find({ "$and": [ { "score": { "$gt": 0 } }, { "status": "active" } ] }).sort("score", -1))
 
     result["count"] = len(masters)
     result["masters"] = []
