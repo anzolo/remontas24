@@ -41,12 +41,10 @@ def rem_doSearchMasters():
 
     if len(filter["kindServices"]) != 0 and len(filter["kindServices"]) != kindServicesCount(filter["category"]):
         for kind_service in filter["kindServices"]:
-            # query["$and"].append({"categories.kind_services._id": kind_service["_id"]})
             query["$and"].append({"categories.kind_services": {'$elemMatch': { "_id":kind_service["_id"], "services":{'$elemMatch':{"price":{"$gt": 0}}}}}})
     elif (filter["category"] is not None) and filter["category"]["_id"] != "all-category":
         # фильтруем только по категории
-        query["$and"].append({"categories._id": filter["category"]["_id"]})
-        query["$and"].append({"categories.kind_services.services.price": { "$gt": 0}})
+        query["$and"].append({'categories':{'$elemMatch':{'_id':filter["category"]["_id"],'kind_services': {'$elemMatch': { 'services':{'$elemMatch':{"price":{"$gt": 0}}}}}}}})
 
 
     if len(filter["addServices"]) > 0:
