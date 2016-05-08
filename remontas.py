@@ -205,8 +205,8 @@ def rem_masterGetData(masterId):
 
 
             # удалим лишние поля
-            if "_id" in master:
-                del master["_id"]
+            # if "_id" in master:
+            #     del master["_id"]
             if "status" in master:
                 del master["status"]
             if "score" in master:

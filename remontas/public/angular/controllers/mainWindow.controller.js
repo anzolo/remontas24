@@ -6,7 +6,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         placeholderForServices: ""
     };
 
-    console.log(Session.filter())
+    //    console.log(Session.filter())
     if (Session.filter() == undefined) {
         $scope.model.filter = {
             "category": null,
@@ -34,6 +34,8 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.CheckService = CheckService;
     $scope.checkAddService = checkAddService;
     $scope.arrayObjectIndexOf = arrayObjectIndexOf;
+    $scope.getFavoritesCount = getFavoritesCount;
+    $scope.masterInFavorites = masterInFavorites;
 
     loadMasters(1);
 
@@ -72,6 +74,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.searchBox.max_page = data.max_page;
             $scope.model.searchBox.current_page = data.current_page;
             $scope.model.searchBox.loadMasters = $scope.loadMasters;
+            $scope.model.searchBox.masterInFavorites = $scope.masterInFavorites;
 
             $scope.model.additionalServicesDict = JSON.parse(JSON.stringify(data.additionalServicesDict));
 
@@ -197,6 +200,19 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.filter.addServices.splice(indexOfEl, 1);
         } else $scope.model.filter.addServices.push(element_id);
 
+    };
+
+    function getFavoritesCount() {
+
+        var count = Session.countFavorites();
+
+        if (count > 99) count = count.toString() + "+";
+
+        return count;
+    };
+
+    function masterInFavorites(master) {
+        return Session.masterInFavourites(master._id);
     };
 
 }]);

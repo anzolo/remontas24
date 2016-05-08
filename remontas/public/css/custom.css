@@ -1084,8 +1084,19 @@ h2.master-counter span {
     box-sizing: border-box;
 }
 
+
+/*
 .about-extra .compare {
     background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
+}
+*/
+
+.about-extra .comparePlus {
+    background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
+}
+
+.about-extra .compareMinus {
+    background: transparent url('../img/icon-heart-grey.png') no-repeat left center;
 }
 
 .about-extra .portfolio {
@@ -1547,7 +1558,7 @@ h2.master-counter span {
     position: relative;
 }
 
-.page .comparison .masters .favorite {
+.page .comparison .masters .favoritePlus {
     position: absolute;
     background: transparent url('../img/icon-heart-plus.png') no-repeat;
     width: 30px;
@@ -1557,7 +1568,7 @@ h2.master-counter span {
     cursor: pointer;
 }
 
-.page .comparison .masters .favorite.active {
+.page .comparison .masters .favoriteMinus {
     background: transparent url('../img/icon-heart-grey.png') no-repeat;
 }
 

@@ -2,16 +2,7 @@ remontas24Site.directive('mastersSearchBox', function () {
     return {
         restrict: 'E',
         scope: {
-            data:'=data'
-//            masters: '=masters',
-    //            mastersCount: '=mastersCount',
-    //            maxPage: '=maxPage',
-    //            currentPage: '=currentPage'
-        },
-        link: function (scope, element) {
-            scope.getNumber = function (num) {
-                return new Array(num);
-            }
+            data: '=data'
         },
         templateUrl: '/remontas/public/angular/directives/mastersSearchBox.html'
     };

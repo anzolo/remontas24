@@ -49,6 +49,12 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
     $locationProvider.hashPrefix('!');
 });
 
+remontas24Site.run(function (Session) {
+
+    if (Session.favourites() == undefined) Session.initFavourites();
+
+})
+
 remontas24Site.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
     loginFailed: 'auth-login-failed',

@@ -35,12 +35,35 @@ remontas24Site.service('Session', function ($localStorage) {
     this.username = function () {
         return $localStorage.username;
     };
+
     this.saveFilter = function (newFilter) {
         return $localStorage.filter = JSON.parse(JSON.stringify(newFilter));
     };
     this.filter = function () {
         return $localStorage.filter;
     };
+
+    this.favourites = function () {
+        return $localStorage.favourites;
+    };
+
+    this.initFavourites = function () {
+        $localStorage.favourites = [];
+    };
+
+    this.addToFavourites = function (id) {
+        var indexOfMaster = $localStorage.favourites.indexOf(id);
+
+        if (indexOfMaster >= 0) {
+            $localStorage.favourites.splice(indexOfMaster, 1)
+        } else $localStorage.favourites.push(id);
+    };
+    this.masterInFavourites = function (id) {
+        return $localStorage.favourites.indexOf(id) >= 0;
+    };
+    this.countFavorites = function () {
+        return $localStorage.favourites.length;
+    }
 
     return this;
 })

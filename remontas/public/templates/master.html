@@ -5,7 +5,7 @@
             <h1 class="text-center">{{getNameMaster()}}</h1>
             <div class="about-extra clearfix">
                 <div class="corner"></div>
-                <div class="item compare">К сравнению</div>
+                <div class="item" ng-click="addToFavorites(model.master._id)" ng-class="{comparePlus: !masterInFavorites(model.master), compareMinus: masterInFavorites(model.master)}">{{getFavoritesStatus(model.master)}}</div>
                 <div class="item portfolio"><strong>{{model.master.works.length}}</strong> работы</div>
                 <div class="item phones">{{showPhone(model.master.phone1)}}
                     <br>{{showPhone(model.master.phone2)}}

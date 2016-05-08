@@ -2,7 +2,7 @@
 <div class="selection clearfix">
 
     <a href="#" ui-sref="remontas.profile({ id: master._id })" class="item" ng-repeat="master in data.masters">
-        <div class="favorite "></div>
+        <div class="favorite" ng-class="{active: data.masterInFavorites(master)}"></div>
         <div class="img ">
             <img ng-src="{{data.configUrl.img_url_path + master.avatar}}" width="187 " height="187 ">
             <div>{{master.count_works}} работ</div>

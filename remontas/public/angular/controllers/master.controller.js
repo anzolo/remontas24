@@ -1,4 +1,4 @@
-remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProfile', '$stateParams', 'ModalService', function ($scope, $sce, masterOpenProfile, $stateParams, ModalService) {
+remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProfile', '$stateParams', 'ModalService', 'Session', function ($scope, $sce, masterOpenProfile, $stateParams, ModalService, Session) {
 
     $scope.interfaceOptions = {
         checkKind_services: null,
@@ -22,7 +22,9 @@ remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProf
     $scope.clearMouseOverService = clearMouseOverService;
     $scope.selectKindServices = selectKindServices;
     $scope.showPhone = showPhone;
-
+    $scope.addToFavorites = addToFavorites;
+    $scope.masterInFavorites = masterInFavorites;
+    $scope.getFavoritesStatus = getFavoritesStatus;
 
     loadData($stateParams.id);
 
@@ -38,7 +40,23 @@ remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProf
 
             $scope.model.kind_services = masterKindServiceArray();
         });
-    }
+    };
+
+    function addToFavorites(id) {
+        Session.addToFavourites(id);
+    };
+
+    function masterInFavorites(master) {
+        return Session.masterInFavourites(master._id);
+    };
+
+    function getFavoritesStatus(master) {
+
+        if (Session.masterInFavourites(master._id)) {
+            return "В сравнении"
+        } else return "К сравнению";
+
+    };
 
     function getNameMaster() {
         try {
