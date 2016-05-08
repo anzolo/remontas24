@@ -10,7 +10,7 @@
         <div class="service-2">
             <input type="text" readonly="readonly" ng-disabled="model.filter.category._id=='all-category'" placeholder="{{model.placeholderForServices}}" value="{{model.placeholderForServices}}" ng-click="showFiltersMenu('Service')">
             <div class="sub" ng-if="showComboBox=='Service'">
-                <div ng-repeat="element in model.categories | filter:{'type':'service', 'parent_id':model.filter.category._id} | orderBy:'order'" ng-click="CheckService(element)"><span ng-class="{active: model.filter.kindServices.indexOf(element)>=0}">{{element.val}}</span></div>
+                <div ng-repeat="element in model.categories | filter:{'type':'service', 'parent_id':model.filter.category._id} | orderBy:'order'" ng-click="CheckService(element)"><span ng-class="{active: arrayObjectIndexOf(model.filter.kindServices,element._id, '_id')>=0}">{{element.val}}</span></div>
                 <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <input type="text" readonly="readonly" placeholder="{{'Выбрано доп. услуг: '+model.filter.addServices.length}}" ng-click="showFiltersMenu('AddServices')">
             <div class="sub" ng-if="showComboBox=='AddServices'">
                 <!--                <div>Услуга мастер на час</div>-->
-                <div ng-repeat="element in model.additionalServicesDict" ng-click="checkAddService(element)"><span ng-class="{active: model.filter.addServices.indexOf(element)>=0}">{{element.name}}</span></div>
+                <div ng-repeat="element in model.additionalServicesDict" ng-click="checkAddService(element._id)"><span ng-class="{active: model.filter.addServices.indexOf(element._id)>=0}">{{element.name}}</span></div>
 
                 <abbr class="btn" ng-click="closePopup()">Выбрать</abbr>
             </div>

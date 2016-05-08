@@ -49,7 +49,7 @@ def rem_doSearchMasters():
 
     if len(filter["addServices"]) > 0:
         for add_service in filter["addServices"]:
-            query["$and"].append({ "additional_service": { '$elemMatch': { '$in': [add_service["_id"]] } } })
+            query["$and"].append({ "additional_service": { '$elemMatch': { '$in': [add_service] } } })
 
     # if filter["category"] is None or filter["category"]["_id"]=="all-category":
     #     if len(filter["services"])==0:

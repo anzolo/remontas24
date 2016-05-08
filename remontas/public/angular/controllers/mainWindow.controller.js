@@ -3,13 +3,17 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.model = {
         searchBox: {},
         categories: [],
-        filter: {
+        placeholderForServices: ""
+    };
+
+    console.log(Session.filter())
+    if (Session.filter() == undefined) {
+        $scope.model.filter = {
             "category": null,
             "kindServices": [],
             "addServices": []
-        },
-        placeholderForServices: ""
-    };
+        };
+    } else $scope.model.filter = JSON.parse(JSON.stringify(Session.filter()));
 
     $scope.showComboBox = "";
     $scope.countCheckedServices = "";
@@ -29,6 +33,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.closePopup = closePopup;
     $scope.CheckService = CheckService;
     $scope.checkAddService = checkAddService;
+    $scope.arrayObjectIndexOf = arrayObjectIndexOf;
 
     loadMasters(1);
 
@@ -53,15 +58,13 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     });
 
     function loadMasters(page) {
+
+        Session.saveFilter($scope.model.filter);
+
         $scope.searchResult = searchMasters.searchMasters({
             "page": page,
             "filter": $scope.model.filter
         }, function (data) {
-            $scope.model.filter = {
-                "category": null,
-                "kindServices": [],
-                "addServices": []
-            }
 
             $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
             $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
@@ -76,7 +79,6 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
             categoryAll = {
                 "_id": "all-category",
-                "measure": "",
                 "order": -1,
                 "parent_id": null,
                 "type": "category",
@@ -85,9 +87,23 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
             $scope.model.categories.push(categoryAll);
 
-            $scope.model.filter.category = $scope.model.categories[$scope.model.categories.length - 1];
 
-            $scope.model.placeholderForServices = "Все услуги";
+            if (Session.filter() == undefined) {
+                $scope.model.filter = {
+                    "category": $scope.model.categories[$scope.model.categories.length - 1],
+                    "kindServices": [],
+                    "addServices": []
+                };
+            } else $scope.model.filter = JSON.parse(JSON.stringify(Session.filter()));
+
+            var maxServices = $scope.model.categories.filter(function (el1) {
+                return el1.parent_id == $scope.model.filter.category.parent_id
+            }).length;
+
+            if ($scope.model.filter.kindServices.length == 0 || $scope.model.filter.kindServices.length == maxServices) {
+                $scope.model.placeholderForServices = "Все услуги"
+            } else
+                $scope.model.placeholderForServices = "Выбрано услуг " + $scope.model.filter.kindServices.length;
 
         });
     }
@@ -140,7 +156,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     function checkCategory(element) {
         $scope.showComboBox = "";
-        $scope.model.filter.category = element;
+        $scope.model.filter.category = JSON.parse(JSON.stringify(element));
 
         $scope.model.placeholderForServices = "Все услуги";
         $scope.model.filter.kindServices.length = 0;
@@ -149,11 +165,12 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     function CheckService(element) {
 
-        var indexOfEl = $scope.model.filter.kindServices.indexOf(element);
+        var indexOfEl = arrayObjectIndexOf($scope.model.filter.kindServices, element._id, "_id")
+            //            $scope.model.filter.kindServices.indexOf(JSON.parse(JSON.stringify(element)));
 
         if (indexOfEl >= 0) {
             $scope.model.filter.kindServices.splice(indexOfEl, 1);
-        } else $scope.model.filter.kindServices.push(element);
+        } else $scope.model.filter.kindServices.push(JSON.parse(JSON.stringify(element)));
 
         var maxServices = $scope.model.categories.filter(function (el1) {
             return el1.parent_id == element.parent_id
@@ -165,13 +182,20 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.placeholderForServices = "Выбрано услуг " + $scope.model.filter.kindServices.length;
     };
 
-    function checkAddService(element) {
+    function arrayObjectIndexOf(myArray, searchTerm, property) {
+        for (var i = 0, len = myArray.length; i < len; i++) {
+            if (myArray[i][property] === searchTerm) return i;
+        }
+        return -1;
+    }
 
-        var indexOfEl = $scope.model.filter.addServices.indexOf(element);
+    function checkAddService(element_id) {
+
+        var indexOfEl = $scope.model.filter.addServices.indexOf(element_id);
 
         if (indexOfEl >= 0) {
             $scope.model.filter.addServices.splice(indexOfEl, 1);
-        } else $scope.model.filter.addServices.push(element);
+        } else $scope.model.filter.addServices.push(element_id);
 
     };
 

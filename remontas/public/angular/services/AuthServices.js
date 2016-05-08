@@ -30,12 +30,16 @@ remontas24Site.service('Session', function ($localStorage) {
         $localStorage.username = null;
     };
     this.token = function () {
-        //console.log("return token: ", $localStorage.token);
         return $localStorage.token;
     };
     this.username = function () {
-        //console.log("return token: ", $localStorage.token);
         return $localStorage.username;
+    };
+    this.saveFilter = function (newFilter) {
+        return $localStorage.filter = JSON.parse(JSON.stringify(newFilter));
+    };
+    this.filter = function () {
+        return $localStorage.filter;
     };
 
     return this;
