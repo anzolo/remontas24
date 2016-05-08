@@ -9,7 +9,13 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     //    console.log(Session.filter())
     if (Session.filter() == undefined) {
         $scope.model.filter = {
-            "category": null,
+            "category": {
+                "_id": "all-category",
+                "order": -1,
+                "parent_id": null,
+                "type": "category",
+                "val": "Все категории"
+            },
             "kindServices": [],
             "addServices": []
         };
@@ -100,7 +106,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             } else $scope.model.filter = JSON.parse(JSON.stringify(Session.filter()));
 
             var maxServices = $scope.model.categories.filter(function (el1) {
-                return el1.parent_id == $scope.model.filter.category.parent_id
+                return el1.parent_id == $scope.model.filter.category._id
             }).length;
 
             if ($scope.model.filter.kindServices.length == 0 || $scope.model.filter.kindServices.length == maxServices) {
