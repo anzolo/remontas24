@@ -42,6 +42,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.arrayObjectIndexOf = arrayObjectIndexOf;
     $scope.getFavoritesCount = getFavoritesCount;
     $scope.masterInFavorites = masterInFavorites;
+    $scope.showInvoiceForm = showInvoiceForm;
 
     loadMasters(1);
 
@@ -220,5 +221,12 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     function masterInFavorites(master) {
         return Session.masterInFavourites(master._id);
     };
+
+    function showInvoiceForm() {
+        ModalService.showModal({
+            templateUrl: "/remontas/public/templates/modals/invoiceForm.html",
+            controller: "invoiceFormController"
+        });
+    }
 
 }]);

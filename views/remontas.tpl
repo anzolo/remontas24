@@ -54,6 +54,7 @@
     <script src="/remontas/public/angular/controllers/master.controller.js"></script>
     <script src="/remontas/public/angular/controllers/workViewer.controller.js"></script>
     <script src="/remontas/public/angular/controllers/compare.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/invoiceForm.controller.js"></script>
 
 
     <!-- Директивы-->

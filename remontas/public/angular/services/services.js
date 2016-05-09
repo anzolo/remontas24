@@ -45,3 +45,16 @@ remBackend.factory('compareService', ['$resource',
             }
         });
 }]);
+
+remBackend.factory('invoiceService', ['$resource',
+  function ($resource) {
+        return $resource('/api/invoiceService', {}, {
+            "sendInvoice": {
+                method: 'POST'
+            },
+            "getCategories": {
+                method: 'GET',
+                isArray: true
+            }
+        });
+}]);

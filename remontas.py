@@ -7,6 +7,7 @@ import conf
 import os
 import json
 import math
+import datetime
 
 
 # Ремонтас. По маршруту возвращается шаблон
@@ -154,6 +155,63 @@ def rem_compareMasters():
 
 def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()
+
+# получение категорий для формы заявки
+@route('/api/invoiceService')
+def rem_getGategoriesForInvoice():
+    result = list(conf.db.category_job.find({"type":"category"}).sort("order",-1))
+
+    return common.JSONEncoder().encode(result)
+
+
+# API ремонтаса. сервис сравнения мастеров
+@route('/api/invoiceService', method='POST')
+def rem_sendInvoice():
+    result = {"status": "OK"}
+
+    try:
+        form = request.json
+
+        newInvoice = dict()
+
+        newInvoice["status"] = "new"
+        newInvoice["when"] = datetime.datetime.now()
+        newInvoice["invoice"] = dict()
+        if len(form["email"]) > 0:
+            newInvoice["invoice"]["email"] = form["email"]
+        else:
+            newInvoice["invoice"]["phone"] = form["phone"]
+        newInvoice["invoice"]["comment"] = form["comment"]
+        newInvoice["invoice"]["category"] = form["selectedCategory"]
+
+        conf.db.invoices.insert_one(newInvoice)
+
+        siteURL = request.urlparts[0] + "://" + request.urlparts[1]
+
+        if len(form["email"]) > 0:
+            # отправляем уведомление заказчику
+
+            messageText = conf.messageInvoiceSuccessEmailText.format(siteURL=siteURL)
+            messageHTML = conf.messageInvoiceSuccessEmailHTML.format(siteURL=siteURL)
+
+            subject = "Заявка на подбор мастера успешно получена сервисом remontas24.ru"
+
+            common.sendMail(form["email"], subject, messageText, messageHTML)
+
+        # отправляем уведомление администратору
+        # messageText = conf.messageInvoiceSuccessEmailText.format(name=master["name"], siteURL=siteURL)
+        # messageHTML = conf.messageInvoiceSuccessEmailHTML.format(name=master["name"], siteURL=siteURL)
+        #
+        # subject = "Доступно заполнение портфолио в remontas24.ru"
+        #
+        # common.sendMail(masterUser["login"], subject, messageText, messageHTML)
+
+        return result
+    except Exception as e:
+        result["status"] = "Error"
+        result["note"] = str(e)
+        print("Error: " + str(e))
+        common.writeToLog("error", "rem_sendInvoice: " + str(e))
 
 # API ремонтаса. получение данных для личного кабинета
 @route('/api/lk')

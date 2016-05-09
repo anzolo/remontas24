@@ -931,7 +931,7 @@ h2.master-counter span {
 
 #order .interest > .sub {
     text-align: left;
-    display: none;
+    /*    display: none;*/
     position: absolute;
     background: #f9f9f9 url('../img/icon-select.png') no-repeat 300px 16px;
     border: 1px solid #f5f5f5;

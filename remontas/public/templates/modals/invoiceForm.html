@@ -1,0 +1,41 @@
+<div id="modal">
+    <div id="order">
+        <div class="close-modal" ng-click="closeWindow()"></div>
+        <p>ЗАЯВКА НА ПОДБОР МАСТЕРА</p>
+        <p style="font-weight: 300">Как с вами связаться?</p>
+
+        <div class="order-tabs-header clearfix">
+            <div class="tab-1" ng-click="model.activeTab='email'; model.showComboBox = false" ng-class="{'active':model.activeTab=='email'}">По email</div>
+            <div class="tab-2" ng-click="model.activeTab='phone'; model.showComboBox = false" ng-class="{'active':model.activeTab=='phone'}">По телефону</div>
+        </div>
+
+        <div id="order-tab-1" ng-class="{'active':model.activeTab=='email'}">
+            <ng-form name="emailForm">
+                <input type="email" name="email" placeholder="Email" required ng-class="{required: emailForm.email.$invalid}" ng-model="model.form.email" />
+                <div class="interest">
+                    <input type="text" name="interest" placeholder="Меня интересует" ng-model="model.form.selectedCategory.name" required ng-class="{required: emailForm.interest.$invalid}" ng-click="model.showComboBox=true">
+                    <div class="sub" ng-if="model.showComboBox">
+                        <div ng-repeat="category in model.categories" ng-click="selectCategory(category)">{{category.val}}</div>
+                    </div>
+                </div>
+                <textarea name="comment" placeholder="Комментарий" required ng-class="{required: emailForm.comment.$invalid}" ng-model="model.form.comment"></textarea>
+                <button ng-disabled="emailForm.email.$invalid||emailForm.interest.$invalid||emailForm.comment.$invalid" ng-click="sendInvoice()">Отправить</button>
+            </ng-form>
+        </div>
+
+        <div id="order-tab-2" ng-class="{'active':model.activeTab=='phone'}">
+            <ng-form name="phoneForm">
+                <input type="text" name="phone" ui-mask="+7 (999) 999 99 99" required ng-class="{required: phoneForm.phone.$invalid}" ng-model="model.form.phone" />
+                <div class="interest">
+                    <input type="text" name="interest" placeholder="Меня интересует" ng-model="model.form.selectedCategory.name" required ng-class="{required: phoneForm.interest.$invalid}" ng-click="model.showComboBox=true">
+                    <div class="sub" ng-if="model.showComboBox">
+                        <div ng-repeat="category in model.categories" ng-click="selectCategory(category)">{{category.val}}</div>
+                    </div>
+                </div>
+                <textarea name="comment" placeholder="Комментарий" required ng-class="{required: phoneForm.comment.$invalid}" ng-model="model.form.comment"></textarea>
+                <button ng-disabled="phoneForm.phone.$invalid||phoneForm.interest.$invalid||phoneForm.comment.$invalid" ng-click="sendInvoice()>Отправить</button>
+            </ng-form>
+        </div>
+
+    </div>
+</div>
