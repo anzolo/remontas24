@@ -18,7 +18,11 @@ from os import urandom
 #  хранилище фото
 @route('/storage/<filename:path>')
 def storage(filename):
-    return static_file(filename, root='./storage')
+    path, file = os.path.split(filename)
+    if file==conf.img_no_avatar:
+        return static_file(filename, root='./remontas/public/img')
+    else:
+        return static_file(filename, root='./storage')
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -56,7 +60,7 @@ def syncFiles(newMaster, oldMaster, request):
                             photoFile.filename = createFileName(photoFile.raw_filename)
                             photo["filename"] = photoFile.filename
                             photoFile.save(conf.works_path)
-                            watermarkPhoto(conf.works_path + photo["filename"], "storage/watermark.png", 'tile', 0.2)
+                            watermarkPhoto(conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
                 else:
                     #исключаем фото, которое осталось в мастере из списка удаления
                     if oldPhotos.count(photo["filename"])>0:

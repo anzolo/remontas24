@@ -53,6 +53,8 @@
     <script src="/remontas/public/angular/controllers/lkWorkManage.controller.js"></script>
     <script src="/remontas/public/angular/controllers/master.controller.js"></script>
     <script src="/remontas/public/angular/controllers/workViewer.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/compare.controller.js"></script>
+
 
     <!-- Директивы-->
     <script src="/remontas/public/angular/directives.js"></script>

@@ -87,6 +87,70 @@ def rem_doSearchMasters():
 
     return common.JSONEncoder().encode(result)
 
+# API ремонтаса. сервис сравнения мастеров
+@route('/api/compareService', method='POST')
+def rem_compareMasters():
+    result = dict()
+    result["configUrl"] = conf.configUrl
+
+    mastersList = []
+    masters = []
+    categories = []
+    servicesMastersSet = set()
+
+    for el in request.json["masters"]:
+        mastersList.append(ObjectId(el))
+
+    query = dict()
+
+    query["_id"] = {'$in': mastersList}
+
+    resultMasters = conf.db.masters.find(query)
+
+    for master in resultMasters:
+        newMaster=dict()
+        newMaster["_id"] = master["_id"]
+        newMaster["name"] = master["name"]
+        if master["phone1"]!="":
+            newMaster["phone"] = master["phone1"]
+        else:
+            newMaster["phone"] = master["phone2"]
+        newMaster["avatar"] = master["avatar"]
+        newMaster["count_works"] = len(master["works"])
+
+        newMaster["prices"] = dict()
+
+        for category in master["categories"]:
+            for kindService in category["kind_services"]:
+                needAddKindService = False
+                for service in kindService["services"]:
+                    if service["price"]>0:
+                        servicesMastersSet.add(service["_id"])
+                        newMaster["prices"].update({service["_id"]:service["price"]})
+                        needAddKindService = True
+                if needAddKindService:
+                    servicesMastersSet.add(kindService["_id"])
+        masters.append(newMaster)
+
+    kindServicesDict = conf.db.category_job.find({"type": "service"}).sort([("parent_id",-1),("order",-1)])
+
+    for kindService in kindServicesDict:
+        if str(kindService["_id"]) in servicesMastersSet:
+            newCategory = {'name':kindService["val"], 'type':kindService["type"], '_id':kindService["_id"]}
+            categories.append(newCategory)
+            servicesList = conf.db.category_job.find({"parent_id": kindService["_id"]}).sort("order",-1)
+            for service in servicesList:
+                if str(service["_id"]) in servicesMastersSet:
+                    newService = {'name': service["val"], 'type': service["type"], '_id': service["_id"], "measure":service["measure"]}
+                    categories.append(newService)
+
+    result["categories"] = categories
+    result["masters"] = masters
+
+
+    # a = set({"n":1})
+
+    return common.JSONEncoder().encode(result)
 
 def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()

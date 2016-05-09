@@ -36,3 +36,12 @@ remBackend.factory('masterResetPassword', ['$resource',
   function ($resource) {
         return $resource('/api/masterResetPassword');
 }]);
+
+remBackend.factory('compareService', ['$resource',
+  function ($resource) {
+        return $resource('/api/compareService', {}, {
+            "compare": {
+                method: 'POST'
+            }
+        });
+}]);
