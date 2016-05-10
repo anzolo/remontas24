@@ -224,8 +224,8 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     function showInvoiceForm() {
         ModalService.showModal({
-            templateUrl: "/remontas/public/templates/modals/invoiceForm.html",
-            controller: "invoiceFormController"
+            templateUrl: "/remontas/public/templates/modals/orderForm.html",
+            controller: "orderFormController"
         });
     }
 

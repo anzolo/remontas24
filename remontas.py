@@ -157,61 +157,73 @@ def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()
 
 # получение категорий для формы заявки
-@route('/api/invoiceService')
-def rem_getGategoriesForInvoice():
+@route('/api/ordersService')
+def rem_getGategoriesForOrder():
     result = list(conf.db.category_job.find({"type":"category"}).sort("order",-1))
 
     return common.JSONEncoder().encode(result)
 
 
-# API ремонтаса. сервис сравнения мастеров
-@route('/api/invoiceService', method='POST')
-def rem_sendInvoice():
+# API ремонтаса. сервис для обработки новой заявки на подбор мастера
+@route('/api/ordersService', method='POST')
+def rem_sendOrder():
     result = {"status": "OK"}
 
     try:
         form = request.json
 
-        newInvoice = dict()
+        newOrder = dict()
 
-        newInvoice["status"] = "new"
-        newInvoice["when"] = datetime.datetime.now()
-        newInvoice["invoice"] = dict()
+        newOrder["status"] = "new"
+        newOrder["when"] = datetime.datetime.now()
+        newOrder["order"] = dict()
         if len(form["email"]) > 0:
-            newInvoice["invoice"]["email"] = form["email"]
+            newOrder["order"]["email"] = form["email"]
         else:
-            newInvoice["invoice"]["phone"] = form["phone"]
-        newInvoice["invoice"]["comment"] = form["comment"]
-        newInvoice["invoice"]["category"] = form["selectedCategory"]
+            newOrder["order"]["phone"] = form["phone"]
+        newOrder["order"]["comment"] = form["comment"]
+        newOrder["order"]["category"] = form["selectedCategory"]
 
-        conf.db.invoices.insert_one(newInvoice)
+        conf.db.orders.insert_one(newOrder)
 
         siteURL = request.urlparts[0] + "://" + request.urlparts[1]
 
         if len(form["email"]) > 0:
             # отправляем уведомление заказчику
 
-            messageText = conf.messageInvoiceSuccessEmailText.format(siteURL=siteURL)
-            messageHTML = conf.messageInvoiceSuccessEmailHTML.format(siteURL=siteURL)
+            messageText = conf.messageOrdersSuccessEmailText.format(siteURL=siteURL)
+            messageHTML = conf.messageOrdersSuccessEmailHTML.format(siteURL=siteURL)
 
             subject = "Заявка на подбор мастера успешно получена сервисом remontas24.ru"
 
             common.sendMail(form["email"], subject, messageText, messageHTML)
 
         # отправляем уведомление администратору
-        # messageText = conf.messageInvoiceSuccessEmailText.format(name=master["name"], siteURL=siteURL)
-        # messageHTML = conf.messageInvoiceSuccessEmailHTML.format(name=master["name"], siteURL=siteURL)
-        #
-        # subject = "Доступно заполнение портфолио в remontas24.ru"
-        #
-        # common.sendMail(masterUser["login"], subject, messageText, messageHTML)
+
+        sendTo = conf.db.options.find_one({"option":"adminsEmailsNotification"})
+
+        if sendTo is not None:
+
+            adminkaURL = request.urlparts[0] + "://" + request.urlparts[1] + "/adminka"
+
+            if len(form["email"]) > 0:
+                contacts = form["email"]
+            else:
+                contacts = form["phone"]
+
+            messageText = conf.messageOrdersNotifyAdminsEmailText.format(category=form["selectedCategory"]["name"], comment=form["comment"], contacts = contacts, adminkaURL = adminkaURL, siteURL=siteURL)
+            messageHTML = conf.messageOrdersNotifyAdminsEmailHTML.format(category=form["selectedCategory"]["name"], comment=form["comment"], contacts = contacts, adminkaURL = adminkaURL, siteURL=siteURL)
+
+            subject = "Новая заявка на подбор мастера!"
+
+            common.sendMail(sendTo["value"], subject, messageText, messageHTML)
 
         return result
     except Exception as e:
         result["status"] = "Error"
         result["note"] = str(e)
         print("Error: " + str(e))
-        common.writeToLog("error", "rem_sendInvoice: " + str(e))
+        common.writeToLog("error", "rem_sendOrder: " + str(e))
 
 # API ремонтаса. получение данных для личного кабинета
 @route('/api/lk')

@@ -965,6 +965,10 @@ h2.master-counter span {
     background: #ececec;
 }
 
+#order .info-text {
+    padding-top: 20px;
+}
+
 #forget {
     /*    display: none;*/
     position: relative;

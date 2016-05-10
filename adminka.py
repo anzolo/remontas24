@@ -509,6 +509,12 @@ def generateTestMasters(count):
     except Exception as e:
         print(e)
 
+
+@route ('/api/adminka/ordersService')
+def adm_getOrders():
+    result = list(conf.db.orders.find().sort("when",-1))
+    return common.JSONEncoder().encode(result)
+
 # удаление мастера
 def deleteMaster(id):
     result = dict()
