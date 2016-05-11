@@ -12,7 +12,12 @@
                             <div><a href="#">Различающиеся</a></div>
                         </div>
 
-                        <div ng-repeat="element in model.categories" ng-class="{marked:element.type=='service'}" data-param>{{element.name}}</div>
+
+                        <div ng-repeat="element in model.categories">
+                            <div ng-if="element.type=='service'" class="marked">{{element.name}}</div>
+                            <div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index)}" ng-attr-data-param="{{'param-' + $index}}" ng-click="checkJob($event)">{{element.name}}</div>
+                        </div>
+                        <!--                        <div ng-repeat="element in model.categories" ng-class="{marked:element.type=='service'}" data-param>{{element.name}}</div>-->
                         <!--
                         <div class="marked">Ремонтно-отделочные работы</div>
 <div data-param="param-1">Укладка плитки</div>
@@ -94,222 +99,6 @@
 												<div data-param="param-14">320 руб/м</div>
 											</div>
 										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
-										<li>
-											<div class="item">
-												<div class="name">Виталий</div>
-												<div class="photo">
-													<div class="favorite"></div>
-													<img src="assets/img/img-master-1.jpg" width="80" height="80">
-												</div>
-												<div class="phone">+7 909 786 43 98</div>
-												<div class="delimiter" style="margin-top: 27px"></div>
-												<div data-param="param-1">320 руб/м<sup>2</sup></div>
-												<div data-param="param-2">320 руб/м<sup>2</sup></div>
-												<div data-param="param-3">320 руб/м<sup>2</sup></div>
-												<div data-param="param-4">320 руб/м<sup>2</sup></div>
-												<div data-param="param-5">да</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-6">320 руб/м<sup>2</sup></div>
-												<div data-param="param-7">320 руб/м<sup>2</sup></div>
-												<div data-param="param-8">500 руб</div>
-												<div data-param="param-9">320 руб/м<sup>2</sup></div>
-												<div data-param="param-10">1500 руб</div>
-												<div class="delimiter" style="margin-top: 16px"></div>
-												<div data-param="param-11">320 руб/м</div>
-												<div data-param="param-12">320 руб/шт</div>
-												<div data-param="param-13">320 руб/шт</div>
-												<div data-param="param-14">320 руб/м</div>
-											</div>
-										</li>
 									</ul>
 								</li>
 							</ul>
@@ -325,13 +114,20 @@
 
                     <div class="masters clearfix">
                         <div class="inner">
-                            <div class="item">
-                                <div class="name">Виталий</div>
+                            <div class="item" ng-repeat="master in model.masters">
+                                <div class="name">{{master.name}}</div>
                                 <div class="photo">
                                     <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
+                                    <img ng-src="{{model.configUrl.img_url_path + master.avatar}}" width="80" height="80">
                                 </div>
-                                <div class="phone">+7 909 786 43 98</div>
+                                <div class="phone">{{showPhone(master.phone)}}</div>
+
+                                <div ng-repeat="element in model.categories">
+                                    <div ng-if="element.type=='service'" class="delimiter"></div>
+                                    <div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index)}" ng-attr-data-param="{{'param-' + $index}}" ng-bind-html="prepareHTML(showPrice(element, $index, master))"></div>
+                                </div>
+
+                                <!--
                                 <div class="delimiter" style="margin-top: 27px"></div>
                                 <div data-param="param-1">320 руб/м<sup>2</sup></div>
                                 <div data-param="param-2">320 руб/м<sup>2</sup></div>
@@ -349,207 +145,10 @@
                                 <div data-param="param-12">320 руб/шт</div>
                                 <div data-param="param-13">320 руб/шт</div>
                                 <div data-param="param-14">320 руб/м</div>
+-->
                             </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite active"></div>
-                                    <img src="assets/img/img-master-nophoto.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
-                            <div class="item">
-                                <div class="name">Виталий</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img src="assets/img/img-master-1.jpg" width="80" height="80">
-                                </div>
-                                <div class="phone">+7 909 786 43 98</div>
-                                <div class="delimiter" style="margin-top: 27px"></div>
-                                <div data-param="param-1">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-2">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-3">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-4">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-5">да</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-6">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-7">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-8">500 руб</div>
-                                <div data-param="param-9">320 руб/м<sup>2</sup></div>
-                                <div data-param="param-10">1500 руб</div>
-                                <div class="delimiter" style="margin-top: 16px"></div>
-                                <div data-param="param-11">320 руб/м</div>
-                                <div data-param="param-12">320 руб/шт</div>
-                                <div data-param="param-13">320 руб/шт</div>
-                                <div data-param="param-14">320 руб/м</div>
-                            </div>
+
+
                         </div>
                     </div>
 

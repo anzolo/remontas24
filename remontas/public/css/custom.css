@@ -1508,7 +1508,8 @@ h2.master-counter span {
 
 .page .comparison .params [data-param].active,
 .page .comparison .masters [data-param].active {
-    background: #fff9c7;
+    /*    background: #fff9c7;*/
+    background: red;
 }
 
 .page .comparison .params .marked {
@@ -1519,9 +1520,10 @@ h2.master-counter span {
 
 .page .comparison .masters {
     width: 938px;
-    height: 810px;
+    /*    height: 810px;*/
     position: relative;
-    overflow: hidden;
+    overflow: auto;
+    /*    overflow: hidden;*/
 }
 
 .page .comparison .masters .inner {
