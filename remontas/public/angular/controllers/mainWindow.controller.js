@@ -43,6 +43,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.getFavoritesCount = getFavoritesCount;
     $scope.masterInFavorites = masterInFavorites;
     $scope.showInvoiceForm = showInvoiceForm;
+    $scope.addToFavorites = addToFavorites;
 
     loadMasters(1);
 
@@ -82,6 +83,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.searchBox.current_page = data.current_page;
             $scope.model.searchBox.loadMasters = $scope.loadMasters;
             $scope.model.searchBox.masterInFavorites = $scope.masterInFavorites;
+            $scope.model.searchBox.addToFavorites = $scope.addToFavorites;
 
             $scope.model.additionalServicesDict = JSON.parse(JSON.stringify(data.additionalServicesDict));
 
@@ -228,5 +230,9 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             controller: "orderFormController"
         });
     }
+
+    function addToFavorites(id) {
+        Session.addToFavourites(id);
+    };
 
 }]);

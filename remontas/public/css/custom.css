@@ -1097,10 +1097,12 @@ h2.master-counter span {
 
 .about-extra .comparePlus {
     background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
+    cursor: pointer;
 }
 
 .about-extra .compareMinus {
     background: transparent url('../img/icon-heart-grey.png') no-repeat left center;
+    cursor: pointer;
 }
 
 .about-extra .portfolio {
