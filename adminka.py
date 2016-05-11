@@ -359,6 +359,8 @@ def adm_runOperation():
     else:
         return abort(401, "Sorry, access denied.")
 
+
+
 def generateTestMasters(count):
     try:
         for i in range(count):
@@ -514,6 +516,16 @@ def generateTestMasters(count):
 def adm_getOrders():
     result = list(conf.db.orders.find().sort("when",-1))
     return common.JSONEncoder().encode(result)
+
+@route ('/api/adminka/options')
+def adm_getOptions():
+    result = list(conf.db.options.find().sort("option",-1))
+    return common.JSONEncoder().encode(result)
+
+@route ('/api/adminka/options', method='POST')
+def adm_setOption():
+    conf.db.options.replace_one({"_id":ObjectId(request.json["_id"])},{"option":request.json["option"],"value":request.json["value"]})
+
 
 # удаление мастера
 def deleteMaster(id):

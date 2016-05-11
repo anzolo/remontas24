@@ -60,6 +60,19 @@ remBackend.factory('category', ['$resource',
         });
                 }]);
 
+remBackend.factory('options', ['$resource',
+  function ($resource) {
+        return $resource('/api/adminka/options', {}, {
+            "getAll": {
+                method: 'GET',
+                isArray: true,
+                params: {
+                    method: "getAll"
+                }
+            }
+        });
+                }]);
+
 remBackend.factory('ordersService', ['$resource',
   function ($resource) {
         return $resource('/api/adminka/ordersService', {}, {

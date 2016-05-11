@@ -124,7 +124,7 @@ def sendMail(toAddress, subj, msg_text, msg_html):
         message = MIMEMultipart('alternative')
         message['From'] = conf.fromAddress
         message['To'] = toAddress
-        #message['Cc'] = 'Receiver2 Name <receiver2@server>'
+        #message['Cc'] = copyAddress
         message['Subject'] = subj
 
         # Record the MIME types of both parts - text/plain and text/html.
@@ -139,11 +139,13 @@ def sendMail(toAddress, subj, msg_text, msg_html):
 
         final_message = message.as_string()
 
+        toAddressList = toAddress.split(",")
+
         server = smtplib.SMTP_SSL(conf.smtp_server, conf.smtp_port)
         # server.starttls()
         server.login(conf.mailLogin, conf.mailPassword)
         server.sendmail(conf.mailLogin,
-                        [toAddress],
+                        toAddressList,
                         final_message)
         server.quit()
 

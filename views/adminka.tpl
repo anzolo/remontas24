@@ -78,6 +78,7 @@
     <script src="/adminka/public/app/controllers/usersMasters.controller.js"></script>
     <script src="/adminka/public/app/controllers/operations.controller.js"></script>
     <script src="/adminka/public/app/controllers/orders.controller.js"></script>
+    <script src="/adminka/public/app/controllers/options.controller.js"></script>
 
     <!--  Angular services  -->
     <script src="/adminka/public/app/services/AuthServices.js"></script>
