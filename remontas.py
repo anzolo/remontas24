@@ -148,6 +148,9 @@ def rem_compareMasters():
     result["categories"] = categories
     result["masters"] = masters
 
+    # рассчитываем средние цены
+
+
 
     # a = set({"n":1})
 

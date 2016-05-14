@@ -76,6 +76,10 @@ body,
     padding-bottom: 10px;
 }
 
+.agreement-center {
+    text-align: center;
+}
+
 .footer {
     height: 110px;
     margin-top: 30px;
@@ -1433,13 +1437,14 @@ h2.master-counter span {
 
 .agreement {
     font-weight: 300;
-    background: transparent url('../img/bg-agreement.jpg') no-repeat center;
+    background: transparent url('../img/bg-agreement-1850.jpg') no-repeat center;
     width: 1180px;
-    height: 1070px;
+    /*    height: 1070px;*/
     padding: 0 110px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    display: inline-block;
 }
 
 .agreement .bold {
