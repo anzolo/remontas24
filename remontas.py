@@ -7,7 +7,8 @@ import conf
 import os
 import json
 import math
-import datetime
+from datetime import datetime, timedelta
+import numpy as np
 
 
 # Ремонтас. По маршруту возвращается шаблон
@@ -149,12 +150,86 @@ def rem_compareMasters():
     result["masters"] = masters
 
     # рассчитываем средние цены
-
-
-
-    # a = set({"n":1})
+    result["averagePrices"] = calcAveragePrices()
 
     return common.JSONEncoder().encode(result)
+
+def calcAveragePrices():
+    lastCalc = conf.db.averagePrices.find_one({"$query": {}, "$orderby": {"when" : -1}})
+
+    if lastCalc is not None:
+
+        one_day = timedelta(days=1)
+        deltaMoment = datetime.now() - lastCalc["when"]
+
+        if deltaMoment<one_day:
+            return lastCalc
+
+
+    # print("Calc average prices")
+
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}]}
+
+    servicesPrices = dict()
+
+    masters = list(conf.db.masters.find(query))
+
+    for master in masters:
+        for category in master["categories"]:
+            for kindService in category["kind_services"]:
+                for service in kindService["services"]:
+                    if service["price"]>0:
+                        if servicesPrices.get(service["_id"],None) is not None:
+                            servicesPrices[service["_id"]] = np.append(servicesPrices[service["_id"]], [service["price"]])
+                        else:
+                            newService = {service["_id"]:np.array([service["price"]])}
+                            servicesPrices.update(newService)
+
+    newAveragePricesCalc = dict()
+    newAveragePricesCalc["when"] = datetime.now()
+    newAveragePricesCalc["prices"] = dict()
+
+    for service in servicesPrices:
+
+        newPrice = {service:np.median(servicesPrices[service])}
+
+        newAveragePricesCalc["prices"].update(newPrice)
+
+
+        # print(np.sort(servicesPrices[service]))
+        # print("Минимум = ", np.amin(servicesPrices[service]))
+        # print("Максимум = ", np.amax(servicesPrices[service]))
+        # print("Медиана = ", np.median(servicesPrices[service]))
+        # print("Среднее арифметическое = ", np.average(servicesPrices[service]))
+        #
+        # max_value = np.amax(servicesPrices[service])
+        # min_value = np.amin(servicesPrices[service])
+        #
+        # step = (max_value-min_value)/5
+        #
+        # print("step = ",str(step))
+        #
+        # statList = [0,0,0,0,0]
+        #
+        # for i in range(0,4):
+        #     left_edge = min_value + step*i
+        #     right_edge = left_edge + step
+        #
+        #     statList[i] = 0
+        #
+        #     for x in np.nditer(servicesPrices[service]):
+        #         if x>=left_edge and x<=right_edge:
+        #             statList[i]=statList[i]+1
+        #
+        #     print("left={left}, right={right}, count={count}".format(left=str(left_edge),right=right_edge, count=str(statList[i])))
+        #
+        # print("--------------------------------------------------------------------------------------------------------")
+
+    conf.db.averagePrices.insert_one(newAveragePricesCalc)
+
+    return newAveragePricesCalc
+
+
 
 def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()
