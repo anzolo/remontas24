@@ -165,6 +165,10 @@ body,
     box-sizing: border-box;
 }
 
+.header .top-menu > li.dropdown .lk {
+    left: -30px;
+}
+
 .header .top-menu > li.dropdown ul.active {
     display: block;
 }
