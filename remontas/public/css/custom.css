@@ -640,11 +640,11 @@ h2.master-counter span {
 
 /*
 #modal > div {
-    display: none;
+display: none;
 }
 
 #modal > div.active {
-    display: block;
+display: block;
 }
 */
 
@@ -714,15 +714,15 @@ h2.master-counter span {
 
 /*
 #auth-tabs > .tabs-content input {
-	display: block;
-	width: 330px;
-	border: 0;
-	border-radius: 2px;
-	padding: 15px 20px;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 14px;
+display: block;
+width: 330px;
+border: 0;
+border-radius: 2px;
+padding: 15px 20px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+font-size: 14px;
 }
 */
 
@@ -832,12 +832,12 @@ h2.master-counter span {
     height: 44px;
     cursor: pointer;
     /*
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-	-ms-transition: all 0.5s;
-	-o-transition: all 0.5s;
-	transition: all 0.5s;
-	*/
+-webkit-transition: all 0.5s;
+-moz-transition: all 0.5s;
+-ms-transition: all 0.5s;
+-o-transition: all 0.5s;
+transition: all 0.5s;
+*/
 }
 
 #order-btn:hover {
@@ -1095,7 +1095,7 @@ h2.master-counter span {
 
 /*
 .about-extra .compare {
-    background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
+background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
 }
 */
 
@@ -1211,7 +1211,8 @@ h2.master-counter span {
     /*    background: #FFFFBA;*/
     /*    background: #FFFFCC;*/
     /*    background: #FDFEEE;*/
-    background: lemonchiffon;
+    /*    background: lemonchiffon;*/
+    background: #fff9c7;
     /*    background: lightgoldenrodyellow;*/
     /*    background: lightyellow;*/
 }
@@ -1219,12 +1220,12 @@ h2.master-counter span {
 
 /*
 .service-list table tr:not(.footer_table):hover {
-    background: #ff5c0f url('../img/icon-delete-word-white.png') no-repeat 125px center;
-    cursor: pointer;
+background: #ff5c0f url('../img/icon-delete-word-white.png') no-repeat 125px center;
+cursor: pointer;
 }
 
 .service-list table tr:not(.footer_table):hover * {
-    opacity: 0;
+opacity: 0;
 }
 */
 
@@ -1474,60 +1475,107 @@ h2.master-counter span {
 }
 
 .page .comparison .params {
-    width: 240px;
+    display: table;
+    width: 288px;
+    /*    width: 240px;*/
+    /*    border-collapse: collapse;*/
 }
 
+.page .comparison .params .caption {
+    display: table-caption;
+}
+
+
+/*
 .page .comparison .params .counter {
-    padding-left: 25px;
+padding-left: 25px;
 }
+*/
 
+
+/*
 .page .comparison .params .params-filter {
-    margin: 55px 0 65px 0;
-    font-size: 16px;
+margin: 55px 0 65px 0;
+font-size: 16px;
 }
+*/
 
+
+/*
 .page .comparison .params .params-filter div {
-    padding-left: 25px;
+padding-left: 25px;
 }
+*/
 
+
+/*
 .page .comparison .params .params-filter .active {
-    color: #909090;
-    background: transparent url('../img/icon-checkbox.png') no-repeat 5px center;
+color: #909090;
+background: transparent url('../img/icon-checkbox.png') no-repeat 5px center;
 }
+*/
 
+
+/*
 .page .comparison .params .params-filter a {
-    color: #ff5c0f;
-    text-decoration: underline;
+color: #ff5c0f;
+text-decoration: underline;
+}
+*/
+
+.page .comparison .params .job {
+    display: table-row;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    /*    border: 1px solid blue;*/
 }
 
-.page .comparison .params [data-param] {
-    padding: 8px 0 8px 25px;
+.page .comparison .params .job > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.page .comparison .params .mouseOver,
+.page .comparison .masters .mouseOver {
+    /*    background: #fff;*/
+    background: #fff9c7;
+}
+
+.page .comparison .params .mouseOverPos {
+    position: absolute;
+}
+
+.page .comparison .params .marked {
+    padding: 2px 0px 2px 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.page .comparison .params .job-name {
+    padding: 2px 0px 2px 25px;
     font-weight: 300;
     cursor: pointer;
+    width: 263px;
 }
 
 .page .comparison .masters [data-param] {
     padding: 9px 0 8px 25px;
     cursor: pointer;
+    height: 23px;
 }
 
-.page .comparison .params [data-param].active,
-.page .comparison .masters [data-param].active {
-    /*    background: #fff9c7;*/
-    background: red;
-}
-
-.page .comparison .params .marked {
-    padding: 8px 0 8px 15px;
-    font-size: 13px;
-    font-weight: 500;
+.page .comparison .params .active,
+.page .comparison .masters .active {
+    background: #ffffba;
 }
 
 .page .comparison .masters {
-    width: 938px;
-    /*    height: 810px;*/
+    width: 890px;
     position: relative;
     overflow: auto;
+    /*    width: 938px;*/
+    /*    height: 810px;*/
     /*    overflow: hidden;*/
 }
 
@@ -1544,50 +1592,71 @@ h2.master-counter span {
     box-sizing: border-box;
 }
 
+
+/*
 .page .comparison .masters .item > div {
-    padding-left: 20px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+padding-left: 20px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
 }
+*/
 
+
+/*
 .page .comparison .masters .delimiter {
-    margin: 25px 0 16px;
+margin: 25px 0 16px;
 }
+*/
 
+
+/*
 .page .comparison .masters .name {
-    margin-bottom: 20px;
+margin-bottom: 20px;
 }
+*/
 
+
+/*
 .page .comparison .masters .photo {
-    border: 1px solid #ebebeb;
-    width: 92px;
-    height: 92px;
-    margin-left: 20px;
-    padding: 5px !important;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: relative;
+border: 1px solid #ebebeb;
+width: 92px;
+height: 92px;
+margin-left: 20px;
+padding: 5px !important;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+position: relative;
 }
+*/
 
+
+/*
 .page .comparison .masters .favoritePlus {
-    position: absolute;
-    background: transparent url('../img/icon-heart-plus.png') no-repeat;
-    width: 30px;
-    height: 27px;
-    right: -15px;
-    top: -5px;
-    cursor: pointer;
+position: absolute;
+background: transparent url('../img/icon-heart-plus.png') no-repeat;
+width: 30px;
+height: 27px;
+right: -15px;
+top: -5px;
+cursor: pointer;
 }
+*/
 
+
+/*
 .page .comparison .masters .favoriteMinus {
-    background: transparent url('../img/icon-heart-grey.png') no-repeat;
+background: transparent url('../img/icon-heart-grey.png') no-repeat;
 }
+*/
 
+
+/*
 .page .comparison .masters .phone {
-    margin: 20px 0;
+margin: 20px 0;
 }
+*/
 
 .nicescroll-cursors {
     background-image: url('../img/scroll-lines.png');
@@ -2324,7 +2393,7 @@ h2.master-counter span {
 
 /*
 #add-service .item:last-of-type {
-    margin-bottom: 30px;
+margin-bottom: 30px;
 }
 */
 

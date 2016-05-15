@@ -5,8 +5,7 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     $scope.showPhone = showPhone;
     $scope.prepareHTML = prepareHTML;
     $scope.showPrice = showPrice;
-    $scope.checkJob = checkJob;
-    $scope.checkedJob = checkedJob;
+    $scope.showServiceText = showServiceText;
 
     compareService.compare({
         "masters": Session.favourites()
@@ -14,7 +13,9 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
         $scope.model.configUrl = JSON.parse(JSON.stringify(data.configUrl));
         $scope.model.masters = JSON.parse(JSON.stringify(data.masters));
         $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
+        shrinkServiceText();
         $scope.model.checked = "";
+        $scope.model.mouseOver = "";
     })
 
     function showPhone(phone) {
@@ -33,12 +34,19 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
         return $sce.trustAsHtml(element);
     };
 
-    function checkJob(event) {
-        //        console.log(event.target.attributes['data-param'].value)
-        $scope.model.checked = event.target.attributes['data-param'].value;
-    }
+    function shrinkServiceText() {
+        $scope.model.categories.forEach(function (service, i, arr) {
+            if (service.type == 'job') {
+                if (service.name.length > 67) service.shortName = service.name.substring(0, 66) + "..."
+            }
+        });
+    };
 
-    function checkedJob(event) {
-        return $scope.model.checked == event;
+    function showServiceText(service) {
+        if ($scope.model.mouseOver == service._id) return service.name
+
+        if (service.shortName == undefined) return service.name
+        else return service.shortName
+
     }
 }]);

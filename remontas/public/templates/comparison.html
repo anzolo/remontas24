@@ -6,16 +6,20 @@
                 <div class="corner"></div>
                 <div class="comparison clearfix">
                     <div class="params">
-                        <div class="counter">14 мастеров</div>
-                        <div class="params-filter">
-                            <div class="active">Все цены</div>
-                            <div><a href="#">Различающиеся</a></div>
+                        <div class="caption">
+                            <div class="counter">14 мастеров</div>
+                            <div class="params-filter">
+                                <div class="active">Все цены</div>
+                                <div><a href="#">Различающиеся</a></div>
+                            </div>
                         </div>
 
-
-                        <div ng-repeat="element in model.categories">
-                            <div ng-if="element.type=='service'" class="marked">{{element.name}}</div>
-                            <div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index)}" ng-attr-data-param="{{'param-' + $index}}" ng-click="checkJob($event)">{{element.name}}</div>
+                        <div class="job" ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
+                            <div class="marked" ng-if="element.type=='service'">{{element.name}}</div>
+                            <div class="job-name" ng-class="{active:model.checked==element._id,mouseOver:element.type=='job' && model.mouseOver==element._id, mouseOverPos:element.shortName != undefined}" ng-if="element.type=='job'" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>
+                            <!--                            <div class="job-name mouseOver" ng-if="element.type=='job' && model.mouseOver == element._id && element.shortName == undefined" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>-->
+                            <!--                            <div class="job-name mouseOver mouseOverPos" ng-if="element.type=='job' && model.mouseOver == element._id && element.shortName != undefined" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>-->
+                            <!--<div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index), mouseOver:model.mouseOver == element._id}" ng-attr-data-param="{{'param-' + $index}}" ng-click="checkJob($event)">{{element.name}}</div>-->
                         </div>
                         <!--                        <div ng-repeat="element in model.categories" ng-class="{marked:element.type=='service'}" data-param>{{element.name}}</div>-->
                         <!--
@@ -122,9 +126,9 @@
                                 </div>
                                 <div class="phone">{{showPhone(master.phone)}}</div>
 
-                                <div ng-repeat="element in model.categories">
+                                <div ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
                                     <div ng-if="element.type=='service'" class="delimiter"></div>
-                                    <div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index)}" ng-attr-data-param="{{'param-' + $index}}" ng-bind-html="prepareHTML(showPrice(element, $index, master))"></div>
+                                    <div ng-if="element.type=='job'" ng-class="{active:model.checked == element._id, mouseOver:model.mouseOver==element._id}" ng-click="model.checked = element._id" ng-attr-data-param="{{'param-' + $index}}" ng-bind-html="prepareHTML(showPrice(element, $index, master))"></div>
                                 </div>
 
                                 <!--
