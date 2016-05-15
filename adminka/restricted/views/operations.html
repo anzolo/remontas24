@@ -5,4 +5,12 @@
     <br/>
     <button type="submit" class="btn btn-danger" ng-click="runOperation('generateTestMasters')" ng-disabled="!model.deleteConfirm">Сгенерировать тестовых мастеров 2000шт.</button>
 
+    <br/>
+
+    <label>Я понимаю, что делаю
+        <input type="checkbox" ng-model="model.clearDBConfirm">
+    </label>
+    <br/>
+    <button type="submit" class="btn btn-danger" ng-click="runOperation('clearDB')" ng-disabled="!model.clearDBConfirm">Очистить сгенерированные данные</button>
+
 </div>

@@ -7,13 +7,26 @@ import conf
 import os
 import json
 import math
-import datetime
+import bson
+from datetime import datetime, timedelta
+import numpy as np
 
 
-# Ремонтас. По маршруту возвращается шаблон
+# Ремонтас. Станлартный шаблон на все url, для Angular-JS
+@route('/lk')
+@route('/compare')
+@route('/about')
+@route('/how_works')
+@route('/agreement')
 @route('/')
 def index():
     return template('remontas')
+
+@route('/master/<id>')
+def index2(id):
+    return template('remontas')
+
+
 
 
 # Ремонтас. возврат файлов с учетом прав доступа
@@ -80,7 +93,8 @@ def rem_doSearchMasters():
         bufMaster = {"_id": master["_id"],
                      "name": master["name"],
                      "avatar": master["avatar"],
-                     "count_works": len(master["works"])}
+                     "count_works": len(master["works"]),
+                     "alias_id": master.get("alias_id", "")}
         result["masters"].append(bufMaster)
 
     result["categories"] = list(conf.db.category_job.find())
@@ -102,17 +116,17 @@ def rem_compareMasters():
     for el in request.json["masters"]:
         mastersList.append(ObjectId(el))
 
-    query = dict()
+    # query = dict()
 
-    query["_id"] = {'$in': mastersList}
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}, {"_id":{'$in': mastersList}}]}
 
     resultMasters = conf.db.masters.find(query)
 
     for master in resultMasters:
-        newMaster=dict()
+        newMaster = dict()
         newMaster["_id"] = master["_id"]
         newMaster["name"] = master["name"]
-        if master["phone1"]!="":
+        if master["phone1"] != "":
             newMaster["phone"] = master["phone1"]
         else:
             newMaster["phone"] = master["phone2"]
@@ -149,12 +163,84 @@ def rem_compareMasters():
     result["masters"] = masters
 
     # рассчитываем средние цены
-
-
-
-    # a = set({"n":1})
+    result["averagePrices"] = calcAveragePrices()
 
     return common.JSONEncoder().encode(result)
+
+def calcAveragePrices():
+    lastCalc = conf.db.averagePrices.find_one({"$query": {}, "$orderby": {"when" : -1}})
+
+    if lastCalc is not None:
+
+        one_day = timedelta(days=1)
+        deltaMoment = datetime.now() - lastCalc["when"]
+
+        if deltaMoment<one_day:
+            return lastCalc
+
+
+    # print("Calc average prices")
+
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}]}
+
+    servicesPrices = dict()
+
+    masters = list(conf.db.masters.find(query))
+
+    for master in masters:
+        for category in master["categories"]:
+            for kindService in category["kind_services"]:
+                for service in kindService["services"]:
+                    if service["price"]>0:
+                        if servicesPrices.get(service["_id"],None) is not None:
+                            servicesPrices[service["_id"]] = np.append(servicesPrices[service["_id"]], [service["price"]])
+                        else:
+                            newService = {service["_id"]:np.array([service["price"]])}
+                            servicesPrices.update(newService)
+
+    newAveragePricesCalc = dict()
+    newAveragePricesCalc["when"] = datetime.now()
+    newAveragePricesCalc["prices"] = dict()
+
+    for service in servicesPrices:
+
+        newPrice = {service:np.median(servicesPrices[service])}
+
+        newAveragePricesCalc["prices"].update(newPrice)
+
+
+        # print(np.sort(servicesPrices[service]))
+        # print("Минимум = ", np.amin(servicesPrices[service]))
+        # print("Максимум = ", np.amax(servicesPrices[service]))
+        # print("Медиана = ", np.median(servicesPrices[service]))
+        # print("Среднее арифметическое = ", np.average(servicesPrices[service]))
+        #
+        # max_value = np.amax(servicesPrices[service])
+        # min_value = np.amin(servicesPrices[service])
+        #
+        # step = (max_value-min_value)/5
+        #
+        # print("step = ",str(step))
+        #
+        # statList = [0,0,0,0,0]
+        #
+        # for i in range(0,4):
+        #     left_edge = min_value + step*i
+        #     right_edge = left_edge + step
+        #
+        #     statList[i] = 0
+        #
+        #     for x in np.nditer(servicesPrices[service]):
+        #         if x>=left_edge and x<=right_edge:
+        #             statList[i]=statList[i]+1
+        #
+        #     print("left={left}, right={right}, count={count}".format(left=str(left_edge),right=right_edge, count=str(statList[i])))
+        #
+        # print("--------------------------------------------------------------------------------------------------------")
+
+    conf.db.averagePrices.insert_one(newAveragePricesCalc)
+
+    return newAveragePricesCalc
 
 def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()
@@ -292,6 +378,8 @@ def rem_lkSaveData():
                     newMaster["sername"] = oldMaster["sername"]
                 if "patronymic" in newMaster and "patronymic" in oldMaster:
                     newMaster["patronymic"] = oldMaster["patronymic"]
+                if "alias_id" in newMaster and "alias_id" in oldMaster:
+                    newMaster["alias_id"] = oldMaster["alias_id"]
 
                 avatarFile = request.files.get("avatar")
 
@@ -337,7 +425,13 @@ def rem_masterGetData(masterId):
     result = dict()
 
     try:
-        master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
+        if not bson.objectid.ObjectId.is_valid(masterId):
+            master = conf.db.masters.find_one({"alias_id": masterId})
+            if master is None:
+                raise ValueError('{masterId} is not wrong ObjectId or alias_id'.format(masterId=repr(masterId)))
+        else:
+            master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
+
         if master is not None:
 
 
@@ -395,8 +489,6 @@ def clearMasterFromBadData(master):
         master["categories"].remove(category)
 
     return master
-
-
 
 @route('/api/masterRegister', method='POST')
 def rem_registerMaster():
@@ -466,7 +558,6 @@ def rem_registerMaster():
         common.writeToLog("error", "rem_registerMaster: " + str(e))
         return common.JSONEncoder().encode(result)
 
-
 def createMaster(regParams, result):
     try:
 
@@ -511,7 +602,6 @@ def createMaster(regParams, result):
         result["description"] = "Непредвиденная ошибка: " + str(e)
         common.writeToLog("error", "createMaster: " + str(e))
         return None
-
 
 @route('/api/verifyMail/<code>', name="verifyMail")
 def rem_checkEmailCode(code):

@@ -1,9 +1,10 @@
-remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', 'category', function ($scope, masters, $state, Upload, $stateParams, category) {
+remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Upload', '$stateParams', 'category', function($scope, masters, $state, Upload, $stateParams, category) {
     $scope.model = {
         deleteConfirm: false
     };
 
     $scope.master = {
+        alias_id: "",
         name: "",
         sername: "",
         patronymic: "",
@@ -28,7 +29,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     function deleteMaster() {
         masters.deleteMaster({
             id_to_delete: $stateParams.id
-        }, function (data) {
+        }, function(data) {
             if (data.status == "OK") {
                 console.log("Мастер успешно удален");
 
@@ -57,10 +58,10 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     //    var masterID = $stateParams.id;
 
-    $scope.loadMaster = function () {
+    $scope.loadMaster = function() {
         masters.get({
             id: $stateParams.id
-        }, function (data) {
+        }, function(data) {
             if (data.status == "OK") {
                 $scope.master = JSON.parse(JSON.stringify(data.master));
 
@@ -84,12 +85,12 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
     if ($stateParams.id != undefined) $scope.loadMaster()
     else $scope.categories = category.getAll();
 
-    $scope.cancel = function () {
+    $scope.cancel = function() {
         $state.go('adminka.masters');
         //        console.log("$scope.master.avatar = ", $scope.master.avatar);
     }
 
-    $scope.saveMaster = function () {
+    $scope.saveMaster = function() {
 
         var connString = '/api/adminka/masters';
 
@@ -100,45 +101,51 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
             url: connString,
             data: $scope.formData.uploadData
 
-        }).then(function (resp) {
-            console.log('Success uploaded. Response: ' + resp.data);
-            $scope.saveStatus.show = true;
-            $scope.saveStatus.success = true;
-            $scope.saveStatus.text = "Мастер успешно сохранен: " + resp.data.note;
+        }).then(function(resp) {
+                console.log(resp);
+                if (resp.data.status == "OK") {
+                    $scope.saveStatus.show = true;
+                    $scope.saveStatus.success = true;
+                    $scope.saveStatus.text = "Мастер успешно сохранен: " + resp.data.note;
 
-            if (resp.data.new_id != undefined) $stateParams.id = resp.data.new_id;
-
-            $scope.loadMaster();
-        }, function (resp) {
-            console.log('Error status: ' + resp.status);
-            $scope.saveStatus.show = true;
-            $scope.saveStatus.success = false;
-            $scope.saveStatus.text = "При сохранении мастера произошла ошибка: " + resp.status;
-        });
+                    if (resp.data.new_id != undefined) $stateParams.id = resp.data.new_id;
+                } else if (resp.data.status == "Error") {
+                    $scope.saveStatus.show = true;
+                    $scope.saveStatus.success = false;
+                    $scope.saveStatus.text = "При сохранении мастера произошла ошибка: " + resp.data.note;
+                }
+                $scope.loadMaster();
+            },
+            function(resp) {
+                console.log('Error status: ' + resp.status);
+                $scope.saveStatus.show = true;
+                $scope.saveStatus.success = false;
+                $scope.saveStatus.text = "При сохранении мастера произошла ошибка: " + resp.status;
+            });
 
     };
 
     //управление категориями, видами услуг, услугами
-    $scope.isMasterCategory = function (category) {
-        return $scope.master.categories.findIndex(function (el) {
+    $scope.isMasterCategory = function(category) {
+        return $scope.master.categories.findIndex(function(el) {
             return el._id == category._id
         }) >= 0
     }
 
-    $scope.onlyMasterCategory = function () {
-        return function (category) {
-            return $scope.master.categories.findIndex(function (el) {
+    $scope.onlyMasterCategory = function() {
+        return function(category) {
+            return $scope.master.categories.findIndex(function(el) {
                 return el._id == category._id
             }) >= 0
         };
     };
 
-    $scope.masterServiceArray = function (category, kind_service) {
-        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+    $scope.masterServiceArray = function(category, kind_service) {
+        var categoryIndex = $scope.master.categories.findIndex(function(el) {
             return el._id == category._id
         });
         if (categoryIndex >= 0) {
-            var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+            var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function(el) {
                 return el._id == kind_service._id
             });
 
@@ -148,8 +155,8 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         } else return [];
     };
 
-    $scope.checkCategory = function (category) {
-        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+    $scope.checkCategory = function(category) {
+        var categoryIndex = $scope.master.categories.findIndex(function(el) {
             return el._id == category._id
         });
 
@@ -170,16 +177,16 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         }
     }
 
-    $scope.deleteService = function (category, kind_service, service) {
-        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+    $scope.deleteService = function(category, kind_service, service) {
+        var categoryIndex = $scope.master.categories.findIndex(function(el) {
             return el._id == category._id
         });
 
-        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function(el) {
             return el._id == kind_service._id
         });
 
-        var serviceIndex = $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.findIndex(function (el) {
+        var serviceIndex = $scope.master.categories[categoryIndex].kind_services[kindServiceIndex].services.findIndex(function(el) {
             return el._id == service._id
         });
 
@@ -193,12 +200,12 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         }
     }
 
-    $scope.addService = function (category, kind_service, data) {
-        var categoryIndex = $scope.master.categories.findIndex(function (el) {
+    $scope.addService = function(category, kind_service, data) {
+        var categoryIndex = $scope.master.categories.findIndex(function(el) {
             return el._id == category._id
         });
 
-        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function (el) {
+        var kindServiceIndex = $scope.master.categories[categoryIndex].kind_services.findIndex(function(el) {
             return el._id == kind_service._id
         });
 
@@ -231,9 +238,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     }
 
-    $scope.onlyNewServices = function (category, kind_service) {
-        return function (service) {
-            return $scope.masterServiceArray(category, kind_service).findIndex(function (el) {
+    $scope.onlyNewServices = function(category, kind_service) {
+        return function(service) {
+            return $scope.masterServiceArray(category, kind_service).findIndex(function(el) {
                 return el._id == service._id
             }) < 0
         };
@@ -241,7 +248,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     //функции для "Дополнительных услуг"
 
-    $scope.checkAdditionalService = function (service) {
+    $scope.checkAdditionalService = function(service) {
         var categoryIndex = $scope.master.additional_service.indexOf(service);
 
         if (categoryIndex >= 0) {
@@ -254,13 +261,13 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         }
     }
 
-    $scope.isCheckedAdditionalService = function (service) {
+    $scope.isCheckedAdditionalService = function(service) {
         return $scope.master.additional_service.indexOf(service) >= 0
     }
 
     //функции для блока "Работы"
 
-    $scope.deletePhoto = function (photosArray, photo) {
+    $scope.deletePhoto = function(photosArray, photo) {
 
         if (photo.new) delete $scope.formData.uploadData[photo.filename];
 
@@ -270,7 +277,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     }
 
-    $scope.addWork = function () {
+    $scope.addWork = function() {
         var newWork = {
             'description': "",
             'photos': []
@@ -279,9 +286,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         $scope.master.works.push(newWork);
     }
 
-    $scope.deleteWork = function (work) {
+    $scope.deleteWork = function(work) {
 
-        work.photos.forEach(function (photo, i, arr) {
+        work.photos.forEach(function(photo, i, arr) {
             if (photo.new) delete $scope.formData.uploadData[photo.filename];
         });
 
@@ -290,7 +297,7 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         $scope.master.works.splice(delIndex, 1)
     }
 
-    $scope.addPhoto = function (file, errFiles, work) {
+    $scope.addPhoto = function(file, errFiles, work) {
         $scope.errFile = errFiles && errFiles[0];
         if (file) {
             var newPhoto = {
@@ -309,9 +316,9 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
         }
     }
 
-    var createFileName = function (filename) {
+    var createFileName = function(filename) {
 
-        var newFileName = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var newFileName = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
@@ -323,4 +330,4 @@ remontas24App.controller('masterController', ['$scope', 'masters', '$state', 'Up
 
     }
 
-            }]);
+}]);

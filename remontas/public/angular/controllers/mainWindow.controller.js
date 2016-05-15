@@ -59,6 +59,13 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
         AuthService.logout();
         $state.go('remontas.searchPage');
+        $scope.isAuthOK = false;
+
+        ModalService.showModal({
+            templateUrl: "/remontas/public/templates/modals/authRegForm.html",
+            controller: "authRegFormController"
+        });
+
     });
 
     $scope.$on(AUTH_EVENTS.loginSuccess, function () {

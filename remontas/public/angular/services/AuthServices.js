@@ -1,76 +1,80 @@
-remontas24Site.factory('AuthService', function ($http, Session, $rootScope, $q, AUTH_EVENTS) {
+remontas24Site.factory('AuthService', function($http, Session, $rootScope, $q, AUTH_EVENTS) {
     return {
-        login: function (credentials) {
+        login: function(credentials) {
             return $http
                 .post('/api/login/master', credentials)
-                .then(function (res) {
+                .then(function(res) {
                     if (res.data.status == "success") {
                         Session.create(res.data.token, res.data.username);
                         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     } else $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 });
         },
-        logout: function () {
+        logout: function() {
             Session.destroy();
         },
-        isAuthenticated: function () {
+        isAuthenticated: function() {
             return !!Session.token();
         }
     };
 })
 
-remontas24Site.service('Session', function ($localStorage) {
-    this.create = function (loginToken, username) {
+remontas24Site.service('Session', function($localStorage) {
+    this.create = function(loginToken, username) {
         $localStorage.token = loginToken;
         $localStorage.username = username;
         //console.log("create token: ", loginToken);
     };
-    this.destroy = function () {
+    this.destroy = function() {
         $localStorage.token = null;
         $localStorage.username = null;
     };
-    this.token = function () {
+    this.token = function() {
         return $localStorage.token;
     };
-    this.username = function () {
+    this.username = function() {
         return $localStorage.username;
     };
 
-    this.saveFilter = function (newFilter) {
+    this.saveFilter = function(newFilter) {
         return $localStorage.filter = JSON.parse(JSON.stringify(newFilter));
     };
-    this.filter = function () {
+    this.filter = function() {
         return $localStorage.filter;
     };
 
-    this.favourites = function () {
+    this.favourites = function() {
         return $localStorage.favourites;
     };
 
-    this.initFavourites = function () {
+    this.initFavourites = function() {
         $localStorage.favourites = [];
     };
 
-    this.addToFavourites = function (id) {
+    this.addToFavourites = function(id) {
         var indexOfMaster = $localStorage.favourites.indexOf(id);
 
         if (indexOfMaster >= 0) {
             $localStorage.favourites.splice(indexOfMaster, 1)
         } else $localStorage.favourites.push(id);
     };
-    this.masterInFavourites = function (id) {
+    this.masterInFavourites = function(id) {
         return $localStorage.favourites.indexOf(id) >= 0;
     };
-    this.countFavorites = function () {
+    this.countFavorites = function() {
         return $localStorage.favourites.length;
+    };
+    this.clearFavorites = function() {
+        $localStorage.favourites.length = 0;
     }
+
 
     return this;
 })
 
-remontas24Site.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS, Session) {
+remontas24Site.factory('AuthInterceptor', function($rootScope, $q, AUTH_EVENTS, Session) {
     return {
-        responseError: function (response) {
+        responseError: function(response) {
             if (response.status === 401) {
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, response);
                 return {
@@ -95,7 +99,7 @@ remontas24Site.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS,
             return $q.reject(response);
         },
 
-        request: function (config) {
+        request: function(config) {
             config.headers = config.headers || {};
 
 
@@ -105,7 +109,7 @@ remontas24Site.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS,
             return config;
         },
 
-        response: function (response) {
+        response: function(response) {
             if (response.status === 401) {
                 // handle the case where the user is not authenticated
 

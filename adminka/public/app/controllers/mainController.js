@@ -1,4 +1,4 @@
-remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService', 'USER_ROLES', 'AUTH_EVENTS', 'Session', '$state', function ($scope, $rootScope, AuthService, USER_ROLES, AUTH_EVENTS, Session, $state) {
+remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService', 'USER_ROLES', 'AUTH_EVENTS', 'Session', '$state', function($scope, $rootScope, AuthService, USER_ROLES, AUTH_EVENTS, Session, $state) {
     //$scope.isAutorized = false;
 
     $scope.currentUser = Session.username();
@@ -14,34 +14,31 @@ remontas24App.controller('mainController', ['$scope', '$rootScope', 'AuthService
 
     //console.log($rootScope.$id);
 
-    $scope.login = function (credentials) {
-        AuthService.login(credentials).then(function () {
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                //$scope.currentUser = $scope.credentials.username;
-                //$scope.isAuthorizedAdmin = AuthService.isAuthorized();
-                //                var currentPageTemplate = $route.current.templateUrl;
-                //                $templateCache.remove(currentPageTemplate);
-                //                $route.reload();
+    $scope.login = function(credentials) {
+        AuthService.login(credentials).then(function() {
 
-                $scope.currentUser = Session.username();
+                if (AuthService.isAuthenticated()) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.currentUser = Session.username();
+                }
 
             },
-            function () {
+            function() {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             });
     };
 
-    $scope.logout = function () {
+    $scope.logout = function() {
         AuthService.logout();
         $state.go('login');
     };
 
-    $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
+    $scope.$on(AUTH_EVENTS.notAuthenticated, function() {
         AuthService.logout();
         $state.go('login');
     });
 
-    $scope.$on(AUTH_EVENTS.loginSuccess, function () {
+    $scope.$on(AUTH_EVENTS.loginSuccess, function() {
         $state.go('adminka.dashboard');
     });
-            }]);
+}]);
