@@ -105,15 +105,15 @@ def rem_compareMasters():
 
     query = dict()
 
-    query["_id"] = {'$in': mastersList}
+    query["_id"] = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}, {'$in': mastersList}]}
 
     resultMasters = conf.db.masters.find(query)
 
     for master in resultMasters:
-        newMaster=dict()
+        newMaster = dict()
         newMaster["_id"] = master["_id"]
         newMaster["name"] = master["name"]
-        if master["phone1"]!="":
+        if master["phone1"] != "":
             newMaster["phone"] = master["phone1"]
         else:
             newMaster["phone"] = master["phone2"]
