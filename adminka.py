@@ -362,6 +362,9 @@ def adm_runOperation():
         if request.params.operation == "generateTestMasters":
             generateTestMasters(2000)
             return {"status":"OK"}
+        elif request.params.operation == "clearDB":
+            clearDB()
+            return {"status": "OK"}
     else:
         return abort(401, "Sorry, access denied.")
 
@@ -384,7 +387,18 @@ def generateTestMasters(count):
 
             # randint(0, 9)
 
-            master["status"] = status_list[randint(0, 3)]
+            kubik = randint(1, 10)
+
+            status_index = 0
+
+            if kubik>0 and kubik<9:
+                status_index = 1
+            elif kubik==9:
+                status_index = 0
+            elif kubik==10:
+                status_index = 3
+
+            master["status"] = status_list[status_index]
             master["name"] = "Мастер " + str(i)
             master["kind_profile"] = kind_profile_list[randint(0, 1)]
 
@@ -448,7 +462,7 @@ def generateTestMasters(count):
 
                     master["works"].append(newWork)
 
-                print(photos_list)
+                # print(photos_list)
 
                 # заполняем категории-виды_работ-услуги
 
@@ -458,7 +472,9 @@ def generateTestMasters(count):
                 count_category = randint(0, 2)
 
                 for c in range(count_category):
-                    category = category_list[randint(0, len(category_list)-1)]
+                    category_index = randint(0, len(category_list)-1)
+
+                    category = category_list[category_index]
 
                     newCategory = dict()
                     newCategory["name"] = category["val"]
@@ -477,7 +493,7 @@ def generateTestMasters(count):
                         newKindService["services"]=[]
 
                         services_list = list(conf.db.category_job.find({"parent_id": kindService["_id"]}))
-                        count_services = randint(0, len(services_list)-1)
+                        count_services = randint(0, len(services_list))
 
                         for s in range(count_services):
                             service = services_list[randint(0, len(services_list)-1)]
@@ -497,7 +513,7 @@ def generateTestMasters(count):
                     category_list.remove(category)
 
 
-                print(master)
+                # print(master)
 
             # сохраняем мастера
             result = conf.db.masters.insert_one(master)
@@ -517,6 +533,11 @@ def generateTestMasters(count):
     except Exception as e:
         print(e)
 
+def clearDB():
+    conf.db.scoreMasters.delete_many({})
+    conf.db.users_masters.delete_many({})
+    conf.db.masters.delete_many({})
+    conf.db.averagePrices.delete_many({})
 
 @route ('/api/adminka/ordersService')
 def adm_getOrders():

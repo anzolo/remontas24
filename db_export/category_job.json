@@ -5,10 +5,6 @@
 {"_id":{"$oid":"56dd27bcdfdb2e3885200baf"},"parent_id":{"$oid":"56dd193fdfdb2e3885200ba5"},"type":"service","order":1,"val":"Отделочные работы","measure":""}
 {"_id":{"$oid":"56dd280ddfdb2e3885200bb0"},"parent_id":{"$oid":"56dd193fdfdb2e3885200ba5"},"type":"service","order":2,"val":"Сантехнические работы"}
 {"_id":{"$oid":"56dd2866dfdb2e3885200bb1"},"parent_id":{"$oid":"56dd193fdfdb2e3885200ba5"},"type":"service","order":3,"val":"Электромонтажные работы"}
-{"_id":{"$oid":"56dd288bdfdb2e3885200bb2"},"parent_id":{"$oid":"56dd274bdfdb2e3885200bac"},"type":"service","order":1,"val":"Материал полотна"}
-{"_id":{"$oid":"56dd28b8dfdb2e3885200bb3"},"parent_id":{"$oid":"56dd274bdfdb2e3885200bac"},"type":"service","order":2,"val":"Дополнительные работы"}
-{"_id":{"$oid":"56dd28e5dfdb2e3885200bb4"},"parent_id":{"$oid":"56dd2777dfdb2e3885200bad"},"type":"service","order":1,"val":"Виды мебели"}
-{"_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"parent_id":{"$oid":"56dd2795dfdb2e3885200bae"},"type":"service","order":1,"val":"Дизайн интерьера"}
 {"_id":{"$oid":"56dd29e7dfdb2e3885200bb6"},"parent_id":{"$oid":"56dd27bcdfdb2e3885200baf"},"type":"job","order":1,"val":"Оштукатуривание стен под маяк","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
 {"_id":{"$oid":"56dd2a52dfdb2e3885200bb7"},"parent_id":{"$oid":"56dd27bcdfdb2e3885200baf"},"type":"job","order":2,"val":"Оштукатуривание стен визуальное равнение","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
 {"_id":{"$oid":"56dd2a6ddfdb2e3885200bb8"},"parent_id":{"$oid":"56dd27bcdfdb2e3885200baf"},"type":"job","order":3,"val":"Шпатлевание стен","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
@@ -61,17 +57,17 @@
 {"_id":{"$oid":"570e70396c611d49e3c85c40"},"val":"Спальни","measure":"м.п.","type":"job","parent_id":{"$oid":"56dd28e5dfdb2e3885200bb4"},"order":8}
 {"_id":{"$oid":"570e705a6c611d49e3c85c41"},"val":"Прочее","measure":"м.п.","type":"job","parent_id":{"$oid":"56dd28e5dfdb2e3885200bb4"},"order":9}
 {"_id":{"$oid":"570e719c6c611d49e3c85c42"},"val":"Выезд на замер","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":3}
-{"_id":{"$oid":"570e71bc6c611d49e3c85c43"},"val":"Обмерочный план","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":4}
-{"_id":{"$oid":"570e72e96c611d49e3c85c44"},"val":"План перепланировки","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":5}
+{"_id":{"$oid":"570e71bc6c611d49e3c85c43"},"val":"Обмерочный план","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":4}
+{"_id":{"$oid":"570e72e96c611d49e3c85c44"},"val":"План перепланировки","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":5}
 {"_id":{"$oid":"570e72ff6c611d49e3c85c45"},"val":"План расстановки мебели","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":6}
-{"_id":{"$oid":"570e73176c611d49e3c85c46"},"val":"План потолков","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":7}
-{"_id":{"$oid":"570e73376c611d49e3c85c47"},"val":"План напольных покрытий","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":8}
+{"_id":{"$oid":"570e73176c611d49e3c85c46"},"val":"План потолков","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":7}
+{"_id":{"$oid":"570e73376c611d49e3c85c47"},"val":"План напольных покрытий","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":8}
 {"_id":{"$oid":"570e734c6c611d49e3c85c48"},"val":"План расположения розеток","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":9}
 {"_id":{"$oid":"570e736a6c611d49e3c85c49"},"val":"План освещения, линии включения","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":10}
-{"_id":{"$oid":"570e737f6c611d49e3c85c4a"},"val":"Развертки стен","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":11}
+{"_id":{"$oid":"570e737f6c611d49e3c85c4a"},"val":"Развертки стен","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":11}
 {"_id":{"$oid":"570e739d6c611d49e3c85c4b"},"val":"Подбор мебели и материалов","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":12}
 {"_id":{"$oid":"570e73c26c611d49e3c85c4c"},"val":"Спецификация материалов","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":13}
-{"_id":{"$oid":"570e73fa6c611d49e3c85c4d"},"val":"Раскладка плитки","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":14}
+{"_id":{"$oid":"570e73fa6c611d49e3c85c4d"},"val":"Раскладка плитки","measure":"руб./м\u003csup\u003e2\u003c/sup\u003e","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":14}
 {"_id":{"$oid":"570e741c6c611d49e3c85c4e"},"val":"Спецификация мебели","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":15}
 {"_id":{"$oid":"570e74496c611d49e3c85c4f"},"val":"3D визуализация/эскизы","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":16}
 {"_id":{"$oid":"570e74606c611d49e3c85c50"},"val":"Авторский надзор","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":17}
@@ -79,12 +75,90 @@
 {"_id":{"$oid":"570e74a76c611d49e3c85c52"},"val":"Разовый выезд (неполный рабочий день)","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":19}
 {"_id":{"$oid":"570e74bd6c611d49e3c85c53"},"val":"Выезд дизайнера в черте города","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":20}
 {"_id":{"$oid":"570e74d06c611d49e3c85c54"},"val":"Выезд дизайнера за город","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":21}
-{"_id":{"$oid":"570e757f6c611d49e3c85c55"},"val":"Виртуальная эскурсия","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":22}
+{"_id":{"$oid":"570e757f6c611d49e3c85c55"},"val":"Виртуальная экскурсия","measure":"руб.","type":"job","parent_id":{"$oid":"56dd297ddfdb2e3885200bb5"},"order":22}
 {"_id":{"$oid":"572c76836c611d7913cd40b0"},"parent_id":null,"val":"Строительство домов","order":5,"type":"category","measure":""}
 {"_id":{"$oid":"572c76f26c611d7913cd40b1"},"parent_id":{"$oid":"572c76836c611d7913cd40b0"},"val":"Каменные дома","order":1,"type":"service"}
 {"_id":{"$oid":"572c77286c611d7913cd40b2"},"parent_id":{"$oid":"572c76836c611d7913cd40b0"},"val":"Деревянные дома","order":2,"type":"service"}
 {"_id":{"$oid":"572c774c6c611d7913cd40b3"},"parent_id":{"$oid":"572c76836c611d7913cd40b0"},"val":"Каркасные дома","order":3,"type":"service","measure":""}
 {"_id":{"$oid":"572c9b006c611d7913cd40b4"},"parent_id":{"$oid":"572c76f26c611d7913cd40b1"},"type":"job","val":"Строительство каменных домов","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
-{"_id":{"$oid":"572c9b356c611d7913cd40b5"},"parent_id":{"$oid":"572c76f26c611d7913cd40b1"},"type":"job","val":null,"order":2,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
 {"_id":{"$oid":"572c9bb66c611d7913cd40b6"},"parent_id":{"$oid":"572c77286c611d7913cd40b2"},"type":"job","val":"Строительство деревянных домов","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
 {"_id":{"$oid":"572c9bf16c611d7913cd40b7"},"parent_id":{"$oid":"572c774c6c611d7913cd40b3"},"type":"job","val":"Строительство каркасных домов","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"57308d246c611d6ffc14eea1"},"val":"Кухни","parent_id":{"$oid":"56dd2777dfdb2e3885200bad"},"type":"service","order":2,"measure":""}
+{"_id":{"$oid":"57308d5e6c611d6ffc14eea2"},"val":"Шкафы-купе","parent_id":{"$oid":"56dd2777dfdb2e3885200bad"},"type":"service","order":3}
+{"_id":{"$oid":"57308d986c611d6ffc14eea4"},"val":"Прочее","parent_id":{"$oid":"56dd2777dfdb2e3885200bad"},"type":"service","order":5}
+{"_id":{"$oid":"57308e396c611d6ffc14eea5"},"val":"Кухни на заказ","parent_id":{"$oid":"57308d246c611d6ffc14eea1"},"type":"job","order":1,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308e736c611d6ffc14eea6"},"val":"Шкафы-купе на заказ","parent_id":{"$oid":"57308d5e6c611d6ffc14eea2"},"type":"job","order":1,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308e996c611d6ffc14eea7"},"val":"Детские на заказ","parent_id":{"$oid":"57308d816c611d6ffc14eea3"},"type":"job","order":1,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308ee16c611d6ffc14eea8"},"val":"Спальни на заказ","parent_id":{"$oid":"57308d986c611d6ffc14eea4"},"type":"job","order":1,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308f046c611d6ffc14eea9"},"val":"Прихожие на заказ","parent_id":{"$oid":"57308d986c611d6ffc14eea4"},"type":"job","order":2,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308f226c611d6ffc14eeaa"},"val":"Гостиные на заказ","parent_id":{"$oid":"57308d986c611d6ffc14eea4"},"type":"job","order":3,"measure":"руб./п.м."}
+{"_id":{"$oid":"57308f566c611d6ffc14eeab"},"val":"Офисная мебель","parent_id":{"$oid":"57308d986c611d6ffc14eea4"},"type":"job","order":4,"measure":"руб./п.м."}
+{"_id":{"$oid":"5730909c6c611d6ffc14eeac"},"val":"Монтаж потолков","parent_id":{"$oid":"56dd274bdfdb2e3885200bac"},"type":"service","order":3,"measure":""}
+{"_id":{"$oid":"573091956c611d6ffc14eeb2"},"val":"Монтаж глянцевых потолков","parent_id":{"$oid":"573090be6c611d6ffc14eead"},"type":"job","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573091ba6c611d6ffc14eeb3"},"val":"Монтаж тканевых потолков","parent_id":{"$oid":"573090d76c611d6ffc14eeae"},"type":"job","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573091f36c611d6ffc14eeb4"},"val":"Монтаж сатиновых потолков","parent_id":{"$oid":"573091076c611d6ffc14eeaf"},"type":"job","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573092466c611d6ffc14eeb5"},"val":"Монтаж фактурных потолков","parent_id":{"$oid":"5730912f6c611d6ffc14eeb0"},"type":"job","order":1,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573093346c611d6ffc14eeb6"},"val":"Дизайн квартиры","parent_id":{"$oid":"56dd2795dfdb2e3885200bae"},"type":"service","order":2,"measure":""}
+{"_id":{"$oid":"5730959a6c611d6ffc14eeb8"},"val":"Выезд на замер","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":1,"measure":"руб."}
+{"_id":{"$oid":"573095bb6c611d6ffc14eeb9"},"val":"Обмерочный план","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":2,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573096046c611d6ffc14eeba"},"val":"План перепланировки","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":3,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573096f56c611d6ffc14eebb"},"val":"План расстановки мебели","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":4,"measure":"руб."}
+{"_id":{"$oid":"573097556c611d6ffc14eebc"},"val":"План потолков","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":5,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5730982a6c611d6ffc14eebd"},"val":"План напольных покрытий","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":6,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573098916c611d6ffc14eebe"},"val":"План расположения розеток","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":7,"measure":"руб."}
+{"_id":{"$oid":"573098d46c611d6ffb14eea1"},"val":"План освещения, линия включения","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":8,"measure":"руб."}
+{"_id":{"$oid":"573098f26c611d6ffc14eebf"},"val":"Развертки стен","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":9,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5730994f6c611d6ffb14eea2"},"val":"Подбор мебели и материалов","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":10,"measure":"руб."}
+{"_id":{"$oid":"573099a76c611d6ffc14eec0"},"val":"Спецификация мебели","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":11,"measure":"руб."}
+{"_id":{"$oid":"573099dd6c611d6ffc14eec1"},"val":"Спецификация материалов","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":12,"measure":"руб."}
+{"_id":{"$oid":"57309a796c611d6ffc14eec2"},"val":"Ведомость отделки","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":13,"measure":"руб."}
+{"_id":{"$oid":"57309ac06c611d6ffc14eec3"},"val":"Раскладка плитки","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":14,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"57309af86c611d6ffc14eec4"},"val":"3D визуализация/эскизы","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":15,"measure":"руб."}
+{"_id":{"$oid":"57309b1e6c611d6ffc14eec5"},"val":"Виртуальная эскурсия","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":16,"measure":"руб."}
+{"_id":{"$oid":"57309b386c611d6ffc14eec6"},"val":"Авторский надзор","parent_id":{"$oid":"573093346c611d6ffc14eeb6"},"type":"job","order":17,"measure":"руб."}
+{"_id":{"$oid":"57309b706c611d6ffc14eec8"},"val":"Разовый выезд (полный рабочий день)","parent_id":{"$oid":"57309b4e6c611d6ffc14eec7"},"type":"job","order":1,"measure":"руб."}
+{"_id":{"$oid":"57309ba16c611d6ffc14eec9"},"val":"Разовый выезд (неполный рабочий день)","parent_id":{"$oid":"57309b4e6c611d6ffc14eec7"},"type":"job","order":2,"measure":"руб."}
+{"_id":{"$oid":"57309bc06c611d6ffc14eeca"},"val":"Выезд дизайнера в черте города","parent_id":{"$oid":"57309b4e6c611d6ffc14eec7"},"type":"job","order":3,"measure":"руб."}
+{"_id":{"$oid":"57309bdf6c611d6ffc14eecb"},"val":"Выезд дизайнера за город","parent_id":{"$oid":"57309b4e6c611d6ffc14eec7"},"type":"job","order":4,"measure":"руб."}
+{"_id":{"$oid":"57309db06c611d6ffc14eecc"},"val":"Дополнительные работы","parent_id":{"$oid":"56dd274bdfdb2e3885200bac"},"type":"service","order":8}
+{"_id":{"$oid":"57309dfe6c611d6ffc14eecd"},"val":"Установка закладной под люстру","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":1,"measure":"руб./ед."}
+{"_id":{"$oid":"57309e2a6c611d6ffc14eece"},"val":"Установка люстры","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":2,"measure":"руб./ед."}
+{"_id":{"$oid":"57309e4e6c611d6ffc14eed0"},"val":"Установка закладной под точечный светильник","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":3,"measure":"руб./ед."}
+{"_id":{"$oid":"57309e776c611d6ffc14eed1"},"val":"Установка точечного светильника","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":4,"measure":"руб./ед."}
+{"_id":{"$oid":"57309eba6c611d6ffc14eed2"},"val":"Установка потолочного плинтуса","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":5,"measure":"руб./м.п."}
+{"_id":{"$oid":"57309ee86c611d6ffc14eed3"},"val":"Установка потолочного карниза","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":6,"measure":"руб./м.п."}
+{"_id":{"$oid":"57309f056c611d6ffc14eed4"},"val":"Угол, если больше 4-х","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":7,"measure":"руб./ед."}
+{"_id":{"$oid":"57309f2d6c611d6ffc14eed5"},"val":"Установка светодиодной ленты","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":8,"measure":"руб./м.п."}
+{"_id":{"$oid":"57309f4e6c611d6ffc14eed6"},"val":"Установка решетки вентиляции","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":9,"measure":"руб./ед."}
+{"_id":{"$oid":"57309f726c611d6ffc14eed7"},"val":"Установка вентилятора","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":10,"measure":"руб./ед."}
+{"_id":{"$oid":"57309fae6c611d6ffc14eed8"},"val":"Обвод трубы","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":11,"measure":"руб./ед."}
+{"_id":{"$oid":"57309fcc6c611d6ffc14eed9"},"val":"Спайка двух полотен","parent_id":{"$oid":"57309db06c611d6ffc14eecc"},"type":"job","order":12,"measure":"руб./м.п."}
+{"_id":{"$oid":"5732004e6c611d6ffc14eedf"},"val":"Матовые","parent_id":{"$oid":"5730909c6c611d6ffc14eeac"},"type":"job","order":2,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573200646c611d6ffc14eee0"},"val":"Глянцевые","parent_id":{"$oid":"5730909c6c611d6ffc14eeac"},"type":"job","order":3,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5732009f6c611d6ffc14eee1"},"val":"Тканевые","parent_id":{"$oid":"5730909c6c611d6ffc14eeac"},"type":"job","order":4,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5732011f6c611d6ffc14eee4"},"val":"Сатиновые","parent_id":{"$oid":"5730909c6c611d6ffc14eeac"},"type":"job","order":5,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573201326c611d6ffc14eee5"},"val":"Фактурные","parent_id":{"$oid":"5730909c6c611d6ffc14eeac"},"type":"job","order":6,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573201666c611d6ffc14eee6"},"val":"Детские","parent_id":{"$oid":"57308d986c611d6ffc14eea4"},"type":"job","order":5,"measure":"руб./п.м."}
+{"_id":{"$oid":"5732028e6c611d6ffc14eee7"},"val":"Дизайн коттеджа","parent_id":{"$oid":"56dd2795dfdb2e3885200bae"},"type":"service","order":4}
+{"_id":{"$oid":"573202bb6c611d6ffc14eee8"},"val":"Выезд на замер","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":1,"measure":"руб."}
+{"_id":{"$oid":"573202f26c611d6ffc14eee9"},"val":"Обмерочный план","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":2,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573203236c611d6ffc14eeea"},"val":"План перепланировки","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":3,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5732033c6c611d6ffc14eeeb"},"val":"План расстановки мебели","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":4,"measure":"руб."}
+{"_id":{"$oid":"573203506c611d6ffc14eeec"},"val":"План потолков","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":5,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5732036e6c611d6ffc14eeed"},"val":"План напольных покрытий","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":6,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573203836c611d6ffc14eeee"},"val":"План расположения розеток","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":7,"measure":"руб."}
+{"_id":{"$oid":"5732039e6c611d6ffc14eeef"},"val":"План освещения, линии включения","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":8,"measure":"руб."}
+{"_id":{"$oid":"573203be6c611d6ffc14eef0"},"val":"Развертки стен","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":9,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"573203d36c611d6ffc14eef1"},"val":"Подбор мебели и материалов","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":10,"measure":"руб."}
+{"_id":{"$oid":"573203e36c611d6ffc14eef2"},"val":"Спецификация мебели","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":11,"measure":"руб."}
+{"_id":{"$oid":"573203fc6c611d6ffc14eef3"},"val":"Спецификация материалов","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":12,"measure":"руб."}
+{"_id":{"$oid":"5732040e6c611d6ffc14eef4"},"val":"Ведомость отделки","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":13,"measure":"руб."}
+{"_id":{"$oid":"573204296c611d6ffc14eef5"},"val":"Раскладка плитки","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":14,"measure":"руб./м\u003csup\u003e2\u003c/sup\u003e"}
+{"_id":{"$oid":"5732044e6c611d6ffc14eef6"},"val":"3D визуализация, эскизы","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":15,"measure":"руб."}
+{"_id":{"$oid":"573204676c611d6ffc14eef7"},"val":"Виртуальная экскурсия","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":16,"measure":"руб."}
+{"_id":{"$oid":"5732047f6c611d6ffc14eef8"},"val":"Авторский надзор","parent_id":{"$oid":"5732028e6c611d6ffc14eee7"},"type":"job","order":17,"measure":"руб."}
+{"_id":{"$oid":"573204b26c611d6ffc14eef9"},"val":"Дополнительные работы","parent_id":{"$oid":"56dd2795dfdb2e3885200bae"},"type":"service","order":5}
+{"_id":{"$oid":"573204d86c611d6ffc14eefa"},"val":"Разовый выезд (полный рабочий день)","parent_id":{"$oid":"573204b26c611d6ffc14eef9"},"type":"job","order":1,"measure":"руб."}
+{"_id":{"$oid":"573204f86c611d6ffc14eefb"},"val":"Разовый выезд (неполный рабочий день)","parent_id":{"$oid":"573204b26c611d6ffc14eef9"},"type":"job","order":2,"measure":"руб."}
+{"_id":{"$oid":"5732051d6c611d6ffc14eefc"},"val":"Выезд дизайнера в черте города","parent_id":{"$oid":"573204b26c611d6ffc14eef9"},"type":"job","order":3,"measure":"руб."}
+{"_id":{"$oid":"573205316c611d6ffc14eefd"},"val":"Выезд дизайнера за город","parent_id":{"$oid":"573204b26c611d6ffc14eef9"},"type":"job","order":4,"measure":"руб."}
