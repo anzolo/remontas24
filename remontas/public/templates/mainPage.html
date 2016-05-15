@@ -11,7 +11,7 @@
                         <a href="#" ng-click="showAuthRegForm()">{{nameOfMasterMenu()}}</a>
                         <ul class="active" ng-class="{lk:isAuth()}" ng-if="showMasteramPodmenu">
                             <li ng-if="!isAuth()"><a href="#" class="open-modal" ng-click="showAuthRegForm()">Вход/Регистрация</a></li>
-                            <li><a href="#">Как это работает</a></li>
+                            <li><a href="#" ui-sref="remontas.howWorks">Как это работает</a></li>
                             <li ng-if="isAuth()"><a href="#" ng-click="logout()">Выйти</a></li>
                         </ul>
                     </li>

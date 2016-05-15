@@ -621,6 +621,34 @@ h2.master-counter span {
     margin-left: 15px;
 }
 
+.how-to-use-master {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*    padding: 40px 50px;*/
+}
+
+.how-to-use-master h2 {
+    text-transform: none;
+    margin-top: 15px;
+}
+
+.how-to-use-master .item {
+    float: left;
+    width: 155px;
+    text-align: center;
+}
+
+.how-to-use-master .item.arrow {
+    width: 40px;
+    position: relative;
+    top: 110px;
+}
+
+.how-to-use-master .item + .item {
+    margin-left: 15px;
+}
+
 #modal {
     background: rgba(255, 255, 255, 0.95);
     min-width: 100%;
@@ -1432,6 +1460,26 @@ h2.master-counter span {
     border: 1px dashed #ff5c0f;
     padding: 30px;
     margin: 40px 0;
+}
+
+.page .howWork {
+    font-weight: 300;
+    background: transparent url('../img/logo-giant.png') no-repeat center 1400px;
+    height: 2000px;
+}
+
+.page .howWork .bold {
+    font-weight: 400;
+}
+
+.page .howWork h3 {
+    font-weight: 400;
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+.page .howWork a {
+    color: #ff5c0f;
 }
 
 .page .qa {

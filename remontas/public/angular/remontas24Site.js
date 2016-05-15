@@ -33,6 +33,10 @@ remontas24Site.config(function ($stateProvider, $urlRouterProvider, $locationPro
                 //                $scope.mode = "edit";
             }
         })
+        .state('remontas.howWorks', {
+            url: "how_works",
+            templateUrl: "/remontas/public/templates/howWorks.html"
+        })
         .state('remontas.agreement', {
             url: "agreement",
             templateUrl: "/remontas/public/templates/agreement.html",
