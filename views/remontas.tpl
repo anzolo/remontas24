@@ -2,16 +2,13 @@
 <html lang="en">
 
 <head>
-    <base href="/">
+    <base href="/"></base>
     <meta charset="UTF-8">
     <title>Ремонтас 24 - Мастер найдется!</title>
     <link type="text/css" rel="stylesheet" href="/remontas/public/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/remontas/public/css/custom.css">
-    <link rel="stylesheet" href="/remontas/public/js/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" type="text/css" href="/remontas/public/css/test.css">
 
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/remontas/public/favicon.ico" />

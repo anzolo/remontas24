@@ -12,10 +12,21 @@ from datetime import datetime, timedelta
 import numpy as np
 
 
-# Ремонтас. По маршруту возвращается шаблон
+# Ремонтас. Станлартный шаблон на все url, для Angular-JS
+@route('/lk')
+@route('/compare')
+@route('/about')
+@route('/how_works')
+@route('/agreement')
 @route('/')
 def index():
     return template('remontas')
+
+@route('/master/<id>')
+def index2(id):
+    return template('remontas')
+
+
 
 
 # Ремонтас. возврат файлов с учетом прав доступа
@@ -230,8 +241,6 @@ def calcAveragePrices():
     conf.db.averagePrices.insert_one(newAveragePricesCalc)
 
     return newAveragePricesCalc
-
-
 
 def kindServicesCount(category):
     return conf.db.category_job.find({"parent_id": category["_id"]}).count()
@@ -481,8 +490,6 @@ def clearMasterFromBadData(master):
 
     return master
 
-
-
 @route('/api/masterRegister', method='POST')
 def rem_registerMaster():
     # request.json["sername"]
@@ -551,7 +558,6 @@ def rem_registerMaster():
         common.writeToLog("error", "rem_registerMaster: " + str(e))
         return common.JSONEncoder().encode(result)
 
-
 def createMaster(regParams, result):
     try:
 
@@ -596,7 +602,6 @@ def createMaster(regParams, result):
         result["description"] = "Непредвиденная ошибка: " + str(e)
         common.writeToLog("error", "createMaster: " + str(e))
         return None
-
 
 @route('/api/verifyMail/<code>', name="verifyMail")
 def rem_checkEmailCode(code):
