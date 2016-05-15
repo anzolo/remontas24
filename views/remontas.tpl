@@ -52,6 +52,7 @@
     <script src="/remontas/public/angular/controllers/workViewer.controller.js"></script>
     <script src="/remontas/public/angular/controllers/compare.controller.js"></script>
     <script src="/remontas/public/angular/controllers/orderForm.controller.js"></script>
+    <script src="/remontas/public/angular/controllers/checkRegCode.controller.js"></script>
 
 
     <!-- Директивы-->

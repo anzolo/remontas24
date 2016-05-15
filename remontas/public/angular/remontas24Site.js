@@ -30,10 +30,12 @@ remontas24Site.config(function($stateProvider, $urlRouterProvider, $locationProv
         })
         .state('remontas.about', {
             url: "about",
-            templateUrl: "/remontas/public/templates/about.html",
-            controller: function($scope) {
-                //                $scope.mode = "edit";
-            }
+            templateUrl: "/remontas/public/templates/about.html"
+        })
+        .state('remontas.check-reg-code', {
+            url: "check-reg-code/:code",
+            templateUrl: "/remontas/public/templates/checkRegCode.html",
+            controller: 'checkRegCodeController'
         })
         .state('remontas.howWorks', {
             url: "how_works",
@@ -41,10 +43,7 @@ remontas24Site.config(function($stateProvider, $urlRouterProvider, $locationProv
         })
         .state('remontas.agreement', {
             url: "agreement",
-            templateUrl: "/remontas/public/templates/agreement.html",
-            controller: function($scope) {
-                //                $scope.mode = "edit";
-            }
+            templateUrl: "/remontas/public/templates/agreement.html"
         });
 
     $urlRouterProvider.otherwise(function($injector, $location) {
