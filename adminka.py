@@ -145,6 +145,10 @@ def adm_manageMasters():
         try:
             newMaster = json.loads(request.forms.get("master"))
 
+            if "alias_id" in newMaster:
+                if conf.db.masters.find_one({"alias_id":newMaster["alias_id"]}) is not None:
+                    raise ValueError('Уже есть мастер с таким алиасом: {alias}'.format(alias=repr(newMaster["alias_id"])))
+
             if "_id" in newMaster:
 
                 master_id = newMaster["_id"]
@@ -200,10 +204,12 @@ def adm_manageMasters():
 
             result["status"] = "OK"
 
-        except Exception as e:
-                result["status"] = "Error"
-                result["note"] = str(e)
-                #print(e)
+        except ValueError as err:
+            result["status"] = "Error"
+            result["note"] = str(err.args)
+        except Exception as err:
+            result["status"] = "Error"
+            result["note"] = str(err)
 
         return result
 

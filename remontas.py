@@ -7,6 +7,7 @@ import conf
 import os
 import json
 import math
+import bson
 from datetime import datetime, timedelta
 import numpy as np
 
@@ -81,7 +82,8 @@ def rem_doSearchMasters():
         bufMaster = {"_id": master["_id"],
                      "name": master["name"],
                      "avatar": master["avatar"],
-                     "count_works": len(master["works"])}
+                     "count_works": len(master["works"]),
+                     "alias_id": master.get("alias_id", "")}
         result["masters"].append(bufMaster)
 
     result["categories"] = list(conf.db.category_job.find())
@@ -367,6 +369,8 @@ def rem_lkSaveData():
                     newMaster["sername"] = oldMaster["sername"]
                 if "patronymic" in newMaster and "patronymic" in oldMaster:
                     newMaster["patronymic"] = oldMaster["patronymic"]
+                if "alias_id" in newMaster and "alias_id" in oldMaster:
+                    newMaster["alias_id"] = oldMaster["alias_id"]
 
                 avatarFile = request.files.get("avatar")
 
@@ -412,7 +416,13 @@ def rem_masterGetData(masterId):
     result = dict()
 
     try:
-        master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
+        if not bson.objectid.ObjectId.is_valid(masterId):
+            master = conf.db.masters.find_one({"alias_id": masterId})
+            if master is None:
+                raise ValueError('{masterId} is not wrong ObjectId or alias_id'.format(masterId=repr(masterId)))
+        else:
+            master = conf.db.masters.find_one({"_id": ObjectId(masterId)})
+
         if master is not None:
 
 
