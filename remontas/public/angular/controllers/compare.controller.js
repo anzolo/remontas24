@@ -1,4 +1,4 @@
-remontas24Site.controller('compareController', ['$scope', 'Session', 'compareService', '$sce', function($scope, Session, compareService, $sce) {
+remontas24Site.controller('compareController', ['$scope', 'Session', 'compareService', '$sce', function ($scope, Session, compareService, $sce) {
 
     $scope.model = {}
 
@@ -6,19 +6,21 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     $scope.prepareHTML = prepareHTML;
     $scope.showPrice = showPrice;
     $scope.showServiceText = showServiceText;
+    $scope.showAveragePrice = showAveragePrice;
 
     compareService.compare({
         "masters": Session.favourites()
-    }, function(data) {
+    }, function (data) {
         $scope.model.configUrl = JSON.parse(JSON.stringify(data.configUrl));
         $scope.model.masters = JSON.parse(JSON.stringify(data.masters));
         $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
+        $scope.model.averagePrices = JSON.parse(JSON.stringify(data.averagePrices.prices));
         shrinkServiceText();
         $scope.model.checked = "";
         $scope.model.mouseOver = "";
 
         Session.clearFavorites();
-        $scope.model.masters.forEach(function(element) {
+        $scope.model.masters.forEach(function (element) {
             Session.addToFavourites(element._id)
         }, this);
 
@@ -34,6 +36,11 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     function showPrice(category, index, master) {
         if (master.prices[category._id] != undefined) return master.prices[category._id] + "<span>" + category.measure + "</span>";
         return "-----";
+    }
+
+    function showAveragePrice(category) {
+        if ($scope.model.averagePrices[category._id] != undefined) return $scope.model.averagePrices[category._id] + "<span>" + category.measure + "</span>";
+        return "";
     }
 
     function prepareHTML(element) {

@@ -17,30 +17,8 @@
                         <div class="job" ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
                             <div class="marked" ng-if="element.type=='service'">{{element.name}}</div>
                             <div class="job-name" ng-class="{active:model.checked==element._id,mouseOver:element.type=='job' && model.mouseOver==element._id, mouseOverPos:element.shortName != undefined}" ng-if="element.type=='job'" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>
-                            <!--                            <div class="job-name mouseOver" ng-if="element.type=='job' && model.mouseOver == element._id && element.shortName == undefined" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>-->
-                            <!--                            <div class="job-name mouseOver mouseOverPos" ng-if="element.type=='job' && model.mouseOver == element._id && element.shortName != undefined" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>-->
-                            <!--<div ng-if="element.type=='job'" ng-class="{active:checkedJob('param-' + $index), mouseOver:model.mouseOver == element._id}" ng-attr-data-param="{{'param-' + $index}}" ng-click="checkJob($event)">{{element.name}}</div>-->
+                            <div class="price" ng-class="{active:model.checked==element._id,mouseOver:element.type=='job' && model.mouseOver==element._id}" ng-bind-html="prepareHTML(showAveragePrice(element))"></div>
                         </div>
-                        <!--                        <div ng-repeat="element in model.categories" ng-class="{marked:element.type=='service'}" data-param>{{element.name}}</div>-->
-                        <!--
-                        <div class="marked">Ремонтно-отделочные работы</div>
-<div data-param="param-1">Укладка плитки</div>
-<div data-param="param-2">Поклейка обоев</div>
-<div data-param="param-3">Укладка пола</div>
-<div data-param="param-4">Выравнивание стен</div>
-<div data-param="param-5">Услуга &laquo;Мастер на час&raquo;</div>
-<div class="marked">Сантехнические работы</div>
-<div data-param="param-6">Укладка плитки на стены</div>
-<div data-param="param-7">Укладка плитки на пол</div>
-<div data-param="param-8">Установка смесителя</div>
-<div data-param="param-9">Выравнивание стен</div>
-<div data-param="param-10">Установка ванны</div>
-<div class="marked">Электромонтажные работы</div>
-<div data-param="param-11">Электропроводка</div>
-<div data-param="param-12">Установка люстры</div>
-<div data-param="param-13">Установка розеток</div>
-<div data-param="param-14">Штраба</div>
--->
                     </div>
 
                     <!--

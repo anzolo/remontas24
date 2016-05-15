@@ -1528,7 +1528,8 @@ opacity: 0;
 
 .page .comparison .params {
     display: table;
-    width: 288px;
+    width: 368px;
+    /*    width: 288px;*/
     /*    width: 240px;*/
     /*    border-collapse: collapse;*/
 }
@@ -1602,6 +1603,7 @@ text-decoration: underline;
     padding: 2px 0px 2px 15px;
     font-size: 13px;
     font-weight: 500;
+    width: 273px
 }
 
 .page .comparison .params .job-name {
@@ -1609,6 +1611,16 @@ text-decoration: underline;
     font-weight: 300;
     cursor: pointer;
     width: 263px;
+}
+
+.page .comparison .params .price {
+    cursor: pointer;
+    width: 80px;
+    text-align: center;
+}
+
+.page .comparison .params .price span {
+    display: block;
 }
 
 .page .comparison .masters [data-param] {
@@ -1623,7 +1635,8 @@ text-decoration: underline;
 }
 
 .page .comparison .masters {
-    width: 890px;
+    width: 810px;
+    /*    width: 890px;*/
     position: relative;
     overflow: auto;
     /*    width: 938px;*/
