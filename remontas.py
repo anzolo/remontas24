@@ -103,9 +103,9 @@ def rem_compareMasters():
     for el in request.json["masters"]:
         mastersList.append(ObjectId(el))
 
-    query = dict()
+    # query = dict()
 
-    query["_id"] = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}, {'$in': mastersList}]}
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}, {"_id":{'$in': mastersList}}]}
 
     resultMasters = conf.db.masters.find(query)
 

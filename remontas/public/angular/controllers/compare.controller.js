@@ -1,4 +1,4 @@
-remontas24Site.controller('compareController', ['$scope', 'Session', 'compareService', '$sce', function ($scope, Session, compareService, $sce) {
+remontas24Site.controller('compareController', ['$scope', 'Session', 'compareService', '$sce', function($scope, Session, compareService, $sce) {
 
     $scope.model = {}
 
@@ -10,11 +10,18 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
 
     compareService.compare({
         "masters": Session.favourites()
-    }, function (data) {
+    }, function(data) {
         $scope.model.configUrl = JSON.parse(JSON.stringify(data.configUrl));
         $scope.model.masters = JSON.parse(JSON.stringify(data.masters));
         $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
         $scope.model.checked = "";
+
+
+        Session.clearFavorites();
+        $scope.model.masters.forEach(function(element) {
+            Session.addToFavourites(element._id)
+        }, this);
+
     })
 
     function showPhone(phone) {
