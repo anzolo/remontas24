@@ -23,6 +23,7 @@ def index():
     return template('remontas')
 
 @route('/master/<id>')
+@route('/check-reg-code/<id>', name = "verifyMail")
 def index2(id):
     return template('remontas')
 
@@ -577,7 +578,7 @@ def createMaster(regParams, result):
 
         if regParams["kind_profile"] == "phys":
             master["sername"] = regParams["sername"]
-            master["patronymic"] = regParams["patronymic"]
+            master["patronymic"] = regParams.get("patronymic","")
 
         resultInsert = conf.db.masters.insert_one(master)
 
@@ -603,22 +604,27 @@ def createMaster(regParams, result):
         common.writeToLog("error", "createMaster: " + str(e))
         return None
 
-@route('/api/verifyMail/<code>', name="verifyMail")
+@route('/api/verifyMail/<code>')
 def rem_checkEmailCode(code):
     try:
         masterUser = conf.db.users_masters.find_one({"checkEmailCode": code})
 
         if masterUser is not None:
-            # master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
             conf.db.masters.update_one({"_id": masterUser["master_id"]}, {"$set": {"status": "register"}})
-            # conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {})
             conf.db.users_masters.update_one({"_id": masterUser["_id"]}, {"$unset": {"checkEmailCode": ""}, "$set": {"status": "register"}})
             sendNotificationAboutSuccesVerifyEmail(masterUser["_id"])
+
+            session = {"user_id":str(masterUser["_id"]), "role":"master", "master_id":str(masterUser["master_id"])}
+
+            adminka.create_session(session)
+
+            return common.JSONEncoder().encode({"status":"OK", "session_token":session["token"]})
+        else:
+            return {"status": "Code missed"}
     except Exception as e:
         print("Error: " + str(e))
         common.writeToLog("error", "rem_checkEmailCode: " + str(e))
 
-    redirect('/')
 
 
 def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
@@ -626,7 +632,7 @@ def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
         masterUser = conf.db.users_masters.find_one({"_id": ObjectId(masterUserId)})
         master = conf.db.masters.find_one({"_id": masterUser["master_id"]})
 
-        siteURL = request.urlparts[0] + "://" + request.urlparts[1] + url("verifyMail", code=masterUser["checkEmailCode"])
+        siteURL = request.urlparts[0] + "://" + request.urlparts[1] + url("verifyMail", id=masterUser["checkEmailCode"])
 
         messageText = conf.messageRegisterMasterText.format(name=master["name"], siteURL=siteURL)
         messageHTML = conf.messageRegisterMasterHTML.format(name=master["name"], siteURL=siteURL)
