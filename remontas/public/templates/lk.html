@@ -9,20 +9,20 @@
                 <h1 class="text-center">Ваш кабинет</h1>
 
                 <h2 class="text-center">
-						Профиль <span>{{data.master.score}} баллов</span> <a href="#" class="open-hint" ng-click="interfaceOptions.showWhatIs=!interfaceOptions.showWhatIs">Что это?</a>
+						Профиль <span>{{data.master.score}} баллов</span> <a href="#" class="open-hint" ng-click="showWhatIsPopup()">Что это?</a>
 					</h2>
 
                 <!-- Что это? -->
-                <div id="hint-what-is-it" class="hint-window" ng-if="interfaceOptions.showWhatIs">
-                    <div class="corner"></div>
-                    <div class="body">
+                <div id="hint-what-is-it" class="hint-window" ng-if="interfaceOptions.showComboBox=='whatIs'" ">
+                    <div class="corner "></div>
+                    <div class="body ">
                         <h3>Оценка портфолио мастера</h3>
-                        <h4 ng-if="data.master.status!='active'">У вас слишком мало баллов! Ваше портфолио не видят посетители remontas24. Заполните информацию в профиле, чтобы получать заказы от посетителей нашего сервиса.</h4>
+                        <h4 ng-if="data.master.status!='active' ">У вас слишком мало баллов! Ваше портфолио не видят посетители remontas24. Заполните информацию в профиле, чтобы получать заказы от посетителей нашего сервиса.</h4>
                         <div>
                             <ul>
-                                <li ng-class="{ok:criteria.status, comment:!criteria.status}" ng-repeat="criteria in data.scoreDetail">{{criteria.description + " : " + criteria.score +" баллов"}}
-                                    <ul ng-if="!criteria.status">
-                                        <li ng-class="{good:sub_criteria.status, bad:!sub_criteria.status}" ng-repeat="sub_criteria in criteria.details">{{sub_criteria.description}}</li>
+                                <li ng-class="{ok:criteria.status, comment:!criteria.status} " ng-repeat="criteria in data.scoreDetail ">{{criteria.description + " : " + criteria.score +" баллов "}}
+                                    <ul ng-if="!criteria.status ">
+                                        <li ng-class="{good:sub_criteria.status, bad:!sub_criteria.status} " ng-repeat="sub_criteria in criteria.details ">{{sub_criteria.description}}</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -31,69 +31,69 @@
                 </div>
                 <!-- /Что это? -->
 
-                <div class="person clearfix">
-                    <div class="photo">
-                        <div class="img">
-                            <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}}" ng-if="data.uploadData.avatar==null">
-                            <img ngf-src="data.uploadData.avatar" ngf-resize="{width: 180, height: 180, quality: 0.9}" ng-if="data.uploadData.avatar!=null">
+                <div class="person clearfix ">
+                    <div class="photo ">
+                        <div class="img ">
+                            <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}} " ng-if="data.uploadData.avatar==null ">
+                            <img ngf-src="data.uploadData.avatar " ngf-resize="{width: 180, height: 180, quality: 0.9} " ng-if="data.uploadData.avatar!=null ">
                         </div>
-                        <button class="btn changeAvatarButton" ng-click="changeAvatar()">Изменить</button>
+                        <button class="btn changeAvatarButton " ng-click="changeAvatar() ">Изменить</button>
                     </div>
 
-                    <div class="fields">
-                        <div class="part-1">
-                            <div class="username clearfix" ng-if="data.master.kind_profile=='phys'">
-                                <input type="text" readonly="readonly" placeholder="Имя" required="required" ng-model="data.master.name">
-                                <input type="text" readonly="readonly" placeholder="Отчество" required="required" ng-model="data.master.sername">
-                                <input type="text" readonly="readonly" placeholder="Фамилия" required="required" ng-model="data.master.patronymic">
+                    <div class="fields ">
+                        <div class="part-1 ">
+                            <div class="username clearfix " ng-if="data.master.kind_profile=='phys' ">
+                                <input type="text " readonly="readonly " placeholder="Имя " required="required " ng-model="data.master.name ">
+                                <input type="text " readonly="readonly " placeholder="Отчество " required="required " ng-model="data.master.sername ">
+                                <input type="text " readonly="readonly " placeholder="Фамилия " required="required " ng-model="data.master.patronymic ">
                             </div>
-                            <div ng-if="data.master.kind_profile=='org'">
-                                <input type="text" readonly="readonly" placeholder="Имя" required="required" ng-model="data.master.name">
+                            <div ng-if="data.master.kind_profile=='org' ">
+                                <input type="text " readonly="readonly " placeholder="Имя " required="required " ng-model="data.master.name ">
                             </div>
                             <div>
-                                <input type="text" readonly="readonly" placeholder="Email" required="required" ng-model="data.master.email">
+                                <input type="text " readonly="readonly " placeholder="Email " required="required " ng-model="data.master.email ">
                             </div>
 
-                            <div class="phones clearfix">
+                            <div class="phones clearfix ">
 
-                                <div class="phone-1">
-                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone1" ng-change="interfaceOptions.textIsChange = 'phone1'" ng-blur="changeText('phone1')">
+                                <div class="phone-1 ">
+                                    <input type="text " ui-mask="+7 (999) 999 99 99 " required="required " ng-model="data.master.phone1 " ng-change="interfaceOptions.textIsChange='phone1' " ng-blur="changeText( 'phone1') ">
                                 </div>
 
-                                <div class="phone-2">
-                                    <input type="text" ui-mask="+7 (999) 999 99 99" required="required" ng-model="data.master.phone2" ng-change="interfaceOptions.textIsChange = 'phone2'" ng-blur="changeText('phone2')">
+                                <div class="phone-2 ">
+                                    <input type="text " ui-mask="+7 (999) 999 99 99 " required="required " ng-model="data.master.phone2 " ng-change="interfaceOptions.textIsChange='phone2' " ng-blur="changeText( 'phone2') ">
                                 </div>
                             </div>
 
-                            <div class="selectors clearfix">
+                            <div class="selectors clearfix ">
 
-                                <div class="service-1">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано категории {{data.master.categories.length}}" ng-click="showCategoriesMenu()">
-                                    <div class="sub" ng-if="interfaceOptions.showComboBox=='Category'">
+                                <div class="service-1 ">
+                                    <input type="text " readonly="readonly " required="required " placeholder="Выбрано категории {{data.master.categories.length}} " ng-click="showCategoriesMenu() ">
+                                    <div class="sub " ng-if="interfaceOptions.showComboBox=='Category' ">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div class="counter">Выбирете не больше <strong>2-х</strong></div>
-                                        <div ng-repeat="element in data.categories | filter:{'type':'category'} | orderBy:'order'" ng-click="checkCategory(element)"><span ng-class="{active: isCheckedCategory(element)}">{{element.val}}</span></div>
-                                        <abbr class="btn" ng-click="selectCategories()">Выбрать</abbr>
+                                        <div class="counter ">Выбирете не больше <strong>2-х</strong></div>
+                                        <div ng-repeat="element in data.categories | filter:{ 'type': 'category'} | orderBy: 'order' " ng-click="checkCategory(element) "><span ng-class="{active: isCheckedCategory(element)} ">{{element.val}}</span></div>
+                                        <abbr class="btn " ng-click="selectCategories() ">Выбрать</abbr>
                                     </div>
                                 </div>
 
-                                <div class="service-2">
-                                    <input type="text" readonly="readonly" required="required" placeholder="Выбрано доп. услуг {{data.master.additional_service.length}}" ng-click="showAdditionalServiceMenu()">
-                                    <div class="sub" ng-if="interfaceOptions.showComboBox=='AddServices'">
+                                <div class="service-2 ">
+                                    <input type="text " readonly="readonly " required="required " placeholder="Выбрано доп. услуг {{data.master.additional_service.length}} " ng-click="showAdditionalServiceMenu() ">
+                                    <div class="sub " ng-if="interfaceOptions.showComboBox=='AddServices' ">
                                         <!--<div>Услуга мастер на час</div>-->
-                                        <div ng-click="checkAdditionalService('contractWork')"><span ng-class="{active: isCheckedAdditionalService('contractWork')}">Работа по договору</span></div>
-                                        <div ng-click="checkAdditionalService('masterOnHour')"><span ng-class="{active: isCheckedAdditionalService('masterOnHour')}">Услуга мастер на час</span></div>
-                                        <abbr class="btn" ng-click="selectAdditionalService()">Выбрать</abbr>
+                                        <div ng-click="checkAdditionalService( 'contractWork') "><span ng-class="{active: isCheckedAdditionalService( 'contractWork')} ">Работа по договору</span></div>
+                                        <div ng-click="checkAdditionalService( 'masterOnHour') "><span ng-class="{active: isCheckedAdditionalService( 'masterOnHour')} ">Услуга мастер на час</span></div>
+                                        <abbr class="btn " ng-click="selectAdditionalService() ">Выбрать</abbr>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="part-2">
+                        <div class="part-2 ">
                             <div>
-                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр." ng-model="data.master.detail" ng-change="interfaceOptions.textIsChange = 'detail'" ng-blur="changeText('detail')"></textarea>
+                                <textarea placeholder="Подробно опишите свою деятельность, опыт работы, преимущества и пр. " ng-model="data.master.detail " ng-change="interfaceOptions.textIsChange='detail' " ng-blur="changeText( 'detail') "></textarea>
                             </div>
-                            <!--<button class="btn saveMaster" ng-click="saveMaster()">Сохранить</button>-->
+                            <!--<button class="btn saveMaster " ng-click="saveMaster() ">Сохранить</button>-->
                         </div>
                     </div>
                 </div>
@@ -101,9 +101,9 @@
 
 
 
-                <div class="fragment" ng-if="data.master != undefined && data.categories != undefined">
-                    <h2 class="text-center">Услуги <span>{{interfaceOptions.countServices}}</span></h2>
-                    <!--                    <div class="service-list clearfix" ng-class="{height2: elementCategories_value.kind_services.length > 3}" ng-repeat="(elementCategories_key, elementCategories_value) in data.master.categories.sort(compareOrder)">-->
+                <div class="fragment " ng-if="data.master !=undefined && data.categories !=undefined ">
+                    <h2 class="text-center ">Услуги <span>{{interfaceOptions.countServices}}</span></h2>
+                    <!--                    <div class="service-list clearfix " ng-class="{height2: elementCategories_value.kind_services.length> 3}" ng-repeat="(elementCategories_key, elementCategories_value) in data.master.categories.sort(compareOrder)">-->
                     <!--                    <div class="service-list clearfix" ng-repeat="(elementCategories_key, elementCategories_value) in data.categories.sort(compareOrder)|filter:{type:'category'}|filter:onlyMasterCategory()">-->
                     <div class="service-list clearfix" ng-class="{height2: data.kind_services.length > 3 && data.kind_services.length < 7, height3: data.kind_services.length > 6}">
                         <!--1ng-if="elementCategories_value.visible"-->
@@ -115,27 +115,27 @@
                             <table>
                                 <caption>{{elementKind_services_value.name}}</caption>
                                 <col class="col1_table">
-                                    <col class="col2_table">
-                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
-                                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                        </tr>
+                                <col class="col2_table">
+                                <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
 
-                                        <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
-                                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                        </tr>
+                                <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
 
-                                        <tr class="footer_table">
-                                            <td colspan="2">
-                                                <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
-                                                <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                                                <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
-                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value)">Изменить услуги</a></span>
-                                            </td>
-                                        </tr>
+                                <tr class="footer_table">
+                                    <td colspan="2">
+                                        <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                        <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
+                                        <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
+                                        <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value)">Изменить услуги</a></span>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
