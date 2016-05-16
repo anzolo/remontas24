@@ -14,13 +14,47 @@
 
 </div>
 <div class="pagination clearfix">
-    <a ng-if="data.current_page>1" href="#" class="left" ng-click="data.loadMasters(data.current_page-1)">назад</a>
-    <ul class="clearfix">
+    <div>
+        <div class="to-left">
+            <a ng-if="data.current_page>1" href="#" class="left" ng-click="data.loadMasters(data.current_page-1)">назад</a>
+        </div>
+        <div class="center-pages">
+            <ul class="clearfix">
 
-        <li ng-repeat="i in getNumber(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}" ng-if="data.max_page<=12"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
+                <li ng-repeat="i in getRange(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}" ng-if="data.max_page<=12"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
 
-        <li ng-repeat="i in getNumber(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}" ng-if="data.max_page>12"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
+                <!--пагинация, если страниц больше 12 и текущая страница меньше 7 -->
 
-    </ul>
-    <a ng-if="data.current_page<data.max_page" href="#" class="right" ng-click="data.loadMasters(data.current_page+1)">вперёд</a>
+                <li ng-repeat="i in getRange(1,8,1)" ng-if="data.max_page>12&&data.current_page<7" ng-class="{active: i==data.current_page}"><a href="#" ng-if="i!=data.current_page" ng-click="data.loadMasters(i)">{{i}}</a><span ng-if="i==data.current_page">{{i}}</span></li>
+
+                <li ng-if="data.max_page>12&&data.current_page<7">...</li>
+
+                <li ng-repeat="i in getRange(data.max_page-3,data.max_page+1,1)" ng-if="data.max_page>12&&data.current_page<7"><a href="#" ng-click="data.loadMasters(i)">{{i}}</a></li>
+
+                <!--пагинация, если страниц больше 12 и текущая страница больше 6 и меньше (максимальная страница - 6) -->
+                <li ng-repeat="i in getRange(1,3,1)" ng-if="data.max_page>12&&data.current_page>6&&data.current_page<=(data.max_page-6)"><a href="#" ng-click="data.loadMasters(i)">{{i}}</a></li>
+
+                <li ng-if="data.max_page>12&&data.current_page>6&&data.current_page<=(data.max_page-6)">...</li>
+
+                <li ng-repeat="i in getRange(data.current_page-2,data.current_page+3,1)" ng-if="data.max_page>12&&data.current_page>6&&data.current_page<=(data.max_page-6)" ng-class="{active: i==data.current_page}"><a href="#" ng-if="i!=data.current_page" ng-click="data.loadMasters(i)">{{i}}</a><span ng-if="i==data.current_page">{{i}}</span></li>
+
+                <li ng-if="data.max_page>12&&data.current_page>6&&data.current_page<=(data.max_page-6)">...</li>
+
+                <li ng-repeat="i in getRange(data.max_page-1,data.max_page+1,1)" ng-if="data.max_page>12&&data.current_page>6&&data.current_page<=(data.max_page-6)"><a href="#" ng-click="data.loadMasters(i)">{{i}}</a></li>
+
+                <!--пагинация, если страниц больше 12 и текущая страница больше (максимальная страница - 6) -->
+
+                <li ng-repeat="i in getRange(1,3,1)" ng-if="data.max_page>12&&data.current_page>(data.max_page-6)"><a href="#" ng-click="data.loadMasters(i)">{{i}}</a></li>
+
+                <li ng-if="data.max_page>12&&data.current_page>(data.max_page-6)">...</li>
+
+                <li ng-repeat="i in getRange(data.max_page-6,data.max_page+1,1)" ng-if="data.max_page>12&&data.current_page>(data.max_page-6)" ng-class="{active: i==data.current_page}"><a href="#" ng-if="i!=data.current_page" ng-click="data.loadMasters(i)">{{i}}</a><span ng-if="i==data.current_page">{{i}}</span></li>
+
+
+            </ul>
+        </div>
+        <div class="to-right">
+            <a ng-if="data.current_page<data.max_page" href="#" class="right" ng-click="data.loadMasters(data.current_page+1)">вперёд</a>
+        </div>
+    </div>
 </div>

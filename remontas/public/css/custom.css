@@ -500,14 +500,39 @@ h2.master-counter span {
     width: 100%;
 }
 
+.pagination > div {
+    display: table-row;
+}
+
+.pagination > div .to-left {
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    width: 80px;
+}
+
+.pagination > div .to-right {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+    width: 80px;
+}
+
+.pagination > div .center-pages {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .pagination ul {
-    margin: 0 0 0 395px;
+    margin: 0 0 0 0px;
     padding: 0;
     list-style: none;
-    float: left;
+    /*float: left;*/
     text-align: center;
     position: relative;
-    top: -5px;
+    /*top: -5px;*/
+    display: inline-block;
 }
 
 .pagination li {
