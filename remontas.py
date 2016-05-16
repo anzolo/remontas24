@@ -265,7 +265,7 @@ def rem_sendOrder():
         newOrder = dict()
 
         newOrder["status"] = "new"
-        newOrder["when"] = datetime.datetime.now()
+        newOrder["when"] = datetime.now()
         newOrder["order"] = dict()
         if len(form["email"]) > 0:
             newOrder["order"]["email"] = form["email"]
