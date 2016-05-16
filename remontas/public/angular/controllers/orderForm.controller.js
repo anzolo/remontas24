@@ -1,4 +1,4 @@
-remontas24Site.controller('orderFormController', ['$scope', 'close', '$document', 'ordersService', function ($scope, close, $document, ordersService) {
+remontas24Site.controller('orderFormController', ['$scope', 'close', '$document', 'ordersService', function($scope, close, $document, ordersService) {
 
     var bodyRef = angular.element($document[0].body)
     bodyRef.addClass('ovh');
@@ -6,7 +6,7 @@ remontas24Site.controller('orderFormController', ['$scope', 'close', '$document'
     $scope.closeWindow = closeWindow;
 
     $scope.model = {
-        "activeTab": "email",
+        "activeTab": "phone",
         "categories": ordersService.getCategories(),
         showComboBox: false,
         form: {
@@ -34,12 +34,12 @@ remontas24Site.controller('orderFormController', ['$scope', 'close', '$document'
 
     function sendOrder() {
         $scope.model.loading = true;
-        ordersService.sendOrder($scope.model.form, function (data) {
+        ordersService.sendOrder($scope.model.form, function(data) {
             console.log('send order')
 
             $scope.model.showInfoMessage = true;
 
-        }).$promise.finally(function () {
+        }).$promise.finally(function() {
             // called no matter success or failure
             $scope.model.loading = false;
         })
