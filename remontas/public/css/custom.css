@@ -496,6 +496,8 @@ h2.master-counter span {
 
 .pagination {
     margin-top: 5px;
+    display: table;
+    width: 100%;
 }
 
 .pagination ul {

@@ -17,7 +17,9 @@
     <a ng-if="data.current_page>1" href="#" class="left" ng-click="data.loadMasters(data.current_page-1)">назад</a>
     <ul class="clearfix">
 
-        <li ng-repeat="i in getNumber(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
+        <li ng-repeat="i in getNumber(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}" ng-if="data.max_page<=12"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
+
+        <li ng-repeat="i in getNumber(data.max_page) track by $index" ng-class="{active: $index+1==data.current_page}" ng-if="data.max_page>12"><a ng-if="$index+1!=data.current_page" href="#" ng-click="data.loadMasters($index+1)">{{$index+1}}</a><span ng-if="$index+1==data.current_page">{{$index+1}}</span></li>
 
     </ul>
     <a ng-if="data.current_page<data.max_page" href="#" class="right" ng-click="data.loadMasters(data.current_page+1)">вперёд</a>
