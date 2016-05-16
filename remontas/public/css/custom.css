@@ -1539,8 +1539,10 @@ opacity: 0;
     /*    border-collapse: collapse;*/
 }
 
-.page .comparison .params .caption {
+.page .comparison .params .caption,
+.page .comparison .masters .caption {
     display: table-caption;
+    height: 173px;
 }
 
 
@@ -1581,7 +1583,8 @@ text-decoration: underline;
 }
 */
 
-.page .comparison .params .job {
+.page .comparison .params .job,
+.page .comparison .masters .item .price {
     display: table-row;
     width: 100%;
     height: 40px;
@@ -1589,7 +1592,8 @@ text-decoration: underline;
     /*    border: 1px solid blue;*/
 }
 
-.page .comparison .params .job > div {
+.page .comparison .params .job > div,
+.page .comparison .masters .item .price > div {
     display: table-cell;
     vertical-align: middle;
 }
@@ -1636,7 +1640,8 @@ text-decoration: underline;
 
 .page .comparison .params .active,
 .page .comparison .masters .active {
-    background: #ffffba;
+    /*    background: #ffffba;*/
+    background: #fce327;
 }
 
 .page .comparison .masters {
@@ -1660,71 +1665,60 @@ text-decoration: underline;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    display: table;
 }
 
-
-/*
-.page .comparison .masters .item > div {
-padding-left: 20px;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
+.page .comparison .masters .item .price {
+    display: table-row;
 }
-*/
+
+.page .comparison .masters .caption {
+    text-align: center;
+}
+
+.page .comparison .masters .name {
+    display: table-cell;
+    vertical-align: middle;
+    height: 34px;
+    width: 145px;
+    overflow: hidden;
+    /*    border: 1px solid;*/
+}
+
+.page .comparison .masters .name > div {
+    max-height: 34px;
+}
+
+.page .comparison .masters .photo {
+    border: 1px solid #ebebeb;
+    width: 92px;
+    height: 92px;
+    margin: 10px auto;
+    padding: 5px !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.page .comparison .masters .favorite {
+    position: absolute;
+    background: transparent url('../img/icon-heart-grey.png') no-repeat;
+    width: 30px;
+    height: 27px;
+    right: -15px;
+    top: -10px;
+    cursor: pointer;
+}
+
+.page .comparison .masters .phone {
+    margin-bottom: 10px;
+}
 
 
 /*
 .page .comparison .masters .delimiter {
 margin: 25px 0 16px;
-}
-*/
-
-
-/*
-.page .comparison .masters .name {
-margin-bottom: 20px;
-}
-*/
-
-
-/*
-.page .comparison .masters .photo {
-border: 1px solid #ebebeb;
-width: 92px;
-height: 92px;
-margin-left: 20px;
-padding: 5px !important;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-position: relative;
-}
-*/
-
-
-/*
-.page .comparison .masters .favoritePlus {
-position: absolute;
-background: transparent url('../img/icon-heart-plus.png') no-repeat;
-width: 30px;
-height: 27px;
-right: -15px;
-top: -5px;
-cursor: pointer;
-}
-*/
-
-
-/*
-.page .comparison .masters .favoriteMinus {
-background: transparent url('../img/icon-heart-grey.png') no-repeat;
-}
-*/
-
-
-/*
-.page .comparison .masters .phone {
-margin: 20px 0;
 }
 */
 

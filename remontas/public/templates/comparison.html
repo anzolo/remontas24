@@ -16,8 +16,8 @@
 
                         <div class="job" ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
                             <div class="marked" ng-if="element.type=='service'">{{element.name}}</div>
-                            <div class="job-name" ng-class="{active:model.checked==element._id,mouseOver:element.type=='job' && model.mouseOver==element._id, mouseOverPos:element.shortName != undefined}" ng-if="element.type=='job'" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>
-                            <div class="price" ng-class="{active:model.checked==element._id,mouseOver:element.type=='job' && model.mouseOver==element._id}" ng-bind-html="prepareHTML(showAveragePrice(element))"></div>
+                            <div class="job-name" ng-class="{active:model.checked==element._id, mouseOver:element.type=='job' && model.mouseOver==element._id, mouseOverPos:element.shortName!=undefined}" ng-if="element.type=='job'" ng-click="model.checked = element._id">{{showServiceText(element)}}</div>
+                            <div class="price" ng-class="{active:model.checked==element._id, mouseOver:element.type=='job' && model.mouseOver==element._id}" ng-click="model.checked = element._id" ng-bind-html="prepareHTML(showAveragePrice(element))"></div>
                         </div>
                     </div>
 
@@ -97,16 +97,21 @@
                     <div class="masters clearfix">
                         <div class="inner">
                             <div class="item" ng-repeat="master in model.masters">
-                                <div class="name">{{master.name}}</div>
-                                <div class="photo">
-                                    <div class="favorite"></div>
-                                    <img ng-src="{{model.configUrl.img_url_path + master.avatar}}" width="80" height="80">
+                                <div class="caption">
+                                    <div class="name">
+                                        <div>{{master.name}}</div>
+                                    </div>
+                                    <div class="photo">
+                                        <div class="favorite" ng-click="addToFavorites(master._id)"></div>
+                                        <a href="#" ui-sref="remontas.profile({ id: getIdForMaster(master) })">
+                                            <img ng-src="{{model.configUrl.img_url_path + master.avatar}}" width="80" height="80">
+                                        </a>
+                                    </div>
+                                    <div class="phone">{{showPhone(master.phone)}}</div>
                                 </div>
-                                <div class="phone">{{showPhone(master.phone)}}</div>
-
-                                <div ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
+                                <div class="price" ng-repeat="element in model.categories" ng-mouseenter="model.mouseOver = element._id" ng-mouseleave="model.mouseOver = ''">
                                     <div ng-if="element.type=='service'" class="delimiter"></div>
-                                    <div ng-if="element.type=='job'" ng-class="{active:model.checked == element._id, mouseOver:model.mouseOver==element._id}" ng-click="model.checked = element._id" ng-attr-data-param="{{'param-' + $index}}" ng-bind-html="prepareHTML(showPrice(element, $index, master))"></div>
+                                    <div ng-if="element.type=='job'" ng-class="{active:model.checked == element._id, mouseOver:model.mouseOver==element._id}" ng-click="model.checked = element._id">{{showPrice(element, master)}}</div>
                                 </div>
 
                                 <!--

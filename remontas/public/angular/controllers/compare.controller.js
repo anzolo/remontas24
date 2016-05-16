@@ -7,24 +7,30 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     $scope.showPrice = showPrice;
     $scope.showServiceText = showServiceText;
     $scope.showAveragePrice = showAveragePrice;
+    $scope.addToFavorites = addToFavorites;
+    $scope.getIdForMaster = getIdForMaster;
 
-    compareService.compare({
-        "masters": Session.favourites()
-    }, function (data) {
-        $scope.model.configUrl = JSON.parse(JSON.stringify(data.configUrl));
-        $scope.model.masters = JSON.parse(JSON.stringify(data.masters));
-        $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
-        $scope.model.averagePrices = JSON.parse(JSON.stringify(data.averagePrices.prices));
-        shrinkServiceText();
-        $scope.model.checked = "";
-        $scope.model.mouseOver = "";
+    loadData();
 
-        Session.clearFavorites();
-        $scope.model.masters.forEach(function (element) {
-            Session.addToFavourites(element._id)
-        }, this);
+    function loadData() {
+        compareService.compare({
+            "masters": Session.favourites()
+        }, function (data) {
+            $scope.model.configUrl = JSON.parse(JSON.stringify(data.configUrl));
+            $scope.model.masters = JSON.parse(JSON.stringify(data.masters));
+            $scope.model.categories = JSON.parse(JSON.stringify(data.categories));
+            $scope.model.averagePrices = JSON.parse(JSON.stringify(data.averagePrices.prices));
+            shrinkServiceText();
+            $scope.model.checked = "";
+            $scope.model.mouseOver = "";
 
-    })
+            Session.clearFavorites();
+            $scope.model.masters.forEach(function (element) {
+                Session.addToFavourites(element._id)
+            }, this);
+
+        });
+    };
 
     function showPhone(phone) {
         if (phone != "") {
@@ -33,8 +39,8 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
         return phone;
     }
 
-    function showPrice(category, index, master) {
-        if (master.prices[category._id] != undefined) return master.prices[category._id] + "<span>" + category.measure + "</span>";
+    function showPrice(category, master) {
+        if (master.prices[category._id] != undefined) return master.prices[category._id];
         return "-----";
     }
 
@@ -60,6 +66,16 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
 
         if (service.shortName == undefined) return service.name
         else return service.shortName
+    };
 
+    function addToFavorites(id) {
+        Session.addToFavourites(id);
+        loadData();
+    };
+
+    function getIdForMaster(master) {
+        if (master.alias_id !== undefined && master.alias_id !== "")
+            return master.alias_id;
+        else return master._id;
     }
 }]);
