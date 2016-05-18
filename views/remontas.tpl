@@ -8,9 +8,10 @@
     <link type="text/css" rel="stylesheet" href="/remontas/public/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/remontas/public/css/custom.css">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/remontas/public/bower_components/font-awesome/css/font-awesome.min.css">
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>-->
+    <link href='/remontas/public/bower_components/roboto-fontface/css/roboto-fontface.css' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/remontas/public/favicon.ico" />
     <meta name="viewport" content="width=1250">
 
