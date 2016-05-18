@@ -22,14 +22,14 @@
 	<![endif]-->
 
     <script src="/remontas/public/bower_components/es6-shim/es6-shim.min.js"></script>
-    <script src="/remontas/public/bower_components/angular/angular.js"></script>
+    <script src="/remontas/public/bower_components/angular/angular.min.js"></script>
     <script src="/remontas/public/bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="/remontas/public/bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="/remontas/public/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
-    <script src="/remontas/public/bower_components/angular-ui-mask/dist/mask.js"></script>
-    <script src="/remontas/public/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/remontas/public/bower_components/ng-file-upload/ng-file-upload-all.js"></script>
+    <script src="/remontas/public/bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-ui-mask/dist/mask.min.js"></script>
+    <script src="/remontas/public/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/remontas/public/bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 
 </head>
 
