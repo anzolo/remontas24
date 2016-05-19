@@ -1609,7 +1609,7 @@ text-decoration: underline;
 */
 
 .page .comparison .params .job,
-.page .comparison .masters .item .price {
+.page .comparison .masters .item .element {
     display: table-row;
     width: 100%;
     height: 40px;
@@ -1618,7 +1618,7 @@ text-decoration: underline;
 }
 
 .page .comparison .params .job > div,
-.page .comparison .masters .item .price > div {
+.page .comparison .masters .item .element > div {
     display: table-cell;
     vertical-align: middle;
 }
@@ -1657,10 +1657,16 @@ text-decoration: underline;
     display: block;
 }
 
-.page .comparison .masters [data-param] {
-    padding: 9px 0 8px 25px;
+.page .comparison .masters .price {
     cursor: pointer;
-    height: 23px;
+}
+
+.page .comparison .masters .price .fa-arrow-up {
+    color: red;
+}
+
+.page .comparison .masters .price .fa-arrow-down {
+    color: green;
 }
 
 .page .comparison .params .active,
@@ -1680,7 +1686,7 @@ text-decoration: underline;
 }
 
 .page .comparison .masters .inner {
-    width: 2000px;
+    width: 10000px;
 }
 
 .page .comparison .masters .item {
@@ -1693,11 +1699,7 @@ text-decoration: underline;
     display: table;
 }
 
-.page .comparison .masters .item .price {
-    display: table-row;
-}
-
-.page .comparison .masters .caption {
+.page .comparison .masters {
     text-align: center;
 }
 
@@ -1739,13 +1741,6 @@ text-decoration: underline;
 .page .comparison .masters .phone {
     margin-bottom: 10px;
 }
-
-
-/*
-.page .comparison .masters .delimiter {
-margin: 25px 0 16px;
-}
-*/
 
 .nicescroll-cursors {
     background-image: url('../img/scroll-lines.png');

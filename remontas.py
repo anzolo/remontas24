@@ -137,6 +137,8 @@ def rem_compareMasters():
             newMaster["phone"] = master["phone2"]
         newMaster["avatar"] = master["avatar"]
         newMaster["count_works"] = len(master["works"])
+        newMaster["alias_id"] = master.get("alias_id", "")
+        newMaster["additional_service"] = master["additional_service"]
 
         newMaster["prices"] = dict()
 

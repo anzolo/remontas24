@@ -7,8 +7,10 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     $scope.showPrice = showPrice;
     $scope.showServiceText = showServiceText;
     $scope.showAveragePrice = showAveragePrice;
-    $scope.addToFavorites = addToFavorites;
+    $scope.chackAveragePrice = chackAveragePrice;
+    $scope.dropMaster = dropMaster;
     $scope.getIdForMaster = getIdForMaster;
+    $scope.haveAdditionalService = haveAdditionalService;
 
     loadData();
 
@@ -49,6 +51,15 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
         return "";
     }
 
+    function chackAveragePrice(category, master) {
+        if ($scope.model.averagePrices[category._id] != undefined) {
+            if (master.prices[category._id] != undefined) {
+                return master.prices[category._id] > $scope.model.averagePrices[category._id]
+            };
+        };
+        return false;
+    }
+
     function prepareHTML(element) {
         return $sce.trustAsHtml(element);
     };
@@ -68,14 +79,18 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
         else return service.shortName
     };
 
-    function addToFavorites(id) {
+    function dropMaster(id, index) {
         Session.addToFavourites(id);
-        loadData();
+        $scope.model.masters.splice(index, 1);
     };
 
     function getIdForMaster(master) {
         if (master.alias_id !== undefined && master.alias_id !== "")
             return master.alias_id;
         else return master._id;
+    }
+
+    function haveAdditionalService(master, service) {
+        return (master.additional_service.indexOf(service) >= 0) ? "Да" : "Нет";
     }
 }]);
