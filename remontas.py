@@ -27,6 +27,10 @@ def index():
 def index2(id):
     return template('remontas')
 
+@route('/google5ec13e4f13b0041c.html')
+def googleSearchCheck():
+    return static_file("google5ec13e4f13b0041c.html", root='./remontas/public')
+
 
 
 
