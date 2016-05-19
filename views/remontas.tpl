@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <base href="/"></base>
+    <base href="/">
     <meta charset="UTF-8">
     <title>Ремонтас 24 - Мастер найдется!</title>
     <link type="text/css" rel="stylesheet" href="/remontas/public/css/normalize.css">
@@ -10,8 +10,7 @@
 
     <link rel="stylesheet" href="/remontas/public/bower_components/font-awesome/css/font-awesome.min.css">
 
-    <!--<link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>-->
-    <link href='/remontas/public/bower_components/roboto-fontface/css/roboto-fontface.css' rel='stylesheet' type='text/css'>
+    <link href="/remontas/public/bower_components/roboto-fontface/css/roboto-fontface.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="/remontas/public/favicon.ico" />
     <meta name="viewport" content="width=1250">
 
@@ -62,6 +61,41 @@
     <!--  Сервисы  -->
     <script src="/remontas/public/angular/services/services.js"></script>
     <script src="/remontas/public/angular/services/AuthServices.js"></script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter37458925 = new Ya.Metrika({
+                        id: 37458925,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true,
+                        webvisor: true,
+                        trackHash: true
+                    });
+                } catch (e) {}
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function() {
+                    n.parentNode.insertBefore(s, n);
+                };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/37458925" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
 </body>
 
