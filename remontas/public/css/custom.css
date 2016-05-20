@@ -464,8 +464,16 @@ h2.master-counter span {
     cursor: pointer;
 }
 
+.selection .item .favorite:hover {
+    background: transparent url('../img/icon-heart-plus-green.png') no-repeat;
+}
+
 .selection .item .favorite.active {
     background: transparent url('../img/icon-heart-grey.png') no-repeat;
+}
+
+.selection .item .favorite.active:hover {
+    background: transparent url('../img/icon-heart-grey-red.png') no-repeat;
 }
 
 .selection .item .img {
@@ -1567,7 +1575,8 @@ opacity: 0;
 .page .comparison .params .caption,
 .page .comparison .masters .caption {
     display: table-caption;
-    height: 173px;
+    height: 200px;
+    position: relative;
 }
 
 
@@ -1624,7 +1633,8 @@ text-decoration: underline;
 }
 
 .page .comparison .params .mouseOver,
-.page .comparison .masters .mouseOver {
+.page .comparison .masters .mouseOver,
+.page .comparison .params .marked:hover {
     /*    background: #fff;*/
     background: #fff9c7;
 }
@@ -1634,10 +1644,12 @@ text-decoration: underline;
 }
 
 .page .comparison .params .marked {
-    padding: 2px 0px 2px 15px;
+    /*    padding: 2px 0px 2px 15px;*/
+    padding: 2px 0px 2px 5px;
     font-size: 13px;
     font-weight: 500;
-    width: 273px
+    width: 273px;
+    cursor: pointer;
 }
 
 .page .comparison .params .job-name {
@@ -1728,14 +1740,25 @@ text-decoration: underline;
     position: relative;
 }
 
+.page .comparison .masters .photo:hover {
+    /*> div:not(.favorite):hover {*/
+    background: #fce327;
+}
+
 .page .comparison .masters .favorite {
     position: absolute;
     background: transparent url('../img/icon-heart-grey.png') no-repeat;
     width: 30px;
     height: 27px;
-    right: -15px;
-    top: -10px;
+    /*    right: -15px;*/
+    /*    top: -10px;*/
+    right: 12px;
+    top: 32px;
     cursor: pointer;
+}
+
+.page .comparison .masters .favorite:hover {
+    background: transparent url('../img/icon-heart-grey-red.png') no-repeat;
 }
 
 .page .comparison .masters .phone {
