@@ -438,8 +438,17 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 10px;
+    /*    padding: 10px;*/
     margin-bottom: 30px;
+}
+
+.selection .master {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .selection .item + .item {
@@ -450,7 +459,7 @@ h2.master-counter span {
     margin-left: 0;
 }
 
-.selection .item:hover {
+.selection .master:hover {
     background: #ffe626;
 }
 
