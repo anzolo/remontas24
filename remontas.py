@@ -154,13 +154,13 @@ def rem_compareMasters():
                     servicesMastersSet.add(kindService["_id"])
         masters.append(newMaster)
 
-    kindServicesDict = conf.db.category_job.find({"type": "service"}).sort([("parent_id",-1),("order",-1)])
+    kindServicesDict = conf.db.category_job.find({"type": "service"}).sort([("parent_id",-1),("order",1)])
 
     for kindService in kindServicesDict:
         if str(kindService["_id"]) in servicesMastersSet:
             newCategory = {'name':kindService["val"], 'type':kindService["type"], '_id':kindService["_id"]}
             categories.append(newCategory)
-            servicesList = conf.db.category_job.find({"parent_id": kindService["_id"]}).sort("order",-1)
+            servicesList = conf.db.category_job.find({"parent_id": kindService["_id"]}).sort("order",1)
             for service in servicesList:
                 if str(service["_id"]) in servicesMastersSet:
                     newService = {'name': service["val"], 'type': service["type"], '_id': service["_id"], "measure":service["measure"]}
