@@ -56,7 +56,12 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     function chackAveragePrice(category, master) {
         if ($scope.model.averagePrices[category._id] != undefined) {
             if (master.prices[category._id] != undefined) {
-                return master.prices[category._id] > $scope.model.averagePrices[category._id]
+                var avgPrice = $scope.model.averagePrices[category._id];
+                var masterPrice = master.prices[category._id];
+                //                console.log(avgPrice + avgPrice / 10, avgPrice, avgPrice - avgPrice / 10, masterPrice);
+                if (masterPrice > avgPrice + avgPrice / 10) return 1
+                else if (masterPrice < avgPrice - avgPrice / 10) return -1
+                else return 0
             };
         };
         return false;

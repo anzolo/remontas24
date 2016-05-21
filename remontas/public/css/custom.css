@@ -1687,6 +1687,10 @@ text-decoration: underline;
 }
 
 .page .comparison .masters .price .fa-arrow-down {
+    color: blue;
+}
+
+.page .comparison .masters .price .fa-check {
     color: green;
 }
 

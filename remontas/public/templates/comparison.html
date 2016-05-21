@@ -64,7 +64,7 @@
                                         <div class="delimiter"></div>
                                     </div>
                                     <div ng-if="element.type=='job'" class="price" ng-class="{active:model.checked == element._id, mouseOver:model.mouseOver==element._id}" ng-click="model.checked = element._id">{{showPrice(element, master)}}
-                                        <i ng-class="{'fa fa-arrow-up':chackAveragePrice(element, master), 'fa fa-arrow-down':!chackAveragePrice(element, master)}" ng-if="showPrice(element, master)!='-----'"></i>
+                                        <i ng-class="{'fa fa-arrow-up':chackAveragePrice(element, master)>0, 'fa fa-arrow-down':chackAveragePrice(element, master)<0, 'fa fa-check':chackAveragePrice(element, master)==0}" ng-if="showPrice(element, master)!='-----'"></i>
                                     </div>
                                 </div>
                             </div>
