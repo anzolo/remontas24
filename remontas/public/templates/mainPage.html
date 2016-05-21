@@ -9,12 +9,15 @@
                     </li>
                     <li ng-class="{active: currentPage=='remontas.lk'}" class="dropdown" ng-mouseenter="setMasteramPodmenuVisible(true)" ng-mouseleave="setMasteramPodmenuVisible(false)">
                         <a href="#" ng-click="showAuthRegForm()">{{nameOfMasterMenu()}}</a>
-                        <ul class="active" ng-class="{lk:isAuth()}" ng-if="showMasteramPodmenu">
-                            <li ng-if="!isAuth()"><a href="#" class="open-modal" ng-click="showAuthRegForm()">Вход/Регистрация</a></li>
-                            <li><a href="#" ui-sref="remontas.howWorks">Как это работает</a></li>
-                            <li ng-if="isAuth()"><a href="#" ng-click="logout()">Выйти</a></li>
-                        </ul>
+                        <div class="podmenu" ng-class="{lk:isAuth()}" ng-if="showMasteramPodmenu">
+                            <ul class="active">
+                                <li ng-if="!isAuth()"><a href="#" class="open-modal" ng-click="showAuthRegForm()">Вход/Регистрация</a></li>
+                                <li><a href="#" ui-sref="remontas.howWorks">Как это работает</a></li>
+                                <li ng-if="isAuth()"><a href="#" ng-click="logout()">Выйти</a></li>
+                            </ul>
+                        </div>
                     </li>
+
                 </ul>
                 <div class="comparison-list" ui-sref="remontas.compareList"><span>{{getFavoritesCount()}}</span>Список сравнения</div>
             </div>

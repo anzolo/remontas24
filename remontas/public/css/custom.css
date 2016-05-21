@@ -146,13 +146,18 @@ body,
     margin-left: 50px;
 }
 
-.header .top-menu > li.dropdown ul {
-    list-style: none;
-    display: none;
+.header .top-menu > li.dropdown .podmenu {
     position: absolute;
-    margin: 0;
-    top: 20px;
+    top: 10px;
     left: -60px;
+    height: 114px;
+}
+
+.header .top-menu .podmenu ul {
+    list-style: none;
+    /*    display: none;*/
+    margin: 0;
+    margin-top: 10px;
     width: 203px;
     height: 104px;
     padding: 25px 0 0 0;
