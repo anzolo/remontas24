@@ -474,7 +474,8 @@ h2.master-counter span {
 }
 
 .selection .item .favorite:hover {
-    background: transparent url('../img/icon-heart-plus-green.png') no-repeat;
+    /*    background: transparent url('../img/icon-heart-plus-green.png') no-repeat;*/
+    background: transparent url('../img/icon-heart-plus-blue.png') no-repeat;
 }
 
 .selection .item .favorite.active {
