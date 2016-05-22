@@ -1,4 +1,4 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', '$timeout', function($scope, lkData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS, $timeout) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', '$timeout', function ($scope, lkData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS, $timeout) {
 
     $scope.interfaceOptions = {
         showComboBox: "",
@@ -46,6 +46,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     $scope.mouseOverService = mouseOverService;
     $scope.checkMouseOverService = checkMouseOverService;
     $scope.clearMouseOverService = clearMouseOverService;
+    $scope.parentName = parentName;
 
     $scope.showWhatIsPopup = showWhatIsPopup;
 
@@ -58,7 +59,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     function loadData() {
         $scope.data.uploadData = {};
 
-        lkData.init({}, function(data) {
+        lkData.init({}, function (data) {
             if (data.status == "OK") {
                 $scope.data.master = JSON.parse(JSON.stringify(data.master));
 
@@ -101,17 +102,17 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             url: connString,
             data: $scope.data.uploadData
 
-        }).then(function(resp) {
+        }).then(function (resp) {
             loadData();
-        }, function(resp) {
+        }, function (resp) {
             console.log('Error when try to save master. Status: ' + resp.status);
 
             $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
 
-        }).finally(function() {
+        }).finally(function () {
             // called no matter success or failure
 
-            $timeout(function() {
+            $timeout(function () {
                 $scope.interfaceOptions.loading = false;
             }, 1000);
 
@@ -137,8 +138,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             ModalService.showModal({
                 templateUrl: "/remontas/public/templates/modals/changeAvatar.html",
                 controller: "changeAvatarModalController"
-            }).then(function(modal) {
-                modal.close.then(function(result) {
+            }).then(function (modal) {
+                modal.close.then(function (result) {
                     bodyRef.removeClass('ovh');
 
                     if (result) {
@@ -168,13 +169,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     }
 
     function isCheckedCategory(element) {
-        return $scope.data.master.categories.findIndex(function(el) {
+        return $scope.data.master.categories.findIndex(function (el) {
             return el._id == element._id;
         }) >= 0;
     };
 
     function checkCategory(element) {
-        var categoryIndex = $scope.data.master.categories.findIndex(function(el) {
+        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
             return el._id == element._id
         });
 
@@ -182,7 +183,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
             $scope.data.master.categories.splice(categoryIndex, 1);
             $scope.data.kind_services = masterKindServiceArray();
         } else if ($scope.data.master.categories.length < 2) {
-            var tempcategoryIndex = $scope.tempMasterCategoriesSelect.findIndex(function(el) {
+            var tempcategoryIndex = $scope.tempMasterCategoriesSelect.findIndex(function (el) {
                 return el._id == element._id
             });
 
@@ -248,8 +249,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     };
 
     function clearMouseOverService() {
-        $scope.interfaceOptions.mouseOverService.forEach(function(kind_service, i, arr) {
-            kind_service.forEach(function(service, i, arr) {
+        $scope.interfaceOptions.mouseOverService.forEach(function (kind_service, i, arr) {
+            kind_service.forEach(function (service, i, arr) {
                 service.visible = false
             })
         });
@@ -287,8 +288,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     };
 
     function onlyMasterCategory() {
-        return function(category) {
-            return $scope.data.master.categories.findIndex(function(el) {
+        return function (category) {
+            return $scope.data.master.categories.findIndex(function (el) {
                 return el._id == category._id
             }) >= 0
         };
@@ -296,16 +297,16 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
 
     function masterKindServiceArray() {
         var result = [];
-        var category = $scope.data.categories.filter(function(el) {
+        var category = $scope.data.categories.filter(function (el) {
             return (el.type == 'category') && categoryInMaster(el)
         }).sort($scope.compareOrder);
 
-        category.forEach(function(cat, i, arr) {
-            var kindService = $scope.data.categories.filter(function(el) {
+        category.forEach(function (cat, i, arr) {
+            var kindService = $scope.data.categories.filter(function (el) {
                 return el.parent_id == cat._id
             }).sort($scope.compareOrder);
 
-            kindService.forEach(function(kser, i, arr) {
+            kindService.forEach(function (kser, i, arr) {
                 var kindServiceM = KindServiceInMaster(cat, kser);
                 if (kindServiceM != undefined) result.push(kindServiceM)
                 else {
@@ -323,18 +324,28 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         return result;
     };
 
+    function parentName(kindService) {
+        var categoryId = $scope.data.categories.find(function (el) {
+            return (el._id == kindService._id)
+        }).parent_id;
+        var categoryName = $scope.data.categories.find(function (el) {
+            return (el._id == categoryId)
+        }).val;
+        return categoryName;
+    };
+
     function categoryInMaster(category) {
-        return $scope.data.master.categories.findIndex(function(el) {
+        return $scope.data.master.categories.findIndex(function (el) {
             return el._id == category._id
         }) >= 0
     };
 
     function KindServiceInMaster(category, KindService) {
-        var categoryIndex = $scope.data.master.categories.findIndex(function(el) {
+        var categoryIndex = $scope.data.master.categories.findIndex(function (el) {
             return el._id == category._id
         });
         if (categoryIndex >= 0) {
-            var kindServiceIndex = $scope.data.master.categories[categoryIndex].kind_services.findIndex(function(el) {
+            var kindServiceIndex = $scope.data.master.categories[categoryIndex].kind_services.findIndex(function (el) {
                 return el._id == KindService._id
             });
 
@@ -359,8 +370,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
                         master: $scope.data.master
                     }
                 }
-            }).then(function(modal) {
-                modal.close.then(function(result) {
+            }).then(function (modal) {
+                modal.close.then(function (result) {
                     bodyRef.removeClass('ovh');
 
                     if (result) {
@@ -377,9 +388,9 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     function calcCountServices() {
         var count = 0;
 
-        $scope.data.master.categories.forEach(function(category, i, arr) {
-            category.kind_services.forEach(function(kindService, i, arr) {
-                kindService.services.forEach(function(service, i, arr) {
+        $scope.data.master.categories.forEach(function (category, i, arr) {
+            category.kind_services.forEach(function (kindService, i, arr) {
+                kindService.services.forEach(function (service, i, arr) {
                     count++;
                 })
             })
@@ -437,8 +448,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
                 inputs: {
                     data: data
                 }
-            }).then(function(modal) {
-                modal.close.then(function(result) {
+            }).then(function (modal) {
+                modal.close.then(function (result) {
                     bodyRef.removeClass('ovh');
 
                     if (result) {

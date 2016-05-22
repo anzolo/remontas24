@@ -1,4 +1,4 @@
-remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProfile', '$stateParams', 'ModalService', 'Session', function($scope, $sce, masterOpenProfile, $stateParams, ModalService, Session) {
+remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProfile', '$stateParams', 'ModalService', 'Session', function ($scope, $sce, masterOpenProfile, $stateParams, ModalService, Session) {
 
     $scope.interfaceOptions = {
         checkKind_services: null,
@@ -33,7 +33,7 @@ remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProf
     function loadData(masterId) {
         masterOpenProfile.get({
             'masterId': masterId
-        }, function(value, responseHeaders) {
+        }, function (value, responseHeaders) {
             if (value.status == "OK") {
                 $scope.model.master = JSON.parse(JSON.stringify(value.master));
 
@@ -119,9 +119,10 @@ remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProf
     function masterKindServiceArray() {
         var result = [];
         var category = $scope.model.master.categories.sort(compareOrder);
-        category.forEach(function(cat, i, arr) {
+        category.forEach(function (cat, i, arr) {
             var kindService = cat.kind_services.sort(compareOrder);
-            kindService.forEach(function(kser, i, arr) {
+            kindService.forEach(function (kser, i, arr) {
+                kser["parent_name"] = cat.name;
                 result.push(kser)
             });
         });
@@ -142,8 +143,8 @@ remontas24Site.controller('masterController', ['$scope', '$sce', 'masterOpenProf
     }
 
     function clearMouseOverService() {
-        $scope.interfaceOptions.mouseOverService.forEach(function(kind_service, i, arr) {
-            kind_service.forEach(function(service, i, arr) {
+        $scope.interfaceOptions.mouseOverService.forEach(function (kind_service, i, arr) {
+            kind_service.forEach(function (service, i, arr) {
                 service.visible = false
             })
         });

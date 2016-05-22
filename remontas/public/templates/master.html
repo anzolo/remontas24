@@ -29,7 +29,10 @@
             <div class="service-list clearfix" ng-class="{height2: model.kind_services.length > 3 && model.kind_services.length < 7, height3: model.kind_services.length > 6}">
                 <div class="clearfix" ng-class="{active: elementKind_services_value._id == interfaceOptions.checkKind_services}" ng-repeat="(elementKind_services_key, elementKind_services_value) in model.kind_services">
                     <table>
-                        <caption>{{elementKind_services_value.name}}</caption>
+                        <caption>
+                            <div class="name">{{elementKind_services_value.name}}</div>
+                            <div class="cat_name">{{elementKind_services_value.parent_name}}</div>
+                        </caption>
                         <col class="col1_table">
                             <col class="col2_table">
                                 <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">

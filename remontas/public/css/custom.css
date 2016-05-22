@@ -1220,16 +1220,16 @@ background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
 
 .service-list {
     position: relative;
-    height: 266px;
+    height: 273px;
     /*margin-bottom: 40px;*/
 }
 
 .service-list.height2 {
-    height: 534px;
+    height: 548px;
 }
 
 .service-list.height3 {
-    height: 802px;
+    height: 823px;
 }
 
 .service-list > div {
@@ -1240,7 +1240,7 @@ background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
     width: 378px;
     z-index: 999;
     border: 1px solid #fff;
-    min-height: 244px;
+    min-height: 251px;
 }
 
 .service-list table {
@@ -1255,12 +1255,21 @@ background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
 }
 
 .service-list table caption {
-    font-size: 20px;
-    font-weight: 500;
     margin: 0px 0px 15px 0px;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
+    /*    padding-bottom: 15px;*/
     border-bottom: 1px solid #dfdfdf;
     text-align: center;
+}
+
+.service-list table caption .name {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.service-list table caption .cat_name {
+    font-size: 14px;
+    /*    font-weight: 500;*/
 }
 
 .service-list > div:nth-of-type(3n + 1) {
@@ -1278,13 +1287,13 @@ background: transparent url('../img/icon-heart-plus.png') no-repeat left center;
 .service-list > div:nth-of-type(4),
 .service-list > div:nth-of-type(5),
 .service-list > div:nth-of-type(6) {
-    top: 268px;
+    top: 275px;
 }
 
 .service-list > div:nth-of-type(7),
 .service-list > div:nth-of-type(8),
 .service-list > div:nth-of-type(9) {
-    top: 536px;
+    top: 550px;
 }
 
 .service-list table tr:last-of-type > td {
