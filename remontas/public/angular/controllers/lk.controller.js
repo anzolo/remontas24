@@ -114,7 +114,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
 
             $timeout(function () {
                 $scope.interfaceOptions.loading = false;
-            }, 1000);
+            }, 2000);
 
 
 
