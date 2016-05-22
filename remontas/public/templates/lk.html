@@ -17,7 +17,7 @@
                     <div class="corner "></div>
                     <div class="body ">
                         <h3>Оценка портфолио мастера</h3>
-                        <h4 ng-if="data.master.status!='active' ">У вас слишком мало баллов! Ваше портфолио не видят посетители remontas24. Заполните информацию в профиле, чтобы получать заказы от посетителей нашего сервиса.</h4>
+                        <h4 ng-if="data.master.status!='active' ">Ваше портфолио не видно посетителям сайта! Заполните следующую информаицю в профиле, чтобы получать заказы от посетителей нашего сервиса:</h4>
                         <div>
                             <ul>
                                 <li ng-class="{ok:criteria.status, comment:!criteria.status} " ng-repeat="criteria in data.scoreDetail ">{{criteria.description + " : " + criteria.score +" баллов "}}
@@ -115,27 +115,27 @@
                             <table>
                                 <caption>{{elementKind_services_value.name}}</caption>
                                 <col class="col1_table">
-                                    <col class="col2_table">
-                                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
-                                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                        </tr>
+                                <col class="col2_table">
+                                <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
 
-                                        <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
-                                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                        </tr>
+                                <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
+                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                                </tr>
 
-                                        <tr class="footer_table">
-                                            <td colspan="2">
-                                                <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
-                                                <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                                                <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
-                                                <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value)">Изменить услуги</a></span>
-                                            </td>
-                                        </tr>
+                                <tr class="footer_table">
+                                    <td colspan="2">
+                                        <a href="#" class="open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                        <a href="#" class="close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
+                                        <!--                                                <span><a href="#" class="add-service open-modal" data-modal-name="add-service">Добавить услуги</a></span>-->
+                                        <span><a href="#" class="add-service" ng-click="changeServices(elementKind_services_value)">Изменить услуги</a></span>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>

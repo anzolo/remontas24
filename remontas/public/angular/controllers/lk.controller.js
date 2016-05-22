@@ -10,7 +10,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         loading: false,
         textIsChange: "",
         showWhatIs: false,
-        mouseOverService: []
+        mouseOverService: [],
+        sessionFirstVisit: true
     };
 
     $scope.tempMasterCategoriesSelect = [];
@@ -69,6 +70,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
                 $scope.data.scoreDetail = JSON.parse(JSON.stringify(data.scoreDetail.details));
 
                 calcCountServices();
+
+                if ($scope.interfaceOptions.sessionFirstVisit) {
+                    $scope.interfaceOptions.sessionFirstVisit = false;
+                    if ($scope.data.master.score == 0) {
+                        $scope.interfaceOptions.showComboBox = "whatIs"
+                    }
+                }
 
             } else if (data.status == "Error") {
                 console.error("Error:", data.note);
