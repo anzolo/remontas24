@@ -61,8 +61,9 @@ def syncFiles(newMaster, oldMaster, request):
                         if photoFile is not None:
                             photoFile.filename = createFileName(photoFile.raw_filename)
                             photo["filename"] = photoFile.filename
-                            photoFile.save(conf.works_path)
-                            watermarkPhoto(conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
+                            # photoFile.save(conf.works_path)
+                            # watermarkPhoto(conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
+                            watermarkPhoto(photoFile.file, conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
                 else:
                     #исключаем фото, которое осталось в мастере из списка удаления
                     if oldPhotos.count(photo["filename"])>0:
@@ -89,35 +90,54 @@ def reduce_opacity(im, opacity):
     im.putalpha(alpha)
     return im
 
-def watermarkPhoto(photo, watermark, position, opacity=1):
+def watermarkPhoto(photo, photo_path, watermark, position, opacity=1):
     im = Image.open(photo)
     mark = Image.open(watermark)
+
+
+    # уменьшить размер фото
+
+    large_size = (1920, 1200)
+
+    image_w, image_h = im.size
+    aspect_ratio = image_w / float(image_h)
+    new_height = int(large_size[0] / aspect_ratio)
+
+    if new_height < 1200:
+        final_width = large_size[0]
+        final_height = new_height
+    else:
+        final_width = int(aspect_ratio * large_size[1])
+        final_height = large_size[1]
+
+    imaged = im.resize((final_width, final_height), Image.ANTIALIAS)
 
     """Adds a watermark to an image."""
     if opacity < 1:
         mark = reduce_opacity(mark, opacity)
-    if im.mode != 'RGBA':
-        im = im.convert('RGBA')
+    if imaged.mode != 'RGBA':
+        imaged = imaged.convert('RGBA')
     # create a transparent layer the size of the image and draw the
     # watermark in that layer.
-    layer = Image.new('RGBA', im.size, (0,0,0,0))
+    layer = Image.new('RGBA', imaged.size, (0,0,0,0))
     if position == 'tile':
-        for y in range(0, im.size[1], mark.size[1]):
-            for x in range(0, im.size[0], mark.size[0]):
+        for y in range(0, imaged.size[1], mark.size[1]):
+            for x in range(0, imaged.size[0], mark.size[0]):
                 layer.paste(mark, (x, y))
     elif position == 'scale':
         # scale, but preserve the aspect ratio
         ratio = min(
-            float(im.size[0]) / mark.size[0], float(im.size[1]) / mark.size[1])
+            float(imaged.size[0]) / mark.size[0], float(imaged.size[1]) / mark.size[1])
         w = int(mark.size[0] * ratio)
         h = int(mark.size[1] * ratio)
         mark = mark.resize((w, h))
-        layer.paste(mark, ((im.size[0] - w) / 2, (im.size[1] - h) / 2))
+        layer.paste(mark, ((imaged.size[0] - w) / 2, (imaged.size[1] - h) / 2))
     else:
         layer.paste(mark, position)
     # composite the watermark with the layer
-    photoWithWatermark = Image.composite(layer, im, layer)
-    photoWithWatermark.save(photo,'JPEG', quality=60, optimize=True, progressive=True)
+    photoWithWatermark = Image.composite(layer, imaged, layer)
+    photoWithWatermark.save(photo_path,'JPEG', quality=60, optimize=True, progressive=True)
+    mark.close()
 
 def sendMail(toAddress, subj, msg_text, msg_html):
     try:
