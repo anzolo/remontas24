@@ -1,4 +1,4 @@
-remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', function($scope, lkData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS) {
+remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalService', 'Upload', '$document', '$rootScope', 'AUTH_EVENTS', '$timeout', function($scope, lkData, $sce, ModalService, Upload, $document, $rootScope, AUTH_EVENTS, $timeout) {
 
     $scope.interfaceOptions = {
         showComboBox: "",
@@ -8,6 +8,7 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
         countServices: 0,
         countJobs: 0,
         loading: false,
+        textLoading: "Идет загрузка...",
         textIsChange: "",
         showWhatIs: false,
         mouseOverService: [],
@@ -86,7 +87,8 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
     }
 
     function saveMaster() {
-        $scope.loading = true;
+        $scope.interfaceOptions.loading = true;
+        $scope.interfaceOptions.textLoading = "Идет сохранение профиля...";
 
         var connString = '/api/lk';
 
@@ -108,7 +110,13 @@ remontas24Site.controller('lkController', ['$scope', 'lkData', '$sce', 'ModalSer
 
         }).finally(function() {
             // called no matter success or failure
-            $scope.loading = false;
+
+            $timeout(function() {
+                $scope.interfaceOptions.loading = false;
+            }, 1000);
+
+
+
             $scope.data.uploadData = {};
         });
 

@@ -1,5 +1,5 @@
-<div class="loading" ng-if="loading">
-    <div><img src="\remontas\public\img\spinner.gif"> <span>Идет загрузка</span></div>
+<div class="loading" ng-if="interfaceOptions.loading">
+    <div><img src="\remontas\public\img\spinner.gif"> <span>{{interfaceOptions.textLoading}}</span></div>
 </div>
 <div class="wrapper">
     <div class="content">
@@ -17,7 +17,7 @@
                     <div class="corner "></div>
                     <div class="body ">
                         <h3>Оценка портфолио мастера</h3>
-                        <h4 ng-if="data.master.status!='active' ">Ваше портфолио не видно посетителям сайта! Заполните следующую информаицю в профиле, чтобы получать заказы от посетителей нашего сервиса:</h4>
+                        <h4 ng-if="data.master.status!='active' ">Ваше портфолио не видно посетителям сайта! Заполните следующую информацию в профиле, чтобы получать заказы от посетителей нашего сервиса:</h4>
                         <div>
                             <ul>
                                 <li ng-class="{ok:criteria.status, comment:!criteria.status} " ng-repeat="criteria in data.scoreDetail ">{{criteria.description + " : " + criteria.score +" баллов "}}
