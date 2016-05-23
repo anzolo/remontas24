@@ -454,7 +454,7 @@ h2.master-counter span {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    overflow: hidden;
+    /*    overflow: hidden;*/
 }
 
 .selection .item + .item {
