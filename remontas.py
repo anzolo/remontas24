@@ -20,12 +20,14 @@ import numpy as np
 @route('/agreement')
 @route('/')
 def index():
-    return template('remontas')
+    #return template('remontas')
+    return static_file("index.html", root='.')
 
 @route('/master/<id>')
 @route('/check-reg-code/<id>', name = "verifyMail")
 def index2(id):
-    return template('remontas')
+    #return template('remontas')
+    return static_file("index.html", root='.')
 
 @route('/google5ec13e4f13b0041c.html')
 def googleSearchCheck():

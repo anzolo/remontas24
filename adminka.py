@@ -581,6 +581,9 @@ def deleteMaster(id):
             # удаляем мастера из БД
             conf.db.masters.delete_one({'_id': ObjectId(id)})
 
+            # удаляем пользователя
+
+
             result["status"] = "OK"
         else:
             result["status"] = "Error"
