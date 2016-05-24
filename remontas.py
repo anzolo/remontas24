@@ -21,17 +21,17 @@ import numpy as np
 @route('/')
 def index():
     #return template('remontas')
-    return static_file("index.html", root='.')
+    return static_file("index.html", root='./static')
 
 @route('/master/<id>')
 @route('/check-reg-code/<id>', name = "verifyMail")
 def index2(id):
     #return template('remontas')
-    return static_file("index.html", root='.')
+    return static_file("index.html", root='./static')
 
 @route('/google5ec13e4f13b0041c.html')
 def googleSearchCheck():
-    return static_file("google5ec13e4f13b0041c.html", root='./remontas/public')
+    return static_file("google5ec13e4f13b0041c.html", root='./static/remontas/public')
 
 
 
@@ -40,11 +40,11 @@ def googleSearchCheck():
 @route('/remontas/<access>/<filename:path>')
 def static(access, filename):
     if access == "public":
-        return static_file(filename, root='./remontas/public')
+        return static_file(filename, root='./static/remontas/public')
     elif access == "restricted":
         result_check_rights = adminka.check_rights("master", request)
         if result_check_rights["status"]:
-            return static_file(filename, root='./remontas/restricted')
+            return static_file(filename, root='./static/remontas/restricted')
         else:
             return abort(401, "Sorry, access denied.")
 

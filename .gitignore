@@ -1,3 +1,4 @@
+/static/storage/**
 /storage/**
 /__pycache__
 /.idea

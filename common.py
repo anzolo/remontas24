@@ -20,9 +20,9 @@ from os import urandom
 def storage(filename):
     path, file = os.path.split(filename)
     if file==conf.img_no_avatar:
-        return static_file(filename, root='./remontas/public/img')
+        return static_file(filename, root='./static/remontas/public/img')
     else:
-        return static_file(filename, root='./storage')
+        return static_file(filename, root='./static/storage')
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
