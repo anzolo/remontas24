@@ -22,18 +22,18 @@ debug(conf.debug)
 @route('/adminka/login')
 @route('/adminka/masters')
 def adm_adminka():
-    return template('adminka')
+    return static_file("adminka.html", root='./static')
 
 
 # Админка. возврат файлов с учетом прав доступа
 @route('/adminka/<access>/<filename:path>')
 def adm_static(access, filename):
     if access == "public":
-        return static_file(filename, root='./adminka/public')
+        return static_file(filename, root='./static/adminka/public')
     elif access == "restricted":
         result_check_rights = check_rights("admin", request)
         if result_check_rights["status"]:
-            return static_file(filename, root='./adminka/restricted')
+            return static_file(filename, root='./static/adminka/restricted')
         else:
             return abort(401, "Sorry, access denied.")
             # return bottle.static_file(filename, root='./adminka/restricted')
