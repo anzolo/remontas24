@@ -34,25 +34,25 @@
                             <div class="cat_name">{{elementKind_services_value.parent_name}}</div>
                         </caption>
                         <col class="col1_table">
-                            <col class="col2_table">
-                                <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
-                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                </tr>
+                        <col class="col2_table">
+                        <tr ng-if="elementKind_services_value._id != interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder).slice(0,4)">
+                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                        </tr>
 
-                                <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
-                                    <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
-                                    <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
-                                    <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
-                                </tr>
+                        <tr ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-mouseenter="mouseOverService(elementKind_services_key, elementServices_key, true)" ng-mouseleave="clearMouseOverService()" ng-repeat="(elementServices_key, elementServices_value) in elementKind_services_value.services.sort(compareOrder)">
+                            <td class="job" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)">{{shrinkServiceText(elementKind_services_key, elementServices_key, elementServices_value.name)}}</td>
+                            <td class="price" ng-if="!checkMouseOverService(elementKind_services_key, elementServices_key)" ng-bind-html="preparePriceHTML(elementServices_value.price, elementServices_value.measure)"></td>
+                            <td colspan="2" class="job mouse_over" ng-if="checkMouseOverService(elementKind_services_key, elementServices_key)">{{interfaceOptions.mouseOverService[elementKind_services_key][elementServices_key].text}}</td>
+                        </tr>
 
-                                <tr class="public footer_table">
-                                    <td colspan="2">
-                                        <a href="#" class="public open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
-                                        <a href="#" class="public close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
-                                    </td>
-                                </tr>
+                        <tr class="public footer_table">
+                            <td colspan="2">
+                                <a href="#" class="public open-more" ng-if="(elementKind_services_value._id != interfaceOptions.checkKind_services) && elementKind_services_value.services.length > 4" ng-click="selectKindServices(elementKind_services_value._id)">Посмотреть все</a>
+                                <a href="#" class="public close-more" ng-if="elementKind_services_value._id == interfaceOptions.checkKind_services" ng-click="selectKindServices(elementKind_services_value._id)">Свернуть</a>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -65,7 +65,8 @@
             <div class="gallery clearfix">
                 <a href="#" class="item user">
                     <div class="img">
-                        <img ng-src="{{model.configUrl.img_url_path + model.master.avatar}}" width="187" height="187">
+                        <img ng-if="master.avatar==model.configUrl.img_no_avatar" ng-src="{{model.configUrl.common_files_path + model.master.avatar}}" width="187" height="187">
+                        <img ng-if="master.avatar!=model.configUrl.img_no_avatar" ng-src="{{model.configUrl.img_url_path + model.master.avatar}}" width="187" height="187">
                     </div>
                     <div class="title">{{model.master.name}}</div>
                 </a>

@@ -15,14 +15,15 @@ from datetime import datetime
 
 from os import urandom
 
-#  хранилище фото
+#  хранилище фото и аватарок
 @route('/storage/<filename:path>')
 def storage(filename):
-    path, file = os.path.split(filename)
-    if file==conf.img_no_avatar:
-        return static_file(filename, root='./static/remontas/public/img')
-    else:
-        return static_file(filename, root='./static/storage')
+    return static_file(filename, root='./static/storage')
+
+#  хранилище общих ресурсов для админки и ремонтаса
+@route('/common/<filename:path>')
+def storage(filename):
+    return static_file(filename, root='./static/common')
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):

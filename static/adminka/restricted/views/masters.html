@@ -21,7 +21,10 @@
 
                     <td> {{$index + 1}}</td>
                     <td>
-                        <a href="#" ui-sref="adminka.editMaster({ id: master._id })"><img ng-src="{{model.configUrl.img_url_path+master.avatar}}"></a>
+                        <a href="#" ui-sref="adminka.editMaster({ id: master._id })">
+                            <img ng-if="master.avatar==model.configUrl.img_no_avatar" ng-src="{{model.configUrl.common_files_path+master.avatar}}">
+                            <img ng-if="master.avatar!=model.configUrl.img_no_avatar" ng-src="{{model.configUrl.img_url_path+master.avatar}}">
+                        </a>
                     </td>
                     <td>{{master.name+'; ' +master.kind_profile+'; ' +master.email}}</td>
                 </tr>
