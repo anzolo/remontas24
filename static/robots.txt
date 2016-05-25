@@ -1,0 +1,14 @@
+ser-agent: *
+
+User-agent: Yandex
+Host: remontas24.ru
+Disallow: /adminka
+Disallow: /api
+
+User-agent: Googlebot
+Allow: *.css
+Allow: *.js
+Disallow: /adminka
+Disallow: /api
+
+Sitemap: http://remontas24.ru/sitemap.xml
