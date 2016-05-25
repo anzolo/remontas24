@@ -34,9 +34,9 @@
                 <div class="person clearfix ">
                     <div class="photo ">
                         <div class="img ">
-                            <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}} " ng-if="data.uploadData.avatar==null&&master.avatar!=model.configUrl.img_no_avatar">
-                            <img ng-src="{{data.configUrl.common_files_path + data.master.avatar}} " ng-if="data.uploadData.avatar==null&&master.avatar==model.configUrl.img_no_avatar">
-                            <img ngf-src="data.uploadData.avatar " ngf-resize="{width: 180, height: 180, quality: 0.9} " ng-if="data.uploadData.avatar!=null ">
+                            <img ng-src="{{data.configUrl.img_url_path + data.master.avatar}} " ng-if="data.uploadData.avatar==null&&master.avatar!=data.configUrl.img_no_avatar">
+                            <img ng-src="{{data.configUrl.common_files_path + data.master.avatar}} " ng-if="data.uploadData.avatar==null&&master.avatar==data.configUrl.img_no_avatar">
+                            <!--<img ngf-src="data.uploadData.avatar " ngf-resize="{width: 180, height: 180, quality: 0.9} " ng-if="data.uploadData.avatar!=null ">-->
                         </div>
                         <button class="btn changeAvatarButton " ng-click="changeAvatar() ">Изменить</button>
                     </div>

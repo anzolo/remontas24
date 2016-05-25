@@ -64,7 +64,7 @@ def syncFiles(newMaster, oldMaster, request):
                             photo["filename"] = photoFile.filename
                             # photoFile.save(conf.works_path)
                             # watermarkPhoto(conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
-                            watermarkPhoto(photoFile.file, conf.works_path + photo["filename"], "remontas/public/img/watermark.png", 'tile', 0.2)
+                            watermarkPhoto(photoFile.file, conf.works_path + photo["filename"], conf.watermarkPath, 'tile', 0.2)
                 else:
                     #исключаем фото, которое осталось в мастере из списка удаления
                     if oldPhotos.count(photo["filename"])>0:

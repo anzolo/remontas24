@@ -582,7 +582,10 @@ def deleteMaster(id):
             conf.db.masters.delete_one({'_id': ObjectId(id)})
 
             # удаляем пользователя
+            conf.db.users_masters.delete_one({'master_id': ObjectId(id)})
 
+            # удаляем расчет баллов
+            conf.db.scoreMasters.delete_one({'master_id': ObjectId(id)})
 
             result["status"] = "OK"
         else:
