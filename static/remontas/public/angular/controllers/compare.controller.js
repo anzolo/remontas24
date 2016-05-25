@@ -12,6 +12,7 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
     $scope.getIdForMaster = getIdForMaster;
     $scope.haveAdditionalService = haveAdditionalService;
     $scope.showService = showService;
+    $scope.showAll = showAll;
 
     loadData();
 
@@ -27,6 +28,7 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
             addToCategoriesParams();
             $scope.model.checked = "";
             $scope.model.mouseOver = "";
+            $scope.model.openAdditionalService = true;
 
             Session.clearFavorites();
             $scope.model.masters.forEach(function (element) {
@@ -114,5 +116,14 @@ remontas24Site.controller('compareController', ['$scope', 'Session', 'compareSer
             if ($scope.model.categories[i].type == 'service') break
             $scope.model.categories[i].visible = !$scope.model.categories[i].visible;
         };
+    };
+
+    function showAll(action) {
+        var visible = (action == 'open') ? true : false;
+        $scope.model.openAdditionalService = visible;
+        $scope.model.categories.forEach(function (service, i, arr) {
+            if (service.type == 'service') service.open = visible;
+            if (service.type == 'job') service.visible = visible;
+        });
     };
 }]);

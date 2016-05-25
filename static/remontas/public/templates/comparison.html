@@ -7,20 +7,28 @@
                 <div class="comparison clearfix">
                     <div class="params">
                         <div class="caption">
-                            <!--
-<div class="counter">14 мастеров</div>
-<div class="params-filter">
-    <div class="active">Все цены</div>
-    <div><a href="#">Различающиеся</a></div>
-</div>
--->
+
+                            <div class="caption-head">
+                                <div><a href="#" class="close" ng-click="showAll('close')"><i class="fa fa-minus"></i> Свернуть услуги</a></div>
+                                <div><a href="#" class="open" ng-click="showAll('open')"><i class="fa fa-plus"></i> Развернуть услуги</a></div>
+                            </div>
+                            <div class="caption-footer">
+                                <div class="left">Услуги</div>
+                                <div class="right">Средняя цена</div>
+                            </div>
                         </div>
 
-                        <div class="job" ng-class="{active:model.checked=='masterOnHour', mouseOver:model.mouseOver=='masterOnHour'}" ng-mouseenter="model.mouseOver = 'masterOnHour'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'masterOnHour'">
+                        <div class="job">
+                            <div class="marked" ng-click="model.openAdditionalService = !model.openAdditionalService"><i class="fa fa-minus-square" ng-if="model.openAdditionalService"></i><i class="fa fa-plus-square" ng-if="!model.openAdditionalService"></i> Дополнительные услуги</div>
+                            <div>
+                                <div class="delimiter"></div>
+                            </div>
+                        </div>
+                        <div class="job" ng-class="{active:model.checked=='masterOnHour', mouseOver:model.mouseOver=='masterOnHour'}" ng-if="model.openAdditionalService" ng-mouseenter="model.mouseOver = 'masterOnHour'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'masterOnHour'">
                             <div class="job-name">Мастер на час</div>
                             <div class="price"></div>
                         </div>
-                        <div class="job" ng-class="{active:model.checked=='contractWork', mouseOver:model.mouseOver=='contractWork'}" ng-mouseenter="model.mouseOver = 'contractWork'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'contractWork'">
+                        <div class="job" ng-class="{active:model.checked=='contractWork', mouseOver:model.mouseOver=='contractWork'}" ng-if="model.openAdditionalService" ng-mouseenter="model.mouseOver = 'contractWork'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'contractWork'">
                             <div class="job-name">Работа по договору</div>
                             <div class="price"></div>
                         </div>
@@ -52,10 +60,15 @@
                                     <div class="phone">{{showPhone(master.phone)}}</div>
                                 </div>
 
-                                <div class="element" ng-mouseenter="model.mouseOver = 'masterOnHour'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'masterOnHour'">
+                                <div class="element">
+                                    <div>
+                                        <div class="delimiter"></div>
+                                    </div>
+                                </div>
+                                <div class="element" ng-if="model.openAdditionalService" ng-mouseenter="model.mouseOver = 'masterOnHour'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'masterOnHour'">
                                     <div class="price" ng-class="{active:model.checked=='masterOnHour', mouseOver:model.mouseOver=='masterOnHour'}">{{haveAdditionalService(master, 'masterOnHour')}}</div>
                                 </div>
-                                <div class="element" ng-mouseenter="model.mouseOver = 'contractWork'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'contractWork'">
+                                <div class="element" ng-if="model.openAdditionalService" ng-mouseenter="model.mouseOver = 'contractWork'" ng-mouseleave="model.mouseOver = ''" ng-click="model.checked = 'contractWork'">
                                     <div class="price" ng-class="{active:model.checked=='contractWork', mouseOver:model.mouseOver=='contractWork'}">{{haveAdditionalService(master, 'contractWork')}}</div>
                                 </div>
 

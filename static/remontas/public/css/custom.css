@@ -1727,7 +1727,7 @@ text-decoration: underline;
 }
 
 .page .comparison .masters .inner {
-    width: 10000px;
+    /*    width: 10000px;*/
 }
 
 .page .comparison .masters .item {
@@ -1740,8 +1740,52 @@ text-decoration: underline;
     display: table;
 }
 
+.page .comparison .params .caption,
 .page .comparison .masters {
     text-align: center;
+}
+
+.page .comparison .params .caption-head {
+    height: 138px;
+    margin: 10px;
+    border: 1px solid #eee;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.page .comparison .params .caption-head > div {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 10px;
+    text-align: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.page .comparison .params .caption-head a {
+    color: #ff5c0f;
+    /*    border-bottom: 1px solid #ff5c0f;*/
+}
+
+.page .comparison .params .caption-footer {
+    width: 368px;
+    height: 42px;
+}
+
+.page .comparison .params .caption-footer > div {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
+}
+
+.page .comparison .params .caption-footer .left {
+    float: left;
+}
+
+.page .comparison .params .caption-footer .right {
+    float: right;
 }
 
 .page .comparison .masters .name {
