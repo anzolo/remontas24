@@ -28,11 +28,14 @@ def get_common_files(filename):
 # динамическая генерация sitemap.xml для поисковиков
 @route('/sitemap.xml')
 def get_sitemap_xml():
-    generateSitemap()
+    generateSitemap('static/sitemap.xml')
     return static_file("sitemap.xml", root='./static')
 
 
-def generateSitemap():
+def generateSitemap(path):
+    if os.path.isfile(path):
+        os.remove(path)
+
     start = """<?xml version="1.0" encoding="UTF-8"?>
     <urlset
           xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -51,7 +54,7 @@ def generateSitemap():
 
     # добавляем урлы которые хотим чтобы индексировались поисковиками
 
-    sitemap = open('static/sitemap.xml', 'w')
+    sitemap = open(path, 'w')
     sitemap.write(start)
 
     sitemap.write(url_insert % "")
