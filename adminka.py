@@ -365,6 +365,10 @@ def adm_runOperation():
         elif request.params.operation == "clearDB":
             clearDB()
             return {"status": "OK"}
+        elif request.params.operation == "genSitemapXML":
+            common.generateSitemap(conf.path_to_sitemap_xml)
+            return {"status": "OK"}
+
     else:
         return abort(401, "Sorry, access denied.")
 

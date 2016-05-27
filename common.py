@@ -49,8 +49,6 @@ def generateSitemap(path):
     end = """
     </urlset>
             """
-    sitemap = ""
-    sitemap = sitemap + start
 
     # добавляем урлы которые хотим чтобы индексировались поисковиками
 
