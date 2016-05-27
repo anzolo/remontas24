@@ -29,6 +29,7 @@ def get_common_files(filename):
 @route('/sitemap.xml')
 def get_sitemap_xml():
     generateSitemap()
+    return static_file("sitemap.xml", root='./static')
 
 
 def generateSitemap():
