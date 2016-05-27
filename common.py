@@ -64,9 +64,9 @@ def generateSitemap():
     for master in result:
         alias = master.get("alias_id","")
         if alias!="":
-            sitemap.write(url_insert % alias)
+            sitemap.write(url_insert % ("master/" + alias))
 
-        sitemap.write(url_insert % str(master["_id"]))
+        sitemap.write(url_insert % ("master/" + str(master["_id"])))
 
     sitemap.write(end)
     sitemap.close()
