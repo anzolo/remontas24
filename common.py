@@ -17,13 +17,60 @@ from os import urandom
 
 #  хранилище фото и аватарок
 @route('/storage/<filename:path>')
-def storage(filename):
+def get_file_from_storage(filename):
     return static_file(filename, root='./static/storage')
 
 #  хранилище общих ресурсов для админки и ремонтаса
 @route('/common/<filename:path>')
-def storage(filename):
+def get_common_files(filename):
     return static_file(filename, root='./static/common')
+
+# динамическая генерация sitemap.xml для поисковиков
+@route('/sitemap.xml')
+def get_sitemap_xml():
+    generateSitemap()
+
+
+def generateSitemap():
+    start = """<?xml version="1.0" encoding="UTF-8"?>
+    <urlset
+          xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">"""
+    url_insert = """
+    <url>
+        <loc>http://remontas24.ru/%s</loc>
+    </url>"""
+    end = """
+    </urlset>
+            """
+    sitemap = ""
+    sitemap = sitemap + start
+
+    # добавляем урлы которые хотим чтобы индексировались поисковиками
+
+    sitemap = open('static/sitemap.xml', 'w')
+    sitemap.write(start)
+
+    sitemap.write(url_insert % "")
+
+    sitemap.write(url_insert % "about")
+    sitemap.write(url_insert % "how_works")
+
+    result = conf.db.masters.find({'$and': [{'score': {'$gt': 0}}, {'status': 'active'}]})
+
+    for master in result:
+        alias = master.get("alias_id","")
+        if alias!="":
+            sitemap.write(url_insert % alias)
+
+        sitemap.write(url_insert % str(master["_id"]))
+
+    sitemap.write(end)
+    sitemap.close()
+
+    return True
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
