@@ -2153,6 +2153,10 @@ text-decoration: underline;
     width: 495px;
 }
 
+.my #hint-what-is-it.height2 {
+    top: 181px;
+}
+
 .my #hint-what-is-it .body {
     padding: 20px 30px 30px;
 }
@@ -2210,6 +2214,19 @@ text-decoration: underline;
     color: #ff5c0f;
     background: transparent url('../img/icon-ok-green.png') no-repeat 0 center;
     padding-left: 30px;
+}
+
+.my .profile-show-off {
+    margin-top: 10px;
+    /*    color: #ff5c0f;*/
+    text-align: center;
+}
+
+.my .profile-show-off span {
+    color: #ff5c0f;
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
 }
 
 #work-viewer {
