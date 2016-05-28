@@ -2163,10 +2163,12 @@ text-decoration: underline;
     font-weight: 500;
     margin: 0;
     padding-bottom: 15px;
+    text-align: center;
 }
 
 .my #hint-what-is-it h4 {
     color: red;
+    text-align: center;
 }
 
 .my #hint-what-is-it ul {
@@ -2182,13 +2184,13 @@ text-decoration: underline;
 
 .my #hint-what-is-it li.ok {
     color: #ff5c0f;
-    background: transparent url('../img/icon-ok-orange.png') no-repeat 0 top;
+    background: transparent url('../img/icon-ok-green.png') no-repeat 0 top;
     padding-left: 30px;
 }
 
 .my #hint-what-is-it li.ok li.good {
     color: #ff5c0f;
-    background: transparent url('../img/icon-ok-orange.png') no-repeat 0 center;
+    background: transparent url('../img/icon-ok-green.png') no-repeat 0 center;
     padding-left: 30px;
 }
 
@@ -2206,7 +2208,7 @@ text-decoration: underline;
 
 .my #hint-what-is-it li.comment li.good {
     color: #ff5c0f;
-    background: transparent url('../img/icon-ok-orange.png') no-repeat 0 center;
+    background: transparent url('../img/icon-ok-green.png') no-repeat 0 center;
     padding-left: 30px;
 }
 
