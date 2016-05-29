@@ -33,21 +33,11 @@ def index2(id):
 def googleSearchCheck():
     return static_file("google5ec13e4f13b0041c.html", root='./static/remontas/public')
 
-
-
-
 # Ремонтас. возврат файлов с учетом прав доступа
 @route('/remontas/<access>/<filename:path>')
 def static(access, filename):
     if access == "public":
         return static_file(filename, root='./static/remontas/public')
-    elif access == "restricted":
-        result_check_rights = adminka.check_rights("master", request)
-        if result_check_rights["status"]:
-            return static_file(filename, root='./static/remontas/restricted')
-        else:
-            return abort(401, "Sorry, access denied.")
-
 
 # API ремонтаса. получение списка мастеров для главной странице по фильтру
 @route('/api/main/searchMasters', method='POST')
@@ -261,7 +251,6 @@ def rem_getGategoriesForOrder():
 
     return common.JSONEncoder().encode(result)
 
-
 # API ремонтаса. сервис для обработки новой заявки на подбор мастера
 @route('/api/ordersService', method='POST')
 def rem_sendOrder():
@@ -357,7 +346,6 @@ def rem_lkGetData():
     else:
         return abort(401, "Sorry, access denied.")
 
-
 # API ремонтаса. Сохранение данных
 @route('/api/lk', method='POST')
 def rem_lkSaveData():
@@ -426,7 +414,6 @@ def rem_lkSaveData():
 
     else:
         return abort(401, "Sorry, access denied.")
-
 
 # API ремонтаса. получение данных по мастеру
 @route('/api/masterOpenProfile/<masterId>')
@@ -633,8 +620,6 @@ def rem_checkEmailCode(code):
         print("Error: " + str(e))
         common.writeToLog("error", "rem_checkEmailCode: " + str(e))
 
-
-
 def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
     try:
         masterUser = conf.db.users_masters.find_one({"_id": ObjectId(masterUserId)})
@@ -658,7 +643,6 @@ def sendNotificationAboutSuccesRegisterToMaster(masterUserId, result):
         common.writeToLog("error", str(e))
         return False
 
-
 def sendNotificationAboutSuccesVerifyEmail(masterUserId):
     try:
         masterUser = conf.db.users_masters.find_one({"_id": ObjectId(masterUserId)})
@@ -677,7 +661,6 @@ def sendNotificationAboutSuccesVerifyEmail(masterUserId):
     except Exception as e:
         print("Error: " + str(e))
         common.writeToLog("error", "sendNotificationAboutSuccesVerifyEmail: " + str(e))
-
 
 @route('/api/masterResetPassword', method='POST')
 def rem_resetMasterPassword():

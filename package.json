@@ -1,0 +1,19 @@
+{
+  "name": "remontas24_py",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://anzolo:acc1aca627@bitbucket.org/remontas24/remontas24_py.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/remontas24/remontas24_py#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
