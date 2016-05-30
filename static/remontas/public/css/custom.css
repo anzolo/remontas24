@@ -2187,13 +2187,13 @@ text-decoration: underline;
 }
 
 .my #hint-what-is-it li.ok {
-    color: #ff5c0f;
+    /*    color: #ff5c0f;*/
     background: transparent url('../img/icon-ok-green.png') no-repeat 0 top;
     padding-left: 30px;
 }
 
 .my #hint-what-is-it li.ok li.good {
-    color: #ff5c0f;
+    /*    color: #ff5c0f;*/
     background: transparent url('../img/icon-ok-green.png') no-repeat 0 center;
     padding-left: 30px;
 }
@@ -2205,25 +2205,30 @@ text-decoration: underline;
 }
 
 .my #hint-what-is-it li.comment li.bad {
-    color: #636363;
+    /*    color: #636363;*/
     background: transparent url('../img/icon-close.png') no-repeat 0 center;
     padding-left: 30px;
 }
 
 .my #hint-what-is-it li.comment li.good {
-    color: #ff5c0f;
+    /*    color: #ff5c0f;*/
     background: transparent url('../img/icon-ok-green.png') no-repeat 0 center;
     padding-left: 30px;
 }
 
 .my .profile-show-off {
-    margin-top: 10px;
-    /*    color: #ff5c0f;*/
+    margin: 10px auto 0px auto;
     text-align: center;
+    width: 800px;
+    /*    background: red;*/
+    padding: 5px;
+    border-radius: 2px;
+    /*    color: white;*/
 }
 
 .my .profile-show-off span {
-    color: #ff5c0f;
+    color: red;
+    /*    color: #ffe626;*/
     font-weight: bold;
     font-size: 18px;
     display: block;
