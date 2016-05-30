@@ -384,7 +384,9 @@ def rem_lkSaveData():
                     avatarFile.filename = common.createFileName(avatarFile.raw_filename)
                     newMaster["avatar"] = avatarFile.filename
 
-                    avatarFile.save(conf.storage_path)
+                    # avatarFile.save(conf.storage_path)
+                    
+                    common.resizeAndSaveAvatar(avatarFile.file,conf.storage_path+avatarFile.filename)
 
                     oldFilePath = conf.storage_path + oldMaster["avatar"]
                     if os.path.isfile(oldFilePath):

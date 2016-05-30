@@ -189,6 +189,28 @@ def watermarkPhoto(photo, photo_path, watermark, position, opacity=1):
     photoWithWatermark.save(photo_path,'JPEG', quality=60, optimize=True, progressive=True)
     mark.close()
 
+def resizeAndSaveAvatar(avatarFile, path):
+    avatarImage = Image.open(avatarFile)
+
+    # уменьшить размер аватарки
+
+    large_size = (180, 180)
+
+    image_w, image_h = avatarImage.size
+    aspect_ratio = image_w / float(image_h)
+    new_height = int(large_size[0] / aspect_ratio)
+
+    if new_height < 180:
+        final_width = large_size[0]
+        final_height = new_height
+    else:
+        final_width = int(aspect_ratio * large_size[1])
+        final_height = large_size[1]
+
+    avatarResized = avatarImage.resize((final_width, final_height), Image.ANTIALIAS)
+
+    avatarResized.save(path, 'JPEG', quality=80, optimize=True, progressive=True)
+
 def sendMail(toAddress, subj, msg_text, msg_html):
     try:
         message = MIMEMultipart('alternative')

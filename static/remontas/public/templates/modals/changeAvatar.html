@@ -9,7 +9,7 @@
 
         <div class="errorMsg">{{model.errorMsg}}</div>
 
-        <button ngf-select="selectPicture($file, $invalidFiles)" ngf-pattern="'.jpg,.jpeg,.png'" ngf-accept="'image/*'" ngf-max-size="200KB" ngf-resize="{width: 200, height:200, quality: .9, type: 'image/jpeg',
+        <button ngf-select="selectPicture($file, $invalidFiles)" ngf-pattern="'.jpg,.jpeg,.png'" ngf-accept="'image/*'" ngf-max-size="6MB" ngf-resize="{width: 200, height:200, quality: .9, type: 'image/jpeg',
                 centerCrop: true}" ngf-pattern="'image/*'">ВЫБРАТЬ</button>
 
         <button ng-disabled="canSelect()" ng-click="acceptChange()">ПОДТВЕРДИТЬ</button>
