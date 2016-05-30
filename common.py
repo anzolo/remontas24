@@ -318,8 +318,8 @@ def calcScoreMaster(master_id):
 
                 scoreMainCriteria.append(ballDescr)
 
-                # критерий - прайс заполнен на 50% или более
-                ballDescr = {"description": "Заполнено более 50% цен на услуги", "status": True}
+                # критерий - в прайсе есть хотя бы одна заполненная цена
+                ballDescr = {"description": "Заполнены цены на услуги", "status": True}
 
                 allServicesCount = 0
                 serviceWithPriceCount = 0
@@ -332,7 +332,11 @@ def calcScoreMaster(master_id):
                                 serviceWithPriceCount += 1
 
                 # print("allServicesCount = " + str(allServicesCount) + "; serviceWithPriceCount = "+str(serviceWithPriceCount))
-                if ((allServicesCount > 0) and ((serviceWithPriceCount/allServicesCount) < 0.5)) or (allServicesCount == 0):
+                # if ((allServicesCount > 0) and ((serviceWithPriceCount/allServicesCount) < 0.5)) or (allServicesCount == 0):
+                #     reset_to_register = True
+                #     ballDescr["status"] = False
+
+                if (serviceWithPriceCount==0) or (allServicesCount == 0):
                     reset_to_register = True
                     ballDescr["status"] = False
 
@@ -396,3 +400,9 @@ def calcScoreMaster(master_id):
     except Exception as e:
         print("Error: " + str(e))
         writeToLog("error", "calcScoreMaster: " + str(e))
+
+def reCalcScoreMasters():
+    masters = conf.db.masters.find()
+
+    for master in masters:
+        calcScoreMaster(master["_id"])
