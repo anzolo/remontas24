@@ -27,7 +27,7 @@
             </div>
 
             <div class="add" ng-if="model.work.photos.length<12" ngf-drop="addFiles($files,$invalidFiles)" ngf-drag-over-class="'dragOver'" ngf-multiple="true" accept="image/*" ngf-max-size="6MB" ngf-pattern="'image/*'">
-                <a href="#" ngf-select="addPhoto($file, $invalidFiles)" accept="image/*" ngf-max-size="6MB" ngf-pattern="'image/*'">+ добавить фото</a>
+                <a href="#" ngf-select="addFiles($files,$invalidFiles)" ngf-multiple="true" accept="image/*" ngf-max-size="6MB" ngf-pattern="'image/*'">+ добавить фото</a>
                 <p>Перетащите сюда файлы
                     <br>для загрузки</p>
                 <p class="errorMessage" ng-show="model.errorMsg!=''">{{model.errorMsg}}</p>
