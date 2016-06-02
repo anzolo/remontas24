@@ -1727,7 +1727,7 @@ text-decoration: underline;
 }
 
 .page .comparison .masters .inner {
-    /*    width: 10000px;*/
+    width: 10000px;
 }
 
 .page .comparison .masters .item {
