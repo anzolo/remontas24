@@ -1,4 +1,4 @@
-remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', '$window', '$location', function($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope, $window, $location) {
+remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalService', 'AUTH_EVENTS', 'AuthService', '$state', 'Session', '$rootScope', '$window', '$location', 'compareServiceCheck', function ($scope, searchMasters, ModalService, AUTH_EVENTS, AuthService, $state, Session, $rootScope, $window, $location, compareServiceCheck) {
 
     $scope.model = {
         searchBox: {},
@@ -45,13 +45,14 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
     $scope.showInvoiceForm = showInvoiceForm;
     $scope.addToFavorites = addToFavorites;
     $scope.shrinkText = shrinkText;
+    $scope.checkCountMasters = checkCountMasters;
 
     loadMasters(1);
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
     $rootScope.$on('$stateChangeSuccess',
-        function(event, toState, toParams, fromState, fromParams) {
+        function (event, toState, toParams, fromState, fromParams) {
 
             $scope.currentPage = toState.name;
 
@@ -65,7 +66,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
         })
 
-    $scope.$on(AUTH_EVENTS.notAuthenticated, function() {
+    $scope.$on(AUTH_EVENTS.notAuthenticated, function () {
         AuthService.logout();
         $state.go('remontas.searchPage');
         $scope.isAuthOK = false;
@@ -77,7 +78,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
 
     });
 
-    $scope.$on(AUTH_EVENTS.loginSuccess, function() {
+    $scope.$on(AUTH_EVENTS.loginSuccess, function () {
         $scope.currentPage = "lk";
         $scope.isAuthOK = true;
         $state.go('remontas.lk');
@@ -90,7 +91,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
         $scope.searchResult = searchMasters.searchMasters({
             "page": page,
             "filter": $scope.model.filter
-        }, function(data) {
+        }, function (data) {
 
             $scope.model.searchBox.configUrl = JSON.parse(JSON.stringify(data.configUrl));
             $scope.model.searchBox.masters = JSON.parse(JSON.stringify(data.masters));
@@ -125,7 +126,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
                 };
             } else $scope.model.filter = JSON.parse(JSON.stringify(Session.filter()));
 
-            var maxServices = $scope.model.categories.filter(function(el1) {
+            var maxServices = $scope.model.categories.filter(function (el1) {
                 return el1.parent_id == $scope.model.filter.category._id
             }).length;
 
@@ -201,7 +202,7 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             $scope.model.filter.kindServices.splice(indexOfEl, 1);
         } else $scope.model.filter.kindServices.push(JSON.parse(JSON.stringify(element)));
 
-        var maxServices = $scope.model.categories.filter(function(el1) {
+        var maxServices = $scope.model.categories.filter(function (el1) {
             return el1.parent_id == element.parent_id
         }).length;
 
@@ -257,5 +258,17 @@ remontas24Site.controller('mainController', ['$scope', 'searchMasters', 'ModalSe
             return title.substring(0, 15) + "..."
         } else return title;
     }
+
+    function checkCountMasters() {
+        var countMasters
+        compareServiceCheck.compare({
+            "masters": Session.favourites()
+        }, function (data) {
+            countMasters = JSON.parse(JSON.stringify(data.countMasters));
+
+            if (countMasters > 0) $state.go('remontas.compareList');
+            else Session.clearFavorites();
+        });
+    };
 
 }]);

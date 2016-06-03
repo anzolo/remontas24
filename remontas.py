@@ -99,6 +99,21 @@ def rem_doSearchMasters():
 
     return common.JSONEncoder().encode(result)
 
+
+# API ремонтаса. сервис сравнения мастеров. Проверка есть мастера для сравнения.
+@route('/api/compareServiceCheck', method='POST')
+def rem_compareMastersCheck():
+    result = dict()
+    mastersList = []
+    for el in request.json["masters"]:
+        mastersList.append(ObjectId(el))
+
+    query = {'$and': [{'score': {'$gt': 0}}, {'status': 'active'}, {"_id":{'$in': mastersList}}]}
+    result["countMasters"] = conf.db.masters.find(query).count()
+
+    return common.JSONEncoder().encode(result)
+
+
 # API ремонтаса. сервис сравнения мастеров
 @route('/api/compareService', method='POST')
 def rem_compareMasters():
