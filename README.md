@@ -15,10 +15,7 @@ Web site to search for contractors in Russia for construction and repair work. U
 
 ## personal cabinet screenshots
 
-<img src="/../screenshots/screenshots/personal_cabinet/lk1.png?raw=true" width="200" height="200" />
-<img src="/../screenshots/screenshots/personal_cabinet/lk2.png?raw=true" width="200" height="200" />
-<img src="/../screenshots/screenshots/personal_cabinet/lk3.png?raw=true" width="200" height="200" />
-<img src="/../screenshots/screenshots/personal_cabinet/lk4.png?raw=true" width="200" height="200" />
+<img src="/../screenshots/screenshots/personal_cabinet/lk1.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/personal_cabinet/lk2.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/personal_cabinet/lk3.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/personal_cabinet/lk4.png?raw=true" width="200" height="200" />
 
 ## Using technologies
 Python bottle.py, Angular 1, MongoDB
