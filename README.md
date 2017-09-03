@@ -11,7 +11,7 @@ Web site to search for contractors in Russia for construction and repair work. U
 
 ## website public screenshots
 
-
+<img src="/../screenshots/screenshots/public/public1.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/public/public2.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/public/public3.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/public/public4.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/public/public5.png?raw=true" width="200" height="200" /><img src="/../screenshots/screenshots/public/public6.png?raw=true" width="200" height="200" />
 
 ## Using technologies
 Python bottle.py, Angular 1, MongoDB
